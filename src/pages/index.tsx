@@ -5,7 +5,7 @@ import { withAuthenticator } from '@aws-amplify/ui-react'
 import Amplify from 'aws-amplify'
 import awsmobile from '../aws-exports'
 import HomePage from "../tmp/Home";
-
+import './tmp.css'
 Amplify.configure(awsmobile)
 
 const IndexPage = () => {
