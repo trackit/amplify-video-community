@@ -1,6 +1,6 @@
 {
   "auth": {
-    "amplifyvideocommu7d78b102": {
+    "amplifyvideocommua9ca74e9": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -12,7 +12,7 @@
       "dependsOn": [
         {
           "category": "auth",
-          "resourceName": "amplifyvideocommu7d78b102",
+          "resourceName": "amplifyvideocommua9ca74e9",
           "attributes": [
             "UserPoolId",
             "AppClientIDWeb",
@@ -32,7 +32,7 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authamplifyvideocommu7d78b102"
+              "userPoolId": "authamplifyvideocommua9ca74e9"
             }
           },
           "additionalAuthenticationProviders": []

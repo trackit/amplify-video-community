@@ -7,13 +7,12 @@
     },
     "contentDeliveryNetwork": {
         "signedKey": true,
-        "publicKey": "-----BEGIN PUBLIC KEY-----\\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmtaHkL3VJ9FTlau5RDx1\\nNJjuFgycW+7GiKTQTJvmPO68b50OSLM7+699d2DHAxzC3eog2CMRQ+qX2iWU/d6G\\nqVIK+8Ah768N4h4TncnUXkSqbelVUPQIpS2OnqmyGFJ1U8O9xRUBBDwX2rhi2XIr\\ndsCJPnX2rXYbLbc8D5OzjTRdGvFFi/vNfEJMbCJXrtzq/aEx8zsc8fzJ4hPDHvSF\\n1Qu81AHY8fiMfKf4RfZ/Dm3oUYlQvrIQJJjkiVrlvHlEPytdwKCp0tWVQH1HqapA\\nSnPnC6oo2pFXJp6qgI7M7Xa5srsXVSAfwfAvAyTVRTpdm77XwVOw1u9cpcBThCHu\\nUwIDAQAB\\n-----END PUBLIC KEY-----\\n",
-        "rPublicName": "rCloudFrontPublicKeygwc4sytr",
-        "publicKeyName": "amplifyVideoCommuVOD-dev-publickey-gwc4sytr",
-        "secretPem": "amplifyVideoCommuVOD-dev-pem-gwc4sytr",
-        "secretPemArn": "arn:aws:secretsmanager:us-west-2:394125495069:secret:amplifyVideoCommuVOD-dev-pem-gwc4sytr-Vzaxst",
+        "publicKey": "-----BEGIN PUBLIC KEY-----\\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwoN5VLwIKpgb/Vro7IWK\\na4Fkq/Kh0HGyGMKPhUjm6QL2qvRora+ROjvHZZcZKHnUqs+7gTCf7m5QsUnDkWkv\\noS033I87btiX+U9xffsoe2oKnrfKADSetwc1jtNDrFRO188FJ5JM5rAmdb416lDt\\n84NJVOKjb1O+HyyR275jQDaj3LPqpc3jOwzxVPt6ztkWamYeOnJqwKlMzG//ljOs\\nWxH89tLcfG3CVQpJuRZJnAu4czbKOZvYxXuiwb2A9OA8AgJlDUjn+7PSi0PowagV\\nwSNumadrQ7i3IqcLkEoO3RuC7ABqr4HjW2uMXosZQFvdToEWC61RFest7ULzwE3J\\n3wIDAQAB\\n-----END PUBLIC KEY-----\\n",
+        "rPublicName": "rCloudFrontPublicKeyep9bl4u3",
+        "publicKeyName": "amplifyVideoCommuVOD-dev-publickey-ep9bl4u3",
+        "secretPem": "amplifyVideoCommuVOD-dev-pem-ep9bl4u3",
+        "secretPemArn": "arn:aws:secretsmanager:us-west-2:394125495069:secret:amplifyVideoCommuVOD-dev-pem-ep9bl4u3-GwlGFq",
         "functionName": "amplifyVideoCommuVOD-dev-tokenGen",
-        "functionNameSchema": "amplifyVideoCommuVOD-${env}-tokenGen",
         "enableDistribution": true
     },
     "parameters": {
