@@ -4,10 +4,6 @@ import videojs from 'video.js'
 
 import styled from 'styled-components'
 
-interface VideoPlayerPropsInferface extends videojs.PlayerOptions {
-    token: string
-}
-
 const VideoPlayerWrapper = styled.div`
   margin: auto;
   width: 70%;
