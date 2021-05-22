@@ -4,8 +4,6 @@ import './NavBar.css'
 import { useEffect, useState } from 'react'
 import { Auth } from 'aws-amplify'
 import { Link } from "gatsby"
-import { AiOutlineSearch } from 'react-icons/ai'
-import { AiOutlineSetting } from 'react-icons/ai'
 
 
 const NavBar = () => {
