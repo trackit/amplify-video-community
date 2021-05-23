@@ -1,21 +1,13 @@
-import * as React from "react"
+import React, { useEffect, useState } from 'react'
+import { AiOutlineSearch, AiOutlineSetting } from 'react-icons/ai'
 
 import styled from 'styled-components'
-
-import { useEffect, useState } from 'react'
 import { Auth } from 'aws-amplify'
-import { Link } from "gatsby"
-import { AiOutlineSearch } from 'react-icons/ai'
-import { AiOutlineSetting } from 'react-icons/ai'
+import { Link as GatsbyLink } from "gatsby"
 
-const NavBarSection = styled.div`
+const Header = styled.header`
   box-sizing: border-box;
   margin: 0;
-  padding: 0;
-`;
-
-const NavBarHeader = styled.header`
-  ${NavBarSection};
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -23,19 +15,11 @@ const NavBarHeader = styled.header`
   background-color: #d6493f;
 `;
 
-const NavBarTitle = styled.h2`
-  ${NavBarHeader};
+const Title = styled.h2`
   margin-right: auto;
 `;
 
-const NavBarLinks = styled.ul`
-  ${NavBarHeader};
-  list-style: none;
-  display: flex;
-`;
-
-const NavBarLinksHref = styled(Link)`
-  ${NavBarHeader};
+const Link = styled(GatsbyLink)`
   font-weight: 500;
   font-size: 18px;
   color: white;
@@ -48,19 +32,28 @@ const NavBarLinksHref = styled(Link)`
   }
 `;
 
-const NavBarLinksList = styled.li`
-  ${NavBarHeader};
-  padding: 0 20px;
-`;
-
-const TitleHref = styled(Link)`
-  ${NavBarHeader};
+const TitleLink = styled(GatsbyLink)`
   margin-right: auto;
   text-decoration: none;
   color: white;
 `;
 
+const Container = styled.ul`
+  list-style: none;
+  display: flex;
+`;
 
+const Item = styled.li`
+  padding: 0 20px;
+`;
+
+const Toggle = ({ to, content }: any) => {
+    return (
+        <Item>
+            <Link to={ to } >{ content }</Link>
+        </Item>
+    )
+}
 
 const NavBar = () => {
     const [groups, setGroups] = useState<Array<string>>([])
@@ -73,37 +66,21 @@ const NavBar = () => {
     }, [])
 
     return (
-        <NavBarSection>
-            <NavBarHeader>
-                <NavBarTitle>
-                    <TitleHref to="/" >Amplify Video</TitleHref>
-                </NavBarTitle>
-                <NavBarLinks>
-                    <NavBarLinksList>
-                        <NavBarLinksHref to="/" >Home</NavBarLinksHref>
-                    </NavBarLinksList>
-                    <NavBarLinksList>
-                        <NavBarLinksHref to="/videos" >Videos</NavBarLinksHref>
-                    </NavBarLinksList>
-                    <NavBarLinksList>
-                        <NavBarLinksHref to="/live" >Live</NavBarLinksHref>
-                    </NavBarLinksList>
-                    <NavBarLinksList>
-                        <NavBarLinksHref to="/webinars" >Webinars</NavBarLinksHref>
-                    </NavBarLinksList>
-                    <NavBarLinksList>
-                        <NavBarLinksHref to="/search" ><AiOutlineSearch /></NavBarLinksHref>
-                    </NavBarLinksList>
-                    {groups.includes('Admin') && (
-                        <NavBarLinksList>
-                            <NavBarLinksHref to="/admin">
-                                <AiOutlineSetting />
-                            </NavBarLinksHref>
-                        </NavBarLinksList>
-                    )}
-                </NavBarLinks>
-            </NavBarHeader>
-        </NavBarSection>
+        <Header>
+            <Title>
+                <TitleLink to="/" >Amplify Video</TitleLink>
+            </Title>
+            <Container>
+                <Toggle to="/" content="Home" />
+                <Toggle to="/videos" content="Videos" />
+                <Toggle to="/live" content="Live" />
+                <Toggle to="/webinars" content="Webinars" />
+                <Toggle to="/search" content={<AiOutlineSearch />} />
+                {groups.includes('Admin') && (
+                    <Toggle to="/admin" content={<AiOutlineSetting />} />
+                )}
+            </Container>
+        </Header>
     )
 }
 
