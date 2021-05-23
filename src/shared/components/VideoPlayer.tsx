@@ -1,11 +1,17 @@
 import React from 'react'
 import 'video.js/dist/video-js.css'
-import './VideoPlayer.css'
 import videojs from 'video.js'
+
+import styled from 'styled-components'
 
 interface VideoPlayerPropsInferface extends videojs.PlayerOptions {
     token: string
 }
+
+const VideoPlayerWrapper = styled.div`
+  margin: auto;
+  width: 70%;
+`;
 
 export default class VideoPlayer extends React.Component<VideoPlayerPropsInferface> {
     private player?: videojs.Player
@@ -39,7 +45,7 @@ export default class VideoPlayer extends React.Component<VideoPlayerPropsInferfa
 
     render() {
         return (
-            <div className="video-player">
+            <VideoPlayerWrapper>
                 <div data-vjs-player>
                     <video
                         ref={(node: HTMLVideoElement) => {
@@ -48,7 +54,7 @@ export default class VideoPlayer extends React.Component<VideoPlayerPropsInferfa
                         className="vjs-fluid video-js vjs-default-skin vjs-big-play-centered"
                     />
                 </div>
-            </div>
+            </VideoPlayerWrapper>
         )
     }
 }
