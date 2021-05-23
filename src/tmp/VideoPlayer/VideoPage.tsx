@@ -1,32 +1,49 @@
 import React, { useEffect, useState } from 'react'
 import { fetchVodAsset } from '../../shared/utilities/vod-fetch'
-import { API } from 'aws-amplify'
-import { NavBar, VideoPlayer } from '../../shared/components'
+import { NavBar, VideoPlayer as VideoPlayerComponent } from '../../shared/components'
 import awsvideoconfig from '../../aws-video-exports'
-import './VideoPage.css'
-import { GraphQLResult } from '@aws-amplify/api-graphql'
+import styled from 'styled-components'
 
-const VideoCard = ({ asset }: any) => {
+const VideoPlayer = ({ video }: any) => {
     const videoJsOptions = {
         autoplay: false,
         controls: true,
         sources: [
             {
-                src: `https://${awsvideoconfig.awsOutputVideo}/${asset.video.id}/${asset.video.id}.m3u8`,
+                src: `https://${awsvideoconfig.awsOutputVideo}/${video.id}/${video.id}.m3u8`,
                 type: 'application/x-mpegURL',
             },
         ],
-        token: asset.video.token,
+        token: video.token,
     }
 
+    const Wrapper = styled.div`
+      background: black;
+    `;
+
     return (
-        <div className="video">
-            <div className="video-wrapper">
-                {<VideoPlayer {...videoJsOptions} />}
-            </div>
-            <h2>{asset.title}</h2>
+        <Wrapper>
+            {<VideoPlayerComponent {...videoJsOptions} />}
+        </Wrapper>
+    );
+}
+
+const VideoCard = ({ asset }: any) => {
+    const Card = styled.div`
+      padding: 10px;
+      box-sizing: border-box;
+    `;
+
+    const Title = styled.h2`
+      margin-bottom: 0;
+    `;
+
+    return (
+        <Card>
+            <VideoPlayer video={asset.video} />
+            <Title>{asset.title}</Title>
             <p>{asset.description}</p>
-        </div>
+        </Card>
     )
 }
 
@@ -56,16 +73,18 @@ const VideoPage = (props: any) => {
     [fetchVodAsset]
     )
 
+    const ShowVideoCard = () => {
+        if (asset != null) {
+            return <VideoCard asset={asset} />;
+        }
+        const videoState = !loaded ? "Loading ..." : "Video Not Found";
+        return <p>{ videoState }</p>;
+    }
+
     return (
         <div>
             <NavBar />
-            {asset !== null ? (
-                <VideoCard asset={asset} />
-            ) : !loaded ? (
-                <p>Loading ...</p>
-            ) : (
-                <p>Video Not Found</p>
-            )}
+            <ShowVideoCard />
         </div>
     )
 }
