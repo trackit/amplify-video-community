@@ -55,7 +55,7 @@ const VideoPage = (props: any) => {
     useEffect (() => {
         ;(async () => {
             try {
-                const data = await fetchVodAsset(id);
+                const data: any = await fetchVodAsset(id);
                 if (data.data.getVodAsset === null) {
                     console.log('object doesnt exist')
                 } else {
