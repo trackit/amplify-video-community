@@ -20,20 +20,20 @@ const Title = styled.h2`
 `;
 
 const Link = styled(GatsbyLink)`
-  color: var(--amplify-primary-contrast);
+  color: ${props => props.theme.primaryContrast};
   text-decoration: none;
   transition: all 0.3s ease 0s;
   
   &:hover{
     font-weight: bold;
-    font-size: var(--amplify-text-md);
+    font-size: ${props => props.theme.textMd};
   }
 `;
 
 const TitleLink = styled(GatsbyLink)`
   margin-right: auto;
   text-decoration: none;
-  color: var(--amplify-primary-contrast);
+  color: ${props => props.theme.primaryContrast};
 `;
 
 const Container = styled.ul`
@@ -45,10 +45,10 @@ const Item = styled.li`
   padding: 0 20px;
 `;
 
-const Toggle = ({ to, content }: any) => {
+const Toggle = ({ to, content, theme }: any) => {
     return (
         <Item>
-            <Link to={ to } >{ content }</Link>
+            <Link to={ to } theme={theme} >{ content }</Link>
         </Item>
     )
 }
@@ -66,16 +66,16 @@ const NavBar = ({ theme }: any) => {
     return (
         <Header theme={theme}>
             <Title>
-                <TitleLink to="/" >Amplify Video</TitleLink>
+                <TitleLink to="/" theme={theme} >Amplify Video</TitleLink>
             </Title>
             <Container>
-                <Toggle to="/" content="Home" />
-                <Toggle to="/videos" content="Videos" />
-                <Toggle to="/live" content="Live" />
-                <Toggle to="/webinars" content="Webinars" />
-                <Toggle to="/search" content={<AiOutlineSearch />} />
+                <Toggle to="/" content="Home" theme={theme} />
+                <Toggle to="/videos" content="Videos" theme={theme} />
+                <Toggle to="/live" content="Live" theme={theme} />
+                <Toggle to="/webinars" content="Webinars" theme={theme} />
+                <Toggle to="/search" content={<AiOutlineSearch />} theme={theme} />
                 {groups.includes('Admin') && (
-                    <Toggle to="/admin" content={<AiOutlineSetting />} />
+                    <Toggle to="/admin" content={<AiOutlineSetting />} theme={theme} />
                 )}
             </Container>
         </Header>
