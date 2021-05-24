@@ -83,7 +83,6 @@
 			"Type": "String"
 		}
 
-
 	},
 	"Conditions": {
 		"ShouldNotCreateEnvResources": {
@@ -162,7 +161,6 @@
 	"Resources": {
 		"S3Bucket": {
 			"Type": "AWS::S3::Bucket",
-
 			"DeletionPolicy" : "Retain",
 			"Properties": {
 				"BucketName": {
@@ -200,7 +198,6 @@
                         }
                     ]
                 },
-
 				"CorsConfiguration": {
 					"CorsRules": [
 						{
@@ -230,8 +227,6 @@
 				}
 			}
 		},
-
-
 		"S3AuthPublicPolicy": {
 			"DependsOn": [
 				"S3Bucket"
