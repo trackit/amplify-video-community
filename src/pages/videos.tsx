@@ -1,16 +1,11 @@
 import * as React from "react"
-import {withAuthenticator} from "@aws-amplify/ui-react";
-import Amplify from "aws-amplify";
-
 import Loader from 'react-loader-spinner'
 import { useEffect, useState } from 'react'
+
+import Layout from "../components/layout"
 import { fetchSections, fetchVodFiles, VodAsset } from '../shared/utilities'
 import { Slider, Item } from '../shared/components/VideoSlider'
-import { NavBar } from '../shared/components'
 import styled from 'styled-components'
-import awsmobile from "../aws-exports";
-Amplify.configure(awsmobile)
-
 
 function renderThumbnails(vodAssets: Array<VodAsset>) {
     if (vodAssets.length > 0)
@@ -105,8 +100,7 @@ const VodApp = () => {
     }, [nextTokenSections])
 
     return (
-        <div>
-            <NavBar />
+        <Layout>
             {/* TODO: Render each categories vertically */}
             {loadingVodFiles || loadingSections ? (
                 <Loader
@@ -147,8 +141,8 @@ const VodApp = () => {
                     })}
                 </SectionContainer>
             )}
-        </div>
+        </Layout>
     )
 }
 
-export default withAuthenticator(VodApp)
+export default VodApp
