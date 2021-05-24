@@ -12,7 +12,7 @@ const Header = styled.header`
   justify-content: flex-end;
   align-items: center;
   padding: 5px 10px;
-  background-color: ${props => props.theme.amplifyPrimaryColor};
+  background-color: ${props => props.theme.primaryColor};
 `;
 
 const Title = styled.h2`
