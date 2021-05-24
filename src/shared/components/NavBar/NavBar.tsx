@@ -12,7 +12,7 @@ const Header = styled.header`
   justify-content: flex-end;
   align-items: center;
   padding: 5px 10px;
-  background-color: var(--amplify-primary-color);
+  background-color: ${props => props.theme.amplifyPrimaryColor};
 `;
 
 const Title = styled.h2`
@@ -53,7 +53,7 @@ const Toggle = ({ to, content }: any) => {
     )
 }
 
-const NavBar = () => {
+const NavBar = ({ theme }: any) => {
     const [groups, setGroups] = useState<Array<string>>([])
 
     useEffect(() => {
@@ -64,7 +64,7 @@ const NavBar = () => {
     }, [])
 
     return (
-        <Header>
+        <Header theme={theme}>
             <Title>
                 <TitleLink to="/" >Amplify Video</TitleLink>
             </Title>
