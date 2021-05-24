@@ -23,4 +23,4 @@ amplify-build-config.json
 amplify-gradle-config.json
 amplifytools.xcconfig
 .secret-*
-*aws-video-exports.js
+amplify/team-provider-info.json
