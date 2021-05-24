@@ -12,7 +12,7 @@ const Header = styled.header`
   justify-content: flex-end;
   align-items: center;
   padding: 5px 10px;
-  background-color: #d6493f;
+  background-color: var(--amplify-primary-color);
 `;
 
 const Title = styled.h2`
@@ -20,22 +20,20 @@ const Title = styled.h2`
 `;
 
 const Link = styled(GatsbyLink)`
-  font-weight: 500;
-  font-size: 18px;
-  color: white;
+  color: var(--amplify-primary-contrast);
   text-decoration: none;
   transition: all 0.3s ease 0s;
   
   &:hover{
     font-weight: bold;
-    font-size: 20px;
+    font-size: var(--amplify-text-md);
   }
 `;
 
 const TitleLink = styled(GatsbyLink)`
   margin-right: auto;
   text-decoration: none;
-  color: white;
+  color: var(--amplify-primary-contrast);
 `;
 
 const Container = styled.ul`
