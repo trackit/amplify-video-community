@@ -1,14 +1,12 @@
 import * as React from "react"
-
 import Layout from "../components/layout"
 
-const HomePage = () => {
+const SearchPage = () => {
     return (
         <Layout>
+            <p>Coming Soon</p>
         </Layout>
     )
 }
 
-export default HomePage
-
-
+export default SearchPage
