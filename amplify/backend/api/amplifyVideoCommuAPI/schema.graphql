@@ -1,5 +1,3 @@
-
-
 type vodAsset @model (subscriptions: {level: public})
 @auth(
   rules: [
@@ -29,7 +27,7 @@ type videoObject @model
 )
 {
   id:ID!
-  token: String @function(name: "TrackitEduVOD-prod-tokenGen")
+  token: String @function(name: "amplifyVideoCommuVOD-dev-tokenGen")
 }
 
 type thumbnailObject @model
@@ -66,4 +64,3 @@ type VideoSection @model(queries: null)
   section: section! @connection(fields: ["sectionID"])
   video: vodAsset! @connection(fields: ["videoID"])
 }
-
