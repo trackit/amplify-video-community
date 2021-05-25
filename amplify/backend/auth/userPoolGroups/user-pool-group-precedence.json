@@ -4,7 +4,7 @@
         "precedence": 1,
         "customPolicies": [
             {
-                "PolicyName": "amplifyvideocommu7d78b102-admin-group-policy",
+                "PolicyName": "amplifyvideocommua9ca74e9-admin-group-policy",
                 "PolicyDocument": {
                     "Version": "2012-10-17",
                     "Statement": [
@@ -15,7 +15,7 @@
                                 "s3:PutObject",
                                 "s3:DeleteObject"
                             ],
-                            "Resource": "arn:aws:s3:::amplifyvideocommuvod-dev-input-14u5x8bl/*"
+                            "Resource": "arn:aws:s3:::amplifyvideocommuvod-dev-input-ms8pb7ye/*"
                         }
                     ]
                 }
