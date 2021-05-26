@@ -5,6 +5,10 @@ import { useEffect, useState } from 'react'
 import { fetchThumbnail } from '../../utilities'
 import { Link } from 'gatsby'
 import { vodAsset } from '../../../models'
+import {Link} from "gatsby";
+import awsvideoconfig from "../../../aws-video-exports";
+import { VideoPlayer as VideoPlayerComponent } from "../index";
+//import { useHistory } from 'react-router-dom'
 
 const StyledContent = styled.div`
     position: relative;
@@ -115,6 +119,18 @@ const Content = ({ movie, onClose }: ContentProps) => {
         })()
     }, [movie])
 
+    const videoJsOptions = {
+        autoplay: true,
+        controls: true,
+        sources: [
+            {
+                src: `https://${awsvideoconfig.awsOutputVideo}/${movie.video.id}/${movie.video.id}.m3u8`,
+                type: 'application/x-mpegURL',
+            },
+        ],
+        token: movie.video.token,
+    }
+
     return (
         <StyledContent>
             <div className="__background">
@@ -134,6 +150,7 @@ const Content = ({ movie, onClose }: ContentProps) => {
                     </Link>
                     <div className="__area__container__description">
                         {movie.description}
+                        {<VideoPlayerComponent {...videoJsOptions} />}
                     </div>
                 </div>
                 <button className="__area__close" onClick={onClose}>
