@@ -1,8 +1,8 @@
-import * as React from 'react'
+import React from 'react'
 import Loader from 'react-loader-spinner'
 import { useEffect, useState } from 'react'
 
-import Layout from '../components/layout'
+import { Layout } from '../shared/components'
 import { fetchSections, fetchVodFiles, VodAsset } from '../shared/utilities'
 import { Slider, Item } from '../shared/components/VideoSlider'
 import styled from 'styled-components'

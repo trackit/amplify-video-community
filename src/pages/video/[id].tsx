@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import Layout from '../../components/layout'
-
 import { fetchVodAsset } from '../../shared/utilities/vod-fetch'
-import { VideoPlayer as VideoPlayerComponent } from '../../shared/components'
+import { VideoPlayer as VideoPlayerComponent, Layout } from '../../shared/components'
 import awsvideoconfig from '../../aws-video-exports'
 
 const VideoPlayer = ({ video }: any) => {

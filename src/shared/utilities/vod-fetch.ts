@@ -32,4 +32,37 @@ async function fetchVodAsset(id: any) {
     ) as Promise<GraphQLResult>
 }
 
-export { fetchVodFiles, fetchHighlightedVideos, fetchVodAsset }
+export const listVodSections = /* GraphQL */ `
+  query GetVodAsset($id: ID!) {
+    getVodAsset(id: $id) {
+      id
+      title
+      description
+      highlighted
+      sections {
+        items {
+          id
+          section {
+            id
+            label
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+async function fetchVodSections(id: any) {
+    return API.graphql(
+        graphqlOperation(listVodSections, { id: id })
+    ) as Promise<GraphQLResult>
+}
+
+export { fetchVodFiles, fetchHighlightedVideos, fetchVodAsset, fetchVodSections }

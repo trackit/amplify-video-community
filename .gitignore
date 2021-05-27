@@ -3,9 +3,11 @@ node_modules/
 public
 .idea
 yarn.lock
+.DS_Store
 
 #amplify
 amplify/\#current-cloud-backend
+amplify/team-provider-info.json
 amplify/.config/local-*
 amplify/logs
 amplify/mock-data
@@ -23,4 +25,3 @@ amplify-build-config.json
 amplify-gradle-config.json
 amplifytools.xcconfig
 .secret-*
-amplify/team-provider-info.json

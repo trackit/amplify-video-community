@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { IoClose } from 'react-icons/io5'
 import styled from 'styled-components'
 import { useEffect, useState } from 'react'

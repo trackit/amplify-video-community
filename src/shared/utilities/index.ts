@@ -1,6 +1,6 @@
 import { VodAsset, ListVodAssets } from './vod.interface'
 import { fetchSections, fetchThumbnail } from './fetch'
-import { fetchVodFiles, fetchHighlightedVideos } from './vod-fetch'
+import { fetchVodFiles, fetchHighlightedVideos, fetchVodSections } from './vod-fetch'
 import { uploadVideo } from './vod-mutate'
 
 export {
@@ -9,5 +9,6 @@ export {
     fetchSections,
     uploadVideo,
     fetchThumbnail,
+    fetchVodSections
 }
 export type { VodAsset, ListVodAssets }

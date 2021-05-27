@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import Amplify from 'aws-amplify'
-
-import awsmobile from '../../aws-exports'
-import { section } from '../../API'
-import { fetchSections, uploadVideo } from '../../shared/utilities'
-
-Amplify.configure(awsmobile)
+import { section } from '../../../API'
+import { fetchSections, uploadVideo } from '../../../shared/utilities'
+import { AdminLayout } from '../../../shared/components'
 
 type DropZoneProps = {
     setVodFile: any
@@ -215,11 +211,11 @@ const DashboardVideoAdd = () => {
     const [vodFile, setVodFile] = useState<File | null>(null)
 
     return (
-        <div>
+        <AdminLayout>
             <h1>Video Add</h1>
             {!vodFile && <DropZone setVodFile={setVodFile} />}
             {vodFile && <VideoAddForm vodFile={vodFile} />}
-        </div>
+        </AdminLayout>
     )
 }
 

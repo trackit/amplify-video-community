@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import Amplify from 'aws-amplify'
-
-import awsmobile from '../../aws-exports'
-import AssetsManagementList from '../../shared/components/AssetsManagementList/AssetsManagementList'
-import { fetchVodFiles } from '../../shared/utilities'
+import AssetsManagementList from '../../../shared/components/AssetsManagementList/AssetsManagementList'
+import { fetchVodFiles } from '../../../shared/utilities'
 import Loader from 'react-loader-spinner'
-
-Amplify.configure(awsmobile)
+import { AdminLayout } from '../../../shared/components'
 
 const DashboardVideoManage = () => {
     const [vodAssets, setVodAssets] = useState<any>([])
@@ -14,7 +10,7 @@ const DashboardVideoManage = () => {
     const [loading, setLoading] = useState<boolean>(false)
 
     useEffect(() => {
-        ;(async () => {
+        ; (async () => {
             setLoading(true)
             try {
                 const { data } = await fetchVodFiles(nextToken)
@@ -32,7 +28,7 @@ const DashboardVideoManage = () => {
     }, [nextToken])
 
     return (
-        <div style={{ width: '100%' }}>
+        <AdminLayout>
             {loading ? (
                 <Loader
                     type="Bars"
@@ -44,7 +40,7 @@ const DashboardVideoManage = () => {
             ) : (
                 <AssetsManagementList assets={vodAssets} />
             )}
-        </div>
+        </AdminLayout>
     )
 }
 
