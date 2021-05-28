@@ -12,7 +12,7 @@ import { VideoPlayer as VideoPlayerComponent } from "../index";
 
 const StyledContent = styled.div`
     position: relative;
-    height: 37vw;
+    height: 38vw;
     margin-top: -40px;
 
     .__background,
@@ -52,13 +52,14 @@ const StyledContent = styled.div`
         z-index: 3;
 
         &__container {
-            padding: 30px 70px;
+            padding: 30px 40px;
             color: wheat;
             width: 100%;
+            display: flex;
+            flex-direction: row;
 
             &__content {
-              width: 35%;
-              display: inline-block;
+              flex: 35%;
 
               &__title {
                 font-size: var(--amplify-text-lg);
@@ -80,11 +81,23 @@ const StyledContent = styled.div`
             }
 
             &__image {
+              flex: 60%;
               vertical-align: top;
               margin-right: 0;
-              width: 60%;
-              display: inline-block;
             }
+        }
+
+        @media (max-width: 1000px) {
+          &__container {
+            flex-direction: column;
+            padding: 30px 5px 0px 5px;
+          }
+          &__container__image {
+            display: none;
+          }
+          &__container__content {
+            flex: 100%;
+          }
         }
 
         &__close {
