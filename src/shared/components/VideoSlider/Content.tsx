@@ -76,11 +76,23 @@ const StyledContent = styled.div`
                 cursor: pointer;
             }
 
-            &__description {
+            &__content {
+              width: 100%;
+              padding-top: 20px;
+
+              &__description {
                 font-size: 18px;
                 color: #999;
-                margin-top: 20px;
-                max-width: 500px;
+                width: 30%;
+                display: inline-block;
+              }
+
+              &__image {
+                vertical-align: top;
+                margin-right: 0;
+                width: 70%;
+                display: inline-block;
+              }
             }
         }
 
@@ -148,9 +160,13 @@ const Content = ({ movie, onClose }: ContentProps) => {
                     >
                         {movie.title}
                     </Link>
-                    <div className="__area__container__description">
-                        {movie.description}
-                        {<VideoPlayerComponent {...videoJsOptions} />}
+                    <div className="__area__container__content">
+                        <div className="__area__container__content__description">
+                            {movie.description}
+                        </div>
+                        <div className="__area__container__content__image">
+                            {<VideoPlayerComponent {...videoJsOptions} />}
+                        </div>
                     </div>
                 </div>
                 <button className="__area__close" onClick={onClose}>
