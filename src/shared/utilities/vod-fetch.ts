@@ -1,6 +1,6 @@
 import { API, graphqlOperation } from 'aws-amplify'
 import { GraphQLResult } from '@aws-amplify/api-graphql'
-import {getVodAsset, listVodAssets} from '../../graphql/queries'
+import { getVodAsset, listVodAssets } from '../../graphql/queries'
 import { ModelvodAssetFilterInput } from '../../API'
 import { ListVodAssets } from './vod.interface'
 

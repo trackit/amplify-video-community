@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-//import { useHistory } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
 import { Storage } from 'aws-amplify'
 import Loader from 'react-loader-spinner'
 import styled from 'styled-components'
@@ -32,7 +31,7 @@ async function fetchThumbnail(asset: any) {
 }
 
 const ThumbnailVideo = ({ asset, className }: any) => {
-    const [thumbnailUrl, setThumbnailUrl] = useState<Object | string>('')
+    const [thumbnailUrl, setThumbnailUrl] = useState<any>('')
     //const history = useHistory()
 
     useEffect(() => {
@@ -46,7 +45,12 @@ const ThumbnailVideo = ({ asset, className }: any) => {
 
     return (
         <Item
-            onClick={() => console.log("Go to history") /*history.push(`/video/${asset.id}`)*/}
+            onClick={
+                () =>
+                    console.log(
+                        'Go to history'
+                    ) /*history.push(`/video/${asset.id}`)*/
+            }
             className={className ? className : ''}
         >
             {asset.title}

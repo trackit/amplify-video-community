@@ -1,3 +1,4 @@
+import React from 'react'
 import { ThumbnailVideo } from '../index'
 
 const HighlightedVideo = ({ asset }: any) => {

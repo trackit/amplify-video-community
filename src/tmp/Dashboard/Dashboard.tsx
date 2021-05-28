@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import { Auth } from 'aws-amplify'
-import { Match } from "@reach/router"
+import { Match } from '@reach/router'
 import { NavBar } from '../../shared/components'
 import VideoAdd from './VideoAdd'
 import VideoManage from './VideoManage'
@@ -10,7 +10,7 @@ import LivestreamManage from './LivestreamManage'
 import WebinarAdd from './WebinarAdd'
 import WebinarManage from './WebinarManage'
 import { withAuthenticator } from '@aws-amplify/ui-react'
-import {Link} from "gatsby";
+import { Link } from 'gatsby'
 
 type LeftPanelProps = {
     currentPage: string
@@ -22,42 +22,31 @@ const LeftPanel = ({ currentPage, setCurrentPage }: LeftPanelProps) => {
         <div>
             <h2>Video</h2>
             <div>
-                <Link to="/video/add">
-                    Add new video
-                </Link>
+                <Link to="/video/add">Add new video</Link>
             </div>
             <div>
-                <Link to="/video/manage" >
-                    Manage videos
-                </Link>
+                <Link to="/video/manage">Manage videos</Link>
             </div>
             <h2>Livestream</h2>
             <div>
-                <Link to="/livestream/add" >
-                    Add new livestream
-                </Link>
+                <Link to="/livestream/add">Add new livestream</Link>
             </div>
             <div>
-                <Link to="/livestream/manage" >
-                    Manage livestreams
-                </Link>
+                <Link to="/livestream/manage">Manage livestreams</Link>
             </div>
             <h2>Webinars</h2>
             <div>
-                <Link to="/webinar/add" >
-                    Add new webinar
-                </Link>
+                <Link to="/webinar/add">Add new webinar</Link>
             </div>
             <div>
-                <Link to="/webinar/manage" >
-                    Manage webinars
-                </Link>
+                <Link to="/webinar/manage">Manage webinars</Link>
             </div>
         </div>
     )
 }
 
-const RightPanel = () => {/*
+const RightPanel = () => {
+    /*
     return (
         <div style={{ width: '100%', padding: '15px' }}>
             <Switch>
@@ -82,7 +71,7 @@ const RightPanel = () => {/*
             </Switch>
         </div>
     )*/
-    return (<div>not imp</div>)
+    return <div>not imp</div>
 }
 
 const Dashboard = () => {

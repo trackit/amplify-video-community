@@ -1,9 +1,9 @@
-import * as React from "react"
+import * as React from 'react'
 import { IoClose } from 'react-icons/io5'
 import styled from 'styled-components'
 import { useEffect, useState } from 'react'
 import { fetchThumbnail } from '../../utilities'
-import {Link} from "gatsby";
+import { Link } from 'gatsby'
 //import { useHistory } from 'react-router-dom'
 
 const StyledContent = styled.div`
@@ -99,9 +99,9 @@ const StyledContent = styled.div`
 `
 
 const Content = ({ movie, onClose }: any) => {
-    const [thumbnailUrl, setThumbnailUrl] = useState<Object | string>('')
+    const [thumbnailUrl, setThumbnailUrl] = useState<any>('')
     // const [loading, setLoading] = useState(false)
-    const history = [];//useHistory()
+    const history = [] //useHistory()
 
     useEffect(() => {
         ;(async () => {

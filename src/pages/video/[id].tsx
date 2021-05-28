@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import Layout from "../../components/layout"
+import Layout from '../../components/layout'
 
 import { fetchVodAsset } from '../../shared/utilities/vod-fetch'
 import { VideoPlayer as VideoPlayerComponent } from '../../shared/components'
@@ -21,25 +21,21 @@ const VideoPlayer = ({ video }: any) => {
     }
 
     const Wrapper = styled.div`
-      background: black;
-    `;
+        background: black;
+    `
 
-    return (
-        <Wrapper>
-            {<VideoPlayerComponent {...videoJsOptions} />}
-        </Wrapper>
-    );
+    return <Wrapper>{<VideoPlayerComponent {...videoJsOptions} />}</Wrapper>
 }
 
 const VideoCard = ({ asset }: any) => {
     const Card = styled.div`
-      padding: 10px;
-      box-sizing: border-box;
-    `;
+        padding: 10px;
+        box-sizing: border-box;
+    `
 
     const Title = styled.h2`
-      margin-bottom: 0;
-    `;
+        margin-bottom: 0;
+    `
 
     return (
         <Card>
@@ -51,37 +47,34 @@ const VideoCard = ({ asset }: any) => {
 }
 
 const VideoPage = (props: any) => {
-    const id: any = props.params.id;
+    const id: any = props.params.id
     const [asset, setAsset] = useState(null)
     const [loaded, setLoaded] = useState(false)
 
-    useEffect (() => {
-            ;(async () => {
-                try {
-                    const data: any = await fetchVodAsset(id);
-                    if (data.data.getVodAsset === null) {
-                        console.log('object doesnt exist')
-                    } else {
-                        setAsset(data.data.getVodAsset)
-                        console.log(data)
-                    }
-                    setLoaded(true)
+    useEffect(() => {
+        ;(async () => {
+            try {
+                const data: any = await fetchVodAsset(id)
+                if (data.data.getVodAsset === null) {
+                    console.log('object doesnt exist')
+                } else {
+                    setAsset(data.data.getVodAsset)
+                    console.log(data)
                 }
-                catch (error){
-                    console.log(error)
-                    setLoaded(false)
-                }
-            })()
-        },
-        [fetchVodAsset]
-    )
+                setLoaded(true)
+            } catch (error) {
+                console.log(error)
+                setLoaded(false)
+            }
+        })()
+    }, [fetchVodAsset])
 
     const ShowVideoCard = () => {
         if (asset != null) {
-            return <VideoCard asset={asset} />;
+            return <VideoCard asset={asset} />
         }
-        const videoState = !loaded ? "Loading ..." : "Video Not Found";
-        return <p>{ videoState }</p>;
+        const videoState = !loaded ? 'Loading ...' : 'Video Not Found'
+        return <p>{videoState}</p>
     }
 
     return (

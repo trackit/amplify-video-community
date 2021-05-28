@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from 'react'
 import { useEffect, useState } from 'react'
 import Loader from 'react-loader-spinner'
 import SliderContext from './Context'
@@ -25,7 +25,7 @@ export const StyledItem = styled.div`
 `
 
 const Item = ({ movie }: any) => {
-    const [thumbnailUrl, setThumbnailUrl] = useState<Object | string>('')
+    const [thumbnailUrl, setThumbnailUrl] = useState<any>('')
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {

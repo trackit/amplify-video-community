@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 import { NavBar, theme } from '../shared/components'
 
 import { withAuthenticator } from '@aws-amplify/ui-react'
@@ -16,4 +16,4 @@ const Layout = ({ children }: any) => {
     )
 }
 
-export default withAuthenticator(Layout);
+export default withAuthenticator(Layout)

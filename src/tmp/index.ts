@@ -1,6 +1,3 @@
 import Dashboard from './Dashboard/Dashboard'
 
-export {
-    Dashboard
-}
-
+export { Dashboard }

@@ -9,9 +9,9 @@ interface VideoPlayerPropsInferface extends videojs.PlayerOptions {
 }
 
 const VideoPlayerWrapper = styled.div`
-  margin: auto;
-  width: 70%;
-`;
+    margin: auto;
+    width: 70%;
+`
 
 export default class VideoPlayer extends React.Component<VideoPlayerPropsInferface> {
     private player?: videojs.Player
@@ -26,6 +26,7 @@ export default class VideoPlayer extends React.Component<VideoPlayerPropsInferfa
     }
 
     componentDidMount() {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         videojs.Vhs.xhr.beforeRequest = (options: any) => {
             options.uri = `${options.uri}${this.options?.token}`

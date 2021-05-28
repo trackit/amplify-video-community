@@ -1,0 +1,5 @@
+node_modules
+amplify
+tests
+aws-video-exports.js
+aws-exports.js
