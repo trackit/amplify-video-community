@@ -65,34 +65,34 @@ const StyledContent = styled.div`
         &__container {
             padding: 30px 70px;
             color: wheat;
+            width: 100%;
 
-            &__title {
+            &__content {
+              width: 40%;
+              display: inline-block;
+
+              &__title {
                 font-size: 45px;
                 color: #fff;
                 font-weight: 700;
-            }
+              }
 
-            &__title:hover {
+              &__title:hover {
                 cursor: pointer;
-            }
-
-            &__content {
-              width: 100%;
-              padding-top: 20px;
+              }
 
               &__description {
+                padding-top: 20px;
                 font-size: 18px;
                 color: #999;
-                width: 30%;
-                display: inline-block;
               }
+            }
 
-              &__image {
-                vertical-align: top;
-                margin-right: 0;
-                width: 70%;
-                display: inline-block;
-              }
+            &__image {
+              vertical-align: top;
+              margin-right: 0;
+              width: 60%;
+              display: inline-block;
             }
         }
 
@@ -154,19 +154,19 @@ const Content = ({ movie, onClose }: ContentProps) => {
             </div>
             <div className="__area">
                 <div className="__area__container">
-                    <Link
-                        to={`/video/${movie.id}`}
-                        className="__area__container__title"
-                    >
-                        {movie.title}
-                    </Link>
                     <div className="__area__container__content">
+                        <Link
+                            to={`/video/${movie.id}`}
+                            className="__area__container__content__title"
+                        >
+                            {movie.title}
+                        </Link>
                         <div className="__area__container__content__description">
                             {movie.description}
                         </div>
-                        <div className="__area__container__content__image">
-                            {<VideoPlayerComponent {...videoJsOptions} />}
-                        </div>
+                    </div>
+                    <div className="__area__container__image">
+                        {<VideoPlayerComponent {...videoJsOptions} />}
                     </div>
                 </div>
                 <button className="__area__close" onClick={onClose}>
