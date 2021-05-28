@@ -30,20 +30,9 @@ const StyledContent = styled.div`
 
         &__shadow {
             left: 0;
-            background: #000;
-            width: 30%;
+            background: var(--amplify-secondary-color);
+            width: 100%;
             z-index: 2;
-
-            &:before {
-                content: '';
-                position: absolute;
-                z-index: 10;
-                background-image: linear-gradient(to right, #000, transparent);
-                top: 0;
-                bottom: 0;
-                left: 100%;
-                width: 275px;
-            }
         }
 
         &__image {
@@ -68,12 +57,12 @@ const StyledContent = styled.div`
             width: 100%;
 
             &__content {
-              width: 40%;
+              width: 35%;
               display: inline-block;
 
               &__title {
-                font-size: 45px;
-                color: #fff;
+                font-size: var(--amplify-text-lg);
+                color: var(--amplify-secondary-contrast);
                 font-weight: 700;
               }
 
@@ -83,8 +72,10 @@ const StyledContent = styled.div`
 
               &__description {
                 padding-top: 20px;
-                font-size: 18px;
-                color: #999;
+                padding-right: 20px;
+                font-size: var(--amplify-text-sm);
+                color: var(--amplify-secondary-contrast);
+                text-align: justify;
               }
             }
 
