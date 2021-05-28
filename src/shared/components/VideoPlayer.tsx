@@ -4,12 +4,16 @@ import videojs from 'video.js'
 
 import styled from 'styled-components'
 
+interface VideoPlayerPropsInferface extends videojs.PlayerOptions {
+    width: string
+}
+
 const VideoPlayerWrapper = styled.div`
     margin: auto;
-    width: 70%;
-`
+    width: ${(props) => props.width};
+`;
 
-export default class VideoPlayer extends React.Component<videojs.PlayerOptions> {
+export default class VideoPlayer extends React.Component<VideoPlayerPropsInferface> {
     private player?: videojs.Player
     private videoNode?: HTMLVideoElement
     private options?: videojs.PlayerOptions
@@ -35,7 +39,7 @@ export default class VideoPlayer extends React.Component<videojs.PlayerOptions> 
 
     render() {
         return (
-            <VideoPlayerWrapper>
+            <VideoPlayerWrapper width={this.options?.width || "70%"}>
                 <div data-vjs-player>
                     <video
                         ref={(node: HTMLVideoElement) => {

@@ -132,6 +132,7 @@ const Content = ({ movie, onClose }: ContentProps) => {
             },
         ],
         token: movie.video.token,
+        width: "100%"
     }
 
     return (
