@@ -5,24 +5,23 @@ import videojs from 'video.js'
 import styled from 'styled-components'
 
 interface VideoPlayerPropsInferface extends videojs.PlayerOptions {
-    width?: string
+    width?: string,
+    sources: Array<object>
 }
 
 const VideoPlayerWrapper = styled.div`
-    margin: auto;
-    width: ${(props) => props.width};
+  margin: auto;
+  width: ${(props: { width: string; }) => props.width};
 `;
 
 export default class VideoPlayer extends React.Component<VideoPlayerPropsInferface> {
     private playerWidth: string
     private player?: videojs.Player
     private videoNode?: HTMLVideoElement
-    private options?: VideoPlayerPropsInferface
 
     constructor(props: VideoPlayerPropsInferface) {
         super(props)
         this.playerWidth = props?.width || "70%"
-        this.options = props
         this.player = undefined
         this.videoNode = undefined
     }
@@ -39,7 +38,7 @@ export default class VideoPlayer extends React.Component<VideoPlayerPropsInferfa
     }
 
     componentDidMount() {
-        this.player = videojs(this.videoNode, this.options).ready(function () {
+        this.player = videojs(this.videoNode, this.props).ready(function () {
             console.log('onPlayerReady', this)
         })
     }
