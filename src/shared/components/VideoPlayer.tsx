@@ -39,6 +39,7 @@ export default class VideoPlayer extends React.Component<VideoPlayerPropsInferfa
 
     componentDidMount() {
         this.player = videojs(this.videoNode, this.props).ready(function () {
+            // @ts-ignore
             console.log('onPlayerReady', this)
         })
     }
