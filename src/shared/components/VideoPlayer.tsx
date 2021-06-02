@@ -5,13 +5,13 @@ import videojs from 'video.js'
 import styled from 'styled-components'
 
 interface VideoPlayerPropsInferface extends videojs.PlayerOptions {
-    width?: string,
-    sources: Array<object>
+    width?: string
+    sources: Array<{ src: string; type: string }>
 }
 
 const VideoPlayerWrapper = styled.div`
-  margin: auto;
-  width: ${(props: { width: string; }) => props.width};
+    margin: auto;
+    width: ${(props: { width: string; }) => props.width};
 `;
 
 export default class VideoPlayer extends React.Component<VideoPlayerPropsInferface> {
@@ -36,9 +36,9 @@ export default class VideoPlayer extends React.Component<VideoPlayerPropsInferfa
     componentDidUpdate(
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         prevProps: Readonly<VideoPlayerPropsInferface>,
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
         prevState: Readonly<any>,
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
         snapshot?: any
     ) {
         this.changeVideo()
