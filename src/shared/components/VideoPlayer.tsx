@@ -21,7 +21,7 @@ export default class VideoPlayer extends React.Component<VideoPlayerPropsInferfa
 
     constructor(props: VideoPlayerPropsInferface) {
         super(props)
-        this.playerWidth = props?.width || "70%"
+        this.playerWidth = props?.width || '70%'
         this.player = undefined
         this.videoNode = undefined
     }
@@ -33,13 +33,19 @@ export default class VideoPlayer extends React.Component<VideoPlayerPropsInferfa
         videoComponent.src(newVideo)
     }
 
-    componentDidUpdate(prevProps: Readonly<VideoPlayerPropsInferface>, prevState: Readonly<{}>, snapshot?: any) {
+    componentDidUpdate(
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        prevProps: Readonly<VideoPlayerPropsInferface>,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        prevState: Readonly<any>,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        snapshot?: any
+    ) {
         this.changeVideo()
     }
 
     componentDidMount() {
         this.player = videojs(this.videoNode, this.props).ready(function () {
-            // @ts-ignore
             console.log('onPlayerReady', this)
         })
     }

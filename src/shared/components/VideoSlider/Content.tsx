@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react'
 import { fetchThumbnail } from '../../utilities'
 import { Link } from 'gatsby'
 import { vodAsset } from '../../../models'
-import {Link} from "gatsby";
-import awsvideoconfig from "../../../aws-video-exports";
-import { VideoPlayer as VideoPlayerComponent } from "../index";
+import { Link } from 'gatsby'
+import awsvideoconfig from '../../../aws-video-exports'
+import { VideoPlayer as VideoPlayerComponent } from '../index'
 //import { useHistory } from 'react-router-dom'
 
 const StyledContent = styled.div`
@@ -59,45 +59,45 @@ const StyledContent = styled.div`
             flex-direction: row;
 
             &__content {
-              flex: 35%;
+                flex: 35%;
 
-              &__title {
-                font-size: var(--amplify-text-lg);
-                color: var(--amplify-secondary-contrast);
-                font-weight: 700;
-              }
+                &__title {
+                    font-size: var(--amplify-text-lg);
+                    color: var(--amplify-secondary-contrast);
+                    font-weight: 700;
+                }
 
-              &__title:hover {
-                cursor: pointer;
-              }
+                &__title:hover {
+                    cursor: pointer;
+                }
 
-              &__description {
-                padding-top: 20px;
-                padding-right: 20px;
-                font-size: var(--amplify-text-sm);
-                color: var(--amplify-secondary-contrast);
-                text-align: justify;
-              }
+                &__description {
+                    padding-top: 20px;
+                    padding-right: 20px;
+                    font-size: var(--amplify-text-sm);
+                    color: var(--amplify-secondary-contrast);
+                    text-align: justify;
+                }
             }
 
             &__image {
-              flex: 60%;
-              vertical-align: top;
-              margin-right: 0;
+                flex: 60%;
+                vertical-align: top;
+                margin-right: 0;
             }
         }
 
         @media (max-width: 1000px) {
-          &__container {
-            flex-direction: column;
-            padding: 30px 5px 0px 5px;
-          }
-          &__container__image {
-            display: none;
-          }
-          &__container__content {
-            flex: 100%;
-          }
+            &__container {
+                flex-direction: column;
+                padding: 30px 5px 0px 5px;
+            }
+            &__container__image {
+                display: none;
+            }
+            &__container__content {
+                flex: 100%;
+            }
         }
 
         &__close {
@@ -145,7 +145,7 @@ const Content = ({ movie, onClose }: ContentProps) => {
             },
         ],
         token: movie.video.token,
-        width: "100%"
+        width: '100%',
     }
 
     return (
