@@ -27,6 +27,17 @@ export default class VideoPlayer extends React.Component<VideoPlayerPropsInferfa
         this.videoNode = undefined
     }
 
+    changeVideo() {
+        const newVideo = this.props.sources
+        const videoComponent = videojs(this.videoNode)
+
+        videoComponent.src(newVideo)
+    }
+
+    componentDidUpdate(prevProps: Readonly<VideoPlayerPropsInferface>, prevState: Readonly<{}>, snapshot?: any) {
+        this.changeVideo()
+    }
+
     componentDidMount() {
         this.player = videojs(this.videoNode, this.options).ready(function () {
             console.log('onPlayerReady', this)
