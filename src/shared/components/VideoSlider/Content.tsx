@@ -1,8 +1,6 @@
 import React from 'react'
 import { IoClose } from 'react-icons/io5'
 import styled from 'styled-components'
-import { useEffect, useState } from 'react'
-import { fetchThumbnail } from '../../utilities'
 import { Link } from 'gatsby'
 import { vodAsset } from '../../../models'
 import awsvideoconfig from '../../../aws-video-exports'
@@ -23,18 +21,15 @@ const Background = styled.div`
     bottom: 0;
 `
 
-const Area = styled.div`
+const Container = styled.div`
     left: 0;
     right: 0;
-    height: 100%;
-    z-index: 3;
-
-    position: absolute;
     top: 0;
     bottom: 0;
-`
+    position: absolute;
 
-const Container = styled.div`
+    height: 100%;
+    z-index: 3;
     padding: 45px 40px;
     color: wheat;
     display: flex;
@@ -58,7 +53,7 @@ const CloseButton = styled.button`
     right: 5px;
 `
 
-const ContentBox = styled.div`
+const PresentationContainer = styled.div`
     flex: 35%;
 
     @media (max-width: 1000px) {
@@ -84,7 +79,7 @@ const Description = styled.div`
     text-align: justify;
 `
 
-const ContentImage = styled.div`
+const PlayerContainer = styled.div`
     flex: 60%;
     vertical-align: top;
     margin-right: 0;
@@ -100,17 +95,6 @@ type ContentProps = {
 }
 
 const Content = ({ movie, onClose }: ContentProps) => {
-    const [thumbnailUrl, setThumbnailUrl] = useState<string>('')
-
-    useEffect(() => {
-        ;(async () => {
-            if (movie.thumbnail) {
-                const data = await fetchThumbnail(movie)
-                setThumbnailUrl(data as string)
-            }
-        })()
-    }, [movie])
-
     const videoJsOptions = {
         autoplay: true,
         controls: true,
@@ -127,20 +111,18 @@ const Content = ({ movie, onClose }: ContentProps) => {
     return (
         <StyledContent>
             <Background />
-            <Area>
-                <Container>
-                    <ContentBox>
-                        <Title to={`/video/${movie.id}`}>{movie.title}</Title>
-                        <Description>{movie.description}</Description>
-                    </ContentBox>
-                    <ContentImage>
-                        {<VideoPlayerComponent {...videoJsOptions} />}
-                    </ContentImage>
-                </Container>
-                <CloseButton onClick={onClose}>
-                    <IoClose />
-                </CloseButton>
-            </Area>
+            <Container>
+                <PresentationContainer>
+                    <Title to={`/video/${movie.id}`}>{movie.title}</Title>
+                    <Description>{movie.description}</Description>
+                </PresentationContainer>
+                <PlayerContainer>
+                    {<VideoPlayerComponent {...videoJsOptions} />}
+                </PlayerContainer>
+            </Container>
+            <CloseButton onClick={onClose}>
+                <IoClose />
+            </CloseButton>
         </StyledContent>
     )
 }
