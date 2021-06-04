@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Link } from 'gatsby'
 import { vodAsset } from '../../../models'
 import awsvideoconfig from '../../../aws-video-exports'
-import { VideoPlayer as VideoPlayerComponent } from '../index'
+import { VideoPlayer as VideoPlayerComponent, theme } from '../index'
 
 const StyledContent = styled.div`
     position: relative;
@@ -13,7 +13,7 @@ const StyledContent = styled.div`
 `
 
 const Background = styled.div`
-    background: var(--amplify-secondary-color);
+    background: ${(props) => props.theme.secondaryColor};
     width: 100%;
     position: absolute;
     z-index: 2;
@@ -62,8 +62,8 @@ const PresentationContainer = styled.div`
 `
 
 const Title = styled(Link)`
-    font-size: var(--amplify-text-lg);
-    color: var(--amplify-secondary-contrast);
+    font-size: ${(props) => props.theme.textLg};
+    color: ${(props) => props.theme.secondaryContrast};
     font-weight: 700;
 
     &hover {
@@ -74,8 +74,8 @@ const Title = styled(Link)`
 const Description = styled.div`
     padding-top: 20px;
     padding-right: 20px;
-    font-size: var(--amplify-text-sm);
-    color: var(--amplify-secondary-contrast);
+    font-size: ${(props) => props.theme.textSm};
+    color: ${(props) => props.theme.secondaryContrast};
     text-align: justify;
 `
 
@@ -110,11 +110,13 @@ const Content = ({ movie, onClose }: ContentProps) => {
 
     return (
         <StyledContent>
-            <Background />
+            <Background theme={theme} />
             <Container>
                 <PresentationContainer>
-                    <Title to={`/video/${movie.id}`}>{movie.title}</Title>
-                    <Description>{movie.description}</Description>
+                    <Title to={`/video/${movie.id}`} theme={theme}>
+                        {movie.title}
+                    </Title>
+                    <Description theme={theme}>{movie.description}</Description>
                 </PresentationContainer>
                 <PlayerContainer>
                     {<VideoPlayerComponent {...videoJsOptions} />}
