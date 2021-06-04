@@ -51,6 +51,7 @@ const CloseButton = styled.button`
     position: absolute;
     top: 0;
     right: 5px;
+    z-index: 4;
 `
 
 const PresentationContainer = styled.div`
