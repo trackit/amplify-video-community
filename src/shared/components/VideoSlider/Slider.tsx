@@ -14,14 +14,6 @@ const StyledSlider = styled.div`
     display: flex;
     position: relative;
 
-    .__container {
-        display: flex;
-        padding: 0 55px;
-        transition: transform 300ms ease 100ms;
-        z-index: 3;
-        width: 100%;
-    }
-
     &:not(&.--open) ${StyledItem}:hover ${StyledShowDetailsButton} {
         opacity: 1;
     }
@@ -39,6 +31,16 @@ const StyledSlider = styled.div`
     }
 `
 
+const Container = styled.div`
+    display: flex;
+    padding: 0 55px;
+    transition: transform 300ms ease 100ms;
+    z-index: 3;
+    width: 100%;
+`
+
+const Slider = ({ children, activeSlide }: any) => {
+    const [currentSlide, setCurrentSlide] = useState(activeSlide)
 type SliderProps = {
     children: React.ReactNode
 }
@@ -74,13 +76,9 @@ const Slider = ({ children }: SliderProps) => {
         <SliderContext.Provider value={contextValue}>
             <SliderWrapper>
                 <StyledSlider className={currentSlide != null ? '--open' : ''}>
-                    <div
-                        ref={containerRef}
-                        className="__container"
-                        {...slideProps}
-                    >
+                    <Container ref={containerRef} {...slideProps}>
                         {children}
-                    </div>
+                    </Container>
                 </StyledSlider>
                 {hasPrev && <SlideButton onClick={handlePrev} type="prev" />}
                 {hasNext && <SlideButton onClick={handleNext} type="next" />}
