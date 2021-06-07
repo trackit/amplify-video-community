@@ -1,38 +1,38 @@
 import React, { useEffect, useState } from 'react'
 import { Auth } from 'aws-amplify'
 import Layout from './Layout'
-import { Link } from "gatsby";
+import { Link } from 'gatsby'
 import styled from 'styled-components'
 
-type LeftPanelProps = {
-    currentPage: string
-    setCurrentPage: any
-}
-
 const LeftPanelStyled = styled.div`
-height: 100%;
-flex-direction: row;
-width: 20%
+    height: 100%;
+    flex-direction: row;
+    width: 20%;
 `
 
 const RightPanelStyled = styled.div`
-width: 100%;
+    width: 100%;
 `
 
 const AdminLayoutStyled = styled.div`
-display: flex;
-width: 100%;
+    display: flex;
+    width: 100%;
 `
 
 const LeftPanelStyledElem = styled.div`
-display:flex;
-flex-direction: column;
-padding: 15px;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
 `
 
-const LeftPanel = ({ currentPage, setCurrentPage }: LeftPanelProps) => {
+type LeftPanelProps = {
+    currentPage: string
+    setCurrentPage: React.Dispatch<React.SetStateAction<string>>
+}
 
-    const onLinkClick = (path: String) => {
+const LeftPanel = ({ currentPage, setCurrentPage }: LeftPanelProps) => {
+    const onLinkClick = (path: string) => {
+        console.log(currentPage)
         setCurrentPage(path)
     }
 
@@ -40,28 +40,46 @@ const LeftPanel = ({ currentPage, setCurrentPage }: LeftPanelProps) => {
         <LeftPanelStyled>
             <LeftPanelStyledElem>
                 <h2>Video</h2>
-                <Link to="/admin/video/add" onClick={() => onLinkClick("/admin/video/add")}>
+                <Link
+                    to="/admin/video/add"
+                    onClick={() => onLinkClick('/admin/video/add')}
+                >
                     Add new video
                 </Link>
-                <Link to="/admin/video/manage" onClick={() => onLinkClick("/admin/video/manage")}>
+                <Link
+                    to="/admin/video/manage"
+                    onClick={() => onLinkClick('/admin/video/manage')}
+                >
                     Manage videos
                 </Link>
             </LeftPanelStyledElem>
             <LeftPanelStyledElem>
                 <h2>Livestream</h2>
-                <Link to="/admin/livestream/add" onClick={() => onLinkClick("/admin/livestream/add")}>
+                <Link
+                    to="/admin/livestream/add"
+                    onClick={() => onLinkClick('/admin/livestream/add')}
+                >
                     Add new livestream
                 </Link>
-                <Link to="/admin/livestream/manage" onClick={() => onLinkClick("/admin/livestream/manage")}>
+                <Link
+                    to="/admin/livestream/manage"
+                    onClick={() => onLinkClick('/admin/livestream/manage')}
+                >
                     Manage livestreams
                 </Link>
             </LeftPanelStyledElem>
             <LeftPanelStyledElem>
                 <h2>Webinars</h2>
-                <Link to="/admin/webinar/add" onClick={() => onLinkClick("/admin/webinar/add")}>
+                <Link
+                    to="/admin/webinar/add"
+                    onClick={() => onLinkClick('/admin/webinar/add')}
+                >
                     Add new webinar
                 </Link>
-                <Link to="/admin/webinar/manage" onClick={() => onLinkClick("/admin/webinar/manage")}>
+                <Link
+                    to="/admin/webinar/manage"
+                    onClick={() => onLinkClick('/admin/webinar/manage')}
+                >
                     Manage webinars
                 </Link>
             </LeftPanelStyledElem>
@@ -69,7 +87,11 @@ const LeftPanel = ({ currentPage, setCurrentPage }: LeftPanelProps) => {
     )
 }
 
-const AdminLayout = ({ children }: any) => {
+type AdminLayoutProps = {
+    children: React.ReactNode
+}
+
+const AdminLayout = ({ children }: AdminLayoutProps) => {
     const [groups, setGroups] = useState([] as Array<string>)
     const [currentPage, setCurrentPage] = useState<string>('')
 
@@ -79,7 +101,7 @@ const AdminLayout = ({ children }: any) => {
             const groupsData = authData.getIdToken().payload['cognito:groups']
             if (groupsData !== undefined) setGroups(groupsData)
         })()
-    })
+    }, [])
 
     return (
         <>
@@ -90,9 +112,7 @@ const AdminLayout = ({ children }: any) => {
                             currentPage={currentPage}
                             setCurrentPage={setCurrentPage}
                         />
-                        <RightPanelStyled>
-                            {children}
-                        </RightPanelStyled>
+                        <RightPanelStyled>{children}</RightPanelStyled>
                     </AdminLayoutStyled>
                 </Layout>
             ) : (
@@ -103,7 +123,5 @@ const AdminLayout = ({ children }: any) => {
         </>
     )
 }
-
-
 
 export default AdminLayout

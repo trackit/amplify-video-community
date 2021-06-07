@@ -1,5 +1,6 @@
 import React from 'react'
-import { NavBar, theme } from '../shared/components'
+import { NavBar } from '../'
+import theme from '../theme'
 
 import { withAuthenticator } from '@aws-amplify/ui-react'
 import Amplify from 'aws-amplify'
@@ -7,7 +8,11 @@ import awsmobile from '../../../aws-exports'
 
 Amplify.configure(awsmobile)
 
-const Layout = ({ children }: any) => {
+type LayoutProps = {
+    children: React.ReactNode
+}
+
+const Layout = ({ children }: LayoutProps) => {
     return (
         <div>
             <NavBar theme={theme} />

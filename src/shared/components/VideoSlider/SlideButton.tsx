@@ -38,7 +38,12 @@ const StyledButton = styled.button`
     }
 `
 
-const SlideButton = ({ onClick, type }: any) => (
+type SlideButtonProps = {
+    onClick(): void
+    type: string
+}
+
+const SlideButton = ({ onClick, type }: SlideButtonProps) => (
     <StyledButton className={`--${type}`} onClick={onClick}>
         <span>
             <IoArrowDown />

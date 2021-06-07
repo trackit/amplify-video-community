@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Layout from "../shared/components/Layout/Layout"
+import Layout from '../shared/components/Layout/Layout'
 
 const LiveApp = () => {
     return (

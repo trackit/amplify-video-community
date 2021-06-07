@@ -1,10 +1,17 @@
 import React, { useState } from 'react'
+import { vodAsset } from '../../../models'
+
+type AssetsManagementListItemListProps = {
+    asset: vodAsset
+    selectedAsset: vodAsset
+    setSelectedAsset: React.Dispatch<React.SetStateAction<vodAsset>>
+}
 
 const AssetsManagementListItemList = ({
     asset,
     selectedAsset,
     setSelectedAsset,
-}: any) => {
+}: AssetsManagementListItemListProps) => {
     const [hover, setHover] = useState<boolean>(false)
     const hoverStyles = {
         backgroundColor: '#969696',
@@ -34,9 +41,6 @@ const AssetsManagementListItemList = ({
             <div>
                 <p>{asset.title}</p>
                 <p>{asset.description}</p>
-            </div>
-            <div>
-                <p>{asset.createdAt}</p>
             </div>
             <div>
                 <p>{'>'}</p>

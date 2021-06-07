@@ -3,23 +3,24 @@ import AssetsManagementList from '../../../shared/components/AssetsManagementLis
 import { fetchVodFiles } from '../../../shared/utilities'
 import Loader from 'react-loader-spinner'
 import { AdminLayout } from '../../../shared/components'
+import { vodAsset } from '../../../models'
 
 const DashboardVideoManage = () => {
-    const [vodAssets, setVodAssets] = useState<any>([])
+    const [vodAssets, setVodAssets] = useState<Array<vodAsset>>([])
     const [nextToken, setNextToken] = useState<string | null>(null)
     const [loading, setLoading] = useState<boolean>(false)
 
     useEffect(() => {
-        ; (async () => {
+        ;(async () => {
             setLoading(true)
             try {
                 const { data } = await fetchVodFiles(nextToken)
                 setNextToken(
-                    data.listVodAssets.nextToken
+                    data?.listVodAssets?.nextToken
                         ? data.listVodAssets.nextToken
                         : null
                 )
-                setVodAssets(data.listVodAssets.items)
+                setVodAssets(data?.listVodAssets?.items as Array<vodAsset>)
             } catch (error) {
                 console.error('VideoManage.tsx ', error)
             }

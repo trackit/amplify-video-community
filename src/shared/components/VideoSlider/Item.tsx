@@ -6,6 +6,7 @@ import ShowDetailsButton from './ShowDetailsButton'
 import Mark from './Mark'
 import { fetchThumbnail } from '../../utilities'
 import styled from 'styled-components'
+import { vodAsset } from '../../../models'
 
 export const StyledItem = styled.div`
     flex: 0 0 19.7%;
@@ -24,8 +25,12 @@ export const StyledItem = styled.div`
     }
 `
 
-const Item = ({ movie }: any) => {
-    const [thumbnailUrl, setThumbnailUrl] = useState<any>('')
+type ItemProps = {
+    movie: vodAsset
+}
+
+const Item = ({ movie }: ItemProps) => {
+    const [thumbnailUrl, setThumbnailUrl] = useState<string>('')
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -33,7 +38,7 @@ const Item = ({ movie }: any) => {
             if (movie.thumbnail) {
                 setLoading(true)
                 const data = await fetchThumbnail(movie)
-                setThumbnailUrl(data)
+                setThumbnailUrl(data as string)
                 setLoading(false)
             }
         })()
@@ -41,8 +46,10 @@ const Item = ({ movie }: any) => {
 
     return (
         <SliderContext.Consumer>
-            {({ onSelectSlide, currentSlide, elementRef }: any) => {
-                const isActive = currentSlide && currentSlide.id === movie.id
+            {(consumer) => {
+                const isActive =
+                    consumer?.currentSlide &&
+                    consumer?.currentSlide.id === movie.id
 
                 return loading ? (
                     <Loader
@@ -54,9 +61,9 @@ const Item = ({ movie }: any) => {
                     />
                 ) : (
                     <StyledItem
-                        ref={elementRef}
-                        className={isActive && 'item--open'}
-                        onClick={() => onSelectSlide(movie)}
+                        ref={consumer?.elementRef}
+                        className={isActive ? 'item--open' : ''}
+                        onClick={() => consumer?.onSelectSlide(movie)}
                     >
                         <img src={thumbnailUrl as string} alt="thumbnail" />
                         <ShowDetailsButton />

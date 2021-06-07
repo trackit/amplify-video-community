@@ -1,5 +1,4 @@
-type vodAsset
-@model (subscriptions: {level: public})
+type vodAsset @model (subscriptions: {level: public})
 @auth(
   rules: [
     {allow: groups, groups:["Admin"], operations: [create, update, delete, read]},
@@ -11,13 +10,15 @@ type vodAsset
   title:String!
   description:String!
   highlighted:Boolean!
+
+  #DO NOT EDIT
   video:videoObject @connection
   thumbnail:thumbnailObject @connection
   sections:[VideoSection] @connection(keyName: "byVideo", fields: ["id"])
 }
 
-type videoObject
-@model
+#DO NOT EDIT
+type videoObject @model
 @auth(
   rules: [
     {allow: groups, groups:["Admin"], operations: [create, update, delete, read]},
@@ -29,8 +30,7 @@ type videoObject
   token: String @function(name: "amplifyVideoCommuVOD-dev-tokenGen")
 }
 
-type thumbnailObject
-@model
+type thumbnailObject @model
 @auth(
   rules: [
     {allow: groups, groups:["Admin"], operations: [create, update, delete, read]},
@@ -42,8 +42,7 @@ type thumbnailObject
   ext:String!
 }
 
-type section
-@model
+type section @model
 @auth(
   rules: [
     {allow: groups, groups:["Admin"], operations: [create, update, delete, read]},
@@ -56,13 +55,12 @@ type section
   videos:[VideoSection] @connection(keyName: "bySection", fields: ["id"])
 }
 
-type VideoSection
-  @model(queries: null)
-  @key(name: "bySection", fields: ["sectionID", "videoID"])
-  @key(name: "byVideo", fields: ["videoID", "sectionID"]) {
-    id: ID!
-    sectionID: ID!
-    videoID: ID!
-    section: section! @connection(fields: ["sectionID"])
-    video: vodAsset! @connection(fields: ["videoID"])
+type VideoSection @model(queries: null)
+@key(name: "bySection", fields: ["sectionID", "videoID"])
+@key(name: "byVideo", fields: ["videoID", "sectionID"]) {
+  id: ID!
+  sectionID: ID!
+  videoID: ID!
+  section: section! @connection(fields: ["sectionID"])
+  video: vodAsset! @connection(fields: ["videoID"])
 }

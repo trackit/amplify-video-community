@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
+import { vodAsset } from '../../../models'
 import AssetsManagementListItem from './AssetsManagementListItem'
 import AssetsManagementListItemList from './AssetsManagementListItemList'
 
 type AssetsManagementListProps = {
-    assets: any
+    assets: Array<vodAsset>
 }
 
 const AssetsManagementList = ({ assets }: AssetsManagementListProps) => {
     const [selectedAsset, setSelectedAsset] = useState(null)
     const [searchValue, setSearchValue] = useState('')
 
-    const filterAssets = (elem: any) => {
+    const filterAssets = (elem: vodAsset) => {
         return (
             elem.title.includes(searchValue) ||
             elem.description.includes(searchValue)
@@ -27,9 +28,9 @@ const AssetsManagementList = ({ assets }: AssetsManagementListProps) => {
                                 type="text"
                                 placeholder="Amplify video tutorial"
                                 value={searchValue}
-                                onChange={(e: any) =>
-                                    setSearchValue(e.target.value)
-                                }
+                                onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                ) => setSearchValue(e.target.value)}
                                 style={{ width: '100%' }}
                             />
                         </div>
@@ -44,7 +45,7 @@ const AssetsManagementList = ({ assets }: AssetsManagementListProps) => {
                         </div>
                     </div>
                     <div>
-                        {assets.filter(filterAssets).map((elem: any) => {
+                        {assets.filter(filterAssets).map((elem: vodAsset) => {
                             return (
                                 <AssetsManagementListItemList
                                     key={elem.id}
@@ -58,7 +59,9 @@ const AssetsManagementList = ({ assets }: AssetsManagementListProps) => {
                 </div>
                 <div style={{ padding: '15px' }}>
                     {selectedAsset && (
-                        <AssetsManagementListItem selectedAsset={selectedAsset} />
+                        <AssetsManagementListItem
+                            selectedAsset={selectedAsset}
+                        />
                     )}
                 </div>
             </div>
