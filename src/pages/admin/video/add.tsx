@@ -62,7 +62,8 @@ const VideoAddForm = ({ vodFile }: VideoAddFormProps) => {
         })()
     }, [setExistingSections, setNextTokenSections, nextTokenSections])
 
-    const onSubmit = () => {
+    const onSubmit = (e: React.FormEvent) => {
+        e.preventDefault()
         ;(async () => {
             if (vodFile === null || thumbnailFile === null) {
                 return
