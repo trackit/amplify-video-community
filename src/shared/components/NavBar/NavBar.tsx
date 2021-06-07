@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { AiOutlineSearch, AiOutlineSetting } from 'react-icons/ai'
 
-import styled from 'styled-components'
+import styled, { DefaultTheme } from 'styled-components'
 import { Auth } from 'aws-amplify'
 import { Link as GatsbyLink } from 'gatsby'
 
@@ -12,7 +12,7 @@ const Header = styled.header`
     justify-content: flex-end;
     align-items: center;
     padding: 5px 10px;
-    background-color: ${(props) => props.theme.primaryColor};
+    background-color: ${(props) => props.theme.palette.primary.main};
 `
 
 const Title = styled.h2`
@@ -20,20 +20,20 @@ const Title = styled.h2`
 `
 
 const Link = styled(GatsbyLink)`
-    color: ${(props) => props.theme.primaryContrast};
+    color: ${(props) => props.theme.palette.primary.contrastText};
     text-decoration: none;
     transition: all 0.3s ease 0s;
 
     &:hover {
         font-weight: bold;
-        font-size: ${(props) => props.theme.textMd};
+        font-size: ${(props) => props.theme.palette.textMd};
     }
 `
 
 const TitleLink = styled(GatsbyLink)`
     margin-right: auto;
     text-decoration: none;
-    color: ${(props) => props.theme.primaryContrast};
+    color: ${(props) => props.theme.palette.primary.contrastText};
 `
 
 const Container = styled.ul`
@@ -45,7 +45,13 @@ const Item = styled.li`
     padding: 0 20px;
 `
 
-const Toggle = ({ to, content, theme }: any) => {
+type ToggleProps = {
+    to: string
+    content: React.ReactElement
+    theme: DefaultTheme
+}
+
+const Toggle = ({ to, content, theme }: ToggleProps) => {
     return (
         <Item>
             <Link to={to} theme={theme}>
@@ -55,7 +61,11 @@ const Toggle = ({ to, content, theme }: any) => {
     )
 }
 
-const NavBar = ({ theme }: any) => {
+type NavBarProps = {
+    theme: DefaultTheme
+}
+
+const NavBar = ({ theme }: NavBarProps) => {
     const [groups, setGroups] = useState<Array<string>>([])
 
     useEffect(() => {
@@ -73,10 +83,10 @@ const NavBar = ({ theme }: any) => {
                 </TitleLink>
             </Title>
             <Container>
-                <Toggle to="/" content="Home" theme={theme} />
-                <Toggle to="/videos" content="Videos" theme={theme} />
-                <Toggle to="/live" content="Live" theme={theme} />
-                <Toggle to="/webinars" content="Webinars" theme={theme} />
+                <Toggle to="/" content={<>Home</>} theme={theme} />
+                <Toggle to="/videos" content={<>Videos</>} theme={theme} />
+                <Toggle to="/live" content={<>Live</>} theme={theme} />
+                <Toggle to="/webinars" content={<>Webinars</>} theme={theme} />
                 <Toggle
                     to="/search"
                     content={<AiOutlineSearch />}

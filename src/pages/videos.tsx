@@ -1,15 +1,16 @@
-import * as React from 'react'
+import React from 'react'
 import Loader from 'react-loader-spinner'
 import { useEffect, useState } from 'react'
 
-import Layout from '../components/layout'
-import { fetchSections, fetchVodFiles, VodAsset } from '../shared/utilities'
+import { Layout } from '../shared/components'
+import { fetchSections, fetchVodFiles } from '../shared/utilities'
 import { Slider, Item } from '../shared/components/VideoSlider'
 import styled from 'styled-components'
+import { vodAsset, section } from '../models'
 
-function renderThumbnails(vodAssets: Array<VodAsset>) {
+function renderThumbnails(vodAssets: Array<vodAsset>) {
     if (vodAssets.length > 0)
-        return vodAssets.map((movie: any) => (
+        return vodAssets.map((movie: vodAsset) => (
             <Item movie={movie} key={movie.id} />
         ))
     return <p>No VoD Files</p>
@@ -29,8 +30,8 @@ const SectionItem = styled.div`
 `
 
 const VodApp = () => {
-    const [vodAssets, setVodAssets] = useState<any>([])
-    const [sections, setSections] = useState<Array<any> | null>(null)
+    const [vodAssets, setVodAssets] = useState<Array<vodAsset>>([])
+    const [sections, setSections] = useState<Array<section> | null>(null)
     const [nextTokenVodFiles, setNextTokenVodFiles] =
         useState<string | null>(null)
     const [nextTokenSections, setNextTokenSections] =
@@ -44,11 +45,11 @@ const VodApp = () => {
             try {
                 const { data } = await fetchVodFiles(nextTokenVodFiles)
                 setNextTokenVodFiles(
-                    data.listVodAssets.nextToken
+                    data?.listVodAssets?.nextToken
                         ? data.listVodAssets.nextToken
                         : null
                 )
-                setVodAssets(data.listVodAssets.items)
+                setVodAssets(data?.listVodAssets?.items as Array<vodAsset>)
                 console.log('fetchVodFiles: ', data)
             } catch (error) {
                 console.error('VideoOnDemand.tsx ', error)
@@ -61,36 +62,34 @@ const VodApp = () => {
         ;(async () => {
             setLoadingSections(true)
             try {
-                // TODO: declare fetchSection return type
-                const { data }: any = await fetchSections(nextTokenSections)
+                const { data } = await fetchSections(nextTokenSections)
                 setNextTokenSections(
-                    data.listSections.nextToken
+                    data?.listSections?.nextToken
                         ? data.listSections.nextToken
                         : null
                 )
                 let nonce = true
-                data.listSections.items.forEach(
-                    (item: any, index: number, arr: any) => {
-                        if (arr.length <= 3 && nonce) {
-                            arr.push({
-                                label: 'Highlighted',
-                                id: `Highlighted${index}`,
-                            })
-                            nonce = false
-                        }
-                        if (
-                            index % 3 === 0 &&
-                            index !== 0 &&
-                            item.label !== 'Highlighted'
-                        ) {
-                            arr.splice(index, 0, {
-                                label: 'Highlighted',
-                                id: `Highlighted${index}`,
-                            })
-                        }
+                const list = data?.listSections?.items as Array<section>
+                list.forEach((item, index, arr) => {
+                    if (arr.length <= 3 && nonce) {
+                        arr.push({
+                            label: 'Highlighted',
+                            id: `Highlighted${index}`,
+                        })
+                        nonce = false
                     }
-                )
-                setSections(data.listSections.items)
+                    if (
+                        index % 3 === 0 &&
+                        index !== 0 &&
+                        item?.label !== 'Highlighted'
+                    ) {
+                        arr.splice(index, 0, {
+                            label: 'Highlighted',
+                            id: `Highlighted${index}`,
+                        })
+                    }
+                })
+                setSections(list)
                 console.log('fetchSections: ', data)
             } catch (error) {
                 console.error('VideoOnDemand.tsx ', error)
@@ -101,7 +100,6 @@ const VodApp = () => {
 
     return (
         <Layout>
-            {/* TODO: Render each categories vertically */}
             {loadingVodFiles || loadingSections ? (
                 <Loader
                     type="Bars"
@@ -113,7 +111,7 @@ const VodApp = () => {
             ) : (
                 <SectionContainer>
                     {sections &&
-                        sections.map((section: any) => {
+                        sections.map((section: section) => {
                             return (
                                 <SectionItem key={section.id}>
                                     {section.label === 'Highlighted' ? (
@@ -122,7 +120,7 @@ const VodApp = () => {
                                             <Slider>
                                                 {renderThumbnails(
                                                     vodAssets.filter(
-                                                        (item: any) =>
+                                                        (item: vodAsset) =>
                                                             item.highlighted
                                                     )
                                                 )}

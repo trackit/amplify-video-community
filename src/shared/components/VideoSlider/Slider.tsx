@@ -8,6 +8,7 @@ import useSizeElement from './useSizeElement'
 import styled from 'styled-components'
 import { StyledItem } from './Item'
 import { StyledShowDetailsButton } from './ShowDetailsButton'
+import { vodAsset } from '../../../models'
 
 const StyledSlider = styled.div`
     display: flex;
@@ -38,8 +39,12 @@ const StyledSlider = styled.div`
     }
 `
 
-const Slider = ({ children, activeSlide }: any) => {
-    const [currentSlide, setCurrentSlide] = useState(activeSlide)
+type SliderProps = {
+    children: React.ReactNode
+}
+
+const Slider = ({ children }: SliderProps) => {
+    const [currentSlide, setCurrentSlide] = useState<vodAsset | null>(null)
     const { width, elementRef } = useSizeElement()
     const {
         handlePrev,
@@ -50,7 +55,7 @@ const Slider = ({ children, activeSlide }: any) => {
         hasPrev,
     } = useSliding(width, React.Children.count(children))
 
-    const handleSelect = (movie: any) => {
+    const handleSelect = (movie: vodAsset) => {
         setCurrentSlide(movie)
     }
 
@@ -58,7 +63,7 @@ const Slider = ({ children, activeSlide }: any) => {
         setCurrentSlide(null)
     }
 
-    const contextValue: any = {
+    const contextValue = {
         onSelectSlide: handleSelect,
         onCloseSlide: handleClose,
         elementRef,

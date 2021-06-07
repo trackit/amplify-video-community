@@ -1,10 +1,10 @@
-import * as React from 'react'
+import React from 'react'
 import { IoClose } from 'react-icons/io5'
 import styled from 'styled-components'
 import { useEffect, useState } from 'react'
 import { fetchThumbnail } from '../../utilities'
 import { Link } from 'gatsby'
-//import { useHistory } from 'react-router-dom'
+import { vodAsset } from '../../../models'
 
 const StyledContent = styled.div`
     position: relative;
@@ -98,18 +98,19 @@ const StyledContent = styled.div`
     }
 `
 
-const Content = ({ movie, onClose }: any) => {
-    const [thumbnailUrl, setThumbnailUrl] = useState<any>('')
-    // const [loading, setLoading] = useState(false)
-    const history = [] //useHistory()
+type ContentProps = {
+    movie: vodAsset
+    onClose(): void
+}
+
+const Content = ({ movie, onClose }: ContentProps) => {
+    const [thumbnailUrl, setThumbnailUrl] = useState<string>('')
 
     useEffect(() => {
         ;(async () => {
             if (movie.thumbnail) {
-                // setLoading(true)
                 const data = await fetchThumbnail(movie)
-                setThumbnailUrl(data)
-                // setLoading(false)
+                setThumbnailUrl(data as string)
             }
         })()
     }, [movie])

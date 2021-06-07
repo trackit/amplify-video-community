@@ -7,7 +7,11 @@ const StyledSliderWrapper = styled.div`
     position: relative;
 `
 
-const SliderWrapper = ({ children }: any) => (
+type SliderWrapperProps = {
+    children: React.ReactNode
+}
+
+const SliderWrapper = ({ children }: SliderWrapperProps) => (
     <StyledSliderWrapper>{children}</StyledSliderWrapper>
 )
 

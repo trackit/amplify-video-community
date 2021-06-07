@@ -1,7 +1,6 @@
 import NavBar from './NavBar/NavBar'
 import VideoPlayer from './VideoPlayer'
-import HighlightedVideo from './VideoAsset/HighlightedVideo'
-import ThumbnailVideo from './VideoAsset/ThumbnailVideo'
-import theme from './theme'
+import Layout from './Layout/Layout'
+import AdminLayout from './Layout/AdminLayout'
 
-export { NavBar, VideoPlayer, HighlightedVideo, ThumbnailVideo, theme }
+export { NavBar, VideoPlayer, Layout, AdminLayout }

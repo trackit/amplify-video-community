@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import Amplify from 'aws-amplify'
-
-import awsmobile from '../../aws-exports'
-import { section } from '../../API'
-import { fetchSections, uploadVideo } from '../../shared/utilities'
-
-Amplify.configure(awsmobile)
+import { fetchSections, uploadVideo } from '../../../shared/utilities'
+import { AdminLayout } from '../../../shared/components'
+import { section } from '../../../models'
 
 type DropZoneProps = {
-    setVodFile: any
+    setVodFile: React.Dispatch<React.SetStateAction<File | null>>
 }
 
 const DropZone = ({ setVodFile }: DropZoneProps) => {
@@ -18,8 +14,11 @@ const DropZone = ({ setVodFile }: DropZoneProps) => {
             <input
                 type="file"
                 accept="video/*"
-                onChange={(event: any) => {
-                    setVodFile(event.target.files[0] || null)
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    if (event.target.files === null) {
+                        return
+                    }
+                    setVodFile(event.target.files[0])
                 }}
             />
         </div>
@@ -49,13 +48,13 @@ const VideoAddForm = ({ vodFile }: VideoAddFormProps) => {
         ;(async () => {
             // setLoading(true)
             try {
-                const { data }: any = await fetchSections(nextTokenSections)
+                const { data } = await fetchSections(nextTokenSections)
                 setNextTokenSections(
-                    data.listSections.nextToken
+                    data?.listSections?.nextToken
                         ? data.listSections.nextToken
                         : null
                 )
-                setExistingSections(data.listSections.items)
+                setExistingSections(data?.listSections?.items as Array<section>)
             } catch (error) {
                 console.error('VideoAdd.tsx ', error)
             }
@@ -63,32 +62,27 @@ const VideoAddForm = ({ vodFile }: VideoAddFormProps) => {
         })()
     }, [setExistingSections, setNextTokenSections, nextTokenSections])
 
-    const onSubmit = async (event: any) => {
-        event.preventDefault()
-        console.log(
-            title,
-            description,
-            vodFile,
-            thumbnailFile,
-            highlighted,
-            selectedSections.map((section) => {
-                return section && section.id
-            })
-        )
-        try {
-            await uploadVideo(
-                title,
-                description,
-                vodFile,
-                thumbnailFile,
-                highlighted,
-                selectedSections.map((section) => {
-                    return section && section.id
-                })
-            )
-        } catch (error) {
-            console.error('VideoAdd.tsx', error)
-        }
+    const onSubmit = (e: React.FormEvent) => {
+        e.preventDefault()
+        ;(async () => {
+            if (vodFile === null || thumbnailFile === null) {
+                return
+            }
+            try {
+                await uploadVideo(
+                    title,
+                    description,
+                    vodFile,
+                    thumbnailFile,
+                    highlighted,
+                    selectedSections.map((sec) => {
+                        return sec && sec.id
+                    })
+                )
+            } catch (error) {
+                console.error('VideoAdd.tsx', error)
+            }
+        })()
     }
 
     return (
@@ -104,7 +98,9 @@ const VideoAddForm = ({ vodFile }: VideoAddFormProps) => {
                         type="text"
                         placeholder="Title"
                         value={title}
-                        onChange={(event: any) => {
+                        onChange={(
+                            event: React.ChangeEvent<HTMLInputElement>
+                        ) => {
                             setTitle(event.target.value)
                         }}
                     />
@@ -116,7 +112,9 @@ const VideoAddForm = ({ vodFile }: VideoAddFormProps) => {
                         type="text"
                         placeholder="Description"
                         value={description}
-                        onChange={(event: any) => {
+                        onChange={(
+                            event: React.ChangeEvent<HTMLInputElement>
+                        ) => {
                             setDescription(event.target.value)
                         }}
                     />
@@ -127,8 +125,13 @@ const VideoAddForm = ({ vodFile }: VideoAddFormProps) => {
                         id="_add_vod_thumbnail"
                         type="file"
                         accept="image/*"
-                        onChange={(event: any) => {
-                            setThumbnailFile(event.target.files[0] || null)
+                        onChange={(
+                            event: React.ChangeEvent<HTMLInputElement>
+                        ) => {
+                            if (event.target.files === null) {
+                                return
+                            }
+                            setThumbnailFile(event?.target?.files[0])
                         }}
                     />
                 </div>
@@ -167,11 +170,13 @@ const VideoAddForm = ({ vodFile }: VideoAddFormProps) => {
                     })}
                     <select
                         id="_add_vod_tags"
-                        onChange={(event: any) => {
+                        onChange={(
+                            event: React.FormEvent<HTMLSelectElement>
+                        ) => {
                             const section = existingSections.find(
                                 (section) =>
                                     (section && section.label) ===
-                                    event.target.value
+                                    event.currentTarget.value
                             )
                             section !== undefined &&
                                 setSelectedSections([
@@ -215,11 +220,11 @@ const DashboardVideoAdd = () => {
     const [vodFile, setVodFile] = useState<File | null>(null)
 
     return (
-        <div>
+        <AdminLayout>
             <h1>Video Add</h1>
             {!vodFile && <DropZone setVodFile={setVodFile} />}
             {vodFile && <VideoAddForm vodFile={vodFile} />}
-        </div>
+        </AdminLayout>
     )
 }
 

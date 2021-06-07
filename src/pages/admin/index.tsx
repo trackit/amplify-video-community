@@ -1,9 +1,8 @@
-import { Dashboard } from '../../tmp'
-import { withAuthenticator } from '@aws-amplify/ui-react'
+import React from 'react'
+import { AdminLayout } from '../../shared/components'
 
-import Amplify from 'aws-amplify'
+const Dashboard = () => {
+    return <AdminLayout></AdminLayout>
+}
 
-import awsmobile from '../../aws-exports'
-Amplify.configure(awsmobile)
-
-export default withAuthenticator(Dashboard)
+export default Dashboard

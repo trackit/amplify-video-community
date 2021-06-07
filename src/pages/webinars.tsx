@@ -1,5 +1,5 @@
-import * as React from 'react'
-import Layout from '../components/layout'
+import React from 'react'
+import { Layout } from '../shared/components'
 
 const SearchPage = () => {
     return (

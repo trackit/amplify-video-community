@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import Amplify from 'aws-amplify'
-
-import awsmobile from '../../aws-exports'
-import AssetsManagementList from '../../shared/components/AssetsManagementList/AssetsManagementList'
-import { fetchVodFiles } from '../../shared/utilities'
+import AssetsManagementList from '../../../shared/components/AssetsManagementList/AssetsManagementList'
+import { fetchVodFiles } from '../../../shared/utilities'
 import Loader from 'react-loader-spinner'
-
-Amplify.configure(awsmobile)
+import { AdminLayout } from '../../../shared/components'
+import { vodAsset } from '../../../models'
 
 const DashboardVideoManage = () => {
-    const [vodAssets, setVodAssets] = useState<any>([])
+    const [vodAssets, setVodAssets] = useState<Array<vodAsset>>([])
     const [nextToken, setNextToken] = useState<string | null>(null)
     const [loading, setLoading] = useState<boolean>(false)
 
@@ -19,11 +16,11 @@ const DashboardVideoManage = () => {
             try {
                 const { data } = await fetchVodFiles(nextToken)
                 setNextToken(
-                    data.listVodAssets.nextToken
+                    data?.listVodAssets?.nextToken
                         ? data.listVodAssets.nextToken
                         : null
                 )
-                setVodAssets(data.listVodAssets.items)
+                setVodAssets(data?.listVodAssets?.items as Array<vodAsset>)
             } catch (error) {
                 console.error('VideoManage.tsx ', error)
             }
@@ -32,7 +29,7 @@ const DashboardVideoManage = () => {
     }, [nextToken])
 
     return (
-        <div style={{ width: '100%' }}>
+        <AdminLayout>
             {loading ? (
                 <Loader
                     type="Bars"
@@ -44,7 +41,7 @@ const DashboardVideoManage = () => {
             ) : (
                 <AssetsManagementList assets={vodAssets} />
             )}
-        </div>
+        </AdminLayout>
     )
 }
 

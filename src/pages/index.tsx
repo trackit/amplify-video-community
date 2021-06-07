@@ -1,6 +1,6 @@
-import * as React from 'react'
+import React from 'react'
 
-import Layout from '../components/layout'
+import { Layout } from '../shared/components'
 
 const HomePage = () => {
     return <Layout></Layout>
