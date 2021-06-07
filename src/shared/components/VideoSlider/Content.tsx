@@ -105,15 +105,12 @@ type ContentProps = {
 
 const Content = ({ movie, onClose }: ContentProps) => {
     const [thumbnailUrl, setThumbnailUrl] = useState<string>('')
-    // const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         ;(async () => {
             if (movie.thumbnail) {
-                // setLoading(true)
                 const data = await fetchThumbnail(movie)
                 setThumbnailUrl(data as string)
-                // setLoading(false)
             }
         })()
     }, [movie])
