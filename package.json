@@ -15,7 +15,7 @@
     "clean": "gatsby clean",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
-    "pre-commit": "npx lint-staged",
+    "pre-commit": "npx lint-staged --config=.lintstagedrc.js",
     "prepare": "husky install"
   },
   "lint-staged": {
