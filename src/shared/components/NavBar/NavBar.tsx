@@ -12,7 +12,7 @@ const Header = styled.header`
     justify-content: flex-end;
     align-items: center;
     padding: 5px 10px;
-    background-color: ${(props) => props.theme.palette.primary.main};
+    background-color: ${(props) => props.theme.palette.primary.color};
 `
 
 const Title = styled.h2`
@@ -20,13 +20,13 @@ const Title = styled.h2`
 `
 
 const Link = styled(GatsbyLink)`
-    color: ${(props) => props.theme.palette.primary.contrastText};
+    color: ${(props) => props.theme.palette.primary.contrast};
     text-decoration: none;
     transition: all 0.3s ease 0s;
 
     &:hover {
         font-weight: bold;
-        font-size: ${(props) => props.theme.palette.textMd};
+        font-size: ${(props) => props.theme.palette.medium};
     }
 `
 
@@ -44,7 +44,7 @@ const ExternalLink = styled.a`
 const TitleLink = styled(GatsbyLink)`
     margin-right: auto;
     text-decoration: none;
-    color: ${(props) => props.theme.palette.primary.contrastText};
+    color: ${(props) => props.theme.palette.primary.contrast};
 `
 
 const Container = styled.ul`
