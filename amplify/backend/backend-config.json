@@ -1,9 +1,19 @@
 {
   "auth": {
-    "amplifyvideocommua9ca74e9": {
+    "amplifyvideocommu53af5c15": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "amplifyvideocommu53af5c15PostConfirmation",
+          "triggerProvider": "Cognito",
+          "attributes": [
+            "Arn",
+            "Name"
+          ]
+        }
+      ],
       "customAuth": false
     },
     "userPoolGroups": {
@@ -12,7 +22,7 @@
       "dependsOn": [
         {
           "category": "auth",
-          "resourceName": "amplifyvideocommua9ca74e9",
+          "resourceName": "amplifyvideocommu53af5c15",
           "attributes": [
             "UserPoolId",
             "AppClientIDWeb",
@@ -32,10 +42,14 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authamplifyvideocommua9ca74e9"
+              "userPoolId": "authamplifyvideocommu53af5c15"
             }
           },
-          "additionalAuthenticationProviders": []
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ]
         }
       }
     }
@@ -45,6 +59,13 @@
       "service": "video",
       "serviceType": "video-on-demand",
       "providerPlugin": "awscloudformation"
+    }
+  },
+  "function": {
+    "amplifyvideocommu53af5c15PostConfirmation": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "storage": {

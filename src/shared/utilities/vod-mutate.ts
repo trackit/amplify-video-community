@@ -27,6 +27,61 @@ async function createVideoAsset(payload: APIt.CreateVodAssetInput) {
     ) as GraphQLResult<APIt.CreateVodAssetMutation>
 }
 
+async function putVodFile(file: File, id: string, vodExtension: string[]) {
+    return Storage.put(`${id}.${vodExtension[vodExtension.length - 1]}`, file, {
+        bucket: awsvideoconfig.awsInputVideo,
+        region: awsmobile.aws_project_region,
+        // eslint-disable-next-line
+            progressCallback(progress: any) {
+            console.log(
+                `vodFile Uploaded: ${progress.loaded}/${progress.total}`
+            )
+        },
+    })
+}
+
+async function putThumbnailFile(
+    file: File,
+    id: string,
+    thumbnailExtension: string[]
+) {
+    return Storage.put(
+        `thumbnails/${id}.${thumbnailExtension[thumbnailExtension.length - 1]}`,
+        file,
+        {
+            bucket: awsmobile.aws_user_files_s3_bucket,
+            level: 'public',
+            // eslint-disable-next-line
+            progressCallback(progress: any) {
+                console.log(
+                    `thumbnailFile Uploaded: ${progress.loaded}/${progress.total}`
+                )
+            },
+        }
+    )
+}
+
+async function setThumbnailObject(id: string, thumbnailExtension: string[]) {
+    return API.graphql(
+        graphqlOperation(createThumbnailObject, {
+            input: {
+                id: id,
+                ext: thumbnailExtension[thumbnailExtension.length - 1],
+            },
+        })
+    )
+}
+
+async function setVideoObject(id: string) {
+    return API.graphql(
+        graphqlOperation(createVideoObject, {
+            input: {
+                id: id,
+            },
+        })
+    )
+}
+
 const uploadVideo = async (
     title: string,
     description: string,
@@ -39,78 +94,33 @@ const uploadVideo = async (
     const vodExtension = vodFile.name.toLowerCase().split('.')
     const thumbnailExtension = thumbnailFile.name.toLowerCase().split('.')
     try {
-        await Storage.put(
-            `${id}.${vodExtension[vodExtension.length - 1]}`,
-            vodFile,
-            {
-                bucket: awsvideoconfig.awsInputVideo,
-                region: awsmobile.aws_project_region,
-                level: 'public',
-                // eslint-disable-next-line
-                progressCallback(progress: any) {
-                    console.log(
-                        `vodFile Uploaded: ${progress.loaded}/${progress.total}`
-                    )
-                },
-            }
-        )
+        await putVodFile(vodFile, id, vodExtension)
     } catch (error) {
-        console.error('vod-mutate(storage put vod file): ', error)
-        return
+        console.error('vod-mutate.ts(putVodFile): ', error)
+        // return
     }
 
     try {
-        await Storage.put(
-            `thumbnails/${id}.${
-                thumbnailExtension[thumbnailExtension.length - 1]
-            }`,
-            thumbnailFile,
-            {
-                bucket: awsmobile.aws_user_files_s3_bucket,
-                level: 'public',
-                // eslint-disable-next-line
-                progressCallback(progress: any) {
-                    console.log(
-                        `thumbnailFile Uploaded: ${progress.loaded}/${progress.total}`
-                    )
-                },
-            }
-        )
+        await putThumbnailFile(thumbnailFile, id, thumbnailExtension)
     } catch (error) {
-        console.error('vod-mutate(storage put thumbnail file): ', error)
-        return
+        console.error('vod-mutate.ts(putThumbnailFile): ', error)
+        // return
     }
 
     try {
-        console.log('createThumbnailObject')
-        await API.graphql(
-            graphqlOperation(createThumbnailObject, {
-                input: {
-                    id: id,
-                    ext: thumbnailExtension[thumbnailExtension.length - 1],
-                },
-            })
-        )
+        await setThumbnailObject(id, thumbnailExtension)
     } catch (error) {
-        console.error('vod-mutate(createThumbnail): ', error)
-        return
+        console.error('vod-mutate.tx(setThumbnailObject): ', error)
+        // return
     }
     try {
-        console.log('createVideoObject')
-        await API.graphql(
-            graphqlOperation(createVideoObject, {
-                input: {
-                    id: id,
-                },
-            })
-        )
+        await setVideoObject(id)
     } catch (error) {
-        console.error('vod-mutate(createVideo): ', error)
-        return
+        console.error('vod-mutate.tx(setVideoObject): ', error)
+        // return
     }
 
     try {
-        console.log('createVideoAsset')
         const { data } = await createVideoAsset({
             title: title,
             description: description,
@@ -119,14 +129,13 @@ const uploadVideo = async (
             highlighted: highlighted,
         })
         for (let i = 0; i < sectionsId.length; i++) {
-            console.log('setVideoSections')
             await setVideoSections({
                 sectionID: sectionsId[i] as string,
                 videoID: data?.createVodAsset?.id as string,
             })
         }
     } catch (error) {
-        console.error('vod-mutate(createVodAsset): ', error)
+        console.error('vod-mutate.tx(createVodAsset): ', error)
         return
     }
 }

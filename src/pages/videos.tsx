@@ -34,8 +34,6 @@ const VodApp = () => {
     const [sections, setSections] = useState<Array<section> | null>(null)
     const [nextTokenVodFiles, setNextTokenVodFiles] =
         useState<string | null>(null)
-    const [nextTokenSections, setNextTokenSections] =
-        useState<string | null>(null)
     const [loadingVodFiles, setLoadingVodFiles] = useState(false)
     const [loadingSections, setLoadingSections] = useState(false)
 
@@ -52,7 +50,7 @@ const VodApp = () => {
                 setVodAssets(data?.listVodAssets?.items as Array<vodAsset>)
                 console.log('fetchVodFiles: ', data)
             } catch (error) {
-                console.error('VideoOnDemand.tsx ', error)
+                console.error('videos.tsx(fetchVodFiles):', error)
             }
             setLoadingVodFiles(false)
         })()
@@ -62,12 +60,7 @@ const VodApp = () => {
         ;(async () => {
             setLoadingSections(true)
             try {
-                const { data } = await fetchSections(nextTokenSections)
-                setNextTokenSections(
-                    data?.listSections?.nextToken
-                        ? data.listSections.nextToken
-                        : null
-                )
+                const { data } = await fetchSections()
                 let nonce = true
                 const list = data?.listSections?.items as Array<section>
                 list.forEach((item, index, arr) => {
@@ -92,11 +85,11 @@ const VodApp = () => {
                 setSections(list)
                 console.log('fetchSections: ', data)
             } catch (error) {
-                console.error('VideoOnDemand.tsx ', error)
+                console.error('videos.tsx(fetchSections)', error)
             }
             setLoadingSections(false)
         })()
-    }, [nextTokenSections])
+    }, [])
 
     return (
         <Layout>

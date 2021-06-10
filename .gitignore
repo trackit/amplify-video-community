@@ -5,9 +5,9 @@ public
 yarn.lock
 .DS_Store
 
+amplify/team-provider-info.json
 #amplify
 amplify/\#current-cloud-backend
-amplify/team-provider-info.json
 amplify/.config/local-*
 amplify/logs
 amplify/mock-data

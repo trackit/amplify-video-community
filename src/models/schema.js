@@ -70,6 +70,22 @@ export const schema = {
                         "connectionType": "HAS_MANY",
                         "associatedWith": "video"
                     }
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
                 }
             },
             "syncable": true,
@@ -84,6 +100,14 @@ export const schema = {
                     }
                 },
                 {
+                    "type": "aws_iam",
+                    "properties": {}
+                },
+                {
+                    "type": "aws_cognito_user_pools",
+                    "properties": {}
+                },
+                {
                     "type": "auth",
                     "properties": {
                         "rules": [
@@ -96,13 +120,25 @@ export const schema = {
                                 ],
                                 "operations": [
                                     "create",
+                                    "read",
                                     "update",
-                                    "delete",
+                                    "delete"
+                                ]
+                            },
+                            {
+                                "allow": "public",
+                                "provider": "iam",
+                                "operations": [
                                     "read"
                                 ]
                             },
                             {
-                                "allow": "private",
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "everyone"
+                                ],
                                 "operations": [
                                     "read"
                                 ]
@@ -122,12 +158,21 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "token": {
-                    "name": "token",
+                "createdAt": {
+                    "name": "createdAt",
                     "isArray": false,
-                    "type": "String",
+                    "type": "AWSDateTime",
                     "isRequired": false,
-                    "attributes": []
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
                 }
             },
             "syncable": true,
@@ -135,6 +180,14 @@ export const schema = {
             "attributes": [
                 {
                     "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "aws_iam",
+                    "properties": {}
+                },
+                {
+                    "type": "aws_cognito_user_pools",
                     "properties": {}
                 },
                 {
@@ -150,13 +203,25 @@ export const schema = {
                                 ],
                                 "operations": [
                                     "create",
+                                    "read",
                                     "update",
-                                    "delete",
+                                    "delete"
+                                ]
+                            },
+                            {
+                                "allow": "public",
+                                "provider": "iam",
+                                "operations": [
                                     "read"
                                 ]
                             },
                             {
-                                "allow": "private",
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "everyone"
+                                ],
                                 "operations": [
                                     "read"
                                 ]
@@ -182,6 +247,22 @@ export const schema = {
                     "type": "String",
                     "isRequired": true,
                     "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
                 }
             },
             "syncable": true,
@@ -189,6 +270,14 @@ export const schema = {
             "attributes": [
                 {
                     "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "aws_iam",
+                    "properties": {}
+                },
+                {
+                    "type": "aws_cognito_user_pools",
                     "properties": {}
                 },
                 {
@@ -204,13 +293,25 @@ export const schema = {
                                 ],
                                 "operations": [
                                     "create",
+                                    "read",
                                     "update",
-                                    "delete",
+                                    "delete"
+                                ]
+                            },
+                            {
+                                "allow": "public",
+                                "provider": "iam",
+                                "operations": [
                                     "read"
                                 ]
                             },
                             {
-                                "allow": "private",
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "everyone"
+                                ],
                                 "operations": [
                                     "read"
                                 ]
@@ -255,6 +356,22 @@ export const schema = {
                         "connectionType": "BELONGS_TO",
                         "targetName": "videoID"
                     }
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
                 }
             },
             "syncable": true,
@@ -318,6 +435,22 @@ export const schema = {
                         "connectionType": "HAS_MANY",
                         "associatedWith": "section"
                     }
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
                 }
             },
             "syncable": true,
@@ -325,6 +458,14 @@ export const schema = {
             "attributes": [
                 {
                     "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "aws_iam",
+                    "properties": {}
+                },
+                {
+                    "type": "aws_cognito_user_pools",
                     "properties": {}
                 },
                 {
@@ -340,13 +481,25 @@ export const schema = {
                                 ],
                                 "operations": [
                                     "create",
+                                    "read",
                                     "update",
-                                    "delete",
+                                    "delete"
+                                ]
+                            },
+                            {
+                                "allow": "public",
+                                "provider": "iam",
+                                "operations": [
                                     "read"
                                 ]
                             },
                             {
-                                "allow": "private",
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "everyone"
+                                ],
                                 "operations": [
                                     "read"
                                 ]
@@ -359,5 +512,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "bd25b20b43f4d2b889fa579d3e11e9c6"
+    "version": "c4f5f5099667e978d49331f686c4e4bf"
 };
