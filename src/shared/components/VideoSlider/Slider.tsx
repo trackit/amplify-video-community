@@ -39,8 +39,6 @@ const Container = styled.div`
     width: 100%;
 `
 
-const Slider = ({ children, activeSlide }: any) => {
-    const [currentSlide, setCurrentSlide] = useState(activeSlide)
 type SliderProps = {
     children: React.ReactNode
 }

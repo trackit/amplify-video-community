@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Link } from 'gatsby'
 import { vodAsset } from '../../../models'
 import awsvideoconfig from '../../../aws-video-exports'
-import { VideoPlayer as VideoPlayerComponent, theme } from '../index'
+import { VideoPlayer as VideoPlayerComponent, defaultTheme } from '../index'
 
 const StyledContent = styled.div`
     position: relative;
@@ -13,7 +13,7 @@ const StyledContent = styled.div`
 `
 
 const Background = styled.div`
-    background: ${(props) => props.theme.secondaryColor};
+    background: ${(props) => props.theme.palette.secondary.color};
     width: 100%;
     position: absolute;
     z-index: 2;
@@ -63,8 +63,8 @@ const PresentationContainer = styled.div`
 `
 
 const Title = styled(Link)`
-    font-size: ${(props) => props.theme.textLg};
-    color: ${(props) => props.theme.secondaryContrast};
+    font-size: ${(props) => props.theme.text.large};
+    color: ${(props) => props.theme.palette.secondary.contrast};
     font-weight: 700;
 
     &hover {
@@ -75,8 +75,8 @@ const Title = styled(Link)`
 const Description = styled.div`
     padding-top: 20px;
     padding-right: 20px;
-    font-size: ${(props) => props.theme.textSm};
-    color: ${(props) => props.theme.secondaryContrast};
+    font-size: ${(props) => props.theme.text.small};
+    color: ${(props) => props.theme.palette.secondary.contrast};
     text-align: justify;
 `
 
@@ -111,13 +111,15 @@ const Content = ({ movie, onClose }: ContentProps) => {
 
     return (
         <StyledContent>
-            <Background theme={theme} />
+            <Background theme={defaultTheme} />
             <Container>
                 <PresentationContainer>
-                    <Title to={`/video/${movie.id}`} theme={theme}>
+                    <Title to={`/video/${movie.id}`} theme={defaultTheme}>
                         {movie.title}
                     </Title>
-                    <Description theme={theme}>{movie.description}</Description>
+                    <Description theme={defaultTheme}>
+                        {movie.description}
+                    </Description>
                 </PresentationContainer>
                 <PlayerContainer>
                     {<VideoPlayerComponent {...videoJsOptions} />}
