@@ -42,30 +42,28 @@ const listVodAssets = /* GraphQL */ `
 `
 
 async function fetchVodFiles(nextToken: string | null) {
-    const data = await Auth.currentSession()
-    const groups: Array<string> = data.getIdToken().payload['cognito:groups']
     if (nextToken !== null && nextToken !== '')
         return API.graphql({
             query: listVodAssets,
             variables: {
                 nextToken,
             },
-            authMode: !groups.includes('Admin')
-                ? GRAPHQL_AUTH_MODE.AWS_IAM
-                : undefined,
+            authMode:
+                Auth.Credentials.getCredSource() !== 'userPool'
+                    ? GRAPHQL_AUTH_MODE.AWS_IAM
+                    : GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
         }) as GraphQLResult<APIt.ListVodAssetsQuery>
     else
         return API.graphql({
             query: listVodAssets,
-            authMode: !groups.includes('Admin')
-                ? GRAPHQL_AUTH_MODE.AWS_IAM
-                : undefined,
+            authMode:
+                Auth.Credentials.getCredSource() !== 'userPool'
+                    ? GRAPHQL_AUTH_MODE.AWS_IAM
+                    : GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
         }) as GraphQLResult<APIt.ListVodAssetsQuery>
 }
 
 async function fetchHighlightedVideos() {
-    const data = await Auth.currentSession()
-    const groups: Array<string> = data.getIdToken().payload['cognito:groups']
     const filter: ModelvodAssetFilterInput = {
         highlighted: {
             eq: true,
@@ -74,23 +72,23 @@ async function fetchHighlightedVideos() {
     return API.graphql({
         query: listVodAssets,
         variables: { filter },
-        authMode: !groups.includes('Admin')
-            ? GRAPHQL_AUTH_MODE.AWS_IAM
-            : undefined,
+        authMode:
+            Auth.Credentials.getCredSource() !== 'userPool'
+                ? GRAPHQL_AUTH_MODE.AWS_IAM
+                : GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as GraphQLResult<APIt.GetVodAssetQuery>
 }
 
 async function fetchVodAsset(id: string) {
-    const data = await Auth.currentSession()
-    const groups: Array<string> = data.getIdToken().payload['cognito:groups']
     return API.graphql({
         query: getVodAsset,
         variables: {
             id,
         },
-        authMode: !groups.includes('Admin')
-            ? GRAPHQL_AUTH_MODE.AWS_IAM
-            : undefined,
+        authMode:
+            Auth.Credentials.getCredSource() !== 'userPool'
+                ? GRAPHQL_AUTH_MODE.AWS_IAM
+                : GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as GraphQLResult<APIt.GetVodAssetQuery>
 }
 
@@ -147,16 +145,15 @@ export type ListVodSections = {
 }
 
 async function fetchVodSections(id: string) {
-    const data = await Auth.currentSession()
-    const groups: Array<string> = data.getIdToken().payload['cognito:groups']
     return API.graphql({
         query: listVodSections,
         variables: {
             id: id,
         },
-        authMode: !groups.includes('Admin')
-            ? GRAPHQL_AUTH_MODE.AWS_IAM
-            : undefined,
+        authMode:
+            Auth.Credentials.getCredSource() !== 'userPool'
+                ? GRAPHQL_AUTH_MODE.AWS_IAM
+                : GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as GraphQLResult<ListVodSections>
 }
 

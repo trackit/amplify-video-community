@@ -69,10 +69,12 @@ const NavBar = ({ theme }: NavBarProps) => {
     const [groups, setGroups] = useState<Array<string>>([])
 
     useEffect(() => {
-        Auth.currentSession().then((data) => {
-            const groupsData = data.getIdToken().payload['cognito:groups']
-            if (groupsData !== undefined) setGroups(groupsData)
-        })
+        if (Auth.Credentials.getCredSource() === 'userPool') {
+            Auth.currentSession().then((data) => {
+                const groupsData = data.getIdToken().payload['cognito:groups']
+                if (groupsData !== undefined) setGroups(groupsData)
+            })
+        }
     }, [])
 
     return (

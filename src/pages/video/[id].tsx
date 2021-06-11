@@ -24,7 +24,6 @@ const VideoPlayer = ({ video }: VideoPlayerProps) => {
                 type: 'application/x-mpegURL',
             },
         ],
-        token: video?.token || '',
     }
 
     const Wrapper = styled.div`
@@ -37,16 +36,16 @@ type VideoCardProps = {
     asset: vodAsset
 }
 
+const Card = styled.div`
+    padding: 10px;
+    box-sizing: border-box;
+`
+
+const Title = styled.h2`
+    margin-bottom: 0;
+`
+
 const VideoCard = ({ asset }: VideoCardProps) => {
-    const Card = styled.div`
-        padding: 10px;
-        box-sizing: border-box;
-    `
-
-    const Title = styled.h2`
-        margin-bottom: 0;
-    `
-
     return (
         <Card>
             <VideoPlayer video={asset.video} />
@@ -69,7 +68,6 @@ const VideoPage = (props: PageProps) => {
                     console.log('object doesnt exist')
                 } else {
                     setAsset(data?.getVodAsset as vodAsset)
-                    console.log(data)
                 }
                 setLoaded(true)
             } catch (error) {
