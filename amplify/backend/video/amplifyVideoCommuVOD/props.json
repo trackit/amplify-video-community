@@ -15,23 +15,6 @@
     "parameters": {
         "authRoleName": {
             "Ref": "AuthRoleName"
-        },
-        "GraphQLAPIId": {
-            "Fn::GetAtt": [
-                "apiamplifyVideoCommuAPI",
-                "Outputs.GraphQLAPIIdOutput"
-            ]
-        },
-        "GraphQLEndpoint": {
-            "Fn::GetAtt": [
-                "apiamplifyVideoCommuAPI",
-                "Outputs.GraphQLAPIEndpointOutput"
-            ]
         }
-    },
-    "permissions": {
-        "permissionSchema": [
-            "admin"
-        ]
     }
 }

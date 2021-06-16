@@ -4,6 +4,7 @@ public
 .idea
 yarn.lock
 .DS_Store
+scripts/
 
 amplify/team-provider-info.json
 #amplify

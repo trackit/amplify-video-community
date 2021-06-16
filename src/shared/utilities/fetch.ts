@@ -1,21 +1,15 @@
-import { API, Storage, Auth } from 'aws-amplify'
+import { API, Storage } from 'aws-amplify'
 import { getSection, listSections } from '../../graphql/queries'
-import {
-    GraphQLResult,
-    GRAPHQL_AUTH_MODE,
-    GraphQLOptions,
-} from '@aws-amplify/api-graphql'
+import { GraphQLResult, GraphQLOptions } from '@aws-amplify/api-graphql'
 import awsmobile from '../../aws-exports'
 import * as APIt from '../../API'
 import { vodAsset } from '../../models'
+import { getAuthMode } from './helper'
 
 async function fetchSections() {
     const opts: GraphQLOptions = {
         query: listSections,
-        authMode:
-            Auth.Credentials.getCredSource() !== 'userPool'
-                ? GRAPHQL_AUTH_MODE.AWS_IAM
-                : GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        authMode: getAuthMode(),
     }
     return API.graphql(opts) as GraphQLResult<APIt.ListSectionsQuery>
 }
@@ -24,10 +18,7 @@ async function fetchSection(id: string | null) {
     return API.graphql({
         query: getSection,
         variables: { input: { id } },
-        authMode:
-            Auth.Credentials.getCredSource() !== 'userPool'
-                ? GRAPHQL_AUTH_MODE.AWS_IAM
-                : GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        authMode: getAuthMode(),
     }) as GraphQLResult<APIt.GetSectionQuery>
 }
 

@@ -1,8 +1,9 @@
-import { API, Auth } from 'aws-amplify'
-import { GraphQLResult, GRAPHQL_AUTH_MODE } from '@aws-amplify/api-graphql'
+import { API } from 'aws-amplify'
+import { GraphQLResult } from '@aws-amplify/api-graphql'
 import { getVodAsset } from '../../graphql/queries'
 import { ModelvodAssetFilterInput } from '../../API'
 import * as APIt from '../../API'
+import { getAuthMode } from './helper'
 
 const listVodAssets = /* GraphQL */ `
     query ListVodAssets(
@@ -48,18 +49,12 @@ async function fetchVodFiles(nextToken: string | null) {
             variables: {
                 nextToken,
             },
-            authMode:
-                Auth.Credentials.getCredSource() !== 'userPool'
-                    ? GRAPHQL_AUTH_MODE.AWS_IAM
-                    : GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+            authMode: getAuthMode(),
         }) as GraphQLResult<APIt.ListVodAssetsQuery>
     else
         return API.graphql({
             query: listVodAssets,
-            authMode:
-                Auth.Credentials.getCredSource() !== 'userPool'
-                    ? GRAPHQL_AUTH_MODE.AWS_IAM
-                    : GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+            authMode: getAuthMode(),
         }) as GraphQLResult<APIt.ListVodAssetsQuery>
 }
 
@@ -72,10 +67,7 @@ async function fetchHighlightedVideos() {
     return API.graphql({
         query: listVodAssets,
         variables: { filter },
-        authMode:
-            Auth.Credentials.getCredSource() !== 'userPool'
-                ? GRAPHQL_AUTH_MODE.AWS_IAM
-                : GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        authMode: getAuthMode(),
     }) as GraphQLResult<APIt.GetVodAssetQuery>
 }
 
@@ -85,10 +77,7 @@ async function fetchVodAsset(id: string) {
         variables: {
             id,
         },
-        authMode:
-            Auth.Credentials.getCredSource() !== 'userPool'
-                ? GRAPHQL_AUTH_MODE.AWS_IAM
-                : GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        authMode: getAuthMode(),
     }) as GraphQLResult<APIt.GetVodAssetQuery>
 }
 
@@ -150,10 +139,7 @@ async function fetchVodSections(id: string) {
         variables: {
             id: id,
         },
-        authMode:
-            Auth.Credentials.getCredSource() !== 'userPool'
-                ? GRAPHQL_AUTH_MODE.AWS_IAM
-                : GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        authMode: getAuthMode(),
     }) as GraphQLResult<ListVodSections>
 }
 

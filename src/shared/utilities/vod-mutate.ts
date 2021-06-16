@@ -82,6 +82,17 @@ async function setVideoObject(id: string) {
     )
 }
 
+function checkfileExtention(filename: string) {
+    const validThumbnailExtention = ['png', 'jpg', 'jpeg']
+    const validVodFileExtention = ['mp4', 'avi', 'mov', 'mkv']
+    const filePart = filename.toLowerCase().split('.')
+    return (
+        !validThumbnailExtention.includes(filePart[filePart.length - 1]) &&
+        !validVodFileExtention.includes(filePart[filePart.length - 1]) &&
+        filePart.length <= 1
+    )
+}
+
 const uploadVideo = async (
     title: string,
     description: string,
@@ -91,33 +102,39 @@ const uploadVideo = async (
     sectionsId: Array<undefined | string>
 ) => {
     const id = uuidv4()
+    if (
+        checkfileExtention(thumbnailFile.name) ||
+        checkfileExtention(vodFile.name)
+    ) {
+        return
+    }
     const vodExtension = vodFile.name.toLowerCase().split('.')
     const thumbnailExtension = thumbnailFile.name.toLowerCase().split('.')
     try {
         await putVodFile(vodFile, id, vodExtension)
     } catch (error) {
         console.error('vod-mutate.ts(putVodFile): ', error)
-        // return
+        return
     }
 
     try {
         await putThumbnailFile(thumbnailFile, id, thumbnailExtension)
     } catch (error) {
         console.error('vod-mutate.ts(putThumbnailFile): ', error)
-        // return
+        return
     }
 
     try {
         await setThumbnailObject(id, thumbnailExtension)
     } catch (error) {
         console.error('vod-mutate.tx(setThumbnailObject): ', error)
-        // return
+        return
     }
     try {
         await setVideoObject(id)
     } catch (error) {
         console.error('vod-mutate.tx(setVideoObject): ', error)
-        // return
+        return
     }
 
     try {
