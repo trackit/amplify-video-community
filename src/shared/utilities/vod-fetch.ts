@@ -1,8 +1,9 @@
-import { API, graphqlOperation } from 'aws-amplify'
+import { API } from 'aws-amplify'
 import { GraphQLResult } from '@aws-amplify/api-graphql'
 import { getVodAsset } from '../../graphql/queries'
 import { ModelvodAssetFilterInput } from '../../API'
 import * as APIt from '../../API'
+import { getAuthMode } from './helper'
 
 const listVodAssets = /* GraphQL */ `
     query ListVodAssets(
@@ -18,7 +19,6 @@ const listVodAssets = /* GraphQL */ `
                 highlighted
                 video {
                     id
-                    token
                     createdAt
                     updatedAt
                 }
@@ -44,13 +44,18 @@ const listVodAssets = /* GraphQL */ `
 
 async function fetchVodFiles(nextToken: string | null) {
     if (nextToken !== null && nextToken !== '')
-        return API.graphql(
-            graphqlOperation(listVodAssets, { nextToken: nextToken })
-        ) as GraphQLResult<APIt.ListVodAssetsQuery>
+        return API.graphql({
+            query: listVodAssets,
+            variables: {
+                nextToken,
+            },
+            authMode: getAuthMode(),
+        }) as GraphQLResult<APIt.ListVodAssetsQuery>
     else
-        return API.graphql(
-            graphqlOperation(listVodAssets)
-        ) as GraphQLResult<APIt.ListVodAssetsQuery>
+        return API.graphql({
+            query: listVodAssets,
+            authMode: getAuthMode(),
+        }) as GraphQLResult<APIt.ListVodAssetsQuery>
 }
 
 async function fetchHighlightedVideos() {
@@ -59,15 +64,21 @@ async function fetchHighlightedVideos() {
             eq: true,
         },
     }
-    return API.graphql(
-        graphqlOperation(listVodAssets, { filter })
-    ) as GraphQLResult<APIt.GetVodAssetQuery>
+    return API.graphql({
+        query: listVodAssets,
+        variables: { filter },
+        authMode: getAuthMode(),
+    }) as GraphQLResult<APIt.GetVodAssetQuery>
 }
 
 async function fetchVodAsset(id: string) {
-    return API.graphql(
-        graphqlOperation(getVodAsset, { id: id })
-    ) as GraphQLResult<APIt.GetVodAssetQuery>
+    return API.graphql({
+        query: getVodAsset,
+        variables: {
+            id,
+        },
+        authMode: getAuthMode(),
+    }) as GraphQLResult<APIt.GetVodAssetQuery>
 }
 
 export const listVodSections = /* GraphQL */ `
@@ -123,9 +134,13 @@ export type ListVodSections = {
 }
 
 async function fetchVodSections(id: string) {
-    return API.graphql(
-        graphqlOperation(listVodSections, { id: id })
-    ) as GraphQLResult<ListVodSections>
+    return API.graphql({
+        query: listVodSections,
+        variables: {
+            id: id,
+        },
+        authMode: getAuthMode(),
+    }) as GraphQLResult<ListVodSections>
 }
 
 export {

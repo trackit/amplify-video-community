@@ -3,38 +3,18 @@
         "resourceName": "amplifyVideoCommuVOD"
     },
     "template": {
+        "type": [
+            "HLS"
+        ],
         "name": "Amplify_Video_HLS.json"
     },
     "contentDeliveryNetwork": {
-        "signedKey": true,
-        "publicKey": "-----BEGIN PUBLIC KEY-----\\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwoN5VLwIKpgb/Vro7IWK\\na4Fkq/Kh0HGyGMKPhUjm6QL2qvRora+ROjvHZZcZKHnUqs+7gTCf7m5QsUnDkWkv\\noS033I87btiX+U9xffsoe2oKnrfKADSetwc1jtNDrFRO188FJ5JM5rAmdb416lDt\\n84NJVOKjb1O+HyyR275jQDaj3LPqpc3jOwzxVPt6ztkWamYeOnJqwKlMzG//ljOs\\nWxH89tLcfG3CVQpJuRZJnAu4czbKOZvYxXuiwb2A9OA8AgJlDUjn+7PSi0PowagV\\nwSNumadrQ7i3IqcLkEoO3RuC7ABqr4HjW2uMXosZQFvdToEWC61RFest7ULzwE3J\\n3wIDAQAB\\n-----END PUBLIC KEY-----\\n",
-        "rPublicName": "rCloudFrontPublicKeyep9bl4u3",
-        "publicKeyName": "amplifyVideoCommuVOD-dev-publickey-ep9bl4u3",
-        "secretPem": "amplifyVideoCommuVOD-dev-pem-ep9bl4u3",
-        "secretPemArn": "arn:aws:secretsmanager:us-west-2:394125495069:secret:amplifyVideoCommuVOD-dev-pem-ep9bl4u3-GwlGFq",
-        "functionName": "amplifyVideoCommuVOD-dev-tokenGen",
+        "signedKey": false,
         "enableDistribution": true
     },
     "parameters": {
         "authRoleName": {
             "Ref": "AuthRoleName"
-        },
-        "GraphQLAPIId": {
-            "Fn::GetAtt": [
-                "apiamplifyVideoCommuAPI",
-                "Outputs.GraphQLAPIIdOutput"
-            ]
-        },
-        "GraphQLEndpoint": {
-            "Fn::GetAtt": [
-                "apiamplifyVideoCommuAPI",
-                "Outputs.GraphQLAPIEndpointOutput"
-            ]
         }
-    },
-    "permissions": {
-        "permissionSchema": [
-            "admin"
-        ]
     }
 }

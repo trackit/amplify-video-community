@@ -1,10 +1,10 @@
 [
     {
         "groupName": "Admin",
-        "precedence": 1,
+        "precedence": 999,
         "customPolicies": [
             {
-                "PolicyName": "amplifyvideocommua9ca74e9-admin-group-policy",
+                "PolicyName": "amplifyvideocommu53af5c15-admin-group-policy",
                 "PolicyDocument": {
                     "Version": "2012-10-17",
                     "Statement": [
@@ -15,11 +15,15 @@
                                 "s3:PutObject",
                                 "s3:DeleteObject"
                             ],
-                            "Resource": "arn:aws:s3:::amplifyvideocommuvod-dev-input-ms8pb7ye/*"
+                            "Resource": "arn:aws:s3:::amplifyvideocommuvod-dev-input-4v9d02qg/*"
                         }
                     ]
                 }
             }
         ]
+    },
+    {
+        "groupName": "everyone",
+        "precedence": 1
     }
 ]

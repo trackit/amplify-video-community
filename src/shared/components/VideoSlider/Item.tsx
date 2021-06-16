@@ -35,11 +35,15 @@ const Item = ({ movie }: ItemProps) => {
 
     useEffect(() => {
         ;(async () => {
-            if (movie.thumbnail) {
-                setLoading(true)
-                const data = await fetchThumbnail(movie)
-                setThumbnailUrl(data as string)
-                setLoading(false)
+            try {
+                if (movie.thumbnail) {
+                    setLoading(true)
+                    const data = await fetchThumbnail(movie)
+                    setThumbnailUrl(data as string)
+                    setLoading(false)
+                }
+            } catch (error) {
+                console.error('item.tsx(fetchThumbnail):')
             }
         })()
     }, [movie])

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Auth } from 'aws-amplify'
+import { withAuthenticator } from '@aws-amplify/ui-react'
 import Layout from './Layout'
 import { Link } from 'gatsby'
 import styled from 'styled-components'
@@ -124,4 +125,4 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
     )
 }
 
-export default AdminLayout
+export default withAuthenticator(AdminLayout)

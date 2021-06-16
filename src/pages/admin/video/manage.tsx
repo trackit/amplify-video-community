@@ -22,7 +22,7 @@ const DashboardVideoManage = () => {
                 )
                 setVodAssets(data?.listVodAssets?.items as Array<vodAsset>)
             } catch (error) {
-                console.error('VideoManage.tsx ', error)
+                console.error('video/manage.tsx(fetchVodFiles):', error)
             }
             setLoading(false)
         })()

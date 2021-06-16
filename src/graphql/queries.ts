@@ -9,9 +9,10 @@ export const getVodAsset = /* GraphQL */ `
       title
       description
       highlighted
+      createdAt
+      updatedAt
       video {
         id
-        token
         createdAt
         updatedAt
       }
@@ -31,8 +32,6 @@ export const getVodAsset = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -48,9 +47,10 @@ export const listVodAssets = /* GraphQL */ `
         title
         description
         highlighted
+        createdAt
+        updatedAt
         video {
           id
-          token
           createdAt
           updatedAt
         }
@@ -63,8 +63,6 @@ export const listVodAssets = /* GraphQL */ `
         sections {
           nextToken
         }
-        createdAt
-        updatedAt
       }
       nextToken
     }
@@ -74,7 +72,6 @@ export const getVideoObject = /* GraphQL */ `
   query GetVideoObject($id: ID!) {
     getVideoObject(id: $id) {
       id
-      token
       createdAt
       updatedAt
     }
@@ -89,7 +86,6 @@ export const listVideoObjects = /* GraphQL */ `
     listVideoObjects(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        token
         createdAt
         updatedAt
       }
@@ -133,6 +129,8 @@ export const getSection = /* GraphQL */ `
     getSection(id: $id) {
       id
       label
+      createdAt
+      updatedAt
       videos {
         items {
           id
@@ -143,8 +141,6 @@ export const getSection = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -158,11 +154,11 @@ export const listSections = /* GraphQL */ `
       items {
         id
         label
+        createdAt
+        updatedAt
         videos {
           nextToken
         }
-        createdAt
-        updatedAt
       }
       nextToken
     }

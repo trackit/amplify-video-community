@@ -4,21 +4,17 @@ import videojs from 'video.js'
 
 import styled from 'styled-components'
 
-interface VideoPlayerPropsInferface extends videojs.PlayerOptions {
-    token: string
-}
-
 const VideoPlayerWrapper = styled.div`
     margin: auto;
     width: 70%;
 `
 
-export default class VideoPlayer extends React.Component<VideoPlayerPropsInferface> {
+export default class VideoPlayer extends React.Component<videojs.PlayerOptions> {
     private player?: videojs.Player
     private videoNode?: HTMLVideoElement
-    private options?: VideoPlayerPropsInferface
+    private options?: videojs.PlayerOptions
 
-    constructor(props: VideoPlayerPropsInferface) {
+    constructor(props: videojs.PlayerOptions) {
         super(props)
         this.options = props
         this.player = undefined
@@ -26,12 +22,6 @@ export default class VideoPlayer extends React.Component<VideoPlayerPropsInferfa
     }
 
     componentDidMount() {
-        // eslint-disable-next-line
-        videojs.Vhs.xhr.beforeRequest = (options: any) => {
-            options.uri = `${options.uri}${this.options?.token}`
-            return options
-        }
-
         this.player = videojs(this.videoNode, this.options).ready(function () {
             console.log('onPlayerReady', this)
         })

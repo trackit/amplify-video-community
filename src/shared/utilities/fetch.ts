@@ -1,25 +1,25 @@
-import { API, graphqlOperation, Storage } from 'aws-amplify'
+import { API, Storage } from 'aws-amplify'
 import { getSection, listSections } from '../../graphql/queries'
-import { GraphQLResult } from '@aws-amplify/api-graphql'
+import { GraphQLResult, GraphQLOptions } from '@aws-amplify/api-graphql'
 import awsmobile from '../../aws-exports'
 import * as APIt from '../../API'
 import { vodAsset } from '../../models'
+import { getAuthMode } from './helper'
 
-async function fetchSections(nextToken: string | null) {
-    if (nextToken !== null && nextToken !== '')
-        return API.graphql(
-            graphqlOperation(listSections, { nexToken: nextToken })
-        ) as GraphQLResult<APIt.ListSectionsQuery>
-    else
-        return API.graphql(
-            graphqlOperation(listSections)
-        ) as GraphQLResult<APIt.ListSectionsQuery>
+async function fetchSections() {
+    const opts: GraphQLOptions = {
+        query: listSections,
+        authMode: getAuthMode(),
+    }
+    return API.graphql(opts) as GraphQLResult<APIt.ListSectionsQuery>
 }
 
 async function fetchSection(id: string | null) {
-    return API.graphql(
-        graphqlOperation(getSection, { input: { id } })
-    ) as GraphQLResult<APIt.GetSectionQuery>
+    return API.graphql({
+        query: getSection,
+        variables: { input: { id } },
+        authMode: getAuthMode(),
+    }) as GraphQLResult<APIt.GetSectionQuery>
 }
 
 async function fetchThumbnail(asset: vodAsset) {

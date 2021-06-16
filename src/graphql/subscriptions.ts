@@ -9,9 +9,10 @@ export const onCreateVodAsset = /* GraphQL */ `
       title
       description
       highlighted
+      createdAt
+      updatedAt
       video {
         id
-        token
         createdAt
         updatedAt
       }
@@ -31,8 +32,6 @@ export const onCreateVodAsset = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -43,9 +42,10 @@ export const onUpdateVodAsset = /* GraphQL */ `
       title
       description
       highlighted
+      createdAt
+      updatedAt
       video {
         id
-        token
         createdAt
         updatedAt
       }
@@ -65,8 +65,6 @@ export const onUpdateVodAsset = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -77,9 +75,10 @@ export const onDeleteVodAsset = /* GraphQL */ `
       title
       description
       highlighted
+      createdAt
+      updatedAt
       video {
         id
-        token
         createdAt
         updatedAt
       }
@@ -99,8 +98,6 @@ export const onDeleteVodAsset = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -108,7 +105,6 @@ export const onCreateVideoObject = /* GraphQL */ `
   subscription OnCreateVideoObject {
     onCreateVideoObject {
       id
-      token
       createdAt
       updatedAt
     }
@@ -118,7 +114,6 @@ export const onUpdateVideoObject = /* GraphQL */ `
   subscription OnUpdateVideoObject {
     onUpdateVideoObject {
       id
-      token
       createdAt
       updatedAt
     }
@@ -128,7 +123,6 @@ export const onDeleteVideoObject = /* GraphQL */ `
   subscription OnDeleteVideoObject {
     onDeleteVideoObject {
       id
-      token
       createdAt
       updatedAt
     }
@@ -169,6 +163,8 @@ export const onCreateSection = /* GraphQL */ `
     onCreateSection {
       id
       label
+      createdAt
+      updatedAt
       videos {
         items {
           id
@@ -179,8 +175,6 @@ export const onCreateSection = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -189,6 +183,8 @@ export const onUpdateSection = /* GraphQL */ `
     onUpdateSection {
       id
       label
+      createdAt
+      updatedAt
       videos {
         items {
           id
@@ -199,8 +195,6 @@ export const onUpdateSection = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -209,6 +203,8 @@ export const onDeleteSection = /* GraphQL */ `
     onDeleteSection {
       id
       label
+      createdAt
+      updatedAt
       videos {
         items {
           id
@@ -219,8 +215,6 @@ export const onDeleteSection = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -230,23 +224,17 @@ export const onCreateVideoSection = /* GraphQL */ `
       id
       sectionID
       videoID
-      section {
-        id
-        label
-        videos {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      createdAt
+      updatedAt
       video {
         id
         title
         description
         highlighted
+        createdAt
+        updatedAt
         video {
           id
-          token
           createdAt
           updatedAt
         }
@@ -259,11 +247,16 @@ export const onCreateVideoSection = /* GraphQL */ `
         sections {
           nextToken
         }
+      }
+      section {
+        id
+        label
         createdAt
         updatedAt
+        videos {
+          nextToken
+        }
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -273,23 +266,17 @@ export const onUpdateVideoSection = /* GraphQL */ `
       id
       sectionID
       videoID
-      section {
-        id
-        label
-        videos {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      createdAt
+      updatedAt
       video {
         id
         title
         description
         highlighted
+        createdAt
+        updatedAt
         video {
           id
-          token
           createdAt
           updatedAt
         }
@@ -302,11 +289,16 @@ export const onUpdateVideoSection = /* GraphQL */ `
         sections {
           nextToken
         }
+      }
+      section {
+        id
+        label
         createdAt
         updatedAt
+        videos {
+          nextToken
+        }
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -316,23 +308,17 @@ export const onDeleteVideoSection = /* GraphQL */ `
       id
       sectionID
       videoID
-      section {
-        id
-        label
-        videos {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      createdAt
+      updatedAt
       video {
         id
         title
         description
         highlighted
+        createdAt
+        updatedAt
         video {
           id
-          token
           createdAt
           updatedAt
         }
@@ -345,11 +331,16 @@ export const onDeleteVideoSection = /* GraphQL */ `
         sections {
           nextToken
         }
+      }
+      section {
+        id
+        label
         createdAt
         updatedAt
+        videos {
+          nextToken
+        }
       }
-      createdAt
-      updatedAt
     }
   }
 `;

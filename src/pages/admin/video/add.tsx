@@ -40,27 +40,17 @@ const VideoAddForm = ({ vodFile }: VideoAddFormProps) => {
     const [selectedSections, setSelectedSections] = useState<
         Array<section | undefined>
     >([])
-    const [nextTokenSections, setNextTokenSections] =
-        useState<string | null>(null)
-    // const [loading, setLoading] = useState<boolean>(false)
 
     useEffect(() => {
         ;(async () => {
-            // setLoading(true)
             try {
-                const { data } = await fetchSections(nextTokenSections)
-                setNextTokenSections(
-                    data?.listSections?.nextToken
-                        ? data.listSections.nextToken
-                        : null
-                )
+                const { data } = await fetchSections()
                 setExistingSections(data?.listSections?.items as Array<section>)
             } catch (error) {
-                console.error('VideoAdd.tsx ', error)
+                console.error('video/add.tsx(fetchSections):', error)
             }
-            // setLoading(false)
         })()
-    }, [setExistingSections, setNextTokenSections, nextTokenSections])
+    }, [setExistingSections])
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault()
@@ -80,7 +70,7 @@ const VideoAddForm = ({ vodFile }: VideoAddFormProps) => {
                     })
                 )
             } catch (error) {
-                console.error('VideoAdd.tsx', error)
+                console.error('video/add.tsx(uploadVideo):', error)
             }
         })()
     }
