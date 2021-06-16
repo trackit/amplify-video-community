@@ -22,12 +22,6 @@ export default class VideoPlayer extends React.Component<videojs.PlayerOptions> 
     }
 
     componentDidMount() {
-        // eslint-disable-next-line
-        videojs.Vhs.xhr.beforeRequest = (options: any) => {
-            options.uri = `${options.uri}`
-            return options
-        }
-
         this.player = videojs(this.videoNode, this.options).ready(function () {
             console.log('onPlayerReady', this)
         })
