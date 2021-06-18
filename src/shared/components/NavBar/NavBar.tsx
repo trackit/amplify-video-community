@@ -80,15 +80,23 @@ const NavBar = ({ theme }: NavBarProps) => {
     return (
         <Header theme={theme}>
             <Title>
-                <TitleLink to="/" theme={theme}>
+                <TitleLink to="/videos" theme={theme}>
                     Amplify Video
                 </TitleLink>
             </Title>
             <Container>
-                <Toggle to="/" content={<>Home</>} theme={theme} />
                 <Toggle to="/videos" content={<>Videos</>} theme={theme} />
                 <Toggle to="/live" content={<>Live</>} theme={theme} />
                 <Toggle to="/webinars" content={<>Webinars</>} theme={theme} />
+                <Item>
+                    <a
+                        href="https://docs-amplify.trackit.io/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Documentation
+                    </a>
+                </Item>
                 <Toggle
                     to="/search"
                     content={<AiOutlineSearch />}
