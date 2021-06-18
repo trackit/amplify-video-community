@@ -30,6 +30,17 @@ const Link = styled(GatsbyLink)`
     }
 `
 
+const ExternalLink = styled.a`
+    color: ${(props) => props.theme.palette.primary.contrastText};
+    text-decoration: none;
+    transition: all 0.3s ease 0s;
+
+    &:hover {
+        font-weight: bold;
+        font-size: ${(props) => props.theme.palette.textMd};
+    }
+`
+
 const TitleLink = styled(GatsbyLink)`
     margin-right: auto;
     text-decoration: none;
@@ -89,13 +100,13 @@ const NavBar = ({ theme }: NavBarProps) => {
                 <Toggle to="/live" content={<>Live</>} theme={theme} />
                 <Toggle to="/webinars" content={<>Webinars</>} theme={theme} />
                 <Item>
-                    <a
+                    <ExternalLink
                         href="https://docs-amplify.trackit.io/"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
                         Documentation
-                    </a>
+                    </ExternalLink>
                 </Item>
                 <Toggle
                     to="/search"
