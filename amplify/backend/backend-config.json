@@ -67,5 +67,11 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }
+  },
+  "storage": {
+    "amplifyVideoCommuAssets": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
   }
 }
