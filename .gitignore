@@ -7,6 +7,7 @@ yarn.lock
 scripts/
 
 amplify/team-provider-info.json
+
 #amplify
 amplify/\#current-cloud-backend
 amplify/.config/local-*

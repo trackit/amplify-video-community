@@ -67,12 +67,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "amplifyvideocommu53af5c15PostConfirmation",
+            "amplifyvideocommu33267767PostConfirmation",
             {
               "Fn::Join": [
                 "",
                 [
-                  "amplifyvideocommu53af5c15PostConfirmation",
+                  "amplifyvideocommu33267767PostConfirmation",
                   "-",
                   {
                     "Ref": "env"
@@ -122,12 +122,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "amplifyvideocommu53af5c15PostConfirmation",
+            "amplifyvideocommu33267767PostConfirmation",
             {
               "Fn::Join": [
                 "",
                 [
-                  "amplifyvideocommu53af5c15PostConfirmation",
+                  "amplifyvideocommu33267767PostConfirmation",
                   "-",
                   {
                     "Ref": "env"

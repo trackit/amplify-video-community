@@ -11,10 +11,10 @@
     "userpoolArn": {
       "Type": "String"
     },
-    "functionamplifyvideocommu53af5c15PostConfirmationName": {
+    "functionamplifyvideocommu33267767PostConfirmationName": {
       "Type": "String"
     },
-    "functionamplifyvideocommu53af5c15PostConfirmationArn": {
+    "functionamplifyvideocommu33267767PostConfirmationArn": {
       "Type": "String"
     }
   },
@@ -34,7 +34,7 @@
       "Properties": {
         "Action": "lambda:InvokeFunction",
         "FunctionName": {
-          "Ref": "functionamplifyvideocommu53af5c15PostConfirmationName"
+          "Ref": "functionamplifyvideocommu33267767PostConfirmationName"
         },
         "Principal": "cognito-idp.amazonaws.com",
         "SourceArn": {
@@ -132,9 +132,9 @@
         "lambdaConfig": [
           {
             "triggerType": "PostConfirmation",
-            "lambdaFunctionName": "amplifyvideocommu53af5c15PostConfirmation",
+            "lambdaFunctionName": "amplifyvideocommu33267767PostConfirmation",
             "lambdaFunctionArn": {
-              "Ref": "functionamplifyvideocommu53af5c15PostConfirmationArn"
+              "Ref": "functionamplifyvideocommu33267767PostConfirmationArn"
             }
           }
         ]
