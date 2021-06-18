@@ -101,6 +101,7 @@ const NavBar = ({ theme }: NavBarProps) => {
                 <Toggle to="/webinars" content={<>Webinars</>} theme={theme} />
                 <Item>
                     <ExternalLink
+                        theme={theme}
                         href="https://docs-amplify.trackit.io/"
                         target="_blank"
                         rel="noopener noreferrer"
