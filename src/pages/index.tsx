@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { Layout } from '../shared/components'
 import { navigate } from 'gatsby'
 
 const HomePage = () => {
-    navigate('/videos')
+    useEffect(() => {
+        navigate('/videos')
+    })
     return (
         <Layout>
             <></>
