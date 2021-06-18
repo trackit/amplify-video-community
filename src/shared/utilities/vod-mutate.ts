@@ -114,14 +114,14 @@ const uploadVideo = async (
         await putVodFile(vodFile, id, vodExtension)
     } catch (error) {
         console.error('vod-mutate.ts(putVodFile): ', error)
-        // return
+        return
     }
 
     try {
         await putThumbnailFile(thumbnailFile, id, thumbnailExtension)
     } catch (error) {
         console.error('vod-mutate.ts(putThumbnailFile): ', error)
-        // return
+        return
     }
 
     try {
