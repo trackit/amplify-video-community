@@ -1,23 +1,23 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
     "Parameters": {
-        "authamplifyvideocommu53af5c15UserPoolId": {
+        "authamplifyvideocommu33267767UserPoolId": {
             "Type": "String",
-            "Default": "authamplifyvideocommu53af5c15UserPoolId"
+            "Default": "authamplifyvideocommu33267767UserPoolId"
         },
         
-        "authamplifyvideocommu53af5c15IdentityPoolId": {
+        "authamplifyvideocommu33267767IdentityPoolId": {
             "Type": "String",
-            "Default": "authamplifyvideocommu53af5c15IdentityPoolId"
+            "Default": "authamplifyvideocommu33267767IdentityPoolId"
         },
         
-        "authamplifyvideocommu53af5c15AppClientID": {
+        "authamplifyvideocommu33267767AppClientID": {
             "Type": "String",
-            "Default": "authamplifyvideocommu53af5c15AppClientID"
+            "Default": "authamplifyvideocommu33267767AppClientID"
         },
-        "authamplifyvideocommu53af5c15AppClientIDWeb": {
+        "authamplifyvideocommu33267767AppClientIDWeb": {
             "Type": "String",
-            "Default": "authamplifyvideocommu53af5c15AppClientIDWeb"
+            "Default": "authamplifyvideocommu33267767AppClientIDWeb"
         },
         "AuthRoleArn": {
             "Type": "String"
@@ -45,7 +45,7 @@
           "Type" : "AWS::Cognito::UserPoolGroup",
           "Properties" : {
               "GroupName" : "Admin",
-              "Precedence" : 999,
+              "Precedence" : 1,
               
               "RoleArn" : {
                 "Fn::GetAtt": [
@@ -55,7 +55,7 @@
               },
               
               "UserPoolId" : {
-                "Ref": "authamplifyvideocommu53af5c15UserPoolId"
+                "Ref": "authamplifyvideocommu33267767UserPoolId"
               }
             }
         },
@@ -68,7 +68,7 @@
                         "",
                         [
                           {
-                            "Ref": "authamplifyvideocommu53af5c15UserPoolId"
+                            "Ref": "authamplifyvideocommu33267767UserPoolId"
                           },
                           "-AdminGroupRole"
                         ]
@@ -85,81 +85,7 @@
                             },
                             "Action": "sts:AssumeRoleWithWebIdentity",
                             "Condition": {
-                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authamplifyvideocommu53af5c15IdentityPoolId"}},
-                              "ForAnyValue:StringLike": {"cognito-identity.amazonaws.com:amr": "authenticated"}
-                            }
-                        }
-                    ]
-                },
-                "Policies": [
-    {
-        "PolicyName": "amplifyvideocommu53af5c15-admin-group-policy",
-        "PolicyDocument": {
-            "Version": "2012-10-17",
-            "Statement": [
-                {
-                    "Sid": "VisualEditor0",
-                    "Effect": "Allow",
-                    "Action": [
-                        "s3:PutObject",
-                        "s3:DeleteObject"
-                    ],
-                    "Resource": "arn:aws:s3:::amplifyvideocommuvod-dev-input-4v9d02qg/*"
-                }
-            ]
-        }
-    }
-]
-                
-            }
-        },
-     
-    
-        "everyoneGroup": {
-          "Type" : "AWS::Cognito::UserPoolGroup",
-          "Properties" : {
-              "GroupName" : "everyone",
-              "Precedence" : 1,
-              
-              "RoleArn" : {
-                "Fn::GetAtt": [
-                    "everyoneGroupRole",
-                    "Arn"
-                ]
-              },
-              
-              "UserPoolId" : {
-                "Ref": "authamplifyvideocommu53af5c15UserPoolId"
-              }
-            }
-        },
-        
-        "everyoneGroupRole": {
-            "Type": "AWS::IAM::Role",
-            "Properties": {
-                "RoleName":{
-                    "Fn::Join": [
-                        "",
-                        [
-                          {
-                            "Ref": "authamplifyvideocommu53af5c15UserPoolId"
-                          },
-                          "-everyoneGroupRole"
-                        ]
-                    ]
-                },
-                "AssumeRolePolicyDocument": {
-                    "Version": "2012-10-17",
-                    "Statement": [
-                        {
-                            "Sid": "",
-                            "Effect": "Allow",
-                            "Principal": {
-                                "Federated": "cognito-identity.amazonaws.com"
-                            },
-                            "Action": "sts:AssumeRoleWithWebIdentity",
-                            "Condition": {
-                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authamplifyvideocommu53af5c15IdentityPoolId"}},
+                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authamplifyvideocommu33267767IdentityPoolId"}},
                               "ForAnyValue:StringLike": {"cognito-identity.amazonaws.com:amr": "authenticated"}
                             }
                         }
@@ -185,7 +111,7 @@
                                 "",
                                 [
 
-                                  "amplifyvideocommu53af5c15",
+                                  "amplifyvideocommu33267767",
                                   "-ExecutionRole-",
                                   {
                                     "Ref": "env"
@@ -346,16 +272,16 @@
                     "Ref": "UnauthRoleArn"
                 },
                 "identityPoolId": {
-                    "Ref": "authamplifyvideocommu53af5c15IdentityPoolId"
+                    "Ref": "authamplifyvideocommu33267767IdentityPoolId"
                 },
                 "userPoolId": {
-                    "Ref": "authamplifyvideocommu53af5c15UserPoolId"
+                    "Ref": "authamplifyvideocommu33267767UserPoolId"
                 },
                 "appClientIDWeb": {
-                    "Ref": "authamplifyvideocommu53af5c15AppClientIDWeb"
+                    "Ref": "authamplifyvideocommu33267767AppClientIDWeb"
                 },
                 "appClientID": {
-                    "Ref": "authamplifyvideocommu53af5c15AppClientID"
+                    "Ref": "authamplifyvideocommu33267767AppClientID"
                 },
                 "region": {
                     "Ref": "AWS::Region"
@@ -375,17 +301,6 @@
             "Value": {
                 "Fn::GetAtt": [
                     "AdminGroupRole",
-                    "Arn"
-                ]
-            }
-        
-        },
-        
-      
-        "everyoneGroupRole": {
-            "Value": {
-                "Fn::GetAtt": [
-                    "everyoneGroupRole",
                     "Arn"
                 ]
             }

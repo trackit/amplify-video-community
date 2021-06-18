@@ -1,12 +1,12 @@
 {
   "auth": {
-    "amplifyvideocommu53af5c15": {
+    "amplifyvideocommu33267767": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [
         {
           "category": "function",
-          "resourceName": "amplifyvideocommu53af5c15PostConfirmation",
+          "resourceName": "amplifyvideocommu33267767PostConfirmation",
           "triggerProvider": "Cognito",
           "attributes": [
             "Arn",
@@ -22,7 +22,7 @@
       "dependsOn": [
         {
           "category": "auth",
-          "resourceName": "amplifyvideocommu53af5c15",
+          "resourceName": "amplifyvideocommu33267767",
           "attributes": [
             "UserPoolId",
             "AppClientIDWeb",
@@ -42,7 +42,7 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authamplifyvideocommu53af5c15"
+              "userPoolId": "authamplifyvideocommu33267767"
             }
           },
           "additionalAuthenticationProviders": [
@@ -62,7 +62,7 @@
     }
   },
   "function": {
-    "amplifyvideocommu53af5c15PostConfirmation": {
+    "amplifyvideocommu33267767PostConfirmation": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
@@ -71,30 +71,7 @@
   "storage": {
     "amplifyVideoCommuAssets": {
       "service": "S3",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "amplifyvideocommu53af5c15",
-          "attributes": [
-            "UserPoolId"
-          ]
-        },
-        {
-          "category": "auth",
-          "resourceName": "userPoolGroups",
-          "attributes": [
-            "AdminGroupRole"
-          ]
-        },
-        {
-          "category": "auth",
-          "resourceName": "userPoolGroups",
-          "attributes": [
-            "everyoneGroupRole"
-          ]
-        }
-      ]
+      "providerPlugin": "awscloudformation"
     }
   }
 }

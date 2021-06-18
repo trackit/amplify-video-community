@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "amplifyvideocommu53af5c15_identitypool_53af5c15",
+    "identityPoolName": "amplifyvideocommu33267767_identitypool_33267767",
     "allowUnauthenticatedIdentities": true,
-    "resourceNameTruncated": "amplif53af5c15",
-    "userPoolName": "amplifyvideocommu53af5c15_userpool_53af5c15",
+    "resourceNameTruncated": "amplif33267767",
+    "userPoolName": "amplifyvideocommu33267767_userpool_33267767",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -28,10 +28,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "amplif53af5c15_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "amplif33267767_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "53af5c15",
-    "resourceName": "amplifyvideocommu53af5c15",
+    "sharedId": "33267767",
+    "resourceName": "amplifyvideocommu33267767",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -46,24 +46,15 @@
         ]
     },
     "useDefault": "manual",
-    "triggers": "{\n  \"PostConfirmation\": [\n    \"add-to-group\"\n  ]\n}",
     "userPoolGroupList": [
-        "Admin",
-        "everyone"
+        "Admin"
     ],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
-    "parentStack": {
-        "Ref": "AWS::StackId"
-    },
-    "breakCircularDependency": true,
-    "permissions": [
-        "{\n  \"policyName\": \"AddToGroupCognito\",\n  \"trigger\": \"PostConfirmation\",\n  \"effect\": \"Allow\",\n  \"actions\": [\n    \"cognito-idp:AdminAddUserToGroup\",\n    \"cognito-idp:GetGroup\",\n    \"cognito-idp:CreateGroup\"\n  ],\n  \"resource\": {\n    \"paramType\": \"!GetAtt\",\n    \"keys\": [\n      \"UserPool\",\n      \"Arn\"\n    ]\n  }\n}"
-    ],
     "dependsOn": [
         {
             "category": "function",
-            "resourceName": "amplifyvideocommu53af5c15PostConfirmation",
+            "resourceName": "amplifyvideocommu33267767PostConfirmation",
             "triggerProvider": "Cognito",
             "attributes": [
                 "Arn",
@@ -74,7 +65,15 @@
     "thirdPartyAuth": false,
     "userPoolGroups": true,
     "adminQueries": false,
+    "triggers": "{\n  \"PostConfirmation\": [\n    \"add-to-group\"\n  ]\n}",
     "hostedUI": false,
-    "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PostConfirmation\",\n    \"lambdaFunctionName\": \"amplifyvideocommu53af5c15PostConfirmation\"\n  }\n]",
+    "parentStack": {
+        "Ref": "AWS::StackId"
+    },
+    "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PostConfirmation\",\n    \"lambdaFunctionName\": \"amplifyvideocommu33267767PostConfirmation\"\n  }\n]",
+    "breakCircularDependency": true,
+    "permissions": [
+        "{\n  \"policyName\": \"AddToGroupCognito\",\n  \"trigger\": \"PostConfirmation\",\n  \"effect\": \"Allow\",\n  \"actions\": [\n    \"cognito-idp:AdminAddUserToGroup\",\n    \"cognito-idp:GetGroup\",\n    \"cognito-idp:CreateGroup\"\n  ],\n  \"resource\": {\n    \"paramType\": \"!GetAtt\",\n    \"keys\": [\n      \"UserPool\",\n      \"Arn\"\n    ]\n  }\n}"
+    ],
     "authProviders": []
 }
