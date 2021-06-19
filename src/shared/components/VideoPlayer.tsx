@@ -11,8 +11,8 @@ interface VideoPlayerPropsInferface extends videojs.PlayerOptions {
 
 const VideoPlayerWrapper = styled.div`
     margin: auto;
-    width: ${(props: { width: string; }) => props.width};
-`;
+    width: ${(props: { width: string }) => props.width};
+`
 
 export default class VideoPlayer extends React.Component<VideoPlayerPropsInferface> {
     private playerWidth: string
