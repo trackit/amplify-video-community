@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import Loader from 'react-loader-spinner'
 
-import { fetchVodAsset } from '../../shared/utilities/vod-fetch'
+import { fetchVodAsset, fetchVodFiles } from '../../shared/utilities/vod-fetch'
+import { fetchSections } from '../../shared/utilities/fetch'
 import {
     VideoPlayer as VideoPlayerComponent,
     Layout,
+    Section,
+    HighlightedSection,
 } from '../../shared/components'
 import awsvideoconfig from '../../aws-video-exports'
-import { videoObject, vodAsset } from '../../models'
+import { videoObject, vodAsset, section } from '../../models'
 import { PageProps } from 'gatsby'
 
 type VideoPlayerProps = {
@@ -55,10 +59,21 @@ const VideoCard = ({ asset }: VideoCardProps) => {
     )
 }
 
+const SectionContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+`
+
 const VideoPage = (props: PageProps) => {
     const id = props.params.id
     const [asset, setAsset] = useState<vodAsset | null>(null)
     const [loaded, setLoaded] = useState<boolean>(false)
+    const [vodAssets, setVodAssets] = useState<Array<vodAsset>>([])
+    const [sections, setSections] = useState<Array<section> | null>(null)
+    const [nextTokenVodFiles, setNextTokenVodFiles] =
+        useState<string | null>(null)
+    const [loadingVodFiles, setLoadingVodFiles] = useState(false)
+    const [loadingSections, setLoadingSections] = useState(false)
 
     useEffect(() => {
         ;(async () => {
@@ -77,6 +92,39 @@ const VideoPage = (props: PageProps) => {
         })()
     }, [fetchVodAsset])
 
+    useEffect(() => {
+        ;(async () => {
+            setLoadingVodFiles(true)
+            try {
+                const { data } = await fetchVodFiles(nextTokenVodFiles)
+                setNextTokenVodFiles(
+                    data?.listVodAssets?.nextToken
+                        ? data.listVodAssets.nextToken
+                        : null
+                )
+                setVodAssets(data?.listVodAssets?.items as Array<vodAsset>)
+                console.log('fetchVodFiles: ', data)
+            } catch (error) {
+                console.error('videos.tsx(fetchVodFiles):', error)
+            }
+            setLoadingVodFiles(false)
+        })()
+    }, [nextTokenVodFiles])
+
+    useEffect(() => {
+        ;(async () => {
+            setLoadingSections(true)
+            try {
+                const { data } = await fetchSections()
+                setSections(data?.listSections?.items as Array<section>)
+                console.log('fetchSections: ', data)
+            } catch (error) {
+                console.error('videos.tsx(fetchSections)', error)
+            }
+            setLoadingSections(false)
+        })()
+    }, [])
+
     return (
         <Layout>
             <>
@@ -84,6 +132,39 @@ const VideoPage = (props: PageProps) => {
                     <p>{!loaded ? 'Loading ...' : 'Video Not Found'}</p>
                 ) : (
                     <VideoCard asset={asset} />
+                )}
+                {loadingVodFiles || loadingSections ? (
+                    <Loader
+                        type="Bars"
+                        color="#FFA41C"
+                        height={100}
+                        width={100}
+                        timeout={3000}
+                    />
+                ) : (
+                    <SectionContainer>
+                        {sections &&
+                            sections.map((section: section) => {
+                                return section.label === 'Highlighted' ? (
+                                    <HighlightedSection
+                                        key={section.id}
+                                        title={section.label}
+                                        vodAsset={vodAssets
+                                            .filter(
+                                                (item: vodAsset) =>
+                                                    item.highlighted
+                                            )
+                                            .pop()}
+                                    />
+                                ) : (
+                                    <Section
+                                        key={section.id}
+                                        title={section.label}
+                                        vodAssets={vodAssets}
+                                    />
+                                )
+                            })}
+                    </SectionContainer>
                 )}
             </>
         </Layout>

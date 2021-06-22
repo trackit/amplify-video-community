@@ -2,31 +2,14 @@ import React from 'react'
 import Loader from 'react-loader-spinner'
 import { useEffect, useState } from 'react'
 
-import { Layout } from '../shared/components'
+import { Layout, Section, HighlightedSection } from '../shared/components'
 import { fetchSections, fetchVodFiles } from '../shared/utilities'
-import { Slider, Item } from '../shared/components/VideoSlider'
 import styled from 'styled-components'
 import { vodAsset, section } from '../models'
-
-function renderThumbnails(vodAssets: Array<vodAsset>) {
-    if (vodAssets.length > 0)
-        return vodAssets.map((movie: vodAsset) => (
-            <Item movie={movie} key={movie.id} />
-        ))
-    return <p>No VoD Files</p>
-}
 
 const SectionContainer = styled.div`
     display: flex;
     flex-direction: column;
-`
-
-const SectionItem = styled.div`
-    div {
-        h1 {
-            margin-left: 20px;
-        }
-    }
 `
 
 const VodApp = () => {
@@ -105,29 +88,22 @@ const VodApp = () => {
                 <SectionContainer>
                     {sections &&
                         sections.map((section: section) => {
-                            return (
-                                <SectionItem key={section.id}>
-                                    {section.label === 'Highlighted' ? (
-                                        <div key={section.label}>
-                                            <h1>{section.label}</h1>
-                                            <Slider>
-                                                {renderThumbnails(
-                                                    vodAssets.filter(
-                                                        (item: vodAsset) =>
-                                                            item.highlighted
-                                                    )
-                                                )}
-                                            </Slider>
-                                        </div>
-                                    ) : (
-                                        <div key={section.label}>
-                                            <h1>{section.label}</h1>
-                                            <Slider>
-                                                {renderThumbnails(vodAssets)}
-                                            </Slider>
-                                        </div>
-                                    )}
-                                </SectionItem>
+                            return section.label === 'Highlighted' ? (
+                                <HighlightedSection
+                                    key={section.id}
+                                    title={section.label}
+                                    vodAsset={vodAssets
+                                        .filter(
+                                            (item: vodAsset) => item.highlighted
+                                        )
+                                        .pop()}
+                                />
+                            ) : (
+                                <Section
+                                    key={section.id}
+                                    title={section.label}
+                                    vodAssets={vodAssets}
+                                />
                             )
                         })}
                 </SectionContainer>
