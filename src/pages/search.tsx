@@ -5,6 +5,51 @@ import { fetchThumbnail, fetchVodFiles } from '../shared/utilities'
 import { vodAsset } from '../models'
 import { AiOutlineSearch } from 'react-icons/ai'
 import Loader from 'react-loader-spinner'
+import styled from 'styled-components'
+
+const StyledSearchItem = styled.div`
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 4px solid ${(props) => props.theme.palette.primary.main};
+    border-radius: 50px;
+    position: relative;
+    height: 42px;
+    width: 300px;
+
+    table {
+        width: 100%;
+        height: 100%;
+        vertical-align: middle;
+    }
+`
+
+const StyledSearchInput = styled.input`
+    border: none;
+    height: 100%;
+    width: 100%;
+    padding: 0px 5px;
+    border-radius: 50px;
+    font-size: 18px;
+
+    &:focus {
+        outline: none;
+    }
+`
+
+const StyledSearch = styled.td`
+    & svg {
+        color: ${(props) => props.theme.palette.primary.main};
+        font-size: 26px;
+    }
+`
+
+const StyledVideoList = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+`
 
 type VideoItemProps = {
     asset: vodAsset
@@ -38,7 +83,16 @@ const VideoItem = ({ asset }: VideoItemProps) => {
             timeout={3000}
         />
     ) : (
-        <a href={`/video/${asset.id}`} style={{ padding: '10px' }}>
+        <a
+            href={`/video/${asset.id}`}
+            style={{
+                padding: '10px',
+                height: '100%',
+                width: '500px',
+                textDecoration: 'none',
+                color: 'inherit',
+            }}
+        >
             <img
                 style={{ height: '100%', width: '100%' }}
                 src={thumbnailUrl as string}
@@ -49,7 +103,7 @@ const VideoItem = ({ asset }: VideoItemProps) => {
     )
 }
 
-const LiveApp = () => {
+const SearchPage = () => {
     const [vodAssets, setVodAssets] = useState<Array<vodAsset>>([])
     const [nextToken, setNextToken] = useState<string | null>(null)
     const [searchValue, setSearchValue] = useState('')
@@ -79,25 +133,31 @@ const LiveApp = () => {
 
     return (
         <Layout>
-            <form style={{ textAlign: 'center', display: 'inline-block' }}>
-                <input
-                    type="text"
-                    placeholder="Search.."
-                    name="search"
-                    onChange={(e) => setSearchValue(e.target.value)}
-                />
-                <button type="submit">
-                    <AiOutlineSearch />
-                </button>
-            </form>
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
+            <StyledSearchItem>
+                <table>
+                    <tr>
+                        <StyledSearch>
+                            <StyledSearchInput
+                                type="text"
+                                placeholder="Search.."
+                                name="search"
+                                onChange={(e) => setSearchValue(e.target.value)}
+                            />
+                        </StyledSearch>
+                        <StyledSearch>
+                            <AiOutlineSearch />
+                        </StyledSearch>
+                    </tr>
+                </table>
+            </StyledSearchItem>
+            <StyledVideoList>
                 {vodAssets.filter(filterAssets).map((elem: vodAsset, key) => {
                     console.log(elem)
                     return <VideoItem asset={elem} key={key} />
                 })}
-            </div>
+            </StyledVideoList>
         </Layout>
     )
 }
 
-export default LiveApp
+export default SearchPage

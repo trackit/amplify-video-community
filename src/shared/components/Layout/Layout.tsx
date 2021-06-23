@@ -2,7 +2,6 @@ import React from 'react'
 import { NavBar } from '../'
 import theme from '../theme'
 import { ThemeProvider } from 'styled-components'
-
 import Amplify from 'aws-amplify'
 import awsmobile from '../../../aws-exports'
 
