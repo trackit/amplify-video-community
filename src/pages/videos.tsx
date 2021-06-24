@@ -1,9 +1,19 @@
 import React from 'react'
 import Loader from 'react-loader-spinner'
 import { useEffect, useState } from 'react'
+import { Thumbnail } from '../shared/types'
 
-import { Layout, Section, HighlightedSection } from '../shared/components'
-import { fetchSections, fetchVodFiles } from '../shared/utilities'
+import {
+    Layout,
+    Section,
+    HighlightedSection,
+    VideoCardSlider,
+} from '../shared/components'
+import {
+    fetchSections,
+    fetchVodFiles,
+    fetchThumbnail,
+} from '../shared/utilities'
 import styled from 'styled-components'
 import { vodAsset, section } from '../models'
 
@@ -14,6 +24,7 @@ const SectionContainer = styled.div`
 
 const VodApp = () => {
     const [vodAssets, setVodAssets] = useState<Array<vodAsset>>([])
+    const [thumbnails, setThumbnails] = useState<Array<Thumbnail>>([])
     const [sections, setSections] = useState<Array<section> | null>(null)
     const [nextTokenVodFiles, setNextTokenVodFiles] =
         useState<string | null>(null)
@@ -30,8 +41,20 @@ const VodApp = () => {
                         ? data.listVodAssets.nextToken
                         : null
                 )
-                setVodAssets(data?.listVodAssets?.items as Array<vodAsset>)
-                console.log('fetchVodFiles: ', data)
+                const assets = data?.listVodAssets?.items as Array<vodAsset>
+                setVodAssets(assets)
+
+                const thumbnailArr: Array<Thumbnail> = []
+                await Promise.all(
+                    assets.map(async (asset) => {
+                        const data = await fetchThumbnail(asset)
+                        thumbnailArr.push({
+                            obj: asset.thumbnail,
+                            url: data as string,
+                        })
+                    })
+                )
+                setThumbnails(thumbnailArr)
             } catch (error) {
                 console.error('videos.tsx(fetchVodFiles):', error)
             }
@@ -66,7 +89,6 @@ const VodApp = () => {
                     }
                 })
                 setSections(list)
-                console.log('fetchSections: ', data)
             } catch (error) {
                 console.error('videos.tsx(fetchSections)', error)
             }
@@ -86,6 +108,14 @@ const VodApp = () => {
                 />
             ) : (
                 <SectionContainer>
+                    <VideoCardSlider
+                        vod={vodAssets}
+                        thumbnails={[
+                            ...thumbnails,
+                            ...thumbnails,
+                            ...thumbnails,
+                        ]}
+                    />
                     {sections &&
                         sections.map((section: section) => {
                             return section.label === 'Highlighted' ? (
@@ -97,12 +127,18 @@ const VodApp = () => {
                                             (item: vodAsset) => item.highlighted
                                         )
                                         .pop()}
+                                    thumbnails={thumbnails}
                                 />
                             ) : (
                                 <Section
                                     key={section.id}
                                     title={section.label}
-                                    vodAssets={vodAssets}
+                                    vodAssets={[
+                                        ...vodAssets,
+                                        ...vodAssets,
+                                        ...vodAssets,
+                                    ]}
+                                    thumbnails={thumbnails}
                                 />
                             )
                         })}

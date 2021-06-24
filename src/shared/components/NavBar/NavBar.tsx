@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { AiOutlineSearch, AiOutlineSetting } from 'react-icons/ai'
 
-import styled, { DefaultTheme } from 'styled-components'
+import styled from 'styled-components'
 import { Auth } from 'aws-amplify'
 import { Link as GatsbyLink } from 'gatsby'
 
@@ -59,24 +59,17 @@ const Item = styled.li`
 type ToggleProps = {
     to: string
     content: React.ReactElement
-    theme: DefaultTheme
 }
 
-const Toggle = ({ to, content, theme }: ToggleProps) => {
+const Toggle = ({ to, content }: ToggleProps) => {
     return (
         <Item>
-            <Link to={to} theme={theme}>
-                {content}
-            </Link>
+            <Link to={to}>{content}</Link>
         </Item>
     )
 }
 
-type NavBarProps = {
-    theme: DefaultTheme
-}
-
-const NavBar = ({ theme }: NavBarProps) => {
+const NavBar = () => {
     const [groups, setGroups] = useState<Array<string>>([])
 
     useEffect(() => {
@@ -89,19 +82,16 @@ const NavBar = ({ theme }: NavBarProps) => {
     }, [])
 
     return (
-        <Header theme={theme}>
+        <Header>
             <Title>
-                <TitleLink to="/videos" theme={theme}>
-                    Amplify Video
-                </TitleLink>
+                <TitleLink to="/videos">Amplify Video</TitleLink>
             </Title>
             <Container>
-                <Toggle to="/videos" content={<>Videos</>} theme={theme} />
-                <Toggle to="/live" content={<>Live</>} theme={theme} />
-                <Toggle to="/webinars" content={<>Webinars</>} theme={theme} />
+                <Toggle to="/videos" content={<>Videos</>} />
+                <Toggle to="/live" content={<>Live</>} />
+                <Toggle to="/webinars" content={<>Webinars</>} />
                 <Item>
                     <ExternalLink
-                        theme={theme}
                         href="https://docs-amplify.trackit.io/"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -109,17 +99,9 @@ const NavBar = ({ theme }: NavBarProps) => {
                         Documentation
                     </ExternalLink>
                 </Item>
-                <Toggle
-                    to="/search"
-                    content={<AiOutlineSearch />}
-                    theme={theme}
-                />
+                <Toggle to="/search" content={<AiOutlineSearch />} />
                 {groups.includes('Admin') && (
-                    <Toggle
-                        to="/admin"
-                        content={<AiOutlineSetting />}
-                        theme={theme}
-                    />
+                    <Toggle to="/admin" content={<AiOutlineSetting />} />
                 )}
             </Container>
         </Header>

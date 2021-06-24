@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { vodAsset } from '../../../models'
-import { fetchThumbnail } from '../../utilities'
 import Loader from 'react-loader-spinner'
 import { navigate } from 'gatsby'
+import { Thumbnail } from '../../types'
+import { vodAsset } from '../../../models'
 
 type HighlightedVideoCardProps = {
+    thumbnail: Thumbnail | undefined
     vod: vodAsset | undefined
 }
 
@@ -20,32 +21,17 @@ const StyledHighlightedVideoCard = styled.div`
     }
 `
 
-const HighlightedVideoCard = ({ vod }: HighlightedVideoCardProps) => {
-    const [thumbnailUrl, setThumbnailUrl] = useState<string>('')
-    const [loading, setLoading] = useState(false)
-
-    useEffect(() => {
-        ;(async () => {
-            try {
-                if (vod?.thumbnail) {
-                    setLoading(true)
-                    const data = await fetchThumbnail(vod)
-                    setThumbnailUrl(data as string)
-                    setLoading(false)
-                }
-            } catch (error) {
-                console.error('item.tsx(fetchThumbnail):')
-            }
-        })()
-    }, [vod])
-
+const HighlightedVideoCard = ({
+    vod,
+    thumbnail,
+}: HighlightedVideoCardProps) => {
     const onClick = () => {
         navigate(`/video/${vod?.id}`)
     }
 
     return (
         <StyledHighlightedVideoCard onClick={onClick}>
-            {loading ? (
+            {!thumbnail ? (
                 <Loader
                     type="Rings"
                     color="#FFA41C"
@@ -54,7 +40,7 @@ const HighlightedVideoCard = ({ vod }: HighlightedVideoCardProps) => {
                     timeout={3000}
                 />
             ) : (
-                <img src={thumbnailUrl as string} alt="thumbnail" />
+                <img src={thumbnail.url as string} alt="thumbnail" />
             )}
         </StyledHighlightedVideoCard>
     )

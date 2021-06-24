@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { vodAsset } from '../../../models'
-import { fetchThumbnail } from '../../utilities'
 import Loader from 'react-loader-spinner'
 import { navigate } from 'gatsby'
+import { Thumbnail } from '../../types'
+import { vodAsset } from '../../../models'
 
 type VideoCardProps = {
+    thumbnail: Thumbnail | undefined
     vod: vodAsset | undefined
 }
 
@@ -19,33 +20,14 @@ const StyledVideoCard = styled.div`
     }
 `
 
-const VideoCard = ({ vod }: VideoCardProps) => {
-    const [thumbnailUrl, setThumbnailUrl] = useState<string>('')
-    const [loading, setLoading] = useState(false)
-
-    useEffect(() => {
-        ;(async () => {
-            try {
-                if (vod?.thumbnail) {
-                    setLoading(true)
-                    const data = await fetchThumbnail(vod)
-                    setThumbnailUrl(data as string)
-                    setLoading(false)
-                }
-            } catch (error) {
-                console.error('item.tsx(fetchThumbnail):')
-            }
-        })()
-    }, [vod])
-
+const VideoCard = ({ vod, thumbnail }: VideoCardProps) => {
     const onClick = () => {
-        console.log('wesh la zone')
         navigate(`/video/${vod?.id}`)
     }
 
     return (
         <StyledVideoCard onClick={onClick}>
-            {loading ? (
+            {!thumbnail ? (
                 <Loader
                     type="Rings"
                     color="#FFA41C"
@@ -54,7 +36,7 @@ const VideoCard = ({ vod }: VideoCardProps) => {
                     timeout={3000}
                 />
             ) : (
-                <img src={thumbnailUrl as string} alt="thumbnail" />
+                <img src={thumbnail.url} alt="thumbnail" />
             )}
         </StyledVideoCard>
     )
