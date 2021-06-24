@@ -4,8 +4,9 @@ import { Layout } from '../shared/components'
 import { fetchThumbnail, fetchVodFiles } from '../shared/utilities'
 import { vodAsset } from '../models'
 import { AiOutlineSearch } from 'react-icons/ai'
-import Loader from 'react-loader-spinner'
 import styled from 'styled-components'
+import VideoCard from '../shared/components/Video/VideoCard'
+import { Thumbnail } from '../shared/types'
 
 const StyledSearchItem = styled.div`
     margin: auto;
@@ -47,8 +48,20 @@ const StyledSearch = styled.td`
 const StyledVideoList = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-evenly;
     flex-wrap: wrap;
+`
+
+const StyledVideoCard = styled.div`
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    h3 {
+        text-align: center;
+    }
 `
 
 type VideoItemProps = {
@@ -56,17 +69,17 @@ type VideoItemProps = {
 }
 
 const VideoItem = ({ asset }: VideoItemProps) => {
-    const [thumbnailUrl, setThumbnailUrl] = useState<string>('')
-    const [isLoading, setLoading] = useState(false)
+    const [thumbnail, setThumbnail] = useState<Thumbnail | undefined>(undefined)
 
     useEffect(() => {
         ;(async () => {
             try {
                 if (asset.thumbnail) {
-                    setLoading(true)
                     const data = await fetchThumbnail(asset)
-                    setThumbnailUrl(data as string)
-                    setLoading(false)
+                    setThumbnail({
+                        obj: asset.thumbnail,
+                        url: data as string,
+                    })
                 }
             } catch (error) {
                 console.error('search.tsx(fetchThumbnail):')
@@ -74,32 +87,11 @@ const VideoItem = ({ asset }: VideoItemProps) => {
         })()
     }, [asset])
 
-    return isLoading ? (
-        <Loader
-            type="Rings"
-            color="#FFA41C"
-            height={100}
-            width={100}
-            timeout={3000}
-        />
-    ) : (
-        <a
-            href={`/video/${asset.id}`}
-            style={{
-                padding: '10px',
-                height: '100%',
-                width: '500px',
-                textDecoration: 'none',
-                color: 'inherit',
-            }}
-        >
-            <img
-                style={{ height: '100%', width: '100%' }}
-                src={thumbnailUrl as string}
-                alt="thumbnail"
-            />
-            <h3 style={{ textAlign: 'center' }}>{asset.title}</h3>
-        </a>
+    return (
+        <StyledVideoCard>
+            <VideoCard thumbnail={thumbnail} vod={asset} />
+            <h3>{asset.title}</h3>
+        </StyledVideoCard>
     )
 }
 
@@ -108,12 +100,9 @@ const SearchPage = () => {
     const [nextToken, setNextToken] = useState<string | null>(null)
     const [searchValue, setSearchValue] = useState('')
 
-    const filterAssets = (elem: vodAsset) => {
-        return (
-            elem.title.includes(searchValue) ||
-            elem.description.includes(searchValue)
-        )
-    }
+    const filterAssets = (elem: vodAsset) =>
+        elem.title.includes(searchValue) ||
+        elem.description.includes(searchValue)
 
     useEffect(() => {
         ;(async () => {
@@ -152,7 +141,6 @@ const SearchPage = () => {
             </StyledSearchItem>
             <StyledVideoList>
                 {vodAssets.filter(filterAssets).map((elem: vodAsset, key) => {
-                    console.log(elem)
                     return <VideoItem asset={elem} key={key} />
                 })}
             </StyledVideoList>
