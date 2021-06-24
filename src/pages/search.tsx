@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import styled from 'styled-components'
 
 import { Layout } from '../shared/components'
 import { fetchThumbnail, fetchVodFiles } from '../shared/utilities'
 import { vodAsset } from '../models'
 import { AiOutlineSearch } from 'react-icons/ai'
-import styled from 'styled-components'
 import VideoCard from '../shared/components/Video/VideoCard'
 import { Thumbnail } from '../shared/types'
 
@@ -98,7 +98,7 @@ const VideoItem = ({ asset }: VideoItemProps) => {
 const SearchPage = () => {
     const [vodAssets, setVodAssets] = useState<Array<vodAsset>>([])
     const [nextToken, setNextToken] = useState<string | null>(null)
-    const [searchValue, setSearchValue] = useState('')
+    const [searchValue, setSearchValue] = useState<string>('')
 
     const filterAssets = (elem: vodAsset) =>
         elem.title.includes(searchValue) ||
