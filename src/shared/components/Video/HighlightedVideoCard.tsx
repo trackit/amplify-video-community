@@ -11,14 +11,14 @@ type HighlightedVideoCardProps = {
 }
 
 const StyledHighlightedVideoCard = styled.div`
-    cursor: pointer;
-    margin-left: 10px;
-    margin-right: 10px;
-    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+`
 
-    img {
-        height: 27vh;
-    }
+const Image = styled.img`
+    cursor: pointer;
+    height: 27vh;
 `
 
 const HighlightedVideoCard = ({
@@ -40,7 +40,7 @@ const HighlightedVideoCard = ({
                     timeout={3000}
                 />
             ) : (
-                <img src={thumbnail.url as string} alt="thumbnail" />
+                <Image src={thumbnail.url as string} alt="thumbnail" />
             )}
         </StyledHighlightedVideoCard>
     )

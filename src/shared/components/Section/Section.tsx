@@ -1,50 +1,90 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { vodAsset } from '../../../models'
+import Slider from 'react-slick'
+import { vodAsset, section } from '../../../models'
 import VideoCard from '../Video/VideoCard'
 import { Thumbnail } from '../../types'
 
 type SectionProps = {
-    title: string
-    vodAssets: Array<vodAsset> | null
+    section: section
+    vodAssets: Array<vodAsset>
     thumbnails: Array<Thumbnail>
 }
 
-const StyledSectionContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-left;
+const StyledTitle = styled.h1``
 
-    margin-left: 5px;
-    margin-right: 5px;
+const Slide = styled.div`
+    margin: 0 auto;
 `
 
-const StyledTitle = styled.h1`
-    margin-left: 15px;
+const StyledSection = styled.div`
+    margin: 0 15px;
 `
 
-const Section = ({ title, vodAssets, thumbnails }: SectionProps) => {
+const Section = ({ section, vodAssets, thumbnails }: SectionProps) => {
+    const [filteredAssets, setFilteredAssets] = useState<Array<vodAsset>>([])
+    const slidesToShow = (slidesNumber: number) =>
+        filteredAssets.length >= slidesNumber
+            ? slidesNumber
+            : filteredAssets.length
+    const sliderSettings = {
+        infinite: true,
+        draggable: true,
+        swipe: true,
+        swipeToSlide: true,
+        speed: 300,
+        slidesToShow: slidesToShow(5),
+        centerPadding: 0,
+        responsive: [
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: slidesToShow(3),
+                },
+            },
+            {
+                breakpoint: 640,
+                settings: {
+                    slidesToShow: slidesToShow(1),
+                },
+            },
+        ],
+    }
+
+    useEffect(() => {
+        setFilteredAssets(
+            vodAssets.filter((asset) => {
+                let returnValue = false
+                // eslint-disable-next-line
+                asset.sections?.items.forEach((item) => {
+                    if (item?.section.id === section.id) {
+                        returnValue = true
+                    }
+                })
+                return returnValue
+            })
+        )
+    }, [])
+
     return (
-        <div>
-            <StyledTitle>{title}</StyledTitle>
-            <StyledSectionContainer>
-                {vodAssets &&
-                    vodAssets.map((asset) => {
-                        return (
+        <StyledSection>
+            <StyledTitle>{section.label}</StyledTitle>
+            <Slider {...sliderSettings}>
+                {filteredAssets &&
+                    filteredAssets.map((asset) => (
+                        <Slide key={asset.id}>
                             <VideoCard
-                                key={asset.id}
-                                vod={asset}
                                 thumbnail={thumbnails.find(
                                     (thumbnail) =>
-                                        asset.thumbnail?.id ===
+                                        asset?.thumbnail?.id ===
                                         thumbnail.obj?.id
                                 )}
+                                vod={asset}
                             />
-                        )
-                    })}
-            </StyledSectionContainer>
-        </div>
+                        </Slide>
+                    ))}
+            </Slider>
+        </StyledSection>
     )
 }
 

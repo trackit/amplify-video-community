@@ -13,23 +13,19 @@ type HighlightedProps = {
 const StyledHighlightedContainer = styled.div`
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-
-    margin-left: 5px;
-    margin-right: 5px;
+    flex-wrap: wrap;
+    gap: 15px;
 `
 
-const StyledTitle = styled.h1`
-    margin-left: 15px;
-`
+const StyledTitle = styled.h1``
 
 const StyledContentContainer = styled.div`
-    margin-left: 10px;
+    flex: 1 0;
+    align-self: center;
 `
 
 const StyledContentTitle = styled.p`
-    font-size: 2.2em;
+    font-size: 1.7em;
     font-weight: bold;
     margin-bottom: 12px;
     margin-top 0;
@@ -39,9 +35,14 @@ const StyledContent = styled.p`
     font-size: 1em;
 `
 
+const StyledHighlighted = styled.div`
+    margin: 0 15px;
+    margin-bottom: 25px;
+`
+
 const Highlighted = ({ title, vodAsset, thumbnails }: HighlightedProps) => {
     return (
-        <div>
+        <StyledHighlighted>
             <StyledTitle>{title}</StyledTitle>
             <StyledHighlightedContainer>
                 <HighlightedVideoCard
@@ -52,17 +53,11 @@ const Highlighted = ({ title, vodAsset, thumbnails }: HighlightedProps) => {
                     )}
                 />
                 <StyledContentContainer>
-                    <StyledContentTitle>Titre</StyledContentTitle>
-                    <StyledContent>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Sint modi tempore beatae enim, deserunt delectus fuga
-                        doloribus mollitia soluta neque, a magni, aliquam
-                        tempora architecto optio odit dignissimos assumenda
-                        quis.
-                    </StyledContent>
+                    <StyledContentTitle>{vodAsset?.title}</StyledContentTitle>
+                    <StyledContent>{vodAsset?.description}</StyledContent>
                 </StyledContentContainer>
             </StyledHighlightedContainer>
-        </div>
+        </StyledHighlighted>
     )
 }
 

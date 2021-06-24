@@ -20,6 +20,7 @@ import { vodAsset, section } from '../models'
 const SectionContainer = styled.div`
     display: flex;
     flex-direction: column;
+    gap: 25px;
 `
 
 const VodApp = () => {
@@ -108,14 +109,7 @@ const VodApp = () => {
                 />
             ) : (
                 <SectionContainer>
-                    <VideoCardSlider
-                        vod={vodAssets}
-                        thumbnails={[
-                            ...thumbnails,
-                            ...thumbnails,
-                            ...thumbnails,
-                        ]}
-                    />
+                    <VideoCardSlider vod={vodAssets} thumbnails={thumbnails} />
                     {sections &&
                         sections.map((section: section) => {
                             return section.label === 'Highlighted' ? (
@@ -132,12 +126,8 @@ const VodApp = () => {
                             ) : (
                                 <Section
                                     key={section.id}
-                                    title={section.label}
-                                    vodAssets={[
-                                        ...vodAssets,
-                                        ...vodAssets,
-                                        ...vodAssets,
-                                    ]}
+                                    section={section}
+                                    vodAssets={vodAssets}
                                     thumbnails={thumbnails}
                                 />
                             )

@@ -9,7 +9,7 @@ const StyledArrow = styled.div`
     color: black;
 
     & svg {
-        transition: color: 300ms;
+        transition: color 300ms;
     }
 
     & svg:hover {

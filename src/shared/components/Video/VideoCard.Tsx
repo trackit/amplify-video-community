@@ -11,13 +11,13 @@ type VideoCardProps = {
 }
 
 const StyledVideoCard = styled.div`
-    cursor: pointer;
-    margin-left: 10px;
-    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+`
 
-    img {
-        width: 21vw;
-    }
+const Image = styled.img`
+    cursor: pointer;
+    width: 85%;
 `
 
 const VideoCard = ({ vod, thumbnail }: VideoCardProps) => {
@@ -26,7 +26,7 @@ const VideoCard = ({ vod, thumbnail }: VideoCardProps) => {
     }
 
     return (
-        <StyledVideoCard onClick={onClick}>
+        <StyledVideoCard>
             {!thumbnail ? (
                 <Loader
                     type="Rings"
@@ -36,7 +36,7 @@ const VideoCard = ({ vod, thumbnail }: VideoCardProps) => {
                     timeout={3000}
                 />
             ) : (
-                <img src={thumbnail.url} alt="thumbnail" />
+                <Image src={thumbnail.url} alt="thumbnail" onClick={onClick} />
             )}
         </StyledVideoCard>
     )

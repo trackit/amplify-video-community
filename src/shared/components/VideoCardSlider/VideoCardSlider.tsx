@@ -13,6 +13,7 @@ type VideoCardSliderProps = {
 
 const StyledVideoCardSlider = styled.div`
     margin: 4vh;
+    margin-bottom: 0;
 `
 
 const Slide = styled.div`
@@ -21,45 +22,40 @@ const Slide = styled.div`
     opacity: 0.5;
 
     & img {
-        width: 40vw;
+        width: 100%;
         margin: 0 auto;
     }
 `
-
 const ActiveSlide = styled(Slide)`
     transform: scale(1);
     opacity: 1;
-    z-index: 5;
+    z-index: 10;
 `
 
 const VideoCardSlider = ({ vod, thumbnails }: VideoCardSliderProps) => {
     const [imageIndex, setImageIndex] = useState<number>(0)
+    const slidesToShow = (slidesNumber: number) =>
+        thumbnails.length >= slidesNumber ? slidesNumber : thumbnails.length
 
     const sliderSettings = {
         infinite: true,
         className: 'center',
         centerMode: true,
         lazyLoad: true,
-        autoplay: true,
+        autoplay: false,
         autoplaySpeed: 3500,
         draggable: true,
         speed: 300,
-        slidesToShow: 3,
+        slidesToShow: slidesToShow(3),
         centerPadding: 0,
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />,
         beforeChange: (current: number, next: number) => setImageIndex(next),
         responsive: [
             {
-                breakpoint: 600,
+                breakpoint: 768,
                 settings: {
-                    slidesToShow: 2,
-                },
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
+                    slidesToShow: slidesToShow(1),
                 },
             },
         ],

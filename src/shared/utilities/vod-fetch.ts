@@ -31,6 +31,10 @@ const listVodAssets = /* GraphQL */ `
                 sections {
                     items {
                         id
+                        section {
+                            id
+                            label
+                        }
                     }
                     nextToken
                 }
