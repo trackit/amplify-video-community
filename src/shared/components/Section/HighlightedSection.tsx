@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+
 import { vodAsset } from '../../../models'
 import HighlightedVideoCard from '../Video/HighlightedVideoCard'
 import { Thumbnail } from '../../types'

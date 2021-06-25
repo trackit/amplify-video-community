@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Loader from 'react-loader-spinner'
 import { navigate } from 'gatsby'
+
 import { Thumbnail } from '../../types'
 import { vodAsset } from '../../../models'
 

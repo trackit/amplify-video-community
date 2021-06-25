@@ -1,8 +1,9 @@
 import React from 'react'
 import Loader from 'react-loader-spinner'
 import { useEffect, useState } from 'react'
-import { Thumbnail } from '../shared/types'
+import styled from 'styled-components'
 
+import { Thumbnail } from '../shared/types'
 import {
     Layout,
     Section,
@@ -14,7 +15,6 @@ import {
     fetchVodFiles,
     fetchThumbnail,
 } from '../shared/utilities'
-import styled from 'styled-components'
 import { vodAsset, section } from '../models'
 
 const SectionContainer = styled.div`

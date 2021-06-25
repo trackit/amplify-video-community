@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Loader from 'react-loader-spinner'
+import { PageProps } from 'gatsby'
 
+import awsvideoconfig from '../../aws-video-exports'
 import { fetchVodAsset, fetchVodFiles } from '../../shared/utilities/vod-fetch'
 import { fetchSections } from '../../shared/utilities/fetch'
 import {
@@ -10,9 +12,7 @@ import {
     Section,
     HighlightedSection,
 } from '../../shared/components'
-import awsvideoconfig from '../../aws-video-exports'
 import { videoObject, vodAsset, section } from '../../models'
-import { PageProps } from 'gatsby'
 
 type VideoPlayerProps = {
     video: videoObject | undefined
@@ -72,8 +72,8 @@ const VideoPage = (props: PageProps) => {
     const [sections, setSections] = useState<Array<section> | null>(null)
     const [nextTokenVodFiles, setNextTokenVodFiles] =
         useState<string | null>(null)
-    const [loadingVodFiles, setLoadingVodFiles] = useState(false)
-    const [loadingSections, setLoadingSections] = useState(false)
+    const [loadingVodFiles, setLoadingVodFiles] = useState<boolean>(false)
+    const [loadingSections, setLoadingSections] = useState<boolean>(false)
 
     useEffect(() => {
         ;(async () => {

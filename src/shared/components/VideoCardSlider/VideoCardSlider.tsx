@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import Slider from 'react-slick'
+
 import { NextArrow, PrevArrow } from './Arrows'
 import VideoCard from '../Video/VideoCard'
 import { Thumbnail } from '../../types'

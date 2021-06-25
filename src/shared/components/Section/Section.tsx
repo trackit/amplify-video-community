@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Slider from 'react-slick'
+
 import { vodAsset, section } from '../../../models'
 import VideoCard from '../Video/VideoCard'
 import { Thumbnail } from '../../types'
@@ -55,6 +56,7 @@ const Section = ({ section, vodAssets, thumbnails }: SectionProps) => {
         setFilteredAssets(
             vodAssets.filter((asset) => {
                 let returnValue = false
+                // TODO: create according model for vodAssets (with sections details from custom graphql call)
                 // eslint-disable-next-line
                 asset.sections?.items.forEach((item) => {
                     if (item?.section.id === section.id) {
