@@ -1,36 +1,31 @@
 import React from 'react'
 import Loader from 'react-loader-spinner'
 import { useEffect, useState } from 'react'
-
-import { Layout } from '../shared/components'
-import { fetchSections, fetchVodFiles } from '../shared/utilities'
-import { Slider, Item } from '../shared/components/VideoSlider'
 import styled from 'styled-components'
-import { vodAsset, section } from '../models'
 
-function renderThumbnails(vodAssets: Array<vodAsset>) {
-    if (vodAssets.length > 0)
-        return vodAssets.map((movie: vodAsset) => (
-            <Item movie={movie} key={movie.id} />
-        ))
-    return <p>No VoD Files</p>
-}
+import { Thumbnail } from '../shared/types'
+import {
+    Layout,
+    Section,
+    HighlightedSection,
+    VideoCardSlider,
+} from '../shared/components'
+import {
+    fetchSections,
+    fetchVodFiles,
+    fetchThumbnail,
+} from '../shared/utilities'
+import { vodAsset, section } from '../models'
 
 const SectionContainer = styled.div`
     display: flex;
     flex-direction: column;
-`
-
-const SectionItem = styled.div`
-    div {
-        h1 {
-            margin-left: 20px;
-        }
-    }
+    gap: 25px;
 `
 
 const VodApp = () => {
     const [vodAssets, setVodAssets] = useState<Array<vodAsset>>([])
+    const [thumbnails, setThumbnails] = useState<Array<Thumbnail>>([])
     const [sections, setSections] = useState<Array<section> | null>(null)
     const [nextTokenVodFiles, setNextTokenVodFiles] =
         useState<string | null>(null)
@@ -47,8 +42,20 @@ const VodApp = () => {
                         ? data.listVodAssets.nextToken
                         : null
                 )
-                setVodAssets(data?.listVodAssets?.items as Array<vodAsset>)
-                console.log('fetchVodFiles: ', data)
+                const assets = data?.listVodAssets?.items as Array<vodAsset>
+                setVodAssets(assets)
+
+                const thumbnailArr: Array<Thumbnail> = []
+                await Promise.all(
+                    assets.map(async (asset) => {
+                        const data = await fetchThumbnail(asset)
+                        thumbnailArr.push({
+                            obj: asset.thumbnail,
+                            url: data as string,
+                        })
+                    })
+                )
+                setThumbnails(thumbnailArr)
             } catch (error) {
                 console.error('videos.tsx(fetchVodFiles):', error)
             }
@@ -83,7 +90,6 @@ const VodApp = () => {
                     }
                 })
                 setSections(list)
-                console.log('fetchSections: ', data)
             } catch (error) {
                 console.error('videos.tsx(fetchSections)', error)
             }
@@ -103,31 +109,27 @@ const VodApp = () => {
                 />
             ) : (
                 <SectionContainer>
+                    <VideoCardSlider vod={vodAssets} thumbnails={thumbnails} />
                     {sections &&
                         sections.map((section: section) => {
-                            return (
-                                <SectionItem key={section.id}>
-                                    {section.label === 'Highlighted' ? (
-                                        <div key={section.label}>
-                                            <h1>{section.label}</h1>
-                                            <Slider>
-                                                {renderThumbnails(
-                                                    vodAssets.filter(
-                                                        (item: vodAsset) =>
-                                                            item.highlighted
-                                                    )
-                                                )}
-                                            </Slider>
-                                        </div>
-                                    ) : (
-                                        <div key={section.label}>
-                                            <h1>{section.label}</h1>
-                                            <Slider>
-                                                {renderThumbnails(vodAssets)}
-                                            </Slider>
-                                        </div>
-                                    )}
-                                </SectionItem>
+                            return section.label === 'Highlighted' ? (
+                                <HighlightedSection
+                                    key={section.id}
+                                    title={section.label}
+                                    vodAsset={vodAssets
+                                        .filter(
+                                            (item: vodAsset) => item.highlighted
+                                        )
+                                        .pop()}
+                                    thumbnails={thumbnails}
+                                />
+                            ) : (
+                                <Section
+                                    key={section.id}
+                                    section={section}
+                                    vodAssets={vodAssets}
+                                    thumbnails={thumbnails}
+                                />
                             )
                         })}
                 </SectionContainer>

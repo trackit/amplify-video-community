@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavBar } from '../'
 import theme from '../theme'
+import { ThemeProvider } from 'styled-components'
 
 import Amplify from 'aws-amplify'
 import awsmobile from '../../../aws-exports'
@@ -13,10 +14,10 @@ type LayoutProps = {
 
 const Layout = ({ children }: LayoutProps) => {
     return (
-        <div>
-            <NavBar theme={theme} />
+        <ThemeProvider theme={theme}>
+            <NavBar />
             {children}
-        </div>
+        </ThemeProvider>
     )
 }
 
