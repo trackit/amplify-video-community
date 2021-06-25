@@ -5,7 +5,7 @@ import { PageProps } from 'gatsby'
 
 import awsvideoconfig from '../../aws-video-exports'
 import { fetchVodAsset, fetchVodFiles } from '../../shared/utilities/vod-fetch'
-import { fetchSections } from '../../shared/utilities/fetch'
+import { fetchSections, fetchThumbnail } from '../../shared/utilities'
 import {
     VideoPlayer as VideoPlayerComponent,
     Layout,
@@ -13,6 +13,7 @@ import {
     HighlightedSection,
 } from '../../shared/components'
 import { videoObject, vodAsset, section } from '../../models'
+import { Thumbnail } from '../../shared/types'
 
 type VideoPlayerProps = {
     video: videoObject | undefined
@@ -74,6 +75,7 @@ const VideoPage = (props: PageProps) => {
         useState<string | null>(null)
     const [loadingVodFiles, setLoadingVodFiles] = useState<boolean>(false)
     const [loadingSections, setLoadingSections] = useState<boolean>(false)
+    const [thumbnails, setThumbnails] = useState<Array<Thumbnail>>([])
 
     useEffect(() => {
         ;(async () => {
@@ -102,10 +104,22 @@ const VideoPage = (props: PageProps) => {
                         ? data.listVodAssets.nextToken
                         : null
                 )
-                setVodAssets(data?.listVodAssets?.items as Array<vodAsset>)
-                console.log('fetchVodFiles: ', data)
+                const assets = data?.listVodAssets?.items as Array<vodAsset>
+                setVodAssets(assets)
+
+                const thumbnailArr: Array<Thumbnail> = []
+                await Promise.all(
+                    assets.map(async (asset) => {
+                        const data = await fetchThumbnail(asset)
+                        thumbnailArr.push({
+                            obj: asset.thumbnail,
+                            url: data as string,
+                        })
+                    })
+                )
+                setThumbnails(thumbnailArr)
             } catch (error) {
-                console.error('videos.tsx(fetchVodFiles):', error)
+                console.error('video/[id].tsx(fetchVodFiles):', error)
             }
             setLoadingVodFiles(false)
         })()
@@ -149,6 +163,7 @@ const VideoPage = (props: PageProps) => {
                                     <HighlightedSection
                                         key={section.id}
                                         title={section.label}
+                                        thumbnails={thumbnails}
                                         vodAsset={vodAssets
                                             .filter(
                                                 (item: vodAsset) =>
@@ -159,8 +174,9 @@ const VideoPage = (props: PageProps) => {
                                 ) : (
                                     <Section
                                         key={section.id}
-                                        title={section.label}
+                                        section={section}
                                         vodAssets={vodAssets}
+                                        thumbnails={thumbnails}
                                     />
                                 )
                             })}
