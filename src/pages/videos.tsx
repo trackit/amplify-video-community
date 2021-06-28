@@ -35,6 +35,7 @@ const VodApp = () => {
         useState<string | null>(null)
     const [loadingVodFiles, setLoadingVodFiles] = useState<boolean>(false)
     const [loadingSections, setLoadingSections] = useState<boolean>(false)
+    const [haveHighlightedContent, setHaveHighlightedContent] = useState(false)
 
     useEffect(() => {
         ;(async () => {
@@ -49,12 +50,14 @@ const VodApp = () => {
                 const assets = data?.listVideoOnDemands
                     ?.items as Array<VideoOnDemand>
                 setVodAssets(assets)
-
-                console.log('assets: ', assets)
                 const thumbnailArr: Array<{
                     obj: Thumbnail | undefined
                     url: string
                 }> = []
+
+                if (assets.findIndex((elem) => elem.media?.highlighted === true) > 0) {
+                    setHaveHighlightedContent(true)
+                }
                 await Promise.all(
                     assets.map(async (asset) => {
                         const data = await fetchThumbnail(asset)
@@ -79,25 +82,27 @@ const VodApp = () => {
                 const { data } = await fetchSections()
                 let nonce = true
                 const list = data?.listSections?.items as Array<Section>
-                list.forEach((item, index, arr) => {
-                    if (arr.length <= 3 && nonce) {
-                        arr.push({
-                            label: 'Highlighted',
-                            id: `Highlighted${index}`,
-                        })
-                        nonce = false
-                    }
-                    if (
-                        index % 3 === 0 &&
-                        index !== 0 &&
-                        item?.label !== 'Highlighted'
-                    ) {
-                        arr.splice(index, 0, {
-                            label: 'Highlighted',
-                            id: `Highlighted${index}`,
-                        })
-                    }
-                })
+                if (haveHighlightedContent) {
+                    list.forEach((item, index, arr) => {
+                        if (arr.length <= 3 && nonce) {
+                            arr.push({
+                                label: 'Highlighted',
+                                id: `Highlighted${index}`,
+                            })
+                            nonce = false
+                        }
+                        if (
+                            index % 3 === 0 &&
+                            index !== 0 &&
+                            item?.label !== 'Highlighted'
+                        ) {
+                            arr.splice(index, 0, {
+                                label: 'Highlighted',
+                                id: `Highlighted${index}`,
+                            })
+                        }
+                    })
+                }
                 setSections(list)
             } catch (error) {
                 console.error('videos.tsx(fetchSections)', error)

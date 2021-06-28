@@ -21,7 +21,8 @@ const StyledVideoCard = styled.div`
 
 const Image = styled.img`
     cursor: pointer;
-    width: 85%;
+    width: 100%;
+    transform: scale(0.85);
 `
 
 const VideoCard = ({ vod, thumbnail }: VideoCardProps) => {
