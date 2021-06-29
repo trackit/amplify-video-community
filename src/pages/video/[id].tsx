@@ -37,6 +37,26 @@ const VideoPlayer = ({ video }: VideoPlayerProps) => {
     return <Wrapper>{<VideoPlayerComponent {...videoJsOptions} />}</Wrapper>
 }
 
+type IframeVideoPlayerProps = {
+    asset: vodAsset
+}
+
+const IframeVideoPlayer = ({ asset }: IframeVideoPlayerProps) => {
+    return (
+        <div style={{ background: 'black' }}>
+            <iframe
+                width="1280"
+                height="720"
+                src={asset.src}
+                title={asset.title}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+            />
+        </div>
+    )
+}
+
 type VideoCardProps = {
     asset: vodAsset
 }
@@ -51,9 +71,17 @@ const Title = styled.h2`
 `
 
 const VideoCard = ({ asset }: VideoCardProps) => {
+    useEffect(() => {
+        console.log(asset)
+    })
+
     return (
         <Card>
-            <VideoPlayer video={asset.video} />
+            {asset.src === null ? (
+                <VideoPlayer video={asset.video} />
+            ) : (
+                <IframeVideoPlayer asset={asset} />
+            )}
             <Title>{asset.title}</Title>
             <p>{asset.description}</p>
         </Card>

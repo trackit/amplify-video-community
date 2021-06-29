@@ -10,6 +10,7 @@ export const createVodAsset = /* GraphQL */ `
     createVodAsset(input: $input, condition: $condition) {
       id
       title
+      src
       description
       highlighted
       createdAt
@@ -46,6 +47,7 @@ export const updateVodAsset = /* GraphQL */ `
     updateVodAsset(input: $input, condition: $condition) {
       id
       title
+      src
       description
       highlighted
       createdAt
@@ -82,6 +84,7 @@ export const deleteVodAsset = /* GraphQL */ `
     deleteVodAsset(input: $input, condition: $condition) {
       id
       title
+      src
       description
       highlighted
       createdAt
@@ -268,6 +271,7 @@ export const createVideoSection = /* GraphQL */ `
       video {
         id
         title
+        src
         description
         highlighted
         createdAt
@@ -313,6 +317,7 @@ export const updateVideoSection = /* GraphQL */ `
       video {
         id
         title
+        src
         description
         highlighted
         createdAt
@@ -358,6 +363,7 @@ export const deleteVideoSection = /* GraphQL */ `
       video {
         id
         title
+        src
         description
         highlighted
         createdAt

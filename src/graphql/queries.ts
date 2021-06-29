@@ -7,6 +7,7 @@ export const getVodAsset = /* GraphQL */ `
     getVodAsset(id: $id) {
       id
       title
+      src
       description
       highlighted
       createdAt
@@ -45,6 +46,7 @@ export const listVodAssets = /* GraphQL */ `
       items {
         id
         title
+        src
         description
         highlighted
         createdAt
