@@ -1,54 +1,59 @@
 import React from 'react'
-import { Link } from 'gatsby'
+import { Layout } from '../shared/components'
+import styled from 'styled-components'
 
-// styles
-const pageStyles = {
-    color: '#232129',
-    padding: '96px',
-    fontFamily: '-apple-system, Roboto, sans-serif, serif',
-}
-const headingStyles = {
-    marginTop: 0,
-    marginBottom: 64,
-    maxWidth: 320,
-}
+const NotFoundContent = styled.div`
+    display: flex;
+    height: 65vh;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgb(242, 242, 242);
+`
 
-const paragraphStyles = {
-    marginBottom: 48,
-}
-const codeStyles = {
-    color: '#8A6534',
-    padding: 4,
-    backgroundColor: '#FFF4DB',
-    fontSize: '1.25rem',
-    borderRadius: 4,
-}
+const Title = styled.h2`
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 0.1rem;
+    display: contents;
+`
 
-// markup
+const SubTitle = styled.h4`
+    font-size: 1.25rem;
+    font-weight: 500;
+    padding-bottom: 1.375rem;
+`
+
+const Link = styled.a`
+    border-radius: 0.25rem;
+    cursor: pointer;
+    box-shadow: rgb(204, 204, 204) 0.125rem 0.125rem 0px 0.125rem;
+    padding: 0.5625rem 0.75rem 0.5rem;
+    margin-top: 1rem;
+    background-color: #fff;
+    font-size: 1rem;
+    font-weight: 300;
+    appearance: none;
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.25s ease 0s;
+    font-weight: 400;
+
+    &:hover {
+        box-shadow: rgb(204, 204, 204) 0.1875rem 0.1875rem 0px 0.1875rem;
+        transform: translate(-0.0625rem, -0.0625rem);
+    }
+`
+
 const NotFoundPage = () => {
     return (
-        <main style={pageStyles}>
-            <title>Not found</title>
-            <h1 style={headingStyles}>Page not found</h1>
-            <p style={paragraphStyles}>
-                Sorry{' '}
-                <span role="img" aria-label="Pensive emoji">
-                    😔
-                </span>{' '}
-                we couldn’t find what you were looking for.
-                <br />
-                {process.env.NODE_ENV === 'development' ? (
-                    <>
-                        <br />
-                        Try creating a page in{' '}
-                        <code style={codeStyles}>src/pages/</code>.
-                        <br />
-                    </>
-                ) : null}
-                <br />
-                <Link to="/">Go home</Link>.
-            </p>
-        </main>
+        <Layout>
+            <NotFoundContent>
+                <Title>404</Title>
+                <SubTitle>Page Not Found</SubTitle>
+                <Link href="/">Return Home</Link>
+            </NotFoundContent>
+        </Layout>
     )
 }
 
