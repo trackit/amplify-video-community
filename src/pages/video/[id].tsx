@@ -112,13 +112,13 @@ const VideoPage = (props: PageProps) => {
             try {
                 const { data } = await fetchVodAsset(id)
                 if (data?.getVodAsset === null) {
-                    console.log('object doesnt exist')
+                    console.error('object doesnt exist')
                 } else {
                     setAsset(data?.getVodAsset as vodAsset)
                 }
                 setLoaded(true)
             } catch (error) {
-                console.log(error)
+                console.error(error)
                 setLoaded(false)
             }
         })()
