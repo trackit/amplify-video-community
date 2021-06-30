@@ -12,6 +12,7 @@ type vodAsset
 {
   id:ID!
   title:String!
+  src:String
   description:String!
   highlighted:Boolean!
   video:videoObject @connection

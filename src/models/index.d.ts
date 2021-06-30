@@ -7,6 +7,7 @@ import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplif
 export declare class vodAsset {
   readonly id: string;
   readonly title: string;
+  readonly src?: string;
   readonly description: string;
   readonly highlighted: boolean;
   readonly video?: videoObject;

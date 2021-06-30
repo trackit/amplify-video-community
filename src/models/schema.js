@@ -17,6 +17,13 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "src": {
+                    "name": "src",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "description": {
                     "name": "description",
                     "isArray": false,
@@ -120,9 +127,9 @@ export const schema = {
                                 ],
                                 "operations": [
                                     "create",
-                                    "read",
                                     "update",
-                                    "delete"
+                                    "delete",
+                                    "read"
                                 ]
                             },
                             {
@@ -203,9 +210,9 @@ export const schema = {
                                 ],
                                 "operations": [
                                     "create",
-                                    "read",
                                     "update",
-                                    "delete"
+                                    "delete",
+                                    "read"
                                 ]
                             },
                             {
@@ -293,9 +300,9 @@ export const schema = {
                                 ],
                                 "operations": [
                                     "create",
-                                    "read",
                                     "update",
-                                    "delete"
+                                    "delete",
+                                    "read"
                                 ]
                             },
                             {
@@ -384,6 +391,14 @@ export const schema = {
                     }
                 },
                 {
+                    "type": "aws_iam",
+                    "properties": {}
+                },
+                {
+                    "type": "aws_cognito_user_pools",
+                    "properties": {}
+                },
+                {
                     "type": "key",
                     "properties": {
                         "name": "bySection",
@@ -400,6 +415,45 @@ export const schema = {
                         "fields": [
                             "videoID",
                             "sectionID"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "Admin"
+                                ],
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            },
+                            {
+                                "allow": "public",
+                                "provider": "iam",
+                                "operations": [
+                                    "read"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "everyone"
+                                ],
+                                "operations": [
+                                    "read"
+                                ]
+                            }
                         ]
                     }
                 }
@@ -481,9 +535,9 @@ export const schema = {
                                 ],
                                 "operations": [
                                     "create",
-                                    "read",
                                     "update",
-                                    "delete"
+                                    "delete",
+                                    "read"
                                 ]
                             },
                             {
@@ -512,5 +566,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "c4f5f5099667e978d49331f686c4e4bf"
+    "version": "a911dc98a9b8851c904cd289b20efa7b"
 };

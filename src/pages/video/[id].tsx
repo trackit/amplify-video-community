@@ -37,6 +37,32 @@ const VideoPlayer = ({ video }: VideoPlayerProps) => {
     return <Wrapper>{<VideoPlayerComponent {...videoJsOptions} />}</Wrapper>
 }
 
+type IframeVideoPlayerProps = {
+    asset: vodAsset
+}
+
+const IframeVideoPlayer = ({ asset }: IframeVideoPlayerProps) => {
+    const Wrapper = styled.div`
+        display: flex;
+        background-color: black;
+        justify-content: center;
+    `
+
+    return (
+        <Wrapper>
+            <iframe
+                width="1280"
+                height="720"
+                src={asset.src}
+                title={asset.title}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+            />
+        </Wrapper>
+    )
+}
+
 type VideoCardProps = {
     asset: vodAsset
 }
@@ -53,7 +79,11 @@ const Title = styled.h2`
 const VideoCard = ({ asset }: VideoCardProps) => {
     return (
         <Card>
-            <VideoPlayer video={asset.video} />
+            {asset.src === null ? (
+                <VideoPlayer video={asset.video} />
+            ) : (
+                <IframeVideoPlayer asset={asset} />
+            )}
             <Title>{asset.title}</Title>
             <p>{asset.description}</p>
         </Card>
@@ -82,13 +112,13 @@ const VideoPage = (props: PageProps) => {
             try {
                 const { data } = await fetchVodAsset(id)
                 if (data?.getVodAsset === null) {
-                    console.log('object doesnt exist')
+                    console.error('object doesnt exist')
                 } else {
                     setAsset(data?.getVodAsset as vodAsset)
                 }
                 setLoaded(true)
             } catch (error) {
-                console.log(error)
+                console.error(error)
                 setLoaded(false)
             }
         })()

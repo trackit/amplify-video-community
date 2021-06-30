@@ -7,6 +7,7 @@ export const onCreateVodAsset = /* GraphQL */ `
     onCreateVodAsset {
       id
       title
+      src
       description
       highlighted
       createdAt
@@ -40,6 +41,7 @@ export const onUpdateVodAsset = /* GraphQL */ `
     onUpdateVodAsset {
       id
       title
+      src
       description
       highlighted
       createdAt
@@ -73,6 +75,7 @@ export const onDeleteVodAsset = /* GraphQL */ `
     onDeleteVodAsset {
       id
       title
+      src
       description
       highlighted
       createdAt
@@ -229,6 +232,7 @@ export const onCreateVideoSection = /* GraphQL */ `
       video {
         id
         title
+        src
         description
         highlighted
         createdAt
@@ -271,6 +275,7 @@ export const onUpdateVideoSection = /* GraphQL */ `
       video {
         id
         title
+        src
         description
         highlighted
         createdAt
@@ -313,6 +318,7 @@ export const onDeleteVideoSection = /* GraphQL */ `
       video {
         id
         title
+        src
         description
         highlighted
         createdAt
