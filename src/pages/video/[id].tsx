@@ -77,10 +77,6 @@ const Title = styled.h2`
 `
 
 const VideoCard = ({ asset }: VideoCardProps) => {
-    useEffect(() => {
-        console.log(asset)
-    })
-
     return (
         <Card>
             {asset.src === null ? (
