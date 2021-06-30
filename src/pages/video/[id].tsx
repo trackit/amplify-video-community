@@ -42,8 +42,14 @@ type IframeVideoPlayerProps = {
 }
 
 const IframeVideoPlayer = ({ asset }: IframeVideoPlayerProps) => {
+    const Wrapper = styled.div`
+        display: flex;
+        background-color: black;
+        justify-content: center;
+    `
+
     return (
-        <div style={{ background: 'black' }}>
+        <Wrapper>
             <iframe
                 width="1280"
                 height="720"
@@ -53,7 +59,7 @@ const IframeVideoPlayer = ({ asset }: IframeVideoPlayerProps) => {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
             />
-        </div>
+        </Wrapper>
     )
 }
 
