@@ -1,19 +1,9 @@
 {
   "auth": {
-    "amplifyvideocommu33267767": {
+    "amplifyvideocommuf4da7910": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "amplifyvideocommu33267767PostConfirmation",
-          "triggerProvider": "Cognito",
-          "attributes": [
-            "Arn",
-            "Name"
-          ]
-        }
-      ],
+      "dependsOn": [],
       "customAuth": false
     },
     "userPoolGroups": {
@@ -22,7 +12,7 @@
       "dependsOn": [
         {
           "category": "auth",
-          "resourceName": "amplifyvideocommu33267767",
+          "resourceName": "amplifyvideocommuf4da7910",
           "attributes": [
             "UserPoolId",
             "AppClientIDWeb",
@@ -42,7 +32,7 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authamplifyvideocommu33267767"
+              "userPoolId": "authamplifyvideocommuf4da7910"
             }
           },
           "additionalAuthenticationProviders": [
@@ -61,13 +51,6 @@
       "providerPlugin": "awscloudformation"
     }
   },
-  "function": {
-    "amplifyvideocommu33267767PostConfirmation": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    }
-  },
   "storage": {
     "amplifyVideoCommuAssets": {
       "service": "S3",
@@ -75,7 +58,7 @@
       "dependsOn": [
         {
           "category": "auth",
-          "resourceName": "amplifyvideocommu33267767",
+          "resourceName": "amplifyvideocommuf4da7910",
           "attributes": [
             "UserPoolId"
           ]

@@ -3,10 +3,9 @@ import styled from 'styled-components'
 
 import { Layout } from '../shared/components'
 import { fetchThumbnail, fetchVodFiles } from '../shared/utilities'
-import { vodAsset } from '../models'
+import { VideoOnDemand, Thumbnail } from '../models'
 import { AiOutlineSearch } from 'react-icons/ai'
 import VideoCard from '../shared/components/Video/VideoCard'
-import { Thumbnail } from '../shared/types'
 
 const StyledSearchItem = styled.div`
     margin: auto;
@@ -65,19 +64,26 @@ const StyledVideoCard = styled.div`
 `
 
 type VideoItemProps = {
-    asset: vodAsset
+    asset: VideoOnDemand
 }
 
 const VideoItem = ({ asset }: VideoItemProps) => {
-    const [thumbnail, setThumbnail] = useState<Thumbnail | undefined>(undefined)
+    const [thumbnail, setThumbnail] =
+        useState<
+            | {
+                  obj: Thumbnail
+                  url: string
+              }
+            | undefined
+        >(undefined)
 
     useEffect(() => {
         ;(async () => {
             try {
-                if (asset.thumbnail) {
+                if (asset.media?.thumbnail) {
                     const data = await fetchThumbnail(asset)
                     setThumbnail({
-                        obj: asset.thumbnail,
+                        obj: asset.media?.thumbnail,
                         url: data as string,
                     })
                 }
@@ -90,30 +96,32 @@ const VideoItem = ({ asset }: VideoItemProps) => {
     return (
         <StyledVideoCard>
             <VideoCard thumbnail={thumbnail} vod={asset} />
-            <h3>{asset.title}</h3>
+            <h3>{asset.media?.title}</h3>
         </StyledVideoCard>
     )
 }
 
 const SearchPage = () => {
-    const [vodAssets, setVodAssets] = useState<Array<vodAsset>>([])
+    const [vodAssets, setVodAssets] = useState<Array<VideoOnDemand>>([])
     const [nextToken, setNextToken] = useState<string | null>(null)
     const [searchValue, setSearchValue] = useState<string>('')
 
-    const filterAssets = (elem: vodAsset) =>
-        elem.title.includes(searchValue) ||
-        elem.description.includes(searchValue)
+    const filterAssets = (elem: VideoOnDemand) =>
+        elem.media?.title.includes(searchValue) ||
+        elem.media?.description.includes(searchValue)
 
     useEffect(() => {
         ;(async () => {
             try {
                 const { data } = await fetchVodFiles(nextToken)
                 setNextToken(
-                    data?.listVodAssets?.nextToken
-                        ? data.listVodAssets.nextToken
+                    data?.listVideoOnDemands?.nextToken
+                        ? data.listVideoOnDemands.nextToken
                         : null
                 )
-                setVodAssets(data?.listVodAssets?.items as Array<vodAsset>)
+                setVodAssets(
+                    data?.listVideoOnDemands?.items as Array<VideoOnDemand>
+                )
             } catch (error) {
                 console.error('search.tsx(fetchVodFiles):', error)
             }
@@ -140,9 +148,11 @@ const SearchPage = () => {
                 </table>
             </StyledSearchItem>
             <StyledVideoList>
-                {vodAssets.filter(filterAssets).map((elem: vodAsset, key) => {
-                    return <VideoItem asset={elem} key={key} />
-                })}
+                {vodAssets
+                    .filter(filterAssets)
+                    .map((elem: VideoOnDemand, key) => {
+                        return <VideoItem asset={elem} key={key} />
+                    })}
             </StyledVideoList>
         </Layout>
     )

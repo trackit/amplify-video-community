@@ -2,24 +2,30 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateVodAssetInput = {
+export type CreateMediaInput = {
   id?: string | null,
   title: string,
-  src?: string | null,
   description: string,
   highlighted: boolean,
-  vodAssetVideoId?: string | null,
-  vodAssetThumbnailId?: string | null,
+  source?: Source | null,
+  mediaThumbnailId?: string | null,
 };
 
-export type ModelvodAssetConditionInput = {
+export enum Source {
+  TWITCH = "TWITCH",
+  YOUTUBE = "YOUTUBE",
+  SELF = "SELF",
+}
+
+
+export type ModelMediaConditionInput = {
   title?: ModelStringInput | null,
-  src?: ModelStringInput | null,
   description?: ModelStringInput | null,
   highlighted?: ModelBooleanInput | null,
-  and?: Array< ModelvodAssetConditionInput | null > | null,
-  or?: Array< ModelvodAssetConditionInput | null > | null,
-  not?: ModelvodAssetConditionInput | null,
+  source?: ModelSourceInput | null,
+  and?: Array< ModelMediaConditionInput | null > | null,
+  or?: Array< ModelMediaConditionInput | null > | null,
+  not?: ModelMediaConditionInput | null,
 };
 
 export type ModelStringInput = {
@@ -69,111 +75,89 @@ export type ModelBooleanInput = {
   attributeType?: ModelAttributeTypes | null,
 };
 
-export type vodAsset = {
-  __typename: "vodAsset",
+export type ModelSourceInput = {
+  eq?: Source | null,
+  ne?: Source | null,
+};
+
+export type Media = {
+  __typename: "Media",
   id: string,
   title: string,
-  src?: string | null,
   description: string,
   highlighted: boolean,
+  source?: Source | null,
   createdAt: string,
   updatedAt: string,
-  video?: videoObject | null,
-  thumbnail?: thumbnailObject | null,
-  sections?: ModelVideoSectionConnection | null,
+  thumbnail?: Thumbnail | null,
+  sections?: ModelMediasSectionsConnection | null,
 };
 
-export type videoObject = {
-  __typename: "videoObject",
-  id: string,
-  createdAt: string,
-  updatedAt: string,
-};
-
-export type thumbnailObject = {
-  __typename: "thumbnailObject",
+export type Thumbnail = {
+  __typename: "Thumbnail",
   id: string,
   ext: string,
   createdAt: string,
   updatedAt: string,
 };
 
-export type ModelVideoSectionConnection = {
-  __typename: "ModelVideoSectionConnection",
-  items?:  Array<VideoSection | null > | null,
+export type ModelMediasSectionsConnection = {
+  __typename: "ModelMediasSectionsConnection",
+  items?:  Array<MediasSections | null > | null,
   nextToken?: string | null,
 };
 
-export type VideoSection = {
-  __typename: "VideoSection",
+export type MediasSections = {
+  __typename: "MediasSections",
   id: string,
   sectionID: string,
-  videoID: string,
+  mediaID: string,
   createdAt: string,
   updatedAt: string,
-  video: vodAsset,
-  section: section,
+  media: Media,
+  section: Section,
 };
 
-export type section = {
-  __typename: "section",
+export type Section = {
+  __typename: "Section",
   id: string,
   label: string,
   createdAt: string,
   updatedAt: string,
-  videos?: ModelVideoSectionConnection | null,
+  medias?: ModelMediasSectionsConnection | null,
 };
 
-export type UpdateVodAssetInput = {
+export type UpdateMediaInput = {
   id: string,
   title?: string | null,
-  src?: string | null,
   description?: string | null,
   highlighted?: boolean | null,
-  vodAssetVideoId?: string | null,
-  vodAssetThumbnailId?: string | null,
+  source?: Source | null,
+  mediaThumbnailId?: string | null,
 };
 
-export type DeleteVodAssetInput = {
+export type DeleteMediaInput = {
   id: string,
 };
 
-export type CreateVideoObjectInput = {
-  id?: string | null,
-};
-
-export type ModelvideoObjectConditionInput = {
-  and?: Array< ModelvideoObjectConditionInput | null > | null,
-  or?: Array< ModelvideoObjectConditionInput | null > | null,
-  not?: ModelvideoObjectConditionInput | null,
-};
-
-export type UpdateVideoObjectInput = {
-  id: string,
-};
-
-export type DeleteVideoObjectInput = {
-  id: string,
-};
-
-export type CreateThumbnailObjectInput = {
+export type CreateThumbnailInput = {
   id?: string | null,
   ext: string,
 };
 
-export type ModelthumbnailObjectConditionInput = {
+export type ModelThumbnailConditionInput = {
   ext?: ModelStringInput | null,
-  and?: Array< ModelthumbnailObjectConditionInput | null > | null,
-  or?: Array< ModelthumbnailObjectConditionInput | null > | null,
-  not?: ModelthumbnailObjectConditionInput | null,
+  and?: Array< ModelThumbnailConditionInput | null > | null,
+  or?: Array< ModelThumbnailConditionInput | null > | null,
+  not?: ModelThumbnailConditionInput | null,
 };
 
-export type UpdateThumbnailObjectInput = {
+export type UpdateThumbnailInput = {
   id: string,
   ext?: string | null,
 };
 
-export type DeleteThumbnailObjectInput = {
+export type DeleteThumbnailInput = {
   id: string,
 };
 
@@ -182,11 +166,11 @@ export type CreateSectionInput = {
   label: string,
 };
 
-export type ModelsectionConditionInput = {
+export type ModelSectionConditionInput = {
   label?: ModelStringInput | null,
-  and?: Array< ModelsectionConditionInput | null > | null,
-  or?: Array< ModelsectionConditionInput | null > | null,
-  not?: ModelsectionConditionInput | null,
+  and?: Array< ModelSectionConditionInput | null > | null,
+  or?: Array< ModelSectionConditionInput | null > | null,
+  not?: ModelSectionConditionInput | null,
 };
 
 export type UpdateSectionInput = {
@@ -198,18 +182,18 @@ export type DeleteSectionInput = {
   id: string,
 };
 
-export type CreateVideoSectionInput = {
+export type CreateMediasSectionsInput = {
   id?: string | null,
   sectionID: string,
-  videoID: string,
+  mediaID: string,
 };
 
-export type ModelVideoSectionConditionInput = {
+export type ModelMediasSectionsConditionInput = {
   sectionID?: ModelIDInput | null,
-  videoID?: ModelIDInput | null,
-  and?: Array< ModelVideoSectionConditionInput | null > | null,
-  or?: Array< ModelVideoSectionConditionInput | null > | null,
-  not?: ModelVideoSectionConditionInput | null,
+  mediaID?: ModelIDInput | null,
+  and?: Array< ModelMediasSectionsConditionInput | null > | null,
+  or?: Array< ModelMediasSectionsConditionInput | null > | null,
+  not?: ModelMediasSectionsConditionInput | null,
 };
 
 export type ModelIDInput = {
@@ -228,109 +212,237 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
-export type UpdateVideoSectionInput = {
+export type UpdateMediasSectionsInput = {
   id: string,
   sectionID?: string | null,
-  videoID?: string | null,
+  mediaID?: string | null,
 };
 
-export type DeleteVideoSectionInput = {
+export type DeleteMediasSectionsInput = {
   id: string,
 };
 
-export type ModelvodAssetFilterInput = {
+export type CreateVideoObjectInput = {
+  id?: string | null,
+};
+
+export type ModelVideoObjectConditionInput = {
+  and?: Array< ModelVideoObjectConditionInput | null > | null,
+  or?: Array< ModelVideoObjectConditionInput | null > | null,
+  not?: ModelVideoObjectConditionInput | null,
+};
+
+export type VideoObject = {
+  __typename: "VideoObject",
+  id: string,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type UpdateVideoObjectInput = {
+  id: string,
+};
+
+export type DeleteVideoObjectInput = {
+  id: string,
+};
+
+export type CreateVideoOnDemandInput = {
+  id?: string | null,
+  src: string,
+  videoOnDemandMediaId?: string | null,
+  videoOnDemandVideoId?: string | null,
+};
+
+export type ModelVideoOnDemandConditionInput = {
+  src?: ModelStringInput | null,
+  and?: Array< ModelVideoOnDemandConditionInput | null > | null,
+  or?: Array< ModelVideoOnDemandConditionInput | null > | null,
+  not?: ModelVideoOnDemandConditionInput | null,
+};
+
+export type VideoOnDemand = {
+  __typename: "VideoOnDemand",
+  id: string,
+  src: string,
+  createdAt: string,
+  updatedAt: string,
+  media?: Media | null,
+  video?: VideoObject | null,
+};
+
+export type UpdateVideoOnDemandInput = {
+  id: string,
+  src?: string | null,
+  videoOnDemandMediaId?: string | null,
+  videoOnDemandVideoId?: string | null,
+};
+
+export type DeleteVideoOnDemandInput = {
+  id: string,
+};
+
+export type CreateLivestreamInput = {
+  id?: string | null,
+  url: string,
+  isLive?: boolean | null,
+  livestreamMediaId?: string | null,
+};
+
+export type ModelLivestreamConditionInput = {
+  url?: ModelStringInput | null,
+  isLive?: ModelBooleanInput | null,
+  and?: Array< ModelLivestreamConditionInput | null > | null,
+  or?: Array< ModelLivestreamConditionInput | null > | null,
+  not?: ModelLivestreamConditionInput | null,
+};
+
+export type Livestream = {
+  __typename: "Livestream",
+  id: string,
+  url: string,
+  isLive?: boolean | null,
+  createdAt: string,
+  updatedAt: string,
+  media?: Media | null,
+};
+
+export type UpdateLivestreamInput = {
+  id: string,
+  url?: string | null,
+  isLive?: boolean | null,
+  livestreamMediaId?: string | null,
+};
+
+export type DeleteLivestreamInput = {
+  id: string,
+};
+
+export type ModelMediaFilterInput = {
   id?: ModelIDInput | null,
   title?: ModelStringInput | null,
-  src?: ModelStringInput | null,
   description?: ModelStringInput | null,
   highlighted?: ModelBooleanInput | null,
-  and?: Array< ModelvodAssetFilterInput | null > | null,
-  or?: Array< ModelvodAssetFilterInput | null > | null,
-  not?: ModelvodAssetFilterInput | null,
+  source?: ModelSourceInput | null,
+  and?: Array< ModelMediaFilterInput | null > | null,
+  or?: Array< ModelMediaFilterInput | null > | null,
+  not?: ModelMediaFilterInput | null,
 };
 
-export type ModelvodAssetConnection = {
-  __typename: "ModelvodAssetConnection",
-  items?:  Array<vodAsset | null > | null,
+export type ModelMediaConnection = {
+  __typename: "ModelMediaConnection",
+  items?:  Array<Media | null > | null,
   nextToken?: string | null,
 };
 
-export type ModelvideoObjectFilterInput = {
-  id?: ModelIDInput | null,
-  and?: Array< ModelvideoObjectFilterInput | null > | null,
-  or?: Array< ModelvideoObjectFilterInput | null > | null,
-  not?: ModelvideoObjectFilterInput | null,
-};
-
-export type ModelvideoObjectConnection = {
-  __typename: "ModelvideoObjectConnection",
-  items?:  Array<videoObject | null > | null,
-  nextToken?: string | null,
-};
-
-export type ModelthumbnailObjectFilterInput = {
+export type ModelThumbnailFilterInput = {
   id?: ModelIDInput | null,
   ext?: ModelStringInput | null,
-  and?: Array< ModelthumbnailObjectFilterInput | null > | null,
-  or?: Array< ModelthumbnailObjectFilterInput | null > | null,
-  not?: ModelthumbnailObjectFilterInput | null,
+  and?: Array< ModelThumbnailFilterInput | null > | null,
+  or?: Array< ModelThumbnailFilterInput | null > | null,
+  not?: ModelThumbnailFilterInput | null,
 };
 
-export type ModelthumbnailObjectConnection = {
-  __typename: "ModelthumbnailObjectConnection",
-  items?:  Array<thumbnailObject | null > | null,
+export type ModelThumbnailConnection = {
+  __typename: "ModelThumbnailConnection",
+  items?:  Array<Thumbnail | null > | null,
   nextToken?: string | null,
 };
 
-export type ModelsectionFilterInput = {
+export type ModelSectionFilterInput = {
   id?: ModelIDInput | null,
   label?: ModelStringInput | null,
-  and?: Array< ModelsectionFilterInput | null > | null,
-  or?: Array< ModelsectionFilterInput | null > | null,
-  not?: ModelsectionFilterInput | null,
+  and?: Array< ModelSectionFilterInput | null > | null,
+  or?: Array< ModelSectionFilterInput | null > | null,
+  not?: ModelSectionFilterInput | null,
 };
 
-export type ModelsectionConnection = {
-  __typename: "ModelsectionConnection",
-  items?:  Array<section | null > | null,
+export type ModelSectionConnection = {
+  __typename: "ModelSectionConnection",
+  items?:  Array<Section | null > | null,
   nextToken?: string | null,
 };
 
-export type CreateVodAssetMutationVariables = {
-  input: CreateVodAssetInput,
-  condition?: ModelvodAssetConditionInput | null,
+export type ModelMediasSectionsFilterInput = {
+  id?: ModelIDInput | null,
+  sectionID?: ModelIDInput | null,
+  mediaID?: ModelIDInput | null,
+  and?: Array< ModelMediasSectionsFilterInput | null > | null,
+  or?: Array< ModelMediasSectionsFilterInput | null > | null,
+  not?: ModelMediasSectionsFilterInput | null,
 };
 
-export type CreateVodAssetMutation = {
-  createVodAsset?:  {
-    __typename: "vodAsset",
+export type ModelVideoObjectFilterInput = {
+  id?: ModelIDInput | null,
+  and?: Array< ModelVideoObjectFilterInput | null > | null,
+  or?: Array< ModelVideoObjectFilterInput | null > | null,
+  not?: ModelVideoObjectFilterInput | null,
+};
+
+export type ModelVideoObjectConnection = {
+  __typename: "ModelVideoObjectConnection",
+  items?:  Array<VideoObject | null > | null,
+  nextToken?: string | null,
+};
+
+export type ModelVideoOnDemandFilterInput = {
+  id?: ModelIDInput | null,
+  src?: ModelStringInput | null,
+  and?: Array< ModelVideoOnDemandFilterInput | null > | null,
+  or?: Array< ModelVideoOnDemandFilterInput | null > | null,
+  not?: ModelVideoOnDemandFilterInput | null,
+};
+
+export type ModelVideoOnDemandConnection = {
+  __typename: "ModelVideoOnDemandConnection",
+  items?:  Array<VideoOnDemand | null > | null,
+  nextToken?: string | null,
+};
+
+export type ModelLivestreamFilterInput = {
+  id?: ModelIDInput | null,
+  url?: ModelStringInput | null,
+  isLive?: ModelBooleanInput | null,
+  and?: Array< ModelLivestreamFilterInput | null > | null,
+  or?: Array< ModelLivestreamFilterInput | null > | null,
+  not?: ModelLivestreamFilterInput | null,
+};
+
+export type ModelLivestreamConnection = {
+  __typename: "ModelLivestreamConnection",
+  items?:  Array<Livestream | null > | null,
+  nextToken?: string | null,
+};
+
+export type CreateMediaMutationVariables = {
+  input: CreateMediaInput,
+  condition?: ModelMediaConditionInput | null,
+};
+
+export type CreateMediaMutation = {
+  createMedia?:  {
+    __typename: "Media",
     id: string,
     title: string,
-    src?: string | null,
     description: string,
     highlighted: boolean,
+    source?: Source | null,
     createdAt: string,
     updatedAt: string,
-    video?:  {
-      __typename: "videoObject",
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     thumbnail?:  {
-      __typename: "thumbnailObject",
+      __typename: "Thumbnail",
       id: string,
       ext: string,
       createdAt: string,
       updatedAt: string,
     } | null,
     sections?:  {
-      __typename: "ModelVideoSectionConnection",
+      __typename: "ModelMediasSectionsConnection",
       items?:  Array< {
-        __typename: "VideoSection",
+        __typename: "MediasSections",
         id: string,
         sectionID: string,
-        videoID: string,
+        mediaID: string,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -339,41 +451,35 @@ export type CreateVodAssetMutation = {
   } | null,
 };
 
-export type UpdateVodAssetMutationVariables = {
-  input: UpdateVodAssetInput,
-  condition?: ModelvodAssetConditionInput | null,
+export type UpdateMediaMutationVariables = {
+  input: UpdateMediaInput,
+  condition?: ModelMediaConditionInput | null,
 };
 
-export type UpdateVodAssetMutation = {
-  updateVodAsset?:  {
-    __typename: "vodAsset",
+export type UpdateMediaMutation = {
+  updateMedia?:  {
+    __typename: "Media",
     id: string,
     title: string,
-    src?: string | null,
     description: string,
     highlighted: boolean,
+    source?: Source | null,
     createdAt: string,
     updatedAt: string,
-    video?:  {
-      __typename: "videoObject",
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     thumbnail?:  {
-      __typename: "thumbnailObject",
+      __typename: "Thumbnail",
       id: string,
       ext: string,
       createdAt: string,
       updatedAt: string,
     } | null,
     sections?:  {
-      __typename: "ModelVideoSectionConnection",
+      __typename: "ModelMediasSectionsConnection",
       items?:  Array< {
-        __typename: "VideoSection",
+        __typename: "MediasSections",
         id: string,
         sectionID: string,
-        videoID: string,
+        mediaID: string,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -382,41 +488,35 @@ export type UpdateVodAssetMutation = {
   } | null,
 };
 
-export type DeleteVodAssetMutationVariables = {
-  input: DeleteVodAssetInput,
-  condition?: ModelvodAssetConditionInput | null,
+export type DeleteMediaMutationVariables = {
+  input: DeleteMediaInput,
+  condition?: ModelMediaConditionInput | null,
 };
 
-export type DeleteVodAssetMutation = {
-  deleteVodAsset?:  {
-    __typename: "vodAsset",
+export type DeleteMediaMutation = {
+  deleteMedia?:  {
+    __typename: "Media",
     id: string,
     title: string,
-    src?: string | null,
     description: string,
     highlighted: boolean,
+    source?: Source | null,
     createdAt: string,
     updatedAt: string,
-    video?:  {
-      __typename: "videoObject",
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     thumbnail?:  {
-      __typename: "thumbnailObject",
+      __typename: "Thumbnail",
       id: string,
       ext: string,
       createdAt: string,
       updatedAt: string,
     } | null,
     sections?:  {
-      __typename: "ModelVideoSectionConnection",
+      __typename: "ModelMediasSectionsConnection",
       items?:  Array< {
-        __typename: "VideoSection",
+        __typename: "MediasSections",
         id: string,
         sectionID: string,
-        videoID: string,
+        mediaID: string,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -425,56 +525,14 @@ export type DeleteVodAssetMutation = {
   } | null,
 };
 
-export type CreateVideoObjectMutationVariables = {
-  input: CreateVideoObjectInput,
-  condition?: ModelvideoObjectConditionInput | null,
+export type CreateThumbnailMutationVariables = {
+  input: CreateThumbnailInput,
+  condition?: ModelThumbnailConditionInput | null,
 };
 
-export type CreateVideoObjectMutation = {
-  createVideoObject?:  {
-    __typename: "videoObject",
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type UpdateVideoObjectMutationVariables = {
-  input: UpdateVideoObjectInput,
-  condition?: ModelvideoObjectConditionInput | null,
-};
-
-export type UpdateVideoObjectMutation = {
-  updateVideoObject?:  {
-    __typename: "videoObject",
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type DeleteVideoObjectMutationVariables = {
-  input: DeleteVideoObjectInput,
-  condition?: ModelvideoObjectConditionInput | null,
-};
-
-export type DeleteVideoObjectMutation = {
-  deleteVideoObject?:  {
-    __typename: "videoObject",
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type CreateThumbnailObjectMutationVariables = {
-  input: CreateThumbnailObjectInput,
-  condition?: ModelthumbnailObjectConditionInput | null,
-};
-
-export type CreateThumbnailObjectMutation = {
-  createThumbnailObject?:  {
-    __typename: "thumbnailObject",
+export type CreateThumbnailMutation = {
+  createThumbnail?:  {
+    __typename: "Thumbnail",
     id: string,
     ext: string,
     createdAt: string,
@@ -482,14 +540,14 @@ export type CreateThumbnailObjectMutation = {
   } | null,
 };
 
-export type UpdateThumbnailObjectMutationVariables = {
-  input: UpdateThumbnailObjectInput,
-  condition?: ModelthumbnailObjectConditionInput | null,
+export type UpdateThumbnailMutationVariables = {
+  input: UpdateThumbnailInput,
+  condition?: ModelThumbnailConditionInput | null,
 };
 
-export type UpdateThumbnailObjectMutation = {
-  updateThumbnailObject?:  {
-    __typename: "thumbnailObject",
+export type UpdateThumbnailMutation = {
+  updateThumbnail?:  {
+    __typename: "Thumbnail",
     id: string,
     ext: string,
     createdAt: string,
@@ -497,14 +555,14 @@ export type UpdateThumbnailObjectMutation = {
   } | null,
 };
 
-export type DeleteThumbnailObjectMutationVariables = {
-  input: DeleteThumbnailObjectInput,
-  condition?: ModelthumbnailObjectConditionInput | null,
+export type DeleteThumbnailMutationVariables = {
+  input: DeleteThumbnailInput,
+  condition?: ModelThumbnailConditionInput | null,
 };
 
-export type DeleteThumbnailObjectMutation = {
-  deleteThumbnailObject?:  {
-    __typename: "thumbnailObject",
+export type DeleteThumbnailMutation = {
+  deleteThumbnail?:  {
+    __typename: "Thumbnail",
     id: string,
     ext: string,
     createdAt: string,
@@ -514,23 +572,23 @@ export type DeleteThumbnailObjectMutation = {
 
 export type CreateSectionMutationVariables = {
   input: CreateSectionInput,
-  condition?: ModelsectionConditionInput | null,
+  condition?: ModelSectionConditionInput | null,
 };
 
 export type CreateSectionMutation = {
   createSection?:  {
-    __typename: "section",
+    __typename: "Section",
     id: string,
     label: string,
     createdAt: string,
     updatedAt: string,
-    videos?:  {
-      __typename: "ModelVideoSectionConnection",
+    medias?:  {
+      __typename: "ModelMediasSectionsConnection",
       items?:  Array< {
-        __typename: "VideoSection",
+        __typename: "MediasSections",
         id: string,
         sectionID: string,
-        videoID: string,
+        mediaID: string,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -541,23 +599,23 @@ export type CreateSectionMutation = {
 
 export type UpdateSectionMutationVariables = {
   input: UpdateSectionInput,
-  condition?: ModelsectionConditionInput | null,
+  condition?: ModelSectionConditionInput | null,
 };
 
 export type UpdateSectionMutation = {
   updateSection?:  {
-    __typename: "section",
+    __typename: "Section",
     id: string,
     label: string,
     createdAt: string,
     updatedAt: string,
-    videos?:  {
-      __typename: "ModelVideoSectionConnection",
+    medias?:  {
+      __typename: "ModelMediasSectionsConnection",
       items?:  Array< {
-        __typename: "VideoSection",
+        __typename: "MediasSections",
         id: string,
         sectionID: string,
-        videoID: string,
+        mediaID: string,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -568,23 +626,23 @@ export type UpdateSectionMutation = {
 
 export type DeleteSectionMutationVariables = {
   input: DeleteSectionInput,
-  condition?: ModelsectionConditionInput | null,
+  condition?: ModelSectionConditionInput | null,
 };
 
 export type DeleteSectionMutation = {
   deleteSection?:  {
-    __typename: "section",
+    __typename: "Section",
     id: string,
     label: string,
     createdAt: string,
     updatedAt: string,
-    videos?:  {
-      __typename: "ModelVideoSectionConnection",
+    medias?:  {
+      __typename: "ModelMediasSectionsConnection",
       items?:  Array< {
-        __typename: "VideoSection",
+        __typename: "MediasSections",
         id: string,
         sectionID: string,
-        videoID: string,
+        mediaID: string,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -593,202 +651,457 @@ export type DeleteSectionMutation = {
   } | null,
 };
 
-export type CreateVideoSectionMutationVariables = {
-  input: CreateVideoSectionInput,
-  condition?: ModelVideoSectionConditionInput | null,
+export type CreateMediasSectionsMutationVariables = {
+  input: CreateMediasSectionsInput,
+  condition?: ModelMediasSectionsConditionInput | null,
 };
 
-export type CreateVideoSectionMutation = {
-  createVideoSection?:  {
-    __typename: "VideoSection",
+export type CreateMediasSectionsMutation = {
+  createMediasSections?:  {
+    __typename: "MediasSections",
     id: string,
     sectionID: string,
-    videoID: string,
+    mediaID: string,
     createdAt: string,
     updatedAt: string,
-    video:  {
-      __typename: "vodAsset",
+    media:  {
+      __typename: "Media",
       id: string,
       title: string,
-      src?: string | null,
       description: string,
       highlighted: boolean,
+      source?: Source | null,
       createdAt: string,
       updatedAt: string,
-      video?:  {
-        __typename: "videoObject",
-        id: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
       thumbnail?:  {
-        __typename: "thumbnailObject",
+        __typename: "Thumbnail",
         id: string,
         ext: string,
         createdAt: string,
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelVideoSectionConnection",
+        __typename: "ModelMediasSectionsConnection",
         nextToken?: string | null,
       } | null,
     },
     section:  {
-      __typename: "section",
+      __typename: "Section",
       id: string,
       label: string,
       createdAt: string,
       updatedAt: string,
-      videos?:  {
-        __typename: "ModelVideoSectionConnection",
+      medias?:  {
+        __typename: "ModelMediasSectionsConnection",
         nextToken?: string | null,
       } | null,
     },
   } | null,
 };
 
-export type UpdateVideoSectionMutationVariables = {
-  input: UpdateVideoSectionInput,
-  condition?: ModelVideoSectionConditionInput | null,
+export type UpdateMediasSectionsMutationVariables = {
+  input: UpdateMediasSectionsInput,
+  condition?: ModelMediasSectionsConditionInput | null,
 };
 
-export type UpdateVideoSectionMutation = {
-  updateVideoSection?:  {
-    __typename: "VideoSection",
+export type UpdateMediasSectionsMutation = {
+  updateMediasSections?:  {
+    __typename: "MediasSections",
     id: string,
     sectionID: string,
-    videoID: string,
+    mediaID: string,
     createdAt: string,
     updatedAt: string,
-    video:  {
-      __typename: "vodAsset",
+    media:  {
+      __typename: "Media",
       id: string,
       title: string,
-      src?: string | null,
       description: string,
       highlighted: boolean,
+      source?: Source | null,
       createdAt: string,
       updatedAt: string,
-      video?:  {
-        __typename: "videoObject",
-        id: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
       thumbnail?:  {
-        __typename: "thumbnailObject",
+        __typename: "Thumbnail",
         id: string,
         ext: string,
         createdAt: string,
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelVideoSectionConnection",
+        __typename: "ModelMediasSectionsConnection",
         nextToken?: string | null,
       } | null,
     },
     section:  {
-      __typename: "section",
+      __typename: "Section",
       id: string,
       label: string,
       createdAt: string,
       updatedAt: string,
-      videos?:  {
-        __typename: "ModelVideoSectionConnection",
+      medias?:  {
+        __typename: "ModelMediasSectionsConnection",
         nextToken?: string | null,
       } | null,
     },
   } | null,
 };
 
-export type DeleteVideoSectionMutationVariables = {
-  input: DeleteVideoSectionInput,
-  condition?: ModelVideoSectionConditionInput | null,
+export type DeleteMediasSectionsMutationVariables = {
+  input: DeleteMediasSectionsInput,
+  condition?: ModelMediasSectionsConditionInput | null,
 };
 
-export type DeleteVideoSectionMutation = {
-  deleteVideoSection?:  {
-    __typename: "VideoSection",
+export type DeleteMediasSectionsMutation = {
+  deleteMediasSections?:  {
+    __typename: "MediasSections",
     id: string,
     sectionID: string,
-    videoID: string,
+    mediaID: string,
     createdAt: string,
     updatedAt: string,
-    video:  {
-      __typename: "vodAsset",
+    media:  {
+      __typename: "Media",
       id: string,
       title: string,
-      src?: string | null,
       description: string,
       highlighted: boolean,
+      source?: Source | null,
       createdAt: string,
       updatedAt: string,
-      video?:  {
-        __typename: "videoObject",
-        id: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
       thumbnail?:  {
-        __typename: "thumbnailObject",
+        __typename: "Thumbnail",
         id: string,
         ext: string,
         createdAt: string,
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelVideoSectionConnection",
+        __typename: "ModelMediasSectionsConnection",
         nextToken?: string | null,
       } | null,
     },
     section:  {
-      __typename: "section",
+      __typename: "Section",
       id: string,
       label: string,
       createdAt: string,
       updatedAt: string,
-      videos?:  {
-        __typename: "ModelVideoSectionConnection",
+      medias?:  {
+        __typename: "ModelMediasSectionsConnection",
         nextToken?: string | null,
       } | null,
     },
   } | null,
 };
 
-export type GetVodAssetQueryVariables = {
-  id: string,
+export type CreateVideoObjectMutationVariables = {
+  input: CreateVideoObjectInput,
+  condition?: ModelVideoObjectConditionInput | null,
 };
 
-export type GetVodAssetQuery = {
-  getVodAsset?:  {
-    __typename: "vodAsset",
+export type CreateVideoObjectMutation = {
+  createVideoObject?:  {
+    __typename: "VideoObject",
     id: string,
-    title: string,
-    src?: string | null,
-    description: string,
-    highlighted: boolean,
     createdAt: string,
     updatedAt: string,
+  } | null,
+};
+
+export type UpdateVideoObjectMutationVariables = {
+  input: UpdateVideoObjectInput,
+  condition?: ModelVideoObjectConditionInput | null,
+};
+
+export type UpdateVideoObjectMutation = {
+  updateVideoObject?:  {
+    __typename: "VideoObject",
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteVideoObjectMutationVariables = {
+  input: DeleteVideoObjectInput,
+  condition?: ModelVideoObjectConditionInput | null,
+};
+
+export type DeleteVideoObjectMutation = {
+  deleteVideoObject?:  {
+    __typename: "VideoObject",
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateVideoOnDemandMutationVariables = {
+  input: CreateVideoOnDemandInput,
+  condition?: ModelVideoOnDemandConditionInput | null,
+};
+
+export type CreateVideoOnDemandMutation = {
+  createVideoOnDemand?:  {
+    __typename: "VideoOnDemand",
+    id: string,
+    src: string,
+    createdAt: string,
+    updatedAt: string,
+    media?:  {
+      __typename: "Media",
+      id: string,
+      title: string,
+      description: string,
+      highlighted: boolean,
+      source?: Source | null,
+      createdAt: string,
+      updatedAt: string,
+      thumbnail?:  {
+        __typename: "Thumbnail",
+        id: string,
+        ext: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      sections?:  {
+        __typename: "ModelMediasSectionsConnection",
+        nextToken?: string | null,
+      } | null,
+    } | null,
     video?:  {
-      __typename: "videoObject",
+      __typename: "VideoObject",
       id: string,
       createdAt: string,
       updatedAt: string,
     } | null,
+  } | null,
+};
+
+export type UpdateVideoOnDemandMutationVariables = {
+  input: UpdateVideoOnDemandInput,
+  condition?: ModelVideoOnDemandConditionInput | null,
+};
+
+export type UpdateVideoOnDemandMutation = {
+  updateVideoOnDemand?:  {
+    __typename: "VideoOnDemand",
+    id: string,
+    src: string,
+    createdAt: string,
+    updatedAt: string,
+    media?:  {
+      __typename: "Media",
+      id: string,
+      title: string,
+      description: string,
+      highlighted: boolean,
+      source?: Source | null,
+      createdAt: string,
+      updatedAt: string,
+      thumbnail?:  {
+        __typename: "Thumbnail",
+        id: string,
+        ext: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      sections?:  {
+        __typename: "ModelMediasSectionsConnection",
+        nextToken?: string | null,
+      } | null,
+    } | null,
+    video?:  {
+      __typename: "VideoObject",
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+  } | null,
+};
+
+export type DeleteVideoOnDemandMutationVariables = {
+  input: DeleteVideoOnDemandInput,
+  condition?: ModelVideoOnDemandConditionInput | null,
+};
+
+export type DeleteVideoOnDemandMutation = {
+  deleteVideoOnDemand?:  {
+    __typename: "VideoOnDemand",
+    id: string,
+    src: string,
+    createdAt: string,
+    updatedAt: string,
+    media?:  {
+      __typename: "Media",
+      id: string,
+      title: string,
+      description: string,
+      highlighted: boolean,
+      source?: Source | null,
+      createdAt: string,
+      updatedAt: string,
+      thumbnail?:  {
+        __typename: "Thumbnail",
+        id: string,
+        ext: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      sections?:  {
+        __typename: "ModelMediasSectionsConnection",
+        nextToken?: string | null,
+      } | null,
+    } | null,
+    video?:  {
+      __typename: "VideoObject",
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+  } | null,
+};
+
+export type CreateLivestreamMutationVariables = {
+  input: CreateLivestreamInput,
+  condition?: ModelLivestreamConditionInput | null,
+};
+
+export type CreateLivestreamMutation = {
+  createLivestream?:  {
+    __typename: "Livestream",
+    id: string,
+    url: string,
+    isLive?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    media?:  {
+      __typename: "Media",
+      id: string,
+      title: string,
+      description: string,
+      highlighted: boolean,
+      source?: Source | null,
+      createdAt: string,
+      updatedAt: string,
+      thumbnail?:  {
+        __typename: "Thumbnail",
+        id: string,
+        ext: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      sections?:  {
+        __typename: "ModelMediasSectionsConnection",
+        nextToken?: string | null,
+      } | null,
+    } | null,
+  } | null,
+};
+
+export type UpdateLivestreamMutationVariables = {
+  input: UpdateLivestreamInput,
+  condition?: ModelLivestreamConditionInput | null,
+};
+
+export type UpdateLivestreamMutation = {
+  updateLivestream?:  {
+    __typename: "Livestream",
+    id: string,
+    url: string,
+    isLive?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    media?:  {
+      __typename: "Media",
+      id: string,
+      title: string,
+      description: string,
+      highlighted: boolean,
+      source?: Source | null,
+      createdAt: string,
+      updatedAt: string,
+      thumbnail?:  {
+        __typename: "Thumbnail",
+        id: string,
+        ext: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      sections?:  {
+        __typename: "ModelMediasSectionsConnection",
+        nextToken?: string | null,
+      } | null,
+    } | null,
+  } | null,
+};
+
+export type DeleteLivestreamMutationVariables = {
+  input: DeleteLivestreamInput,
+  condition?: ModelLivestreamConditionInput | null,
+};
+
+export type DeleteLivestreamMutation = {
+  deleteLivestream?:  {
+    __typename: "Livestream",
+    id: string,
+    url: string,
+    isLive?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    media?:  {
+      __typename: "Media",
+      id: string,
+      title: string,
+      description: string,
+      highlighted: boolean,
+      source?: Source | null,
+      createdAt: string,
+      updatedAt: string,
+      thumbnail?:  {
+        __typename: "Thumbnail",
+        id: string,
+        ext: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      sections?:  {
+        __typename: "ModelMediasSectionsConnection",
+        nextToken?: string | null,
+      } | null,
+    } | null,
+  } | null,
+};
+
+export type GetMediaQueryVariables = {
+  id: string,
+};
+
+export type GetMediaQuery = {
+  getMedia?:  {
+    __typename: "Media",
+    id: string,
+    title: string,
+    description: string,
+    highlighted: boolean,
+    source?: Source | null,
+    createdAt: string,
+    updatedAt: string,
     thumbnail?:  {
-      __typename: "thumbnailObject",
+      __typename: "Thumbnail",
       id: string,
       ext: string,
       createdAt: string,
       updatedAt: string,
     } | null,
     sections?:  {
-      __typename: "ModelVideoSectionConnection",
+      __typename: "ModelMediasSectionsConnection",
       items?:  Array< {
-        __typename: "VideoSection",
+        __typename: "MediasSections",
         id: string,
         sectionID: string,
-        videoID: string,
+        mediaID: string,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -797,39 +1110,33 @@ export type GetVodAssetQuery = {
   } | null,
 };
 
-export type ListVodAssetsQueryVariables = {
-  filter?: ModelvodAssetFilterInput | null,
+export type ListMediasQueryVariables = {
+  filter?: ModelMediaFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListVodAssetsQuery = {
-  listVodAssets?:  {
-    __typename: "ModelvodAssetConnection",
+export type ListMediasQuery = {
+  listMedias?:  {
+    __typename: "ModelMediaConnection",
     items?:  Array< {
-      __typename: "vodAsset",
+      __typename: "Media",
       id: string,
       title: string,
-      src?: string | null,
       description: string,
       highlighted: boolean,
+      source?: Source | null,
       createdAt: string,
       updatedAt: string,
-      video?:  {
-        __typename: "videoObject",
-        id: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
       thumbnail?:  {
-        __typename: "thumbnailObject",
+        __typename: "Thumbnail",
         id: string,
         ext: string,
         createdAt: string,
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelVideoSectionConnection",
+        __typename: "ModelMediasSectionsConnection",
         nextToken?: string | null,
       } | null,
     } | null > | null,
@@ -837,45 +1144,13 @@ export type ListVodAssetsQuery = {
   } | null,
 };
 
-export type GetVideoObjectQueryVariables = {
+export type GetThumbnailQueryVariables = {
   id: string,
 };
 
-export type GetVideoObjectQuery = {
-  getVideoObject?:  {
-    __typename: "videoObject",
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type ListVideoObjectsQueryVariables = {
-  filter?: ModelvideoObjectFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListVideoObjectsQuery = {
-  listVideoObjects?:  {
-    __typename: "ModelvideoObjectConnection",
-    items?:  Array< {
-      __typename: "videoObject",
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null > | null,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type GetThumbnailObjectQueryVariables = {
-  id: string,
-};
-
-export type GetThumbnailObjectQuery = {
-  getThumbnailObject?:  {
-    __typename: "thumbnailObject",
+export type GetThumbnailQuery = {
+  getThumbnail?:  {
+    __typename: "Thumbnail",
     id: string,
     ext: string,
     createdAt: string,
@@ -883,17 +1158,17 @@ export type GetThumbnailObjectQuery = {
   } | null,
 };
 
-export type ListThumbnailObjectsQueryVariables = {
-  filter?: ModelthumbnailObjectFilterInput | null,
+export type ListThumbnailsQueryVariables = {
+  filter?: ModelThumbnailFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListThumbnailObjectsQuery = {
-  listThumbnailObjects?:  {
-    __typename: "ModelthumbnailObjectConnection",
+export type ListThumbnailsQuery = {
+  listThumbnails?:  {
+    __typename: "ModelThumbnailConnection",
     items?:  Array< {
-      __typename: "thumbnailObject",
+      __typename: "Thumbnail",
       id: string,
       ext: string,
       createdAt: string,
@@ -909,18 +1184,18 @@ export type GetSectionQueryVariables = {
 
 export type GetSectionQuery = {
   getSection?:  {
-    __typename: "section",
+    __typename: "Section",
     id: string,
     label: string,
     createdAt: string,
     updatedAt: string,
-    videos?:  {
-      __typename: "ModelVideoSectionConnection",
+    medias?:  {
+      __typename: "ModelMediasSectionsConnection",
       items?:  Array< {
-        __typename: "VideoSection",
+        __typename: "MediasSections",
         id: string,
         sectionID: string,
-        videoID: string,
+        mediaID: string,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -930,22 +1205,22 @@ export type GetSectionQuery = {
 };
 
 export type ListSectionsQueryVariables = {
-  filter?: ModelsectionFilterInput | null,
+  filter?: ModelSectionFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
 export type ListSectionsQuery = {
   listSections?:  {
-    __typename: "ModelsectionConnection",
+    __typename: "ModelSectionConnection",
     items?:  Array< {
-      __typename: "section",
+      __typename: "Section",
       id: string,
       label: string,
       createdAt: string,
       updatedAt: string,
-      videos?:  {
-        __typename: "ModelVideoSectionConnection",
+      medias?:  {
+        __typename: "ModelMediasSectionsConnection",
         nextToken?: string | null,
       } | null,
     } | null > | null,
@@ -953,36 +1228,291 @@ export type ListSectionsQuery = {
   } | null,
 };
 
-export type OnCreateVodAssetSubscription = {
-  onCreateVodAsset?:  {
-    __typename: "vodAsset",
+export type GetMediasSectionsQueryVariables = {
+  id: string,
+};
+
+export type GetMediasSectionsQuery = {
+  getMediasSections?:  {
+    __typename: "MediasSections",
     id: string,
-    title: string,
-    src?: string | null,
-    description: string,
-    highlighted: boolean,
+    sectionID: string,
+    mediaID: string,
     createdAt: string,
     updatedAt: string,
+    media:  {
+      __typename: "Media",
+      id: string,
+      title: string,
+      description: string,
+      highlighted: boolean,
+      source?: Source | null,
+      createdAt: string,
+      updatedAt: string,
+      thumbnail?:  {
+        __typename: "Thumbnail",
+        id: string,
+        ext: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      sections?:  {
+        __typename: "ModelMediasSectionsConnection",
+        nextToken?: string | null,
+      } | null,
+    },
+    section:  {
+      __typename: "Section",
+      id: string,
+      label: string,
+      createdAt: string,
+      updatedAt: string,
+      medias?:  {
+        __typename: "ModelMediasSectionsConnection",
+        nextToken?: string | null,
+      } | null,
+    },
+  } | null,
+};
+
+export type ListMediasSectionssQueryVariables = {
+  filter?: ModelMediasSectionsFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListMediasSectionssQuery = {
+  listMediasSectionss?:  {
+    __typename: "ModelMediasSectionsConnection",
+    items?:  Array< {
+      __typename: "MediasSections",
+      id: string,
+      sectionID: string,
+      mediaID: string,
+      createdAt: string,
+      updatedAt: string,
+      media:  {
+        __typename: "Media",
+        id: string,
+        title: string,
+        description: string,
+        highlighted: boolean,
+        source?: Source | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      section:  {
+        __typename: "Section",
+        id: string,
+        label: string,
+        createdAt: string,
+        updatedAt: string,
+      },
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetVideoObjectQueryVariables = {
+  id: string,
+};
+
+export type GetVideoObjectQuery = {
+  getVideoObject?:  {
+    __typename: "VideoObject",
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListVideoObjectsQueryVariables = {
+  filter?: ModelVideoObjectFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListVideoObjectsQuery = {
+  listVideoObjects?:  {
+    __typename: "ModelVideoObjectConnection",
+    items?:  Array< {
+      __typename: "VideoObject",
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetVideoOnDemandQueryVariables = {
+  id: string,
+};
+
+export type GetVideoOnDemandQuery = {
+  getVideoOnDemand?:  {
+    __typename: "VideoOnDemand",
+    id: string,
+    src: string,
+    createdAt: string,
+    updatedAt: string,
+    media?:  {
+      __typename: "Media",
+      id: string,
+      title: string,
+      description: string,
+      highlighted: boolean,
+      source?: Source | null,
+      createdAt: string,
+      updatedAt: string,
+      thumbnail?:  {
+        __typename: "Thumbnail",
+        id: string,
+        ext: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      sections?:  {
+        __typename: "ModelMediasSectionsConnection",
+        nextToken?: string | null,
+      } | null,
+    } | null,
     video?:  {
-      __typename: "videoObject",
+      __typename: "VideoObject",
       id: string,
       createdAt: string,
       updatedAt: string,
     } | null,
+  } | null,
+};
+
+export type ListVideoOnDemandsQueryVariables = {
+  filter?: ModelVideoOnDemandFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListVideoOnDemandsQuery = {
+  listVideoOnDemands?:  {
+    __typename: "ModelVideoOnDemandConnection",
+    items?:  Array< {
+      __typename: "VideoOnDemand",
+      id: string,
+      src: string,
+      createdAt: string,
+      updatedAt: string,
+      media?:  {
+        __typename: "Media",
+        id: string,
+        title: string,
+        description: string,
+        highlighted: boolean,
+        source?: Source | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      video?:  {
+        __typename: "VideoObject",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetLivestreamQueryVariables = {
+  id: string,
+};
+
+export type GetLivestreamQuery = {
+  getLivestream?:  {
+    __typename: "Livestream",
+    id: string,
+    url: string,
+    isLive?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    media?:  {
+      __typename: "Media",
+      id: string,
+      title: string,
+      description: string,
+      highlighted: boolean,
+      source?: Source | null,
+      createdAt: string,
+      updatedAt: string,
+      thumbnail?:  {
+        __typename: "Thumbnail",
+        id: string,
+        ext: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      sections?:  {
+        __typename: "ModelMediasSectionsConnection",
+        nextToken?: string | null,
+      } | null,
+    } | null,
+  } | null,
+};
+
+export type ListLivestreamsQueryVariables = {
+  filter?: ModelLivestreamFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListLivestreamsQuery = {
+  listLivestreams?:  {
+    __typename: "ModelLivestreamConnection",
+    items?:  Array< {
+      __typename: "Livestream",
+      id: string,
+      url: string,
+      isLive?: boolean | null,
+      createdAt: string,
+      updatedAt: string,
+      media?:  {
+        __typename: "Media",
+        id: string,
+        title: string,
+        description: string,
+        highlighted: boolean,
+        source?: Source | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type OnCreateMediaSubscription = {
+  onCreateMedia?:  {
+    __typename: "Media",
+    id: string,
+    title: string,
+    description: string,
+    highlighted: boolean,
+    source?: Source | null,
+    createdAt: string,
+    updatedAt: string,
     thumbnail?:  {
-      __typename: "thumbnailObject",
+      __typename: "Thumbnail",
       id: string,
       ext: string,
       createdAt: string,
       updatedAt: string,
     } | null,
     sections?:  {
-      __typename: "ModelVideoSectionConnection",
+      __typename: "ModelMediasSectionsConnection",
       items?:  Array< {
-        __typename: "VideoSection",
+        __typename: "MediasSections",
         id: string,
         sectionID: string,
-        videoID: string,
+        mediaID: string,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -991,36 +1521,30 @@ export type OnCreateVodAssetSubscription = {
   } | null,
 };
 
-export type OnUpdateVodAssetSubscription = {
-  onUpdateVodAsset?:  {
-    __typename: "vodAsset",
+export type OnUpdateMediaSubscription = {
+  onUpdateMedia?:  {
+    __typename: "Media",
     id: string,
     title: string,
-    src?: string | null,
     description: string,
     highlighted: boolean,
+    source?: Source | null,
     createdAt: string,
     updatedAt: string,
-    video?:  {
-      __typename: "videoObject",
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     thumbnail?:  {
-      __typename: "thumbnailObject",
+      __typename: "Thumbnail",
       id: string,
       ext: string,
       createdAt: string,
       updatedAt: string,
     } | null,
     sections?:  {
-      __typename: "ModelVideoSectionConnection",
+      __typename: "ModelMediasSectionsConnection",
       items?:  Array< {
-        __typename: "VideoSection",
+        __typename: "MediasSections",
         id: string,
         sectionID: string,
-        videoID: string,
+        mediaID: string,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -1029,36 +1553,30 @@ export type OnUpdateVodAssetSubscription = {
   } | null,
 };
 
-export type OnDeleteVodAssetSubscription = {
-  onDeleteVodAsset?:  {
-    __typename: "vodAsset",
+export type OnDeleteMediaSubscription = {
+  onDeleteMedia?:  {
+    __typename: "Media",
     id: string,
     title: string,
-    src?: string | null,
     description: string,
     highlighted: boolean,
+    source?: Source | null,
     createdAt: string,
     updatedAt: string,
-    video?:  {
-      __typename: "videoObject",
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     thumbnail?:  {
-      __typename: "thumbnailObject",
+      __typename: "Thumbnail",
       id: string,
       ext: string,
       createdAt: string,
       updatedAt: string,
     } | null,
     sections?:  {
-      __typename: "ModelVideoSectionConnection",
+      __typename: "ModelMediasSectionsConnection",
       items?:  Array< {
-        __typename: "VideoSection",
+        __typename: "MediasSections",
         id: string,
         sectionID: string,
-        videoID: string,
+        mediaID: string,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -1067,36 +1585,9 @@ export type OnDeleteVodAssetSubscription = {
   } | null,
 };
 
-export type OnCreateVideoObjectSubscription = {
-  onCreateVideoObject?:  {
-    __typename: "videoObject",
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateVideoObjectSubscription = {
-  onUpdateVideoObject?:  {
-    __typename: "videoObject",
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnDeleteVideoObjectSubscription = {
-  onDeleteVideoObject?:  {
-    __typename: "videoObject",
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnCreateThumbnailObjectSubscription = {
-  onCreateThumbnailObject?:  {
-    __typename: "thumbnailObject",
+export type OnCreateThumbnailSubscription = {
+  onCreateThumbnail?:  {
+    __typename: "Thumbnail",
     id: string,
     ext: string,
     createdAt: string,
@@ -1104,9 +1595,9 @@ export type OnCreateThumbnailObjectSubscription = {
   } | null,
 };
 
-export type OnUpdateThumbnailObjectSubscription = {
-  onUpdateThumbnailObject?:  {
-    __typename: "thumbnailObject",
+export type OnUpdateThumbnailSubscription = {
+  onUpdateThumbnail?:  {
+    __typename: "Thumbnail",
     id: string,
     ext: string,
     createdAt: string,
@@ -1114,9 +1605,9 @@ export type OnUpdateThumbnailObjectSubscription = {
   } | null,
 };
 
-export type OnDeleteThumbnailObjectSubscription = {
-  onDeleteThumbnailObject?:  {
-    __typename: "thumbnailObject",
+export type OnDeleteThumbnailSubscription = {
+  onDeleteThumbnail?:  {
+    __typename: "Thumbnail",
     id: string,
     ext: string,
     createdAt: string,
@@ -1126,18 +1617,18 @@ export type OnDeleteThumbnailObjectSubscription = {
 
 export type OnCreateSectionSubscription = {
   onCreateSection?:  {
-    __typename: "section",
+    __typename: "Section",
     id: string,
     label: string,
     createdAt: string,
     updatedAt: string,
-    videos?:  {
-      __typename: "ModelVideoSectionConnection",
+    medias?:  {
+      __typename: "ModelMediasSectionsConnection",
       items?:  Array< {
-        __typename: "VideoSection",
+        __typename: "MediasSections",
         id: string,
         sectionID: string,
-        videoID: string,
+        mediaID: string,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -1148,18 +1639,18 @@ export type OnCreateSectionSubscription = {
 
 export type OnUpdateSectionSubscription = {
   onUpdateSection?:  {
-    __typename: "section",
+    __typename: "Section",
     id: string,
     label: string,
     createdAt: string,
     updatedAt: string,
-    videos?:  {
-      __typename: "ModelVideoSectionConnection",
+    medias?:  {
+      __typename: "ModelMediasSectionsConnection",
       items?:  Array< {
-        __typename: "VideoSection",
+        __typename: "MediasSections",
         id: string,
         sectionID: string,
-        videoID: string,
+        mediaID: string,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -1170,18 +1661,18 @@ export type OnUpdateSectionSubscription = {
 
 export type OnDeleteSectionSubscription = {
   onDeleteSection?:  {
-    __typename: "section",
+    __typename: "Section",
     id: string,
     label: string,
     createdAt: string,
     updatedAt: string,
-    videos?:  {
-      __typename: "ModelVideoSectionConnection",
+    medias?:  {
+      __typename: "ModelMediasSectionsConnection",
       items?:  Array< {
-        __typename: "VideoSection",
+        __typename: "MediasSections",
         id: string,
         sectionID: string,
-        videoID: string,
+        mediaID: string,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -1190,149 +1681,365 @@ export type OnDeleteSectionSubscription = {
   } | null,
 };
 
-export type OnCreateVideoSectionSubscription = {
-  onCreateVideoSection?:  {
-    __typename: "VideoSection",
+export type OnCreateMediasSectionsSubscription = {
+  onCreateMediasSections?:  {
+    __typename: "MediasSections",
     id: string,
     sectionID: string,
-    videoID: string,
+    mediaID: string,
     createdAt: string,
     updatedAt: string,
-    video:  {
-      __typename: "vodAsset",
+    media:  {
+      __typename: "Media",
       id: string,
       title: string,
-      src?: string | null,
       description: string,
       highlighted: boolean,
+      source?: Source | null,
       createdAt: string,
       updatedAt: string,
-      video?:  {
-        __typename: "videoObject",
-        id: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
       thumbnail?:  {
-        __typename: "thumbnailObject",
+        __typename: "Thumbnail",
         id: string,
         ext: string,
         createdAt: string,
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelVideoSectionConnection",
+        __typename: "ModelMediasSectionsConnection",
         nextToken?: string | null,
       } | null,
     },
     section:  {
-      __typename: "section",
+      __typename: "Section",
       id: string,
       label: string,
       createdAt: string,
       updatedAt: string,
-      videos?:  {
-        __typename: "ModelVideoSectionConnection",
+      medias?:  {
+        __typename: "ModelMediasSectionsConnection",
         nextToken?: string | null,
       } | null,
     },
   } | null,
 };
 
-export type OnUpdateVideoSectionSubscription = {
-  onUpdateVideoSection?:  {
-    __typename: "VideoSection",
+export type OnUpdateMediasSectionsSubscription = {
+  onUpdateMediasSections?:  {
+    __typename: "MediasSections",
     id: string,
     sectionID: string,
-    videoID: string,
+    mediaID: string,
     createdAt: string,
     updatedAt: string,
-    video:  {
-      __typename: "vodAsset",
+    media:  {
+      __typename: "Media",
       id: string,
       title: string,
-      src?: string | null,
       description: string,
       highlighted: boolean,
+      source?: Source | null,
       createdAt: string,
       updatedAt: string,
-      video?:  {
-        __typename: "videoObject",
-        id: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
       thumbnail?:  {
-        __typename: "thumbnailObject",
+        __typename: "Thumbnail",
         id: string,
         ext: string,
         createdAt: string,
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelVideoSectionConnection",
+        __typename: "ModelMediasSectionsConnection",
         nextToken?: string | null,
       } | null,
     },
     section:  {
-      __typename: "section",
+      __typename: "Section",
       id: string,
       label: string,
       createdAt: string,
       updatedAt: string,
-      videos?:  {
-        __typename: "ModelVideoSectionConnection",
+      medias?:  {
+        __typename: "ModelMediasSectionsConnection",
         nextToken?: string | null,
       } | null,
     },
   } | null,
 };
 
-export type OnDeleteVideoSectionSubscription = {
-  onDeleteVideoSection?:  {
-    __typename: "VideoSection",
+export type OnDeleteMediasSectionsSubscription = {
+  onDeleteMediasSections?:  {
+    __typename: "MediasSections",
     id: string,
     sectionID: string,
-    videoID: string,
+    mediaID: string,
     createdAt: string,
     updatedAt: string,
-    video:  {
-      __typename: "vodAsset",
+    media:  {
+      __typename: "Media",
       id: string,
       title: string,
-      src?: string | null,
       description: string,
       highlighted: boolean,
+      source?: Source | null,
       createdAt: string,
       updatedAt: string,
-      video?:  {
-        __typename: "videoObject",
-        id: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
       thumbnail?:  {
-        __typename: "thumbnailObject",
+        __typename: "Thumbnail",
         id: string,
         ext: string,
         createdAt: string,
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelVideoSectionConnection",
+        __typename: "ModelMediasSectionsConnection",
         nextToken?: string | null,
       } | null,
     },
     section:  {
-      __typename: "section",
+      __typename: "Section",
       id: string,
       label: string,
       createdAt: string,
       updatedAt: string,
-      videos?:  {
-        __typename: "ModelVideoSectionConnection",
+      medias?:  {
+        __typename: "ModelMediasSectionsConnection",
         nextToken?: string | null,
       } | null,
     },
+  } | null,
+};
+
+export type OnCreateVideoObjectSubscription = {
+  onCreateVideoObject?:  {
+    __typename: "VideoObject",
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateVideoObjectSubscription = {
+  onUpdateVideoObject?:  {
+    __typename: "VideoObject",
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteVideoObjectSubscription = {
+  onDeleteVideoObject?:  {
+    __typename: "VideoObject",
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateVideoOnDemandSubscription = {
+  onCreateVideoOnDemand?:  {
+    __typename: "VideoOnDemand",
+    id: string,
+    src: string,
+    createdAt: string,
+    updatedAt: string,
+    media?:  {
+      __typename: "Media",
+      id: string,
+      title: string,
+      description: string,
+      highlighted: boolean,
+      source?: Source | null,
+      createdAt: string,
+      updatedAt: string,
+      thumbnail?:  {
+        __typename: "Thumbnail",
+        id: string,
+        ext: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      sections?:  {
+        __typename: "ModelMediasSectionsConnection",
+        nextToken?: string | null,
+      } | null,
+    } | null,
+    video?:  {
+      __typename: "VideoObject",
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+  } | null,
+};
+
+export type OnUpdateVideoOnDemandSubscription = {
+  onUpdateVideoOnDemand?:  {
+    __typename: "VideoOnDemand",
+    id: string,
+    src: string,
+    createdAt: string,
+    updatedAt: string,
+    media?:  {
+      __typename: "Media",
+      id: string,
+      title: string,
+      description: string,
+      highlighted: boolean,
+      source?: Source | null,
+      createdAt: string,
+      updatedAt: string,
+      thumbnail?:  {
+        __typename: "Thumbnail",
+        id: string,
+        ext: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      sections?:  {
+        __typename: "ModelMediasSectionsConnection",
+        nextToken?: string | null,
+      } | null,
+    } | null,
+    video?:  {
+      __typename: "VideoObject",
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+  } | null,
+};
+
+export type OnDeleteVideoOnDemandSubscription = {
+  onDeleteVideoOnDemand?:  {
+    __typename: "VideoOnDemand",
+    id: string,
+    src: string,
+    createdAt: string,
+    updatedAt: string,
+    media?:  {
+      __typename: "Media",
+      id: string,
+      title: string,
+      description: string,
+      highlighted: boolean,
+      source?: Source | null,
+      createdAt: string,
+      updatedAt: string,
+      thumbnail?:  {
+        __typename: "Thumbnail",
+        id: string,
+        ext: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      sections?:  {
+        __typename: "ModelMediasSectionsConnection",
+        nextToken?: string | null,
+      } | null,
+    } | null,
+    video?:  {
+      __typename: "VideoObject",
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+  } | null,
+};
+
+export type OnCreateLivestreamSubscription = {
+  onCreateLivestream?:  {
+    __typename: "Livestream",
+    id: string,
+    url: string,
+    isLive?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    media?:  {
+      __typename: "Media",
+      id: string,
+      title: string,
+      description: string,
+      highlighted: boolean,
+      source?: Source | null,
+      createdAt: string,
+      updatedAt: string,
+      thumbnail?:  {
+        __typename: "Thumbnail",
+        id: string,
+        ext: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      sections?:  {
+        __typename: "ModelMediasSectionsConnection",
+        nextToken?: string | null,
+      } | null,
+    } | null,
+  } | null,
+};
+
+export type OnUpdateLivestreamSubscription = {
+  onUpdateLivestream?:  {
+    __typename: "Livestream",
+    id: string,
+    url: string,
+    isLive?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    media?:  {
+      __typename: "Media",
+      id: string,
+      title: string,
+      description: string,
+      highlighted: boolean,
+      source?: Source | null,
+      createdAt: string,
+      updatedAt: string,
+      thumbnail?:  {
+        __typename: "Thumbnail",
+        id: string,
+        ext: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      sections?:  {
+        __typename: "ModelMediasSectionsConnection",
+        nextToken?: string | null,
+      } | null,
+    } | null,
+  } | null,
+};
+
+export type OnDeleteLivestreamSubscription = {
+  onDeleteLivestream?:  {
+    __typename: "Livestream",
+    id: string,
+    url: string,
+    isLive?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    media?:  {
+      __typename: "Media",
+      id: string,
+      title: string,
+      description: string,
+      highlighted: boolean,
+      source?: Source | null,
+      createdAt: string,
+      updatedAt: string,
+      thumbnail?:  {
+        __typename: "Thumbnail",
+        id: string,
+        ext: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      sections?:  {
+        __typename: "ModelMediasSectionsConnection",
+        nextToken?: string | null,
+      } | null,
+    } | null,
   } | null,
 };

@@ -2,14 +2,16 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Slider from 'react-slick'
 
-import { vodAsset, section } from '../../../models'
+import { VideoOnDemand, Section, Thumbnail } from '../../../models'
 import VideoCard from '../Video/VideoCard'
-import { Thumbnail } from '../../types'
 
 type SectionProps = {
-    section: section
-    vodAssets: Array<vodAsset>
-    thumbnails: Array<Thumbnail>
+    section: Section
+    vodAssets: Array<VideoOnDemand>
+    thumbnails: Array<{
+        obj: Thumbnail | undefined
+        url: string
+    }>
 }
 
 const StyledTitle = styled.h1``
@@ -22,8 +24,10 @@ const StyledSection = styled.div`
     margin: 0 15px;
 `
 
-const Section = ({ section, vodAssets, thumbnails }: SectionProps) => {
-    const [filteredAssets, setFilteredAssets] = useState<Array<vodAsset>>([])
+const SectionContainer = ({ section, vodAssets, thumbnails }: SectionProps) => {
+    const [filteredAssets, setFilteredAssets] = useState<Array<VideoOnDemand>>(
+        []
+    )
     const slidesToShow = (slidesNumber: number) =>
         filteredAssets.length >= slidesNumber
             ? slidesNumber
@@ -58,7 +62,7 @@ const Section = ({ section, vodAssets, thumbnails }: SectionProps) => {
                 let returnValue = false
                 // TODO: create according model for vodAssets (with sections details from custom graphql call)
                 // eslint-disable-next-line
-                asset.sections?.items.forEach((item) => {
+                asset.media?.sections?.items.forEach((item) => {
                     if (item?.section.id === section.id) {
                         returnValue = true
                     }
@@ -78,7 +82,7 @@ const Section = ({ section, vodAssets, thumbnails }: SectionProps) => {
                             <VideoCard
                                 thumbnail={thumbnails.find(
                                     (thumbnail) =>
-                                        asset?.thumbnail?.id ===
+                                        asset.media?.thumbnail?.id ===
                                         thumbnail.obj?.id
                                 )}
                                 vod={asset}
@@ -90,4 +94,4 @@ const Section = ({ section, vodAssets, thumbnails }: SectionProps) => {
     )
 }
 
-export default Section
+export default SectionContainer

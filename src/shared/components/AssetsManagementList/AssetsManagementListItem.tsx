@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { fetchThumbnail, fetchVodSections } from '../../utilities'
 import Loader from 'react-loader-spinner'
-import { vodAsset } from '../../../models'
+import { VideoOnDemand } from '../../../models'
 
 type AssetsManagementListItemProps = {
-    selectedAsset: vodAsset
+    selectedAsset: VideoOnDemand
 }
 
 type VideoSections = {
@@ -51,7 +51,7 @@ const AssetsManagementListItem = ({
                 if (data === undefined) {
                     return
                 }
-                setSections(data.getVodAsset.sections.items)
+                setSections(data.getVideoOnDemand.media?.sections.items)
             })()
         } catch (error) {
             console.error('AssetsManagementList(fetchSections): ', error)
@@ -61,8 +61,8 @@ const AssetsManagementListItem = ({
     return (
         <div>
             {thumbnail}
-            <p>Title: {selectedAsset.title}</p>
-            <p>Description: {selectedAsset.description}</p>
+            <p>Title: {selectedAsset.media?.title}</p>
+            <p>Description: {selectedAsset.media?.description}</p>
             <p>
                 Tags:{' '}
                 {sections.map((s) => (

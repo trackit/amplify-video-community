@@ -1,98 +1,3 @@
-type vodAsset
-@model (subscriptions: {level: public})
-@aws_iam
-@aws_cognito_user_pools
-@auth(
-    rules: [
-      { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
-      { allow: public, provider: iam, operations: [read] }
-      { allow: groups, groups: ["everyone"], operations: [read] }
-    ]
-  )
-{
-  id:ID!
-  title:String!
-  src:String
-  description:String!
-  highlighted:Boolean!
-  video:videoObject @connection
-  thumbnail:thumbnailObject @connection
-  sections:[VideoSection] @connection(keyName: "byVideo", fields: ["id"])
-}
-
-type videoObject
-@model
-@aws_iam
-@aws_cognito_user_pools
-@auth(
-    rules: [
-      { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
-      { allow: public, provider: iam, operations: [read] }
-      { allow: groups, groups: ["everyone"], operations: [read] }
-    ]
-  )
-{
-  id:ID!
-}
-
-type thumbnailObject
-@model
-@aws_iam
-@aws_cognito_user_pools
-@auth(
-    rules: [
-      { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
-      { allow: public, provider: iam, operations: [read] }
-      { allow: groups, groups: ["everyone"], operations: [read] }
-    ]
-  )
-{
-  id:ID!
-  ext:String!
-}
-
-type section
-@model
-@aws_iam
-@aws_cognito_user_pools
-@auth(
-    rules: [
-      { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
-      { allow: public, provider: iam, operations: [read] }
-      { allow: groups, groups: ["everyone"], operations: [read] }
-    ]
-  )
-{
-  id:ID!
-  label:String!
-  videos:[VideoSection] @connection(keyName: "bySection", fields: ["id"])
-}
-
-type VideoSection
-@model(queries: null)
-@aws_iam
-@aws_cognito_user_pools
-@auth(
-    rules: [
-      { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
-      { allow: public, provider: iam, operations: [read] }
-      { allow: groups, groups: ["everyone"], operations: [read] }
-    ]
-  )
-@key(name: "bySection", fields: ["sectionID", "videoID"])
-@key(name: "byVideo", fields: ["videoID", "sectionID"]) {
-  id: ID!
-  sectionID: ID!
-  videoID: ID!
-  section: section! @connection(fields: ["sectionID"])
-  video: vodAsset! @connection(fields: ["videoID"])
-}
-
-####################################################################################
-####################################################################################
-####################################################################################
-####################################################################################
-
 ### Interfaces
 
 enum Source {
@@ -101,24 +6,25 @@ enum Source {
   SELF
 }
 
-interface Media {
+type Media
+@model
+@aws_iam
+@aws_cognito_user_pools
+@auth(
+    rules: [
+      { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
+      { allow: public, provider: iam, operations: [read] }
+      { allow: groups, groups: ["everyone"], operations: [read] }
+    ]
+  )
+{
+  id: ID!
   title: String!
   description: String!
   highlighted: Boolean!
   sections: [MediasSections] @connection(keyName: "byMedia", fields: ["id"])
   source: Source
   thumbnail: Thumbnail @connection
-}
-
-### Fragments
-
-fragment VideoOnDemandFields on VideoOnDemand {
-  video: videoObject
-}
-
-fragment LivestreamFields on Livestream {
-  url: String
-  isLive: Boolean
 }
 
 ### General
@@ -178,7 +84,22 @@ type MediasSections
 
 ### Video On Demand
 
-type VideoOnDemand implements Media
+type VideoObject
+@model
+@aws_iam
+@aws_cognito_user_pools
+@auth(
+    rules: [
+      { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
+      { allow: public, provider: iam, operations: [read] }
+      { allow: groups, groups: ["everyone"], operations: [read] }
+    ]
+  )
+{
+  id:ID!
+}
+
+type VideoOnDemand
 @model
 @aws_iam
 @aws_cognito_user_pools
@@ -191,20 +112,14 @@ type VideoOnDemand implements Media
   )
 {
   id: ID!
-  title: String!
-  description: String!
-  highlighted: Boolean!
-  sections: [MediasSections] @connection(keyName: "byMedia", fields: ["id"])
-  source: Source
-  thumbnail: Thumbnail @connection
-
-
-  video: videoObject @connection
+  media: Media @connection
+  video: VideoObject @connection
+  src: String!
 }
 
 ### Livestreaming
 
-type Livestream implements Media
+type Livestream
 @model
 @aws_iam
 @aws_cognito_user_pools
@@ -217,14 +132,7 @@ type Livestream implements Media
   )
 {
   id: ID!
-  title: String!
-  description: String!
-  highlighted: Boolean!
-  sections: [MediasSections] @connection(keyName: "byMedia", fields: ["id"])
-  source: Source
-  thumbnail: Thumbnail @connection
-
-
+  media: Media @connection
   url: String!
   isLive: Boolean
 }

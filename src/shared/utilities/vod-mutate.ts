@@ -1,9 +1,10 @@
 import { API, graphqlOperation, Storage } from 'aws-amplify'
 import {
-    createThumbnailObject,
+    createThumbnail,
     createVideoObject,
-    createVideoSection,
-    createVodAsset,
+    createMediasSections,
+    createVideoOnDemand,
+    createMedia,
 } from '../../graphql/mutations'
 import { v4 as uuidv4 } from 'uuid'
 import awsvideoconfig from '../../aws-video-exports'
@@ -11,20 +12,22 @@ import awsmobile from '../../aws-exports'
 import { GraphQLResult } from '@aws-amplify/api-graphql'
 import * as APIt from '../../API'
 
-async function setVideoSections(videoSection: APIt.CreateVideoSectionInput) {
+async function setMediasSections(
+    mediasSections: APIt.CreateMediasSectionsInput
+) {
     return API.graphql(
-        graphqlOperation(createVideoSection, {
-            input: videoSection,
+        graphqlOperation(createMediasSections, {
+            input: mediasSections,
         })
-    ) as GraphQLResult<APIt.CreateVideoSectionMutation>
+    ) as GraphQLResult<APIt.CreateMediasSectionsMutation>
 }
 
-async function createVideoAsset(payload: APIt.CreateVodAssetInput) {
+async function createVOD(payload: APIt.CreateVideoOnDemandInput) {
     return API.graphql(
-        graphqlOperation(createVodAsset, {
+        graphqlOperation(createVideoOnDemand, {
             input: payload,
         })
-    ) as GraphQLResult<APIt.CreateVodAssetMutation>
+    ) as GraphQLResult<APIt.CreateVideoOnDemandMutation>
 }
 
 async function putVodFile(file: File, id: string, vodExtension: string[]) {
@@ -32,7 +35,7 @@ async function putVodFile(file: File, id: string, vodExtension: string[]) {
         bucket: awsvideoconfig.awsInputVideo,
         region: awsmobile.aws_project_region,
         // eslint-disable-next-line
-            progressCallback(progress: any) {
+        progressCallback(progress: any) {
             console.log(
                 `vodFile Uploaded: ${progress.loaded}/${progress.total}`
             )
@@ -61,9 +64,9 @@ async function putThumbnailFile(
     )
 }
 
-async function setThumbnailObject(id: string, thumbnailExtension: string[]) {
+async function setThumbnail(id: string, thumbnailExtension: string[]) {
     return API.graphql(
-        graphqlOperation(createThumbnailObject, {
+        graphqlOperation(createThumbnail, {
             input: {
                 id: id,
                 ext: thumbnailExtension[thumbnailExtension.length - 1],
@@ -78,6 +81,14 @@ async function setVideoObject(id: string) {
             input: {
                 id: id,
             },
+        })
+    )
+}
+
+async function setMedia(input: APIt.CreateMediaInput) {
+    return API.graphql(
+        graphqlOperation(createMedia, {
+            input,
         })
     )
 }
@@ -125,9 +136,9 @@ const uploadVideo = async (
     }
 
     try {
-        await setThumbnailObject(id, thumbnailExtension)
+        await setThumbnail(id, thumbnailExtension)
     } catch (error) {
-        console.error('vod-mutate.tx(setThumbnailObject): ', error)
+        console.error('vod-mutate.tx(setThumbnail): ', error)
         return
     }
     try {
@@ -138,23 +149,35 @@ const uploadVideo = async (
     }
 
     try {
-        const { data } = await createVideoAsset({
-            title: title,
-            description: description,
-            vodAssetVideoId: id,
-            vodAssetThumbnailId: id,
-            highlighted: highlighted,
+        await setMedia({
+            id,
+            title,
+            description,
+            highlighted,
+            source: APIt.Source.SELF,
+            mediaThumbnailId: id,
+        })
+    } catch (error) {
+        console.error('vod-mutate.tx(setMedia): ', error)
+        return
+    }
+
+    try {
+        const { data } = await createVOD({
+            id,
+            videoOnDemandMediaId: id,
+            videoOnDemandVideoId: id,
         })
         for (let i = 0; i < sectionsId.length; i++) {
-            await setVideoSections({
+            await setMediasSections({
                 sectionID: sectionsId[i] as string,
-                videoID: data?.createVodAsset?.id as string,
+                mediaID: data?.createVideoOnDemand?.id as string,
             })
         }
     } catch (error) {
-        console.error('vod-mutate.tx(createVodAsset): ', error)
+        console.error('vod-mutate.tx(createVOD): ', error)
         return
     }
 }
 
-export { uploadVideo, setVideoSections, createVideoAsset }
+export { uploadVideo, setMediasSections, createVOD }

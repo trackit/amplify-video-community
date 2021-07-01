@@ -2,21 +2,16 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getVodAsset = /* GraphQL */ `
-  query GetVodAsset($id: ID!) {
-    getVodAsset(id: $id) {
+export const getMedia = /* GraphQL */ `
+  query GetMedia($id: ID!) {
+    getMedia(id: $id) {
       id
       title
-      src
       description
       highlighted
+      source
       createdAt
       updatedAt
-      video {
-        id
-        createdAt
-        updatedAt
-      }
       thumbnail {
         id
         ext
@@ -27,7 +22,7 @@ export const getVodAsset = /* GraphQL */ `
         items {
           id
           sectionID
-          videoID
+          mediaID
           createdAt
           updatedAt
         }
@@ -36,26 +31,21 @@ export const getVodAsset = /* GraphQL */ `
     }
   }
 `;
-export const listVodAssets = /* GraphQL */ `
-  query ListVodAssets(
-    $filter: ModelvodAssetFilterInput
+export const listMedias = /* GraphQL */ `
+  query ListMedias(
+    $filter: ModelMediaFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listVodAssets(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listMedias(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         title
-        src
         description
         highlighted
+        source
         createdAt
         updatedAt
-        video {
-          id
-          createdAt
-          updatedAt
-        }
         thumbnail {
           id
           ext
@@ -70,34 +60,9 @@ export const listVodAssets = /* GraphQL */ `
     }
   }
 `;
-export const getVideoObject = /* GraphQL */ `
-  query GetVideoObject($id: ID!) {
-    getVideoObject(id: $id) {
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listVideoObjects = /* GraphQL */ `
-  query ListVideoObjects(
-    $filter: ModelvideoObjectFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listVideoObjects(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getThumbnailObject = /* GraphQL */ `
-  query GetThumbnailObject($id: ID!) {
-    getThumbnailObject(id: $id) {
+export const getThumbnail = /* GraphQL */ `
+  query GetThumbnail($id: ID!) {
+    getThumbnail(id: $id) {
       id
       ext
       createdAt
@@ -105,17 +70,13 @@ export const getThumbnailObject = /* GraphQL */ `
     }
   }
 `;
-export const listThumbnailObjects = /* GraphQL */ `
-  query ListThumbnailObjects(
-    $filter: ModelthumbnailObjectFilterInput
+export const listThumbnails = /* GraphQL */ `
+  query ListThumbnails(
+    $filter: ModelThumbnailFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listThumbnailObjects(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
+    listThumbnails(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         ext
@@ -133,11 +94,11 @@ export const getSection = /* GraphQL */ `
       label
       createdAt
       updatedAt
-      videos {
+      medias {
         items {
           id
           sectionID
-          videoID
+          mediaID
           createdAt
           updatedAt
         }
@@ -148,7 +109,7 @@ export const getSection = /* GraphQL */ `
 `;
 export const listSections = /* GraphQL */ `
   query ListSections(
-    $filter: ModelsectionFilterInput
+    $filter: ModelSectionFilterInput
     $limit: Int
     $nextToken: String
   ) {
@@ -158,8 +119,224 @@ export const listSections = /* GraphQL */ `
         label
         createdAt
         updatedAt
-        videos {
+        medias {
           nextToken
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const getMediasSections = /* GraphQL */ `
+  query GetMediasSections($id: ID!) {
+    getMediasSections(id: $id) {
+      id
+      sectionID
+      mediaID
+      createdAt
+      updatedAt
+      media {
+        id
+        title
+        description
+        highlighted
+        source
+        createdAt
+        updatedAt
+        thumbnail {
+          id
+          ext
+          createdAt
+          updatedAt
+        }
+        sections {
+          nextToken
+        }
+      }
+      section {
+        id
+        label
+        createdAt
+        updatedAt
+        medias {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const listMediasSectionss = /* GraphQL */ `
+  query ListMediasSectionss(
+    $filter: ModelMediasSectionsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listMediasSectionss(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        sectionID
+        mediaID
+        createdAt
+        updatedAt
+        media {
+          id
+          title
+          description
+          highlighted
+          source
+          createdAt
+          updatedAt
+        }
+        section {
+          id
+          label
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const getVideoObject = /* GraphQL */ `
+  query GetVideoObject($id: ID!) {
+    getVideoObject(id: $id) {
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listVideoObjects = /* GraphQL */ `
+  query ListVideoObjects(
+    $filter: ModelVideoObjectFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listVideoObjects(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getVideoOnDemand = /* GraphQL */ `
+  query GetVideoOnDemand($id: ID!) {
+    getVideoOnDemand(id: $id) {
+      id
+      src
+      createdAt
+      updatedAt
+      media {
+        id
+        title
+        description
+        highlighted
+        source
+        createdAt
+        updatedAt
+        thumbnail {
+          id
+          ext
+          createdAt
+          updatedAt
+        }
+        sections {
+          nextToken
+        }
+      }
+      video {
+        id
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+export const listVideoOnDemands = /* GraphQL */ `
+  query ListVideoOnDemands(
+    $filter: ModelVideoOnDemandFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listVideoOnDemands(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        src
+        createdAt
+        updatedAt
+        media {
+          id
+          title
+          description
+          highlighted
+          source
+          createdAt
+          updatedAt
+        }
+        video {
+          id
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const getLivestream = /* GraphQL */ `
+  query GetLivestream($id: ID!) {
+    getLivestream(id: $id) {
+      id
+      url
+      isLive
+      createdAt
+      updatedAt
+      media {
+        id
+        title
+        description
+        highlighted
+        source
+        createdAt
+        updatedAt
+        thumbnail {
+          id
+          ext
+          createdAt
+          updatedAt
+        }
+        sections {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const listLivestreams = /* GraphQL */ `
+  query ListLivestreams(
+    $filter: ModelLivestreamFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listLivestreams(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        url
+        isLive
+        createdAt
+        updatedAt
+        media {
+          id
+          title
+          description
+          highlighted
+          source
+          createdAt
+          updatedAt
         }
       }
       nextToken

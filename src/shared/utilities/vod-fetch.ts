@@ -1,27 +1,109 @@
 import { API } from 'aws-amplify'
 import { GraphQLResult } from '@aws-amplify/api-graphql'
-import { getVodAsset } from '../../graphql/queries'
-import { ModelvodAssetFilterInput } from '../../API'
+import { getVideoOnDemand } from '../../graphql/queries'
 import * as APIt from '../../API'
 import { getAuthMode } from './helper'
 
-const listVodAssets = /* GraphQL */ `
-    query ListVodAssets(
-        $filter: ModelvodAssetFilterInput
+export const listVideoOnDemands = /* GraphQL */ `
+    query ListVideoOnDemands(
+        $filter: ModelVideoOnDemandFilterInput
         $limit: Int
         $nextToken: String
     ) {
-        listVodAssets(filter: $filter, limit: $limit, nextToken: $nextToken) {
+        listVideoOnDemands(
+            filter: $filter
+            limit: $limit
+            nextToken: $nextToken
+        ) {
             items {
                 id
-                title
-                description
-                highlighted
+                createdAt
+                updatedAt
+                media {
+                    id
+                    title
+                    description
+                    highlighted
+                    source
+                    thumbnail {
+                        id
+                        ext
+                    }
+                    sections {
+                        items {
+                            id
+                            section {
+                                id
+                                label
+                            }
+                        }
+                    }
+                    createdAt
+                    updatedAt
+                }
                 video {
                     id
                     createdAt
                     updatedAt
                 }
+            }
+            nextToken
+        }
+    }
+`
+
+async function fetchVodFiles(nextToken: string | null) {
+    if (nextToken !== null && nextToken !== '')
+        return API.graphql({
+            query: listVideoOnDemands,
+            variables: {
+                nextToken,
+            },
+            authMode: getAuthMode(),
+        }) as GraphQLResult<APIt.ListVideoOnDemandsQuery>
+    else
+        return API.graphql({
+            query: listVideoOnDemands,
+            authMode: getAuthMode(),
+        }) as GraphQLResult<APIt.ListVideoOnDemandsQuery>
+}
+
+async function fetchHighlightedVideos() {
+    return API.graphql({
+        query: listVideoOnDemands,
+        variables: {
+            filter: {
+                highlighted: {
+                    eq: true,
+                },
+            },
+        },
+        authMode: getAuthMode(),
+    }) as GraphQLResult<APIt.GetVideoOnDemandQuery>
+}
+
+async function fetchVodAsset(id: string) {
+    return API.graphql({
+        query: getVideoOnDemand,
+        variables: {
+            id,
+        },
+        authMode: getAuthMode(),
+    }) as GraphQLResult<APIt.GetVideoOnDemandQuery>
+}
+
+export const listVodSections = /* GraphQL */ `
+    query GetVideoOnDemand($id: ID!) {
+        getVideoOnDemand(id: $id) {
+            id
+            media {
+                id
+                title
+                description
+                highlighted
+                source
+                createdAt
+                updatedAt
                 thumbnail {
                     id
                     ext
@@ -34,77 +116,14 @@ const listVodAssets = /* GraphQL */ `
                         section {
                             id
                             label
+                            createdAt
+                            updatedAt
                         }
-                    }
-                    nextToken
-                }
-                createdAt
-                updatedAt
-            }
-            nextToken
-        }
-    }
-`
-
-async function fetchVodFiles(nextToken: string | null) {
-    if (nextToken !== null && nextToken !== '')
-        return API.graphql({
-            query: listVodAssets,
-            variables: {
-                nextToken,
-            },
-            authMode: getAuthMode(),
-        }) as GraphQLResult<APIt.ListVodAssetsQuery>
-    else
-        return API.graphql({
-            query: listVodAssets,
-            authMode: getAuthMode(),
-        }) as GraphQLResult<APIt.ListVodAssetsQuery>
-}
-
-async function fetchHighlightedVideos() {
-    const filter: ModelvodAssetFilterInput = {
-        highlighted: {
-            eq: true,
-        },
-    }
-    return API.graphql({
-        query: listVodAssets,
-        variables: { filter },
-        authMode: getAuthMode(),
-    }) as GraphQLResult<APIt.GetVodAssetQuery>
-}
-
-async function fetchVodAsset(id: string) {
-    return API.graphql({
-        query: getVodAsset,
-        variables: {
-            id,
-        },
-        authMode: getAuthMode(),
-    }) as GraphQLResult<APIt.GetVodAssetQuery>
-}
-
-export const listVodSections = /* GraphQL */ `
-    query GetVodAsset($id: ID!) {
-        getVodAsset(id: $id) {
-            id
-            title
-            description
-            highlighted
-            sections {
-                items {
-                    id
-                    section {
-                        id
-                        label
                         createdAt
                         updatedAt
                     }
-                    createdAt
-                    updatedAt
+                    nextToken
                 }
-                nextToken
             }
             createdAt
             updatedAt
@@ -113,24 +132,26 @@ export const listVodSections = /* GraphQL */ `
 `
 
 export type ListVodSections = {
-    getVodAsset: {
+    getVideoOnDemand: {
         id: string
-        title: string
-        description: string
-        highlighted: boolean
-        sections: {
-            items: Array<{
-                id: string
-                section: {
+        media: {
+            title: string
+            description: string
+            highlighted: boolean
+            sections: {
+                items: Array<{
                     id: string
-                    label: string
+                    section: {
+                        id: string
+                        label: string
+                        createdAt: string
+                        updatedAt: string
+                    }
                     createdAt: string
                     updatedAt: string
-                }
-                createdAt: string
-                updatedAt: string
-            }>
-            nextToken: string
+                }>
+                nextToken: string
+            }
         }
         createdAt: string
         updatedAt: string

@@ -1,4 +1,3 @@
-import { VodAsset, ListVodAssets } from './vod.interface'
 import { fetchSections, fetchThumbnail } from './fetch'
 import {
     fetchVodFiles,
@@ -15,4 +14,3 @@ export {
     fetchThumbnail,
     fetchVodSections,
 }
-export type { VodAsset, ListVodAssets }

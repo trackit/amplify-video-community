@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { fetchSections, uploadVideo } from '../../../shared/utilities'
 import { AdminLayout } from '../../../shared/components'
-import { section } from '../../../models'
+import { Section } from '../../../models'
 
 type DropZoneProps = {
     setVodFile: React.Dispatch<React.SetStateAction<File | null>>
@@ -34,18 +34,14 @@ const VideoAddForm = ({ vodFile }: VideoAddFormProps) => {
     const [description, setDescription] = useState<string>('')
     const [thumbnailFile, setThumbnailFile] = useState<File | null>(null)
     const [highlighted, setHighlighted] = useState<boolean>(false)
-    const [existingSections, setExistingSections] = useState<
-        Array<section | undefined>
-    >([])
-    const [selectedSections, setSelectedSections] = useState<
-        Array<section | undefined>
-    >([])
+    const [existingSections, setExistingSections] = useState<Array<Section>>([])
+    const [selectedSections, setSelectedSections] = useState<Array<Section>>([])
 
     useEffect(() => {
         ;(async () => {
             try {
                 const { data } = await fetchSections()
-                setExistingSections(data?.listSections?.items as Array<section>)
+                setExistingSections(data?.listSections?.items as Array<Section>)
             } catch (error) {
                 console.error('video/add.tsx(fetchSections):', error)
             }
@@ -139,7 +135,7 @@ const VideoAddForm = ({ vodFile }: VideoAddFormProps) => {
                 </div>
                 <div style={{ margin: '15px' }}>
                     <label htmlFor="_add_vod_tags">Video Tags</label>
-                    {selectedSections.map((section: section | undefined) => {
+                    {selectedSections.map((section: Section | undefined) => {
                         return (
                             <div key={section && section.label}>
                                 <span>{section && section.label}</span>
@@ -147,7 +143,7 @@ const VideoAddForm = ({ vodFile }: VideoAddFormProps) => {
                                     onClick={() => {
                                         setSelectedSections(
                                             selectedSections.filter(
-                                                (value: section | undefined) =>
+                                                (value: Section | undefined) =>
                                                     value !== section
                                             )
                                         )

@@ -4,12 +4,14 @@ import Slider from 'react-slick'
 
 import { NextArrow, PrevArrow } from './Arrows'
 import VideoCard from '../Video/VideoCard'
-import { Thumbnail } from '../../types'
-import { vodAsset } from '../../../models'
+import { VideoOnDemand, Thumbnail } from '../../../models'
 
 type VideoCardSliderProps = {
-    thumbnails: Array<Thumbnail>
-    vod: Array<vodAsset>
+    thumbnails: Array<{
+        obj: Thumbnail | undefined
+        url: string
+    }>
+    vod: Array<VideoOnDemand>
 }
 
 const StyledVideoCardSlider = styled.div`
@@ -68,24 +70,24 @@ const VideoCardSlider = ({ vod, thumbnails }: VideoCardSliderProps) => {
                 {thumbnails &&
                     thumbnails.map((thumbnail, idx) =>
                         idx === imageIndex ? (
-                            <ActiveSlide key={thumbnail.obj?.id}>
+                            <ActiveSlide key={thumbnail?.obj?.id}>
                                 <VideoCard
                                     thumbnail={thumbnail}
                                     vod={vod.find(
                                         (asset) =>
-                                            asset?.thumbnail?.id ===
-                                            thumbnail.obj?.id
+                                            asset.media?.thumbnail?.id ===
+                                            thumbnail?.obj?.id
                                     )}
                                 />
                             </ActiveSlide>
                         ) : (
-                            <Slide key={thumbnail.obj?.id}>
+                            <Slide key={thumbnail?.obj?.id}>
                                 <VideoCard
                                     thumbnail={thumbnail}
                                     vod={vod.find(
                                         (asset) =>
-                                            asset?.thumbnail?.id ===
-                                            thumbnail.obj?.id
+                                            asset.media?.thumbnail?.id ===
+                                            thumbnail?.obj?.id
                                     )}
                                 />
                             </Slide>

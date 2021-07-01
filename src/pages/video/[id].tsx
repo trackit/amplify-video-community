@@ -9,14 +9,13 @@ import { fetchSections, fetchThumbnail } from '../../shared/utilities'
 import {
     VideoPlayer as VideoPlayerComponent,
     Layout,
-    Section,
+    SectionContainer,
     HighlightedSection,
 } from '../../shared/components'
-import { videoObject, vodAsset, section } from '../../models'
-import { Thumbnail } from '../../shared/types'
+import { VideoObject, VideoOnDemand, Section, Thumbnail } from '../../models'
 
 type VideoPlayerProps = {
-    video: videoObject | undefined
+    video: VideoObject | undefined
 }
 
 const VideoPlayer = ({ video }: VideoPlayerProps) => {
@@ -38,7 +37,7 @@ const VideoPlayer = ({ video }: VideoPlayerProps) => {
 }
 
 type IframeVideoPlayerProps = {
-    asset: vodAsset
+    asset: VideoOnDemand
 }
 
 const IframeVideoPlayer = ({ asset }: IframeVideoPlayerProps) => {
@@ -54,7 +53,7 @@ const IframeVideoPlayer = ({ asset }: IframeVideoPlayerProps) => {
                 width="1280"
                 height="720"
                 src={asset.src}
-                title={asset.title}
+                title={asset.media?.title}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
@@ -64,7 +63,7 @@ const IframeVideoPlayer = ({ asset }: IframeVideoPlayerProps) => {
 }
 
 type VideoCardProps = {
-    asset: vodAsset
+    asset: VideoOnDemand
 }
 
 const Card = styled.div`
@@ -84,37 +83,42 @@ const VideoCard = ({ asset }: VideoCardProps) => {
             ) : (
                 <IframeVideoPlayer asset={asset} />
             )}
-            <Title>{asset.title}</Title>
-            <p>{asset.description}</p>
+            <Title>{asset.media?.title}</Title>
+            <p>{asset.media?.description}</p>
         </Card>
     )
 }
 
-const SectionContainer = styled.div`
+const StyledSection = styled.div`
     display: flex;
     flex-direction: column;
 `
 
 const VideoPage = (props: PageProps) => {
     const id = props.params.id
-    const [asset, setAsset] = useState<vodAsset | null>(null)
+    const [asset, setAsset] = useState<VideoOnDemand | null>(null)
     const [loaded, setLoaded] = useState<boolean>(false)
-    const [vodAssets, setVodAssets] = useState<Array<vodAsset>>([])
-    const [sections, setSections] = useState<Array<section> | null>(null)
+    const [vodAssets, setVodAssets] = useState<Array<VideoOnDemand>>([])
+    const [sections, setSections] = useState<Array<Section>>([])
     const [nextTokenVodFiles, setNextTokenVodFiles] =
         useState<string | null>(null)
     const [loadingVodFiles, setLoadingVodFiles] = useState<boolean>(false)
     const [loadingSections, setLoadingSections] = useState<boolean>(false)
-    const [thumbnails, setThumbnails] = useState<Array<Thumbnail>>([])
+    const [thumbnails, setThumbnails] = useState<
+        Array<{
+            obj: Thumbnail | undefined
+            url: string
+        }>
+    >([])
 
     useEffect(() => {
         ;(async () => {
             try {
                 const { data } = await fetchVodAsset(id)
-                if (data?.getVodAsset === null) {
+                if (data?.getVideoOnDemand === null) {
                     console.error('object doesnt exist')
                 } else {
-                    setAsset(data?.getVodAsset as vodAsset)
+                    setAsset(data?.getVideoOnDemand as VideoOnDemand)
                 }
                 setLoaded(true)
             } catch (error) {
@@ -130,19 +134,23 @@ const VideoPage = (props: PageProps) => {
             try {
                 const { data } = await fetchVodFiles(nextTokenVodFiles)
                 setNextTokenVodFiles(
-                    data?.listVodAssets?.nextToken
-                        ? data.listVodAssets.nextToken
+                    data?.listVideoOnDemands?.nextToken
+                        ? data.listVideoOnDemands.nextToken
                         : null
                 )
-                const assets = data?.listVodAssets?.items as Array<vodAsset>
+                const assets = data?.listVideoOnDemands
+                    ?.items as Array<VideoOnDemand>
                 setVodAssets(assets)
 
-                const thumbnailArr: Array<Thumbnail> = []
+                const thumbnailArr: Array<{
+                    obj: Thumbnail | undefined
+                    url: string
+                }> = []
                 await Promise.all(
                     assets.map(async (asset) => {
                         const data = await fetchThumbnail(asset)
                         thumbnailArr.push({
-                            obj: asset.thumbnail,
+                            obj: asset.media?.thumbnail,
                             url: data as string,
                         })
                     })
@@ -160,7 +168,7 @@ const VideoPage = (props: PageProps) => {
             setLoadingSections(true)
             try {
                 const { data } = await fetchSections()
-                setSections(data?.listSections?.items as Array<section>)
+                setSections(data?.listSections?.items as Array<Section>)
                 console.log('fetchSections: ', data)
             } catch (error) {
                 console.error('videos.tsx(fetchSections)', error)
@@ -186,9 +194,9 @@ const VideoPage = (props: PageProps) => {
                         timeout={3000}
                     />
                 ) : (
-                    <SectionContainer>
+                    <StyledSection>
                         {sections &&
-                            sections.map((section: section) => {
+                            sections.map((section: Section) => {
                                 return section.label === 'Highlighted' ? (
                                     <HighlightedSection
                                         key={section.id}
@@ -196,13 +204,13 @@ const VideoPage = (props: PageProps) => {
                                         thumbnails={thumbnails}
                                         vodAsset={vodAssets
                                             .filter(
-                                                (item: vodAsset) =>
-                                                    item.highlighted
+                                                (item: VideoOnDemand) =>
+                                                    item.media?.highlighted
                                             )
                                             .pop()}
                                     />
                                 ) : (
-                                    <Section
+                                    <SectionContainer
                                         key={section.id}
                                         section={section}
                                         vodAssets={vodAssets}
@@ -210,7 +218,7 @@ const VideoPage = (props: PageProps) => {
                                     />
                                 )
                             })}
-                    </SectionContainer>
+                    </StyledSection>
                 )}
             </>
         </Layout>

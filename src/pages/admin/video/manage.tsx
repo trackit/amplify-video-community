@@ -3,10 +3,10 @@ import AssetsManagementList from '../../../shared/components/AssetsManagementLis
 import { fetchVodFiles } from '../../../shared/utilities'
 import Loader from 'react-loader-spinner'
 import { AdminLayout } from '../../../shared/components'
-import { vodAsset } from '../../../models'
+import { VideoOnDemand } from '../../../models'
 
 const DashboardVideoManage = () => {
-    const [vodAssets, setVodAssets] = useState<Array<vodAsset>>([])
+    const [vodAssets, setVodAssets] = useState<Array<VideoOnDemand>>([])
     const [nextToken, setNextToken] = useState<string | null>(null)
     const [loading, setLoading] = useState<boolean>(false)
 
@@ -16,11 +16,13 @@ const DashboardVideoManage = () => {
             try {
                 const { data } = await fetchVodFiles(nextToken)
                 setNextToken(
-                    data?.listVodAssets?.nextToken
-                        ? data.listVodAssets.nextToken
+                    data?.listVideoOnDemands?.nextToken
+                        ? data.listVideoOnDemands.nextToken
                         : null
                 )
-                setVodAssets(data?.listVodAssets?.items as Array<vodAsset>)
+                setVodAssets(
+                    data?.listVideoOnDemands?.items as Array<VideoOnDemand>
+                )
             } catch (error) {
                 console.error('video/manage.tsx(fetchVodFiles):', error)
             }

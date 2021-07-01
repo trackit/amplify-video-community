@@ -1,7 +1,7 @@
 export const schema = {
     "models": {
-        "vodAsset": {
-            "name": "vodAsset",
+        "Media": {
+            "name": "Media",
             "fields": {
                 "id": {
                     "name": "id",
@@ -15,13 +15,6 @@ export const schema = {
                     "isArray": false,
                     "type": "String",
                     "isRequired": true,
-                    "attributes": []
-                },
-                "src": {
-                    "name": "src",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
                     "attributes": []
                 },
                 "description": {
@@ -38,133 +31,42 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "video": {
-                    "name": "video",
-                    "isArray": false,
-                    "type": {
-                        "model": "videoObject"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetName": "vodAssetVideoId"
-                    }
-                },
-                "thumbnail": {
-                    "name": "thumbnail",
-                    "isArray": false,
-                    "type": {
-                        "model": "thumbnailObject"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetName": "vodAssetThumbnailId"
-                    }
-                },
                 "sections": {
                     "name": "sections",
                     "isArray": true,
                     "type": {
-                        "model": "VideoSection"
+                        "model": "MediasSections"
                     },
                     "isRequired": false,
                     "attributes": [],
                     "isArrayNullable": true,
                     "association": {
                         "connectionType": "HAS_MANY",
-                        "associatedWith": "video"
+                        "associatedWith": "media"
                     }
                 },
-                "createdAt": {
-                    "name": "createdAt",
+                "source": {
+                    "name": "source",
                     "isArray": false,
-                    "type": "AWSDateTime",
+                    "type": {
+                        "enum": "Source"
+                    },
                     "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "vodAssets",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {
-                        "subscriptions": {
-                            "level": "public"
-                        }
-                    }
-                },
-                {
-                    "type": "aws_iam",
-                    "properties": {}
-                },
-                {
-                    "type": "aws_cognito_user_pools",
-                    "properties": {}
-                },
-                {
-                    "type": "auth",
-                    "properties": {
-                        "rules": [
-                            {
-                                "groupClaim": "cognito:groups",
-                                "provider": "userPools",
-                                "allow": "groups",
-                                "groups": [
-                                    "Admin"
-                                ],
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "delete",
-                                    "read"
-                                ]
-                            },
-                            {
-                                "allow": "public",
-                                "provider": "iam",
-                                "operations": [
-                                    "read"
-                                ]
-                            },
-                            {
-                                "groupClaim": "cognito:groups",
-                                "provider": "userPools",
-                                "allow": "groups",
-                                "groups": [
-                                    "everyone"
-                                ],
-                                "operations": [
-                                    "read"
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        "videoObject": {
-            "name": "videoObject",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
                     "attributes": []
                 },
+                "thumbnail": {
+                    "name": "thumbnail",
+                    "isArray": false,
+                    "type": {
+                        "model": "Thumbnail"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetName": "mediaThumbnailId"
+                    }
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -183,7 +85,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "videoObjects",
+            "pluralName": "Media",
             "attributes": [
                 {
                     "type": "model",
@@ -238,98 +140,8 @@ export const schema = {
                 }
             ]
         },
-        "thumbnailObject": {
-            "name": "thumbnailObject",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "ext": {
-                    "name": "ext",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "thumbnailObjects",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "aws_iam",
-                    "properties": {}
-                },
-                {
-                    "type": "aws_cognito_user_pools",
-                    "properties": {}
-                },
-                {
-                    "type": "auth",
-                    "properties": {
-                        "rules": [
-                            {
-                                "groupClaim": "cognito:groups",
-                                "provider": "userPools",
-                                "allow": "groups",
-                                "groups": [
-                                    "Admin"
-                                ],
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "delete",
-                                    "read"
-                                ]
-                            },
-                            {
-                                "allow": "public",
-                                "provider": "iam",
-                                "operations": [
-                                    "read"
-                                ]
-                            },
-                            {
-                                "groupClaim": "cognito:groups",
-                                "provider": "userPools",
-                                "allow": "groups",
-                                "groups": [
-                                    "everyone"
-                                ],
-                                "operations": [
-                                    "read"
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        "VideoSection": {
-            "name": "VideoSection",
+        "MediasSections": {
+            "name": "MediasSections",
             "fields": {
                 "id": {
                     "name": "id",
@@ -342,7 +154,7 @@ export const schema = {
                     "name": "section",
                     "isArray": false,
                     "type": {
-                        "model": "section"
+                        "model": "Section"
                     },
                     "isRequired": true,
                     "attributes": [],
@@ -351,17 +163,17 @@ export const schema = {
                         "targetName": "sectionID"
                     }
                 },
-                "video": {
-                    "name": "video",
+                "media": {
+                    "name": "media",
                     "isArray": false,
                     "type": {
-                        "model": "vodAsset"
+                        "model": "Media"
                     },
                     "isRequired": true,
                     "attributes": [],
                     "association": {
                         "connectionType": "BELONGS_TO",
-                        "targetName": "videoID"
+                        "targetName": "mediaID"
                     }
                 },
                 "createdAt": {
@@ -382,13 +194,11 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "VideoSections",
+            "pluralName": "MediasSections",
             "attributes": [
                 {
                     "type": "model",
-                    "properties": {
-                        "queries": null
-                    }
+                    "properties": {}
                 },
                 {
                     "type": "aws_iam",
@@ -404,16 +214,16 @@ export const schema = {
                         "name": "bySection",
                         "fields": [
                             "sectionID",
-                            "videoID"
+                            "mediaID"
                         ]
                     }
                 },
                 {
                     "type": "key",
                     "properties": {
-                        "name": "byVideo",
+                        "name": "byMedia",
                         "fields": [
-                            "videoID",
+                            "mediaID",
                             "sectionID"
                         ]
                     }
@@ -459,8 +269,8 @@ export const schema = {
                 }
             ]
         },
-        "section": {
-            "name": "section",
+        "Section": {
+            "name": "Section",
             "fields": {
                 "id": {
                     "name": "id",
@@ -476,11 +286,11 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "videos": {
-                    "name": "videos",
+                "medias": {
+                    "name": "medias",
                     "isArray": true,
                     "type": {
-                        "model": "VideoSection"
+                        "model": "MediasSections"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -508,7 +318,399 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "sections",
+            "pluralName": "Sections",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "aws_iam",
+                    "properties": {}
+                },
+                {
+                    "type": "aws_cognito_user_pools",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "Admin"
+                                ],
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            },
+                            {
+                                "allow": "public",
+                                "provider": "iam",
+                                "operations": [
+                                    "read"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "everyone"
+                                ],
+                                "operations": [
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "Thumbnail": {
+            "name": "Thumbnail",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "ext": {
+                    "name": "ext",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Thumbnails",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "aws_iam",
+                    "properties": {}
+                },
+                {
+                    "type": "aws_cognito_user_pools",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "Admin"
+                                ],
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            },
+                            {
+                                "allow": "public",
+                                "provider": "iam",
+                                "operations": [
+                                    "read"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "everyone"
+                                ],
+                                "operations": [
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "VideoObject": {
+            "name": "VideoObject",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "VideoObjects",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "aws_iam",
+                    "properties": {}
+                },
+                {
+                    "type": "aws_cognito_user_pools",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "Admin"
+                                ],
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            },
+                            {
+                                "allow": "public",
+                                "provider": "iam",
+                                "operations": [
+                                    "read"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "everyone"
+                                ],
+                                "operations": [
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "VideoOnDemand": {
+            "name": "VideoOnDemand",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "media": {
+                    "name": "media",
+                    "isArray": false,
+                    "type": {
+                        "model": "Media"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetName": "videoOnDemandMediaId"
+                    }
+                },
+                "video": {
+                    "name": "video",
+                    "isArray": false,
+                    "type": {
+                        "model": "VideoObject"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetName": "videoOnDemandVideoId"
+                    }
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "VideoOnDemands",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "aws_iam",
+                    "properties": {}
+                },
+                {
+                    "type": "aws_cognito_user_pools",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "Admin"
+                                ],
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            },
+                            {
+                                "allow": "public",
+                                "provider": "iam",
+                                "operations": [
+                                    "read"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "everyone"
+                                ],
+                                "operations": [
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "Livestream": {
+            "name": "Livestream",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "media": {
+                    "name": "media",
+                    "isArray": false,
+                    "type": {
+                        "model": "Media"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetName": "livestreamMediaId"
+                    }
+                },
+                "url": {
+                    "name": "url",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "isLive": {
+                    "name": "isLive",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Livestreams",
             "attributes": [
                 {
                     "type": "model",
@@ -564,7 +766,16 @@ export const schema = {
             ]
         }
     },
-    "enums": {},
+    "enums": {
+        "Source": {
+            "name": "Source",
+            "values": [
+                "TWITCH",
+                "YOUTUBE",
+                "SELF"
+            ]
+        }
+    },
     "nonModels": {},
-    "version": "a911dc98a9b8851c904cd289b20efa7b"
+    "version": "82f8529fdce6b8a24a40cca94b0b44dd"
 };
