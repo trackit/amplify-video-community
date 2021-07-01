@@ -87,3 +87,144 @@ type VideoSection
   section: section! @connection(fields: ["sectionID"])
   video: vodAsset! @connection(fields: ["videoID"])
 }
+
+####################################################################################
+####################################################################################
+####################################################################################
+####################################################################################
+
+### Interfaces
+
+enum Source {
+  TWITCH
+  YOUTUBE
+  SELF
+}
+
+interface Media {
+  title: String!
+  description: String!
+  highlighted: Boolean!
+  sections: [MediasSections] @connection(keyName: "byMedia", fields: ["id"])
+  source: Source
+  thumbnail: Thumbnail @connection
+}
+
+### Fragments
+
+fragment VideoOnDemandFields on VideoOnDemand {
+  video: videoObject
+}
+
+fragment LivestreamFields on Livestream {
+  url: String
+  isLive: Boolean
+}
+
+### General
+
+type Thumbnail
+@model
+@aws_iam
+@aws_cognito_user_pools
+@auth(
+    rules: [
+      { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
+      { allow: public, provider: iam, operations: [read] }
+      { allow: groups, groups: ["everyone"], operations: [read] }
+    ]
+  )
+{
+  id: ID!
+  ext: String!
+}
+
+type Section
+@model
+@aws_iam
+@aws_cognito_user_pools
+@auth(
+    rules: [
+      { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
+      { allow: public, provider: iam, operations: [read] }
+      { allow: groups, groups: ["everyone"], operations: [read] }
+    ]
+  )
+{
+  id: ID!
+  label: String!
+  medias: [MediasSections] @connection(keyName: "bySection", fields: ["id"])
+}
+
+type MediasSections
+@model
+@aws_iam
+@aws_cognito_user_pools
+@auth(
+    rules: [
+      { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
+      { allow: public, provider: iam, operations: [read] }
+      { allow: groups, groups: ["everyone"], operations: [read] }
+    ]
+  )
+@key(name: "bySection", fields: ["sectionID", "mediaID"])
+@key(name: "byMedia", fields: ["mediaID", "sectionID"]) {
+  id: ID!
+  sectionID: ID!
+  mediaID: ID!
+  section: Section! @connection(fields: ["sectionID"])
+  media: Media! @connection(fields: ["mediaID"])
+}
+
+### Video On Demand
+
+type VideoOnDemand implements Media
+@model
+@aws_iam
+@aws_cognito_user_pools
+@auth(
+    rules: [
+      { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
+      { allow: public, provider: iam, operations: [read] }
+      { allow: groups, groups: ["everyone"], operations: [read] }
+    ]
+  )
+{
+  id: ID!
+  title: String!
+  description: String!
+  highlighted: Boolean!
+  sections: [MediasSections] @connection(keyName: "byMedia", fields: ["id"])
+  source: Source
+  thumbnail: Thumbnail @connection
+
+
+  video: videoObject @connection
+}
+
+### Livestreaming
+
+type Livestream implements Media
+@model
+@aws_iam
+@aws_cognito_user_pools
+@auth(
+    rules: [
+      { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
+      { allow: public, provider: iam, operations: [read] }
+      { allow: groups, groups: ["everyone"], operations: [read] }
+    ]
+  )
+{
+  id: ID!
+  title: String!
+  description: String!
+  highlighted: Boolean!
+  sections: [MediasSections] @connection(keyName: "byMedia", fields: ["id"])
+  source: Source
+  thumbnail: Thumbnail @connection
+
+
+  url: String!
+  isLive: Boolean
+}
