@@ -463,89 +463,6 @@ export const schema = {
                 }
             ]
         },
-        "VideoObject": {
-            "name": "VideoObject",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "VideoObjects",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "aws_iam",
-                    "properties": {}
-                },
-                {
-                    "type": "aws_cognito_user_pools",
-                    "properties": {}
-                },
-                {
-                    "type": "auth",
-                    "properties": {
-                        "rules": [
-                            {
-                                "groupClaim": "cognito:groups",
-                                "provider": "userPools",
-                                "allow": "groups",
-                                "groups": [
-                                    "Admin"
-                                ],
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "delete",
-                                    "read"
-                                ]
-                            },
-                            {
-                                "allow": "public",
-                                "provider": "iam",
-                                "operations": [
-                                    "read"
-                                ]
-                            },
-                            {
-                                "groupClaim": "cognito:groups",
-                                "provider": "userPools",
-                                "allow": "groups",
-                                "groups": [
-                                    "everyone"
-                                ],
-                                "operations": [
-                                    "read"
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
         "VideoOnDemand": {
             "name": "VideoOnDemand",
             "fields": {
@@ -569,18 +486,12 @@ export const schema = {
                         "targetName": "videoOnDemandMediaId"
                     }
                 },
-                "video": {
-                    "name": "video",
+                "src": {
+                    "name": "src",
                     "isArray": false,
-                    "type": {
-                        "model": "VideoObject"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetName": "videoOnDemandVideoId"
-                    }
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -777,5 +688,5 @@ export const schema = {
         }
     },
     "nonModels": {},
-    "version": "82f8529fdce6b8a24a40cca94b0b44dd"
+    "version": "9ff447027f229bc9764691196a865519"
 };

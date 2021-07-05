@@ -293,33 +293,6 @@ export const onDeleteMediasSections = /* GraphQL */ `
     }
   }
 `;
-export const onCreateVideoObject = /* GraphQL */ `
-  subscription OnCreateVideoObject {
-    onCreateVideoObject {
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateVideoObject = /* GraphQL */ `
-  subscription OnUpdateVideoObject {
-    onUpdateVideoObject {
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteVideoObject = /* GraphQL */ `
-  subscription OnDeleteVideoObject {
-    onDeleteVideoObject {
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const onCreateVideoOnDemand = /* GraphQL */ `
   subscription OnCreateVideoOnDemand {
     onCreateVideoOnDemand {
@@ -344,11 +317,6 @@ export const onCreateVideoOnDemand = /* GraphQL */ `
         sections {
           nextToken
         }
-      }
-      video {
-        id
-        createdAt
-        updatedAt
       }
     }
   }
@@ -378,11 +346,6 @@ export const onUpdateVideoOnDemand = /* GraphQL */ `
           nextToken
         }
       }
-      video {
-        id
-        createdAt
-        updatedAt
-      }
     }
   }
 `;
@@ -410,11 +373,6 @@ export const onDeleteVideoOnDemand = /* GraphQL */ `
         sections {
           nextToken
         }
-      }
-      video {
-        id
-        createdAt
-        updatedAt
       }
     }
   }

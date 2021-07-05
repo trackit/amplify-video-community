@@ -222,36 +222,10 @@ export type DeleteMediasSectionsInput = {
   id: string,
 };
 
-export type CreateVideoObjectInput = {
-  id?: string | null,
-};
-
-export type ModelVideoObjectConditionInput = {
-  and?: Array< ModelVideoObjectConditionInput | null > | null,
-  or?: Array< ModelVideoObjectConditionInput | null > | null,
-  not?: ModelVideoObjectConditionInput | null,
-};
-
-export type VideoObject = {
-  __typename: "VideoObject",
-  id: string,
-  createdAt: string,
-  updatedAt: string,
-};
-
-export type UpdateVideoObjectInput = {
-  id: string,
-};
-
-export type DeleteVideoObjectInput = {
-  id: string,
-};
-
 export type CreateVideoOnDemandInput = {
   id?: string | null,
   src: string,
   videoOnDemandMediaId?: string | null,
-  videoOnDemandVideoId?: string | null,
 };
 
 export type ModelVideoOnDemandConditionInput = {
@@ -268,14 +242,12 @@ export type VideoOnDemand = {
   createdAt: string,
   updatedAt: string,
   media?: Media | null,
-  video?: VideoObject | null,
 };
 
 export type UpdateVideoOnDemandInput = {
   id: string,
   src?: string | null,
   videoOnDemandMediaId?: string | null,
-  videoOnDemandVideoId?: string | null,
 };
 
 export type DeleteVideoOnDemandInput = {
@@ -370,19 +342,6 @@ export type ModelMediasSectionsFilterInput = {
   and?: Array< ModelMediasSectionsFilterInput | null > | null,
   or?: Array< ModelMediasSectionsFilterInput | null > | null,
   not?: ModelMediasSectionsFilterInput | null,
-};
-
-export type ModelVideoObjectFilterInput = {
-  id?: ModelIDInput | null,
-  and?: Array< ModelVideoObjectFilterInput | null > | null,
-  or?: Array< ModelVideoObjectFilterInput | null > | null,
-  not?: ModelVideoObjectFilterInput | null,
-};
-
-export type ModelVideoObjectConnection = {
-  __typename: "ModelVideoObjectConnection",
-  items?:  Array<VideoObject | null > | null,
-  nextToken?: string | null,
 };
 
 export type ModelVideoOnDemandFilterInput = {
@@ -795,48 +754,6 @@ export type DeleteMediasSectionsMutation = {
   } | null,
 };
 
-export type CreateVideoObjectMutationVariables = {
-  input: CreateVideoObjectInput,
-  condition?: ModelVideoObjectConditionInput | null,
-};
-
-export type CreateVideoObjectMutation = {
-  createVideoObject?:  {
-    __typename: "VideoObject",
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type UpdateVideoObjectMutationVariables = {
-  input: UpdateVideoObjectInput,
-  condition?: ModelVideoObjectConditionInput | null,
-};
-
-export type UpdateVideoObjectMutation = {
-  updateVideoObject?:  {
-    __typename: "VideoObject",
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type DeleteVideoObjectMutationVariables = {
-  input: DeleteVideoObjectInput,
-  condition?: ModelVideoObjectConditionInput | null,
-};
-
-export type DeleteVideoObjectMutation = {
-  deleteVideoObject?:  {
-    __typename: "VideoObject",
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
 export type CreateVideoOnDemandMutationVariables = {
   input: CreateVideoOnDemandInput,
   condition?: ModelVideoOnDemandConditionInput | null,
@@ -869,12 +786,6 @@ export type CreateVideoOnDemandMutation = {
         __typename: "ModelMediasSectionsConnection",
         nextToken?: string | null,
       } | null,
-    } | null,
-    video?:  {
-      __typename: "VideoObject",
-      id: string,
-      createdAt: string,
-      updatedAt: string,
     } | null,
   } | null,
 };
@@ -912,12 +823,6 @@ export type UpdateVideoOnDemandMutation = {
         nextToken?: string | null,
       } | null,
     } | null,
-    video?:  {
-      __typename: "VideoObject",
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
   } | null,
 };
 
@@ -953,12 +858,6 @@ export type DeleteVideoOnDemandMutation = {
         __typename: "ModelMediasSectionsConnection",
         nextToken?: string | null,
       } | null,
-    } | null,
-    video?:  {
-      __typename: "VideoObject",
-      id: string,
-      createdAt: string,
-      updatedAt: string,
     } | null,
   } | null,
 };
@@ -1313,38 +1212,6 @@ export type ListMediasSectionssQuery = {
   } | null,
 };
 
-export type GetVideoObjectQueryVariables = {
-  id: string,
-};
-
-export type GetVideoObjectQuery = {
-  getVideoObject?:  {
-    __typename: "VideoObject",
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type ListVideoObjectsQueryVariables = {
-  filter?: ModelVideoObjectFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListVideoObjectsQuery = {
-  listVideoObjects?:  {
-    __typename: "ModelVideoObjectConnection",
-    items?:  Array< {
-      __typename: "VideoObject",
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null > | null,
-    nextToken?: string | null,
-  } | null,
-};
-
 export type GetVideoOnDemandQueryVariables = {
   id: string,
 };
@@ -1377,12 +1244,6 @@ export type GetVideoOnDemandQuery = {
         nextToken?: string | null,
       } | null,
     } | null,
-    video?:  {
-      __typename: "VideoObject",
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
   } | null,
 };
 
@@ -1408,12 +1269,6 @@ export type ListVideoOnDemandsQuery = {
         description: string,
         highlighted: boolean,
         source?: Source | null,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
-      video?:  {
-        __typename: "VideoObject",
-        id: string,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -1810,33 +1665,6 @@ export type OnDeleteMediasSectionsSubscription = {
   } | null,
 };
 
-export type OnCreateVideoObjectSubscription = {
-  onCreateVideoObject?:  {
-    __typename: "VideoObject",
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateVideoObjectSubscription = {
-  onUpdateVideoObject?:  {
-    __typename: "VideoObject",
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnDeleteVideoObjectSubscription = {
-  onDeleteVideoObject?:  {
-    __typename: "VideoObject",
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
 export type OnCreateVideoOnDemandSubscription = {
   onCreateVideoOnDemand?:  {
     __typename: "VideoOnDemand",
@@ -1864,12 +1692,6 @@ export type OnCreateVideoOnDemandSubscription = {
         __typename: "ModelMediasSectionsConnection",
         nextToken?: string | null,
       } | null,
-    } | null,
-    video?:  {
-      __typename: "VideoObject",
-      id: string,
-      createdAt: string,
-      updatedAt: string,
     } | null,
   } | null,
 };
@@ -1902,12 +1724,6 @@ export type OnUpdateVideoOnDemandSubscription = {
         nextToken?: string | null,
       } | null,
     } | null,
-    video?:  {
-      __typename: "VideoObject",
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
   } | null,
 };
 
@@ -1938,12 +1754,6 @@ export type OnDeleteVideoOnDemandSubscription = {
         __typename: "ModelMediasSectionsConnection",
         nextToken?: string | null,
       } | null,
-    } | null,
-    video?:  {
-      __typename: "VideoObject",
-      id: string,
-      createdAt: string,
-      updatedAt: string,
     } | null,
   } | null,
 };

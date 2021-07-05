@@ -1,7 +1,6 @@
 import { API, graphqlOperation, Storage } from 'aws-amplify'
 import {
     createThumbnail,
-    createVideoObject,
     createMediasSections,
     createVideoOnDemand,
     createMedia,
@@ -75,16 +74,6 @@ async function setThumbnail(id: string, thumbnailExtension: string[]) {
     )
 }
 
-async function setVideoObject(id: string) {
-    return API.graphql(
-        graphqlOperation(createVideoObject, {
-            input: {
-                id: id,
-            },
-        })
-    )
-}
-
 async function setMedia(input: APIt.CreateMediaInput) {
     return API.graphql(
         graphqlOperation(createMedia, {
@@ -112,7 +101,7 @@ const uploadVideo = async (
     highlighted: boolean,
     sectionsId: Array<undefined | string>
 ) => {
-    const id = uuidv4()
+    const id: string = uuidv4()
     if (
         checkfileExtention(thumbnailFile.name) ||
         checkfileExtention(vodFile.name)
@@ -141,12 +130,6 @@ const uploadVideo = async (
         console.error('vod-mutate.tx(setThumbnail): ', error)
         return
     }
-    try {
-        await setVideoObject(id)
-    } catch (error) {
-        console.error('vod-mutate.tx(setVideoObject): ', error)
-        return
-    }
 
     try {
         await setMedia({
@@ -166,7 +149,7 @@ const uploadVideo = async (
         const { data } = await createVOD({
             id,
             videoOnDemandMediaId: id,
-            videoOnDemandVideoId: id,
+            src: '',
         })
         for (let i = 0; i < sectionsId.length; i++) {
             await setMediasSections({

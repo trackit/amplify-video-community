@@ -84,21 +84,6 @@ type MediasSections
 
 ### Video On Demand
 
-type VideoObject
-@model
-@aws_iam
-@aws_cognito_user_pools
-@auth(
-    rules: [
-      { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
-      { allow: public, provider: iam, operations: [read] }
-      { allow: groups, groups: ["everyone"], operations: [read] }
-    ]
-  )
-{
-  id:ID!
-}
-
 type VideoOnDemand
 @model
 @aws_iam
@@ -113,7 +98,6 @@ type VideoOnDemand
 {
   id: ID!
   media: Media @connection
-  video: VideoObject @connection
   src: String!
 }
 

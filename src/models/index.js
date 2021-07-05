@@ -8,14 +8,13 @@ const Source = {
   "SELF": "SELF"
 };
 
-const { Media, MediasSections, Section, Thumbnail, VideoObject, VideoOnDemand, Livestream } = initSchema(schema);
+const { Media, MediasSections, Section, Thumbnail, VideoOnDemand, Livestream } = initSchema(schema);
 
 export {
   Media,
   MediasSections,
   Section,
   Thumbnail,
-  VideoObject,
   VideoOnDemand,
   Livestream,
   Source

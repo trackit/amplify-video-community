@@ -329,42 +329,6 @@ export const deleteMediasSections = /* GraphQL */ `
     }
   }
 `;
-export const createVideoObject = /* GraphQL */ `
-  mutation CreateVideoObject(
-    $input: CreateVideoObjectInput!
-    $condition: ModelVideoObjectConditionInput
-  ) {
-    createVideoObject(input: $input, condition: $condition) {
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateVideoObject = /* GraphQL */ `
-  mutation UpdateVideoObject(
-    $input: UpdateVideoObjectInput!
-    $condition: ModelVideoObjectConditionInput
-  ) {
-    updateVideoObject(input: $input, condition: $condition) {
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteVideoObject = /* GraphQL */ `
-  mutation DeleteVideoObject(
-    $input: DeleteVideoObjectInput!
-    $condition: ModelVideoObjectConditionInput
-  ) {
-    deleteVideoObject(input: $input, condition: $condition) {
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const createVideoOnDemand = /* GraphQL */ `
   mutation CreateVideoOnDemand(
     $input: CreateVideoOnDemandInput!
@@ -392,11 +356,6 @@ export const createVideoOnDemand = /* GraphQL */ `
         sections {
           nextToken
         }
-      }
-      video {
-        id
-        createdAt
-        updatedAt
       }
     }
   }
@@ -429,11 +388,6 @@ export const updateVideoOnDemand = /* GraphQL */ `
           nextToken
         }
       }
-      video {
-        id
-        createdAt
-        updatedAt
-      }
     }
   }
 `;
@@ -464,11 +418,6 @@ export const deleteVideoOnDemand = /* GraphQL */ `
         sections {
           nextToken
         }
-      }
-      video {
-        id
-        createdAt
-        updatedAt
       }
     }
   }

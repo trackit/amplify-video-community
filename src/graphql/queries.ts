@@ -198,31 +198,6 @@ export const listMediasSectionss = /* GraphQL */ `
     }
   }
 `;
-export const getVideoObject = /* GraphQL */ `
-  query GetVideoObject($id: ID!) {
-    getVideoObject(id: $id) {
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listVideoObjects = /* GraphQL */ `
-  query ListVideoObjects(
-    $filter: ModelVideoObjectFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listVideoObjects(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
 export const getVideoOnDemand = /* GraphQL */ `
   query GetVideoOnDemand($id: ID!) {
     getVideoOnDemand(id: $id) {
@@ -248,11 +223,6 @@ export const getVideoOnDemand = /* GraphQL */ `
           nextToken
         }
       }
-      video {
-        id
-        createdAt
-        updatedAt
-      }
     }
   }
 `;
@@ -274,11 +244,6 @@ export const listVideoOnDemands = /* GraphQL */ `
           description
           highlighted
           source
-          createdAt
-          updatedAt
-        }
-        video {
-          id
           createdAt
           updatedAt
         }

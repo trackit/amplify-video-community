@@ -41,11 +41,6 @@ export const listVideoOnDemands = /* GraphQL */ `
                     createdAt
                     updatedAt
                 }
-                video {
-                    id
-                    createdAt
-                    updatedAt
-                }
             }
             nextToken
         }
