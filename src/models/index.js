@@ -2,14 +2,20 @@
 import { initSchema } from '@aws-amplify/datastore';
 import { schema } from './schema';
 
+const Source = {
+  "TWITCH": "TWITCH",
+  "YOUTUBE": "YOUTUBE",
+  "SELF": "SELF"
+};
 
-
-const { vodAsset, videoObject, thumbnailObject, VideoSection, section } = initSchema(schema);
+const { Media, MediasSections, Section, Thumbnail, VideoOnDemand, Livestream } = initSchema(schema);
 
 export {
-  vodAsset,
-  videoObject,
-  thumbnailObject,
-  VideoSection,
-  section
+  Media,
+  MediasSections,
+  Section,
+  Thumbnail,
+  VideoOnDemand,
+  Livestream,
+  Source
 };

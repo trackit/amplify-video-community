@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
+import { navigate } from 'gatsby'
 
 import { Layout } from '../shared/components'
-import { navigate } from 'gatsby'
 
 const HomePage = () => {
     useEffect(() => {

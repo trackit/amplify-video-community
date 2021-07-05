@@ -2,21 +2,16 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateVodAsset = /* GraphQL */ `
-  subscription OnCreateVodAsset {
-    onCreateVodAsset {
+export const onCreateMedia = /* GraphQL */ `
+  subscription OnCreateMedia {
+    onCreateMedia {
       id
       title
-      src
       description
       highlighted
+      source
       createdAt
       updatedAt
-      video {
-        id
-        createdAt
-        updatedAt
-      }
       thumbnail {
         id
         ext
@@ -27,7 +22,7 @@ export const onCreateVodAsset = /* GraphQL */ `
         items {
           id
           sectionID
-          videoID
+          mediaID
           createdAt
           updatedAt
         }
@@ -36,21 +31,16 @@ export const onCreateVodAsset = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateVodAsset = /* GraphQL */ `
-  subscription OnUpdateVodAsset {
-    onUpdateVodAsset {
+export const onUpdateMedia = /* GraphQL */ `
+  subscription OnUpdateMedia {
+    onUpdateMedia {
       id
       title
-      src
       description
       highlighted
+      source
       createdAt
       updatedAt
-      video {
-        id
-        createdAt
-        updatedAt
-      }
       thumbnail {
         id
         ext
@@ -61,7 +51,7 @@ export const onUpdateVodAsset = /* GraphQL */ `
         items {
           id
           sectionID
-          videoID
+          mediaID
           createdAt
           updatedAt
         }
@@ -70,21 +60,16 @@ export const onUpdateVodAsset = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteVodAsset = /* GraphQL */ `
-  subscription OnDeleteVodAsset {
-    onDeleteVodAsset {
+export const onDeleteMedia = /* GraphQL */ `
+  subscription OnDeleteMedia {
+    onDeleteMedia {
       id
       title
-      src
       description
       highlighted
+      source
       createdAt
       updatedAt
-      video {
-        id
-        createdAt
-        updatedAt
-      }
       thumbnail {
         id
         ext
@@ -95,7 +80,7 @@ export const onDeleteVodAsset = /* GraphQL */ `
         items {
           id
           sectionID
-          videoID
+          mediaID
           createdAt
           updatedAt
         }
@@ -104,36 +89,9 @@ export const onDeleteVodAsset = /* GraphQL */ `
     }
   }
 `;
-export const onCreateVideoObject = /* GraphQL */ `
-  subscription OnCreateVideoObject {
-    onCreateVideoObject {
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateVideoObject = /* GraphQL */ `
-  subscription OnUpdateVideoObject {
-    onUpdateVideoObject {
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteVideoObject = /* GraphQL */ `
-  subscription OnDeleteVideoObject {
-    onDeleteVideoObject {
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateThumbnailObject = /* GraphQL */ `
-  subscription OnCreateThumbnailObject {
-    onCreateThumbnailObject {
+export const onCreateThumbnail = /* GraphQL */ `
+  subscription OnCreateThumbnail {
+    onCreateThumbnail {
       id
       ext
       createdAt
@@ -141,9 +99,9 @@ export const onCreateThumbnailObject = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateThumbnailObject = /* GraphQL */ `
-  subscription OnUpdateThumbnailObject {
-    onUpdateThumbnailObject {
+export const onUpdateThumbnail = /* GraphQL */ `
+  subscription OnUpdateThumbnail {
+    onUpdateThumbnail {
       id
       ext
       createdAt
@@ -151,9 +109,9 @@ export const onUpdateThumbnailObject = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteThumbnailObject = /* GraphQL */ `
-  subscription OnDeleteThumbnailObject {
-    onDeleteThumbnailObject {
+export const onDeleteThumbnail = /* GraphQL */ `
+  subscription OnDeleteThumbnail {
+    onDeleteThumbnail {
       id
       ext
       createdAt
@@ -168,11 +126,11 @@ export const onCreateSection = /* GraphQL */ `
       label
       createdAt
       updatedAt
-      videos {
+      medias {
         items {
           id
           sectionID
-          videoID
+          mediaID
           createdAt
           updatedAt
         }
@@ -188,11 +146,11 @@ export const onUpdateSection = /* GraphQL */ `
       label
       createdAt
       updatedAt
-      videos {
+      medias {
         items {
           id
           sectionID
-          videoID
+          mediaID
           createdAt
           updatedAt
         }
@@ -208,11 +166,11 @@ export const onDeleteSection = /* GraphQL */ `
       label
       createdAt
       updatedAt
-      videos {
+      medias {
         items {
           id
           sectionID
-          videoID
+          mediaID
           createdAt
           updatedAt
         }
@@ -221,27 +179,22 @@ export const onDeleteSection = /* GraphQL */ `
     }
   }
 `;
-export const onCreateVideoSection = /* GraphQL */ `
-  subscription OnCreateVideoSection {
-    onCreateVideoSection {
+export const onCreateMediasSections = /* GraphQL */ `
+  subscription OnCreateMediasSections {
+    onCreateMediasSections {
       id
       sectionID
-      videoID
+      mediaID
       createdAt
       updatedAt
-      video {
+      media {
         id
         title
-        src
         description
         highlighted
+        source
         createdAt
         updatedAt
-        video {
-          id
-          createdAt
-          updatedAt
-        }
         thumbnail {
           id
           ext
@@ -257,34 +210,29 @@ export const onCreateVideoSection = /* GraphQL */ `
         label
         createdAt
         updatedAt
-        videos {
+        medias {
           nextToken
         }
       }
     }
   }
 `;
-export const onUpdateVideoSection = /* GraphQL */ `
-  subscription OnUpdateVideoSection {
-    onUpdateVideoSection {
+export const onUpdateMediasSections = /* GraphQL */ `
+  subscription OnUpdateMediasSections {
+    onUpdateMediasSections {
       id
       sectionID
-      videoID
+      mediaID
       createdAt
       updatedAt
-      video {
+      media {
         id
         title
-        src
         description
         highlighted
+        source
         createdAt
         updatedAt
-        video {
-          id
-          createdAt
-          updatedAt
-        }
         thumbnail {
           id
           ext
@@ -300,34 +248,29 @@ export const onUpdateVideoSection = /* GraphQL */ `
         label
         createdAt
         updatedAt
-        videos {
+        medias {
           nextToken
         }
       }
     }
   }
 `;
-export const onDeleteVideoSection = /* GraphQL */ `
-  subscription OnDeleteVideoSection {
-    onDeleteVideoSection {
+export const onDeleteMediasSections = /* GraphQL */ `
+  subscription OnDeleteMediasSections {
+    onDeleteMediasSections {
       id
       sectionID
-      videoID
+      mediaID
       createdAt
       updatedAt
-      video {
+      media {
         id
         title
-        src
         description
         highlighted
+        source
         createdAt
         updatedAt
-        video {
-          id
-          createdAt
-          updatedAt
-        }
         thumbnail {
           id
           ext
@@ -343,7 +286,178 @@ export const onDeleteVideoSection = /* GraphQL */ `
         label
         createdAt
         updatedAt
-        videos {
+        medias {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const onCreateVideoOnDemand = /* GraphQL */ `
+  subscription OnCreateVideoOnDemand {
+    onCreateVideoOnDemand {
+      id
+      src
+      createdAt
+      updatedAt
+      media {
+        id
+        title
+        description
+        highlighted
+        source
+        createdAt
+        updatedAt
+        thumbnail {
+          id
+          ext
+          createdAt
+          updatedAt
+        }
+        sections {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const onUpdateVideoOnDemand = /* GraphQL */ `
+  subscription OnUpdateVideoOnDemand {
+    onUpdateVideoOnDemand {
+      id
+      src
+      createdAt
+      updatedAt
+      media {
+        id
+        title
+        description
+        highlighted
+        source
+        createdAt
+        updatedAt
+        thumbnail {
+          id
+          ext
+          createdAt
+          updatedAt
+        }
+        sections {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const onDeleteVideoOnDemand = /* GraphQL */ `
+  subscription OnDeleteVideoOnDemand {
+    onDeleteVideoOnDemand {
+      id
+      src
+      createdAt
+      updatedAt
+      media {
+        id
+        title
+        description
+        highlighted
+        source
+        createdAt
+        updatedAt
+        thumbnail {
+          id
+          ext
+          createdAt
+          updatedAt
+        }
+        sections {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const onCreateLivestream = /* GraphQL */ `
+  subscription OnCreateLivestream {
+    onCreateLivestream {
+      id
+      url
+      isLive
+      createdAt
+      updatedAt
+      media {
+        id
+        title
+        description
+        highlighted
+        source
+        createdAt
+        updatedAt
+        thumbnail {
+          id
+          ext
+          createdAt
+          updatedAt
+        }
+        sections {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const onUpdateLivestream = /* GraphQL */ `
+  subscription OnUpdateLivestream {
+    onUpdateLivestream {
+      id
+      url
+      isLive
+      createdAt
+      updatedAt
+      media {
+        id
+        title
+        description
+        highlighted
+        source
+        createdAt
+        updatedAt
+        thumbnail {
+          id
+          ext
+          createdAt
+          updatedAt
+        }
+        sections {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const onDeleteLivestream = /* GraphQL */ `
+  subscription OnDeleteLivestream {
+    onDeleteLivestream {
+      id
+      url
+      isLive
+      createdAt
+      updatedAt
+      media {
+        id
+        title
+        description
+        highlighted
+        source
+        createdAt
+        updatedAt
+        thumbnail {
+          id
+          ext
+          createdAt
+          updatedAt
+        }
+        sections {
           nextToken
         }
       }

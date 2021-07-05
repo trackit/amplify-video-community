@@ -1,20 +1,20 @@
 import { API, Storage } from 'aws-amplify'
+import { GraphQLResult } from '@aws-amplify/api-graphql'
+
 import { getSection, listSections } from '../../graphql/queries'
-import { GraphQLResult, GraphQLOptions } from '@aws-amplify/api-graphql'
 import awsmobile from '../../aws-exports'
 import * as APIt from '../../API'
-import { vodAsset } from '../../models'
+import { VideoOnDemand } from '../../models'
 import { getAuthMode } from './helper'
 
 async function fetchSections() {
-    const opts: GraphQLOptions = {
+    return API.graphql({
         query: listSections,
         authMode: getAuthMode(),
-    }
-    return API.graphql(opts) as GraphQLResult<APIt.ListSectionsQuery>
+    }) as GraphQLResult<APIt.ListSectionsQuery>
 }
 
-async function fetchSection(id: string | null) {
+async function fetchSection(id: string) {
     return API.graphql({
         query: getSection,
         variables: { input: { id } },
@@ -22,9 +22,9 @@ async function fetchSection(id: string | null) {
     }) as GraphQLResult<APIt.GetSectionQuery>
 }
 
-async function fetchThumbnail(asset: vodAsset) {
+async function fetchThumbnail(vod: VideoOnDemand) {
     return Storage.get(
-        `thumbnails/${asset?.thumbnail?.id}.${asset?.thumbnail?.ext}`,
+        `thumbnails/${vod?.media?.thumbnail?.id}.${vod?.media?.thumbnail?.ext}`,
         {
             bucket: awsmobile.aws_user_files_s3_bucket,
             level: 'public',

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { AiOutlineSearch, AiOutlineSetting } from 'react-icons/ai'
-
 import styled from 'styled-components'
 import { Auth } from 'aws-amplify'
 import { Link as GatsbyLink } from 'gatsby'

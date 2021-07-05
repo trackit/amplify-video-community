@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Auth } from 'aws-amplify'
 import { withAuthenticator } from '@aws-amplify/ui-react'
-import Layout from './Layout'
 import { Link } from 'gatsby'
 import styled from 'styled-components'
+
+import Layout from './Layout'
 
 const LeftPanelStyled = styled.div`
     height: 100%;

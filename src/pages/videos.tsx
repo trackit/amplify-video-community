@@ -3,10 +3,9 @@ import Loader from 'react-loader-spinner'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import { Thumbnail } from '../shared/types'
 import {
     Layout,
-    Section,
+    SectionContainer,
     HighlightedSection,
     VideoCardSlider,
 } from '../shared/components'
@@ -15,22 +14,27 @@ import {
     fetchVodFiles,
     fetchThumbnail,
 } from '../shared/utilities'
-import { vodAsset, section } from '../models'
+import { Thumbnail, VideoOnDemand, Section } from '../models'
 
-const SectionContainer = styled.div`
+const Container = styled.div`
     display: flex;
     flex-direction: column;
     gap: 25px;
 `
 
 const VodApp = () => {
-    const [vodAssets, setVodAssets] = useState<Array<vodAsset>>([])
-    const [thumbnails, setThumbnails] = useState<Array<Thumbnail>>([])
-    const [sections, setSections] = useState<Array<section> | null>(null)
+    const [vodAssets, setVodAssets] = useState<Array<VideoOnDemand>>([])
+    const [thumbnails, setThumbnails] = useState<
+        Array<{
+            obj: Thumbnail | undefined
+            url: string
+        }>
+    >([])
+    const [sections, setSections] = useState<Array<Section> | null>(null)
     const [nextTokenVodFiles, setNextTokenVodFiles] =
         useState<string | null>(null)
-    const [loadingVodFiles, setLoadingVodFiles] = useState(false)
-    const [loadingSections, setLoadingSections] = useState(false)
+    const [loadingVodFiles, setLoadingVodFiles] = useState<boolean>(false)
+    const [loadingSections, setLoadingSections] = useState<boolean>(false)
 
     useEffect(() => {
         ;(async () => {
@@ -38,19 +42,24 @@ const VodApp = () => {
             try {
                 const { data } = await fetchVodFiles(nextTokenVodFiles)
                 setNextTokenVodFiles(
-                    data?.listVodAssets?.nextToken
-                        ? data.listVodAssets.nextToken
+                    data?.listVideoOnDemands?.nextToken
+                        ? data.listVideoOnDemands.nextToken
                         : null
                 )
-                const assets = data?.listVodAssets?.items as Array<vodAsset>
+                const assets = data?.listVideoOnDemands
+                    ?.items as Array<VideoOnDemand>
                 setVodAssets(assets)
 
-                const thumbnailArr: Array<Thumbnail> = []
+                console.log('assets: ', assets)
+                const thumbnailArr: Array<{
+                    obj: Thumbnail | undefined
+                    url: string
+                }> = []
                 await Promise.all(
                     assets.map(async (asset) => {
                         const data = await fetchThumbnail(asset)
                         thumbnailArr.push({
-                            obj: asset.thumbnail,
+                            obj: asset.media?.thumbnail,
                             url: data as string,
                         })
                     })
@@ -69,7 +78,7 @@ const VodApp = () => {
             try {
                 const { data } = await fetchSections()
                 let nonce = true
-                const list = data?.listSections?.items as Array<section>
+                const list = data?.listSections?.items as Array<Section>
                 list.forEach((item, index, arr) => {
                     if (arr.length <= 3 && nonce) {
                         arr.push({
@@ -108,23 +117,24 @@ const VodApp = () => {
                     timeout={3000}
                 />
             ) : (
-                <SectionContainer>
+                <Container>
                     <VideoCardSlider vod={vodAssets} thumbnails={thumbnails} />
                     {sections &&
-                        sections.map((section: section) => {
+                        sections.map((section: Section) => {
                             return section.label === 'Highlighted' ? (
                                 <HighlightedSection
                                     key={section.id}
                                     title={section.label}
                                     vodAsset={vodAssets
                                         .filter(
-                                            (item: vodAsset) => item.highlighted
+                                            (item: VideoOnDemand) =>
+                                                item.media?.highlighted
                                         )
                                         .pop()}
                                     thumbnails={thumbnails}
                                 />
                             ) : (
-                                <Section
+                                <SectionContainer
                                     key={section.id}
                                     section={section}
                                     vodAssets={vodAssets}
@@ -132,7 +142,7 @@ const VodApp = () => {
                                 />
                             )
                         })}
-                </SectionContainer>
+                </Container>
             )}
         </Layout>
     )

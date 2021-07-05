@@ -8,9 +8,11 @@
         ],
         "name": "Amplify_Video_HLS.json"
     },
+    "sns": {
+        "createTopic": false
+    },
     "contentDeliveryNetwork": {
-        "signedKey": false,
-        "enableDistribution": true
+        "enableDistribution": false
     },
     "parameters": {
         "authRoleName": {
@@ -33,5 +35,9 @@
         "permissionSchema": [
             "admin"
         ]
+    },
+    "cms": {
+        "overrideSchema": true,
+        "editAPI": true
     }
 }

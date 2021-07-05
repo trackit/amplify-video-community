@@ -83,9 +83,9 @@
         "triggerFunction": {
             "Type": "String"
         },
-        "authamplifyvideocommu33267767UserPoolId": {
+        "authamplifyvideocommuf4da7910UserPoolId": {
             "Type": "String",
-            "Default": "authamplifyvideocommu33267767UserPoolId"
+            "Default": "authamplifyvideocommuf4da7910UserPoolId"
         },
         "authuserPoolGroupsAdminGroupRole": {
             "Type": "String",
@@ -262,6 +262,70 @@
                             ],
                             "Id": "S3CORSRuleId1",
                             "MaxAge": "3000"
+                        }
+                    ]
+                }
+            }
+        },
+        "AdminGroupPolicy": {
+            "Type": "AWS::IAM::Policy",
+            "Properties": {
+                "PolicyName": "Admin-group-s3-policy",
+                "Roles": [
+                    {
+                        "Fn::Join": [
+                            "",
+                            [
+                                {
+                                    "Ref": "authamplifyvideocommuf4da7910UserPoolId"
+                                },
+                                "-AdminGroupRole"
+                            ]
+                        ]
+                    }
+                ],
+                "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Action": [
+                                "s3:PutObject",
+                                "s3:GetObject",
+                                "s3:ListBucket",
+                                "s3:DeleteObject"
+                            ],
+                            "Resource": [
+                                {
+                                    "Fn::Join": [
+                                        "",
+                                        [
+                                            "arn:aws:s3:::",
+                                            {
+                                                "Ref": "S3Bucket"
+                                            },
+                                            "/*"
+                                        ]
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "Effect": "Allow",
+                            "Action": "s3:ListBucket",
+                            "Resource": [
+                                {
+                                    "Fn::Join": [
+                                        "",
+                                        [
+                                            "arn:aws:s3:::",
+                                            {
+                                                "Ref": "S3Bucket"
+                                            }
+                                        ]
+                                    ]
+                                }
+                            ]
                         }
                     ]
                 }
@@ -688,70 +752,6 @@
                                     ]
                                 }
                             }
-                        }
-                    ]
-                }
-            }
-        },
-        "AdminGroupPolicy": {
-            "Type": "AWS::IAM::Policy",
-            "Properties": {
-                "PolicyName": "Admin-group-s3-policy",
-                "Roles": [
-                    {
-                        "Fn::Join": [
-                            "",
-                            [
-                                {
-                                    "Ref": "authamplifyvideocommu33267767UserPoolId"
-                                },
-                                "-AdminGroupRole"
-                            ]
-                        ]
-                    }
-                ],
-                "PolicyDocument": {
-                    "Version": "2012-10-17",
-                    "Statement": [
-                        {
-                            "Effect": "Allow",
-                            "Action": [
-                                "s3:PutObject",
-                                "s3:GetObject",
-                                "s3:ListBucket",
-                                "s3:DeleteObject"
-                            ],
-                            "Resource": [
-                                {
-                                    "Fn::Join": [
-                                        "",
-                                        [
-                                            "arn:aws:s3:::",
-                                            {
-                                                "Ref": "S3Bucket"
-                                            },
-                                            "/*"
-                                        ]
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "Effect": "Allow",
-                            "Action": "s3:ListBucket",
-                            "Resource": [
-                                {
-                                    "Fn::Join": [
-                                        "",
-                                        [
-                                            "arn:aws:s3:::",
-                                            {
-                                                "Ref": "S3Bucket"
-                                            }
-                                        ]
-                                    ]
-                                }
-                            ]
                         }
                     ]
                 }

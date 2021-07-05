@@ -2,13 +2,16 @@ import React from 'react'
 import styled from 'styled-components'
 import Loader from 'react-loader-spinner'
 import { navigate } from 'gatsby'
-
-import { Thumbnail } from '../../types'
-import { vodAsset } from '../../../models'
+import { VideoOnDemand, Thumbnail } from '../../../models'
 
 type VideoCardProps = {
-    thumbnail: Thumbnail | undefined
-    vod: vodAsset | undefined
+    thumbnail:
+        | {
+              obj: Thumbnail | undefined
+              url: string
+          }
+        | undefined
+    vod: VideoOnDemand | undefined
 }
 
 const StyledVideoCard = styled.div`
@@ -25,6 +28,7 @@ const VideoCard = ({ vod, thumbnail }: VideoCardProps) => {
     const onClick = () => {
         navigate(`/video/${vod?.id}`)
     }
+    console.log(thumbnail)
 
     return (
         <StyledVideoCard>

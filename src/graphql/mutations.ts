@@ -2,24 +2,19 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createVodAsset = /* GraphQL */ `
-  mutation CreateVodAsset(
-    $input: CreateVodAssetInput!
-    $condition: ModelvodAssetConditionInput
+export const createMedia = /* GraphQL */ `
+  mutation CreateMedia(
+    $input: CreateMediaInput!
+    $condition: ModelMediaConditionInput
   ) {
-    createVodAsset(input: $input, condition: $condition) {
+    createMedia(input: $input, condition: $condition) {
       id
       title
-      src
       description
       highlighted
+      source
       createdAt
       updatedAt
-      video {
-        id
-        createdAt
-        updatedAt
-      }
       thumbnail {
         id
         ext
@@ -30,7 +25,7 @@ export const createVodAsset = /* GraphQL */ `
         items {
           id
           sectionID
-          videoID
+          mediaID
           createdAt
           updatedAt
         }
@@ -39,24 +34,19 @@ export const createVodAsset = /* GraphQL */ `
     }
   }
 `;
-export const updateVodAsset = /* GraphQL */ `
-  mutation UpdateVodAsset(
-    $input: UpdateVodAssetInput!
-    $condition: ModelvodAssetConditionInput
+export const updateMedia = /* GraphQL */ `
+  mutation UpdateMedia(
+    $input: UpdateMediaInput!
+    $condition: ModelMediaConditionInput
   ) {
-    updateVodAsset(input: $input, condition: $condition) {
+    updateMedia(input: $input, condition: $condition) {
       id
       title
-      src
       description
       highlighted
+      source
       createdAt
       updatedAt
-      video {
-        id
-        createdAt
-        updatedAt
-      }
       thumbnail {
         id
         ext
@@ -67,7 +57,7 @@ export const updateVodAsset = /* GraphQL */ `
         items {
           id
           sectionID
-          videoID
+          mediaID
           createdAt
           updatedAt
         }
@@ -76,24 +66,19 @@ export const updateVodAsset = /* GraphQL */ `
     }
   }
 `;
-export const deleteVodAsset = /* GraphQL */ `
-  mutation DeleteVodAsset(
-    $input: DeleteVodAssetInput!
-    $condition: ModelvodAssetConditionInput
+export const deleteMedia = /* GraphQL */ `
+  mutation DeleteMedia(
+    $input: DeleteMediaInput!
+    $condition: ModelMediaConditionInput
   ) {
-    deleteVodAsset(input: $input, condition: $condition) {
+    deleteMedia(input: $input, condition: $condition) {
       id
       title
-      src
       description
       highlighted
+      source
       createdAt
       updatedAt
-      video {
-        id
-        createdAt
-        updatedAt
-      }
       thumbnail {
         id
         ext
@@ -104,7 +89,7 @@ export const deleteVodAsset = /* GraphQL */ `
         items {
           id
           sectionID
-          videoID
+          mediaID
           createdAt
           updatedAt
         }
@@ -113,48 +98,12 @@ export const deleteVodAsset = /* GraphQL */ `
     }
   }
 `;
-export const createVideoObject = /* GraphQL */ `
-  mutation CreateVideoObject(
-    $input: CreateVideoObjectInput!
-    $condition: ModelvideoObjectConditionInput
+export const createThumbnail = /* GraphQL */ `
+  mutation CreateThumbnail(
+    $input: CreateThumbnailInput!
+    $condition: ModelThumbnailConditionInput
   ) {
-    createVideoObject(input: $input, condition: $condition) {
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateVideoObject = /* GraphQL */ `
-  mutation UpdateVideoObject(
-    $input: UpdateVideoObjectInput!
-    $condition: ModelvideoObjectConditionInput
-  ) {
-    updateVideoObject(input: $input, condition: $condition) {
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteVideoObject = /* GraphQL */ `
-  mutation DeleteVideoObject(
-    $input: DeleteVideoObjectInput!
-    $condition: ModelvideoObjectConditionInput
-  ) {
-    deleteVideoObject(input: $input, condition: $condition) {
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createThumbnailObject = /* GraphQL */ `
-  mutation CreateThumbnailObject(
-    $input: CreateThumbnailObjectInput!
-    $condition: ModelthumbnailObjectConditionInput
-  ) {
-    createThumbnailObject(input: $input, condition: $condition) {
+    createThumbnail(input: $input, condition: $condition) {
       id
       ext
       createdAt
@@ -162,12 +111,12 @@ export const createThumbnailObject = /* GraphQL */ `
     }
   }
 `;
-export const updateThumbnailObject = /* GraphQL */ `
-  mutation UpdateThumbnailObject(
-    $input: UpdateThumbnailObjectInput!
-    $condition: ModelthumbnailObjectConditionInput
+export const updateThumbnail = /* GraphQL */ `
+  mutation UpdateThumbnail(
+    $input: UpdateThumbnailInput!
+    $condition: ModelThumbnailConditionInput
   ) {
-    updateThumbnailObject(input: $input, condition: $condition) {
+    updateThumbnail(input: $input, condition: $condition) {
       id
       ext
       createdAt
@@ -175,12 +124,12 @@ export const updateThumbnailObject = /* GraphQL */ `
     }
   }
 `;
-export const deleteThumbnailObject = /* GraphQL */ `
-  mutation DeleteThumbnailObject(
-    $input: DeleteThumbnailObjectInput!
-    $condition: ModelthumbnailObjectConditionInput
+export const deleteThumbnail = /* GraphQL */ `
+  mutation DeleteThumbnail(
+    $input: DeleteThumbnailInput!
+    $condition: ModelThumbnailConditionInput
   ) {
-    deleteThumbnailObject(input: $input, condition: $condition) {
+    deleteThumbnail(input: $input, condition: $condition) {
       id
       ext
       createdAt
@@ -191,18 +140,18 @@ export const deleteThumbnailObject = /* GraphQL */ `
 export const createSection = /* GraphQL */ `
   mutation CreateSection(
     $input: CreateSectionInput!
-    $condition: ModelsectionConditionInput
+    $condition: ModelSectionConditionInput
   ) {
     createSection(input: $input, condition: $condition) {
       id
       label
       createdAt
       updatedAt
-      videos {
+      medias {
         items {
           id
           sectionID
-          videoID
+          mediaID
           createdAt
           updatedAt
         }
@@ -214,18 +163,18 @@ export const createSection = /* GraphQL */ `
 export const updateSection = /* GraphQL */ `
   mutation UpdateSection(
     $input: UpdateSectionInput!
-    $condition: ModelsectionConditionInput
+    $condition: ModelSectionConditionInput
   ) {
     updateSection(input: $input, condition: $condition) {
       id
       label
       createdAt
       updatedAt
-      videos {
+      medias {
         items {
           id
           sectionID
-          videoID
+          mediaID
           createdAt
           updatedAt
         }
@@ -237,18 +186,18 @@ export const updateSection = /* GraphQL */ `
 export const deleteSection = /* GraphQL */ `
   mutation DeleteSection(
     $input: DeleteSectionInput!
-    $condition: ModelsectionConditionInput
+    $condition: ModelSectionConditionInput
   ) {
     deleteSection(input: $input, condition: $condition) {
       id
       label
       createdAt
       updatedAt
-      videos {
+      medias {
         items {
           id
           sectionID
-          videoID
+          mediaID
           createdAt
           updatedAt
         }
@@ -257,30 +206,25 @@ export const deleteSection = /* GraphQL */ `
     }
   }
 `;
-export const createVideoSection = /* GraphQL */ `
-  mutation CreateVideoSection(
-    $input: CreateVideoSectionInput!
-    $condition: ModelVideoSectionConditionInput
+export const createMediasSections = /* GraphQL */ `
+  mutation CreateMediasSections(
+    $input: CreateMediasSectionsInput!
+    $condition: ModelMediasSectionsConditionInput
   ) {
-    createVideoSection(input: $input, condition: $condition) {
+    createMediasSections(input: $input, condition: $condition) {
       id
       sectionID
-      videoID
+      mediaID
       createdAt
       updatedAt
-      video {
+      media {
         id
         title
-        src
         description
         highlighted
+        source
         createdAt
         updatedAt
-        video {
-          id
-          createdAt
-          updatedAt
-        }
         thumbnail {
           id
           ext
@@ -296,37 +240,32 @@ export const createVideoSection = /* GraphQL */ `
         label
         createdAt
         updatedAt
-        videos {
+        medias {
           nextToken
         }
       }
     }
   }
 `;
-export const updateVideoSection = /* GraphQL */ `
-  mutation UpdateVideoSection(
-    $input: UpdateVideoSectionInput!
-    $condition: ModelVideoSectionConditionInput
+export const updateMediasSections = /* GraphQL */ `
+  mutation UpdateMediasSections(
+    $input: UpdateMediasSectionsInput!
+    $condition: ModelMediasSectionsConditionInput
   ) {
-    updateVideoSection(input: $input, condition: $condition) {
+    updateMediasSections(input: $input, condition: $condition) {
       id
       sectionID
-      videoID
+      mediaID
       createdAt
       updatedAt
-      video {
+      media {
         id
         title
-        src
         description
         highlighted
+        source
         createdAt
         updatedAt
-        video {
-          id
-          createdAt
-          updatedAt
-        }
         thumbnail {
           id
           ext
@@ -342,37 +281,32 @@ export const updateVideoSection = /* GraphQL */ `
         label
         createdAt
         updatedAt
-        videos {
+        medias {
           nextToken
         }
       }
     }
   }
 `;
-export const deleteVideoSection = /* GraphQL */ `
-  mutation DeleteVideoSection(
-    $input: DeleteVideoSectionInput!
-    $condition: ModelVideoSectionConditionInput
+export const deleteMediasSections = /* GraphQL */ `
+  mutation DeleteMediasSections(
+    $input: DeleteMediasSectionsInput!
+    $condition: ModelMediasSectionsConditionInput
   ) {
-    deleteVideoSection(input: $input, condition: $condition) {
+    deleteMediasSections(input: $input, condition: $condition) {
       id
       sectionID
-      videoID
+      mediaID
       createdAt
       updatedAt
-      video {
+      media {
         id
         title
-        src
         description
         highlighted
+        source
         createdAt
         updatedAt
-        video {
-          id
-          createdAt
-          updatedAt
-        }
         thumbnail {
           id
           ext
@@ -388,7 +322,196 @@ export const deleteVideoSection = /* GraphQL */ `
         label
         createdAt
         updatedAt
-        videos {
+        medias {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const createVideoOnDemand = /* GraphQL */ `
+  mutation CreateVideoOnDemand(
+    $input: CreateVideoOnDemandInput!
+    $condition: ModelVideoOnDemandConditionInput
+  ) {
+    createVideoOnDemand(input: $input, condition: $condition) {
+      id
+      src
+      createdAt
+      updatedAt
+      media {
+        id
+        title
+        description
+        highlighted
+        source
+        createdAt
+        updatedAt
+        thumbnail {
+          id
+          ext
+          createdAt
+          updatedAt
+        }
+        sections {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const updateVideoOnDemand = /* GraphQL */ `
+  mutation UpdateVideoOnDemand(
+    $input: UpdateVideoOnDemandInput!
+    $condition: ModelVideoOnDemandConditionInput
+  ) {
+    updateVideoOnDemand(input: $input, condition: $condition) {
+      id
+      src
+      createdAt
+      updatedAt
+      media {
+        id
+        title
+        description
+        highlighted
+        source
+        createdAt
+        updatedAt
+        thumbnail {
+          id
+          ext
+          createdAt
+          updatedAt
+        }
+        sections {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const deleteVideoOnDemand = /* GraphQL */ `
+  mutation DeleteVideoOnDemand(
+    $input: DeleteVideoOnDemandInput!
+    $condition: ModelVideoOnDemandConditionInput
+  ) {
+    deleteVideoOnDemand(input: $input, condition: $condition) {
+      id
+      src
+      createdAt
+      updatedAt
+      media {
+        id
+        title
+        description
+        highlighted
+        source
+        createdAt
+        updatedAt
+        thumbnail {
+          id
+          ext
+          createdAt
+          updatedAt
+        }
+        sections {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const createLivestream = /* GraphQL */ `
+  mutation CreateLivestream(
+    $input: CreateLivestreamInput!
+    $condition: ModelLivestreamConditionInput
+  ) {
+    createLivestream(input: $input, condition: $condition) {
+      id
+      url
+      isLive
+      createdAt
+      updatedAt
+      media {
+        id
+        title
+        description
+        highlighted
+        source
+        createdAt
+        updatedAt
+        thumbnail {
+          id
+          ext
+          createdAt
+          updatedAt
+        }
+        sections {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const updateLivestream = /* GraphQL */ `
+  mutation UpdateLivestream(
+    $input: UpdateLivestreamInput!
+    $condition: ModelLivestreamConditionInput
+  ) {
+    updateLivestream(input: $input, condition: $condition) {
+      id
+      url
+      isLive
+      createdAt
+      updatedAt
+      media {
+        id
+        title
+        description
+        highlighted
+        source
+        createdAt
+        updatedAt
+        thumbnail {
+          id
+          ext
+          createdAt
+          updatedAt
+        }
+        sections {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const deleteLivestream = /* GraphQL */ `
+  mutation DeleteLivestream(
+    $input: DeleteLivestreamInput!
+    $condition: ModelLivestreamConditionInput
+  ) {
+    deleteLivestream(input: $input, condition: $condition) {
+      id
+      url
+      isLive
+      createdAt
+      updatedAt
+      media {
+        id
+        title
+        description
+        highlighted
+        source
+        createdAt
+        updatedAt
+        thumbnail {
+          id
+          ext
+          createdAt
+          updatedAt
+        }
+        sections {
           nextToken
         }
       }

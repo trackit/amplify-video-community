@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { vodAsset } from '../../../models'
+import { VideoOnDemand } from '../../../models'
 
 type AssetsManagementListItemListProps = {
-    asset: vodAsset
-    selectedAsset: vodAsset
-    setSelectedAsset: React.Dispatch<React.SetStateAction<vodAsset>>
+    asset: VideoOnDemand
+    selectedAsset: VideoOnDemand
+    setSelectedAsset: React.Dispatch<React.SetStateAction<VideoOnDemand>>
 }
 
 const AssetsManagementListItemList = ({
@@ -39,8 +39,8 @@ const AssetsManagementListItemList = ({
             }}
         >
             <div>
-                <p>{asset.title}</p>
-                <p>{asset.description}</p>
+                <p>{asset.media?.title}</p>
+                <p>{asset.media?.description}</p>
             </div>
             <div>
                 <p>{'>'}</p>

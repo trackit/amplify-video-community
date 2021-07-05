@@ -1,7 +1,7 @@
 {
     "bucketName": "amplify-video-commu-assets",
-    "authPolicyName": "s3_amplify_3d48f708",
-    "unauthPolicyName": "s3_amplify_3d48f708",
+    "authPolicyName": "s3_amplify_db6361a1",
+    "unauthPolicyName": "s3_amplify_db6361a1",
     "authRoleName": {
         "Ref": "AuthRoleName"
     },
@@ -17,15 +17,15 @@
         "s3:ListBucket"
     ],
     "s3PermissionsAuthenticatedPublic": "s3:GetObject",
-    "s3PublicPolicy": "Public_policy_377961bd",
+    "s3PublicPolicy": "Public_policy_8c4a906a",
     "s3PermissionsAuthenticatedUploads": "DISALLOW",
-    "s3UploadsPolicy": "Uploads_policy_377961bd",
+    "s3UploadsPolicy": "Uploads_policy_8c4a906a",
     "s3PermissionsAuthenticatedProtected": "s3:GetObject",
-    "s3ProtectedPolicy": "Protected_policy_bc49299e",
+    "s3ProtectedPolicy": "Protected_policy_f320d541",
     "s3PermissionsAuthenticatedPrivate": "s3:GetObject",
-    "s3PrivatePolicy": "Private_policy_bc49299e",
+    "s3PrivatePolicy": "Private_policy_f320d541",
     "AuthenticatedAllowList": "ALLOW",
-    "s3ReadPolicy": "read_policy_377961bd",
+    "s3ReadPolicy": "read_policy_8c4a906a",
     "s3PermissionsGuestPublic": "s3:GetObject",
     "s3PermissionsGuestUploads": "DISALLOW",
     "GuestAllowList": "ALLOW",

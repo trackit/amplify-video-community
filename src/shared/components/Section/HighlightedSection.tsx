@@ -1,14 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { vodAsset } from '../../../models'
+import { VideoOnDemand, Thumbnail } from '../../../models'
 import HighlightedVideoCard from '../Video/HighlightedVideoCard'
-import { Thumbnail } from '../../types'
 
 type HighlightedProps = {
     title: string
-    vodAsset: vodAsset | undefined
-    thumbnails: Array<Thumbnail>
+    vodAsset: VideoOnDemand | undefined
+    thumbnails: Array<{
+        obj: Thumbnail | undefined
+        url: string
+    }>
 }
 
 const StyledHighlightedContainer = styled.div`
@@ -50,12 +52,17 @@ const Highlighted = ({ title, vodAsset, thumbnails }: HighlightedProps) => {
                     key={vodAsset?.id}
                     vod={vodAsset}
                     thumbnail={thumbnails.find(
-                        (thumb) => vodAsset?.thumbnail?.id === thumb.obj?.id
+                        (thumb) =>
+                            vodAsset?.media?.thumbnail?.id === thumb.obj?.id
                     )}
                 />
                 <StyledContentContainer>
-                    <StyledContentTitle>{vodAsset?.title}</StyledContentTitle>
-                    <StyledContent>{vodAsset?.description}</StyledContent>
+                    <StyledContentTitle>
+                        {vodAsset?.media?.title}
+                    </StyledContentTitle>
+                    <StyledContent>
+                        {vodAsset?.media?.description}
+                    </StyledContent>
                 </StyledContentContainer>
             </StyledHighlightedContainer>
         </StyledHighlighted>

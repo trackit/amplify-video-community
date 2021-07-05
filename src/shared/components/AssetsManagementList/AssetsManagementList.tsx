@@ -1,20 +1,20 @@
 import React, { useState } from 'react'
-import { vodAsset } from '../../../models'
+import { VideoOnDemand } from '../../../models'
 import AssetsManagementListItem from './AssetsManagementListItem'
 import AssetsManagementListItemList from './AssetsManagementListItemList'
 
 type AssetsManagementListProps = {
-    assets: Array<vodAsset>
+    assets: Array<VideoOnDemand>
 }
 
 const AssetsManagementList = ({ assets }: AssetsManagementListProps) => {
-    const [selectedAsset, setSelectedAsset] = useState(null)
+    const [selectedAsset, setSelectedAsset] = useState<VideoOnDemand>(assets[0])
     const [searchValue, setSearchValue] = useState('')
 
-    const filterAssets = (elem: vodAsset) => {
+    const filterAssets = (elem: VideoOnDemand) => {
         return (
-            elem.title.includes(searchValue) ||
-            elem.description.includes(searchValue)
+            elem.media?.title.includes(searchValue) ||
+            elem.media?.description.includes(searchValue)
         )
     }
 
@@ -45,7 +45,7 @@ const AssetsManagementList = ({ assets }: AssetsManagementListProps) => {
                         </div>
                     </div>
                     <div>
-                        {assets.filter(filterAssets).map((elem: vodAsset) => {
+                        {assets.filter(filterAssets).map((elem) => {
                             return (
                                 <AssetsManagementListItemList
                                     key={elem.id}

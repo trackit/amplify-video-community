@@ -1,57 +1,73 @@
 import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplify/datastore";
 
+export enum Source {
+  TWITCH = "TWITCH",
+  YOUTUBE = "YOUTUBE",
+  SELF = "SELF"
+}
 
 
 
-
-export declare class vodAsset {
+export declare class Media {
   readonly id: string;
   readonly title: string;
-  readonly src?: string;
   readonly description: string;
   readonly highlighted: boolean;
-  readonly video?: videoObject;
-  readonly thumbnail?: thumbnailObject;
-  readonly sections?: (VideoSection | null)[];
+  readonly sections?: (MediasSections | null)[];
+  readonly source?: Source | keyof typeof Source;
+  readonly thumbnail?: Thumbnail;
   readonly createdAt?: string;
   readonly updatedAt?: string;
-  constructor(init: ModelInit<vodAsset>);
-  static copyOf(source: vodAsset, mutator: (draft: MutableModel<vodAsset>) => MutableModel<vodAsset> | void): vodAsset;
+  constructor(init: ModelInit<Media>);
+  static copyOf(source: Media, mutator: (draft: MutableModel<Media>) => MutableModel<Media> | void): Media;
 }
 
-export declare class videoObject {
+export declare class MediasSections {
   readonly id: string;
+  readonly section: Section;
+  readonly media: Media;
   readonly createdAt?: string;
   readonly updatedAt?: string;
-  constructor(init: ModelInit<videoObject>);
-  static copyOf(source: videoObject, mutator: (draft: MutableModel<videoObject>) => MutableModel<videoObject> | void): videoObject;
+  constructor(init: ModelInit<MediasSections>);
+  static copyOf(source: MediasSections, mutator: (draft: MutableModel<MediasSections>) => MutableModel<MediasSections> | void): MediasSections;
 }
 
-export declare class thumbnailObject {
+export declare class Section {
+  readonly id: string;
+  readonly label: string;
+  readonly medias?: (MediasSections | null)[];
+  readonly createdAt?: string;
+  readonly updatedAt?: string;
+  constructor(init: ModelInit<Section>);
+  static copyOf(source: Section, mutator: (draft: MutableModel<Section>) => MutableModel<Section> | void): Section;
+}
+
+export declare class Thumbnail {
   readonly id: string;
   readonly ext: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
-  constructor(init: ModelInit<thumbnailObject>);
-  static copyOf(source: thumbnailObject, mutator: (draft: MutableModel<thumbnailObject>) => MutableModel<thumbnailObject> | void): thumbnailObject;
+  constructor(init: ModelInit<Thumbnail>);
+  static copyOf(source: Thumbnail, mutator: (draft: MutableModel<Thumbnail>) => MutableModel<Thumbnail> | void): Thumbnail;
 }
 
-export declare class VideoSection {
+export declare class VideoOnDemand {
   readonly id: string;
-  readonly section: section;
-  readonly video: vodAsset;
+  readonly media?: Media;
+  readonly src: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
-  constructor(init: ModelInit<VideoSection>);
-  static copyOf(source: VideoSection, mutator: (draft: MutableModel<VideoSection>) => MutableModel<VideoSection> | void): VideoSection;
+  constructor(init: ModelInit<VideoOnDemand>);
+  static copyOf(source: VideoOnDemand, mutator: (draft: MutableModel<VideoOnDemand>) => MutableModel<VideoOnDemand> | void): VideoOnDemand;
 }
 
-export declare class section {
+export declare class Livestream {
   readonly id: string;
-  readonly label: string;
-  readonly videos?: (VideoSection | null)[];
+  readonly media?: Media;
+  readonly url: string;
+  readonly isLive?: boolean;
   readonly createdAt?: string;
   readonly updatedAt?: string;
-  constructor(init: ModelInit<section>);
-  static copyOf(source: section, mutator: (draft: MutableModel<section>) => MutableModel<section> | void): section;
+  constructor(init: ModelInit<Livestream>);
+  static copyOf(source: Livestream, mutator: (draft: MutableModel<Livestream>) => MutableModel<Livestream> | void): Livestream;
 }

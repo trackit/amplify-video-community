@@ -3,12 +3,16 @@ import styled from 'styled-components'
 import Loader from 'react-loader-spinner'
 import { navigate } from 'gatsby'
 
-import { Thumbnail } from '../../types'
-import { vodAsset } from '../../../models'
+import { VideoOnDemand, Thumbnail } from '../../../models'
 
 type HighlightedVideoCardProps = {
-    thumbnail: Thumbnail | undefined
-    vod: vodAsset | undefined
+    thumbnail:
+        | {
+              obj: Thumbnail | undefined
+              url: string
+          }
+        | undefined
+    vod: VideoOnDemand | undefined
 }
 
 const StyledHighlightedVideoCard = styled.div`
