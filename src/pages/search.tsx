@@ -11,11 +11,12 @@ const StyledSearchItem = styled.div`
     margin: auto;
     margin-top: 20px;
     margin-bottom: 20px;
-    border: 4px solid ${(props) => props.theme.palette.primary.main};
+    border: 2px solid ${(props) => props.theme.palette.primary.main};
     border-radius: 50px;
     position: relative;
     height: 42px;
     width: 300px;
+    padding: 10px;
 
     table {
         width: 100%;
