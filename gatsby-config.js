@@ -1,6 +1,12 @@
 module.exports = {
     siteMetadata: {
-        title: 'amplify-video-community',
+        title: 'Amplify Video Community',
+        titleTemplate: '%s',
+        description:
+            'Amplify Video Community is a community website created by TrackIt using Amplify only.',
+        url: 'https://amplify-video-community.trackit.io',
+        image: 'src/images/favicon.png',
+        twitterUsername: '@TrackItCloud',
     },
     plugins: [
         {
@@ -10,6 +16,7 @@ module.exports = {
                 path: `${__dirname}/content/`,
             },
         },
+        'gatsby-plugin-react-helmet',
         'gatsby-plugin-sharp',
         'gatsby-plugin-styled-components',
         'gatsby-plugin-react-helmet',
