@@ -55,7 +55,11 @@ const VodApp = () => {
                     url: string
                 }> = []
 
-                if (assets.findIndex((elem) => elem.media?.highlighted === true) > 0) {
+                if (
+                    assets.findIndex(
+                        (elem) => elem.media?.highlighted === true
+                    ) > 0
+                ) {
                     setHaveHighlightedContent(true)
                 }
                 await Promise.all(
