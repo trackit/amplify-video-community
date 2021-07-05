@@ -1,14 +1,15 @@
 import { API, graphqlOperation, Storage } from 'aws-amplify'
+import { v4 as uuidv4 } from 'uuid'
+import { GraphQLResult } from '@aws-amplify/api-graphql'
+
 import {
     createThumbnail,
     createMediasSections,
     createVideoOnDemand,
     createMedia,
 } from '../../graphql/mutations'
-import { v4 as uuidv4 } from 'uuid'
 import awsvideoconfig from '../../aws-video-exports'
 import awsmobile from '../../aws-exports'
-import { GraphQLResult } from '@aws-amplify/api-graphql'
 import * as APIt from '../../API'
 
 async function setMediasSections(

@@ -1,5 +1,6 @@
 import { API } from 'aws-amplify'
 import { GraphQLResult } from '@aws-amplify/api-graphql'
+
 import { getVideoOnDemand } from '../../graphql/queries'
 import * as APIt from '../../API'
 import { getAuthMode } from './helper'

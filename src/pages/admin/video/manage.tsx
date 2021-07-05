@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import Loader from 'react-loader-spinner'
+
 import AssetsManagementList from '../../../shared/components/AssetsManagementList/AssetsManagementList'
 import { fetchVodFiles } from '../../../shared/utilities'
-import Loader from 'react-loader-spinner'
 import { AdminLayout } from '../../../shared/components'
 import { VideoOnDemand } from '../../../models'
 

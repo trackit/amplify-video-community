@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { AiOutlineSearch } from 'react-icons/ai'
 
 import { Layout } from '../shared/components'
 import { fetchThumbnail, fetchVodFiles } from '../shared/utilities'
 import { VideoOnDemand, Thumbnail } from '../models'
-import { AiOutlineSearch } from 'react-icons/ai'
 import VideoCard from '../shared/components/Video/VideoCard'
 
 const StyledSearchItem = styled.div`

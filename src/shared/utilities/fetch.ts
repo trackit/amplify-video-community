@@ -1,6 +1,7 @@
 import { API, Storage } from 'aws-amplify'
-import { getSection, listSections } from '../../graphql/queries'
 import { GraphQLResult } from '@aws-amplify/api-graphql'
+
+import { getSection, listSections } from '../../graphql/queries'
 import awsmobile from '../../aws-exports'
 import * as APIt from '../../API'
 import { VideoOnDemand } from '../../models'
