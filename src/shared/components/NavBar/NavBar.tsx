@@ -89,6 +89,7 @@ const NavBar = () => {
                 <Toggle to="/videos" content={<>Videos</>} />
                 <Toggle to="/live" content={<>Live</>} />
                 <Toggle to="/webinars" content={<>Webinars</>} />
+                <Toggle to="/about-amplify" content={<>About Amplify</>} />
                 <Item>
                     <ExternalLink
                         href="https://docs-amplify.trackit.io/"
