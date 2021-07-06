@@ -2,7 +2,7 @@
 
 const awsvideoconfig = {
     "awsInputVideo": "amplifyvideocommuvod-dev-input-xotw0dj5",
-    "awsOutputVideo": "amplifyvideocommuvod-dev-output-xotw0dj5.s3.us-west-2.amazonaws.com"
+    "awsOutputVideo": "d2h7u5cjwwxvqe.cloudfront.net"
 };
 
 export default awsvideoconfig;

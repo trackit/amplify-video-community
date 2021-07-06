@@ -98,7 +98,7 @@ type VideoOnDemand
 {
   id: ID!
   media: Media @connection
-  src: String!
+  src: String
 }
 
 ### Livestreaming
@@ -117,6 +117,6 @@ type Livestream
 {
   id: ID!
   media: Media @connection
-  url: String!
-  isLive: Boolean
+  url: String
+  isLive: Boolean!
 }

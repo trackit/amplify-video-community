@@ -1,7 +1,6 @@
 import React from 'react'
 import 'video.js/dist/video-js.css'
 import videojs from 'video.js'
-
 import styled from 'styled-components'
 
 const VideoPlayerWrapper = styled.div`
@@ -23,7 +22,7 @@ export default class VideoPlayer extends React.Component<videojs.PlayerOptions> 
 
     componentDidMount() {
         this.player = videojs(this.videoNode, this.options).ready(function () {
-            console.log('onPlayerReady', this)
+            return
         })
     }
 

@@ -150,7 +150,7 @@ const uploadVideo = async (
         const { data } = await createVOD({
             id,
             videoOnDemandMediaId: id,
-            src: '',
+            src: null,
         })
         for (let i = 0; i < sectionsId.length; i++) {
             await setMediasSections({

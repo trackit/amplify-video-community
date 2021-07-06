@@ -12,7 +12,8 @@
         "createTopic": false
     },
     "contentDeliveryNetwork": {
-        "enableDistribution": false
+        "signedKey": false,
+        "enableDistribution": true
     },
     "parameters": {
         "authRoleName": {
