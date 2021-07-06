@@ -224,7 +224,7 @@ export type DeleteMediasSectionsInput = {
 
 export type CreateVideoOnDemandInput = {
   id?: string | null,
-  src: string,
+  src?: string | null,
   videoOnDemandMediaId?: string | null,
 };
 
@@ -238,7 +238,7 @@ export type ModelVideoOnDemandConditionInput = {
 export type VideoOnDemand = {
   __typename: "VideoOnDemand",
   id: string,
-  src: string,
+  src?: string | null,
   createdAt: string,
   updatedAt: string,
   media?: Media | null,
@@ -256,8 +256,8 @@ export type DeleteVideoOnDemandInput = {
 
 export type CreateLivestreamInput = {
   id?: string | null,
-  url: string,
-  isLive?: boolean | null,
+  url?: string | null,
+  isLive: boolean,
   livestreamMediaId?: string | null,
 };
 
@@ -272,8 +272,8 @@ export type ModelLivestreamConditionInput = {
 export type Livestream = {
   __typename: "Livestream",
   id: string,
-  url: string,
-  isLive?: boolean | null,
+  url?: string | null,
+  isLive: boolean,
   createdAt: string,
   updatedAt: string,
   media?: Media | null,
@@ -763,7 +763,7 @@ export type CreateVideoOnDemandMutation = {
   createVideoOnDemand?:  {
     __typename: "VideoOnDemand",
     id: string,
-    src: string,
+    src?: string | null,
     createdAt: string,
     updatedAt: string,
     media?:  {
@@ -799,7 +799,7 @@ export type UpdateVideoOnDemandMutation = {
   updateVideoOnDemand?:  {
     __typename: "VideoOnDemand",
     id: string,
-    src: string,
+    src?: string | null,
     createdAt: string,
     updatedAt: string,
     media?:  {
@@ -835,7 +835,7 @@ export type DeleteVideoOnDemandMutation = {
   deleteVideoOnDemand?:  {
     __typename: "VideoOnDemand",
     id: string,
-    src: string,
+    src?: string | null,
     createdAt: string,
     updatedAt: string,
     media?:  {
@@ -871,8 +871,8 @@ export type CreateLivestreamMutation = {
   createLivestream?:  {
     __typename: "Livestream",
     id: string,
-    url: string,
-    isLive?: boolean | null,
+    url?: string | null,
+    isLive: boolean,
     createdAt: string,
     updatedAt: string,
     media?:  {
@@ -908,8 +908,8 @@ export type UpdateLivestreamMutation = {
   updateLivestream?:  {
     __typename: "Livestream",
     id: string,
-    url: string,
-    isLive?: boolean | null,
+    url?: string | null,
+    isLive: boolean,
     createdAt: string,
     updatedAt: string,
     media?:  {
@@ -945,8 +945,8 @@ export type DeleteLivestreamMutation = {
   deleteLivestream?:  {
     __typename: "Livestream",
     id: string,
-    url: string,
-    isLive?: boolean | null,
+    url?: string | null,
+    isLive: boolean,
     createdAt: string,
     updatedAt: string,
     media?:  {
@@ -1220,7 +1220,7 @@ export type GetVideoOnDemandQuery = {
   getVideoOnDemand?:  {
     __typename: "VideoOnDemand",
     id: string,
-    src: string,
+    src?: string | null,
     createdAt: string,
     updatedAt: string,
     media?:  {
@@ -1259,7 +1259,7 @@ export type ListVideoOnDemandsQuery = {
     items?:  Array< {
       __typename: "VideoOnDemand",
       id: string,
-      src: string,
+      src?: string | null,
       createdAt: string,
       updatedAt: string,
       media?:  {
@@ -1285,8 +1285,8 @@ export type GetLivestreamQuery = {
   getLivestream?:  {
     __typename: "Livestream",
     id: string,
-    url: string,
-    isLive?: boolean | null,
+    url?: string | null,
+    isLive: boolean,
     createdAt: string,
     updatedAt: string,
     media?:  {
@@ -1325,8 +1325,8 @@ export type ListLivestreamsQuery = {
     items?:  Array< {
       __typename: "Livestream",
       id: string,
-      url: string,
-      isLive?: boolean | null,
+      url?: string | null,
+      isLive: boolean,
       createdAt: string,
       updatedAt: string,
       media?:  {
@@ -1669,7 +1669,7 @@ export type OnCreateVideoOnDemandSubscription = {
   onCreateVideoOnDemand?:  {
     __typename: "VideoOnDemand",
     id: string,
-    src: string,
+    src?: string | null,
     createdAt: string,
     updatedAt: string,
     media?:  {
@@ -1700,7 +1700,7 @@ export type OnUpdateVideoOnDemandSubscription = {
   onUpdateVideoOnDemand?:  {
     __typename: "VideoOnDemand",
     id: string,
-    src: string,
+    src?: string | null,
     createdAt: string,
     updatedAt: string,
     media?:  {
@@ -1731,7 +1731,7 @@ export type OnDeleteVideoOnDemandSubscription = {
   onDeleteVideoOnDemand?:  {
     __typename: "VideoOnDemand",
     id: string,
-    src: string,
+    src?: string | null,
     createdAt: string,
     updatedAt: string,
     media?:  {
@@ -1762,8 +1762,8 @@ export type OnCreateLivestreamSubscription = {
   onCreateLivestream?:  {
     __typename: "Livestream",
     id: string,
-    url: string,
-    isLive?: boolean | null,
+    url?: string | null,
+    isLive: boolean,
     createdAt: string,
     updatedAt: string,
     media?:  {
@@ -1794,8 +1794,8 @@ export type OnUpdateLivestreamSubscription = {
   onUpdateLivestream?:  {
     __typename: "Livestream",
     id: string,
-    url: string,
-    isLive?: boolean | null,
+    url?: string | null,
+    isLive: boolean,
     createdAt: string,
     updatedAt: string,
     media?:  {
@@ -1826,8 +1826,8 @@ export type OnDeleteLivestreamSubscription = {
   onDeleteLivestream?:  {
     __typename: "Livestream",
     id: string,
-    url: string,
-    isLive?: boolean | null,
+    url?: string | null,
+    isLive: boolean,
     createdAt: string,
     updatedAt: string,
     media?:  {

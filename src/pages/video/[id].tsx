@@ -12,10 +12,10 @@ import {
     SectionContainer,
     HighlightedSection,
 } from '../../shared/components'
-import { VideoObject, VideoOnDemand, Section, Thumbnail } from '../../models'
+import { VideoOnDemand, Section, Thumbnail } from '../../models'
 
 type VideoPlayerProps = {
-    video: VideoObject | undefined
+    video: VideoOnDemand | undefined
 }
 
 const VideoPlayer = ({ video }: VideoPlayerProps) => {
@@ -79,7 +79,7 @@ const VideoCard = ({ asset }: VideoCardProps) => {
     return (
         <Card>
             {asset.src === null ? (
-                <VideoPlayer video={asset.video} />
+                <VideoPlayer video={asset} />
             ) : (
                 <IframeVideoPlayer asset={asset} />
             )}
@@ -169,7 +169,6 @@ const VideoPage = (props: PageProps) => {
             try {
                 const { data } = await fetchSections()
                 setSections(data?.listSections?.items as Array<Section>)
-                console.log('fetchSections: ', data)
             } catch (error) {
                 console.error('videos.tsx(fetchSections)', error)
             }

@@ -33,7 +33,7 @@ const SectionContainer = ({ section, vodAssets, thumbnails }: SectionProps) => {
             ? slidesNumber
             : filteredAssets.length
     const sliderSettings = {
-        infinite: true,
+        infinite: false,
         draggable: true,
         swipe: true,
         swipeToSlide: true,
