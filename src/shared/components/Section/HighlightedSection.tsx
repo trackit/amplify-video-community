@@ -20,7 +20,7 @@ const StyledHighlightedContainer = styled.div`
     gap: 15px;
 `
 
-const StyledTitle = styled.h1``
+const StyledTitle = styled.h2``
 
 const StyledContentContainer = styled.div`
     flex: 1 0;

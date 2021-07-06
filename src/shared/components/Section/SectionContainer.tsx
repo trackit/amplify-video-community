@@ -14,7 +14,7 @@ type SectionProps = {
     }>
 }
 
-const StyledTitle = styled.h1``
+const StyledTitle = styled.h2``
 
 const Slide = styled.div`
     margin: 0 auto;
