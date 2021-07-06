@@ -24,6 +24,7 @@ const Image = styled.img`
     cursor: pointer;
     width: 100%;
     transform: scale(0.85);
+    box-shadow: black 0px 0px 10px;
 `
 
 const VideoCard = ({ vod, thumbnail }: VideoCardProps) => {

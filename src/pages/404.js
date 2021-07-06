@@ -8,7 +8,6 @@ const NotFoundContent = styled.div`
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    background-color: rgb(242, 242, 242);
 `
 
 const Title = styled.h2`

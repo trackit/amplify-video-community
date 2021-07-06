@@ -13,9 +13,17 @@ const Header = styled.header`
     align-items: center;
     padding: 5px 10px;
     background-color: ${(props) => props.theme.palette.primary.main};
-    box-shadow: 0px 3px 2px #c0c0c0;
+    box-shadow: 0px 3px 3px #dedede;
     justify-content: space-between;
     height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+`
+
+const LogoLink = styled.a`
+    margin-left: 50px;
 `
 
 const Link = styled(GatsbyLink)`
@@ -43,6 +51,7 @@ const ExternalLink = styled.a`
 const Container = styled.ul`
     list-style: none;
     display: flex;
+    margin-right: 50px;
 `
 
 const Item = styled.li`
@@ -77,13 +86,13 @@ const NavBar = () => {
 
     return (
         <Header>
-            <a href="/videos">
+            <LogoLink href="/videos">
                 <StaticImage
                     imgStyle={{ objectFit: 'contain', width: '150px' }}
                     alt="amplify"
                     src="../../../images/amplify.png"
                 />
-            </a>
+            </LogoLink>
             <Container>
                 <Toggle to="/videos" content={<>Videos</>} />
                 <Toggle to="/live" content={<>Live</>} />

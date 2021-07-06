@@ -84,6 +84,11 @@ const Body = styled.body`
     min-height: 100vh;
 `
 
+const SubBody = styled.body`
+    margin-left: 50px;
+    margin-right: 50px;
+`
+
 type LayoutProps = {
     children: React.ReactNode
     seo?: SEOProps
@@ -99,9 +104,9 @@ const Layout = ({ children, seo }: LayoutProps) => {
                 article={seo?.article}
             />
             <ThemeProvider theme={theme}>
+                <NavBar />
                 <Body>
-                    <NavBar />
-                    {children}
+                    <SubBody>{children}</SubBody>
                 </Body>
             </ThemeProvider>
         </div>
