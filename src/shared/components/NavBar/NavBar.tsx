@@ -3,6 +3,7 @@ import { AiOutlineSearch, AiOutlineSetting } from 'react-icons/ai'
 import styled from 'styled-components'
 import { Auth } from 'aws-amplify'
 import { Link as GatsbyLink } from 'gatsby'
+import { StaticImage } from 'gatsby-plugin-image'
 
 const Header = styled.header`
     box-sizing: border-box;
@@ -12,10 +13,8 @@ const Header = styled.header`
     align-items: center;
     padding: 5px 10px;
     background-color: ${(props) => props.theme.palette.primary.main};
-`
-
-const Title = styled.h2`
-    margin-right: auto;
+    box-shadow: 0px 3px 2px #c0c0c0;
+    justify-content: space-between;
 `
 
 const Link = styled(GatsbyLink)`
@@ -40,12 +39,6 @@ const ExternalLink = styled.a`
     }
 `
 
-const TitleLink = styled(GatsbyLink)`
-    margin-right: auto;
-    text-decoration: none;
-    color: ${(props) => props.theme.palette.primary.contrastText};
-`
-
 const Container = styled.ul`
     list-style: none;
     display: flex;
@@ -53,6 +46,7 @@ const Container = styled.ul`
 
 const Item = styled.li`
     padding: 0 20px;
+    white-space: nowrap;
 `
 
 type ToggleProps = {
@@ -82,9 +76,13 @@ const NavBar = () => {
 
     return (
         <Header>
-            <Title>
-                <TitleLink to="/videos">Amplify Video</TitleLink>
-            </Title>
+            <a href="/videos">
+                <StaticImage
+                    imgStyle={{ objectFit: 'contain', width: '150px' }}
+                    alt="amplify"
+                    src="../../../images/amplify.png"
+                />
+            </a>
             <Container>
                 <Toggle to="/videos" content={<>Videos</>} />
                 <Toggle to="/live" content={<>Live</>} />

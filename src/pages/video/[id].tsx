@@ -194,6 +194,7 @@ const VideoPage = (props: PageProps) => {
                     />
                 ) : (
                     <StyledSection>
+                        <h1>Linked Contents</h1>
                         {sections &&
                             sections.map((section: Section) => {
                                 return section.label === 'Highlighted' ? (
