@@ -15,6 +15,7 @@ const Header = styled.header`
     background-color: ${(props) => props.theme.palette.primary.main};
     box-shadow: 0px 3px 2px #c0c0c0;
     justify-content: space-between;
+    height: 64px;
 `
 
 const Link = styled(GatsbyLink)`
@@ -78,7 +79,6 @@ const NavBar = () => {
         <Header>
             <a href="/videos">
                 <StaticImage
-                    style={{ height: '50px' }}
                     imgStyle={{ objectFit: 'contain', width: '150px' }}
                     alt="amplify"
                     src="../../../images/amplify.png"
