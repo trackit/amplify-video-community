@@ -5,6 +5,7 @@ const defaultTheme: DefaultTheme = {
         primary: {
             main: 'var(--amplify-primary-color)',
             contrastText: 'var(--amplify-primary-contrast)',
+            background: '#f2f3f3',
         },
         textMd: 'var(--amplify-text-md)',
     },

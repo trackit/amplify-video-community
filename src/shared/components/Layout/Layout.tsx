@@ -1,7 +1,7 @@
 import React from 'react'
 import { useLocation } from '@reach/router'
 import Amplify from 'aws-amplify'
-import { ThemeProvider } from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
 import { Helmet } from 'react-helmet'
 import { graphql, useStaticQuery } from 'gatsby'
 
@@ -79,6 +79,11 @@ const query = graphql`
     }
 `
 
+const Body = styled.body`
+    background-color: ${(props) => props.theme.palette.primary.background};
+    min-height: 100vh;
+`
+
 type LayoutProps = {
     children: React.ReactNode
     seo?: SEOProps
@@ -94,8 +99,10 @@ const Layout = ({ children, seo }: LayoutProps) => {
                 article={seo?.article}
             />
             <ThemeProvider theme={theme}>
-                <NavBar />
-                {children}
+                <Body>
+                    <NavBar />
+                    {children}
+                </Body>
             </ThemeProvider>
         </div>
     )

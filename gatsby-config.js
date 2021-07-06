@@ -12,14 +12,24 @@ module.exports = {
         {
             resolve: 'gatsby-source-filesystem',
             options: {
-                name: 'markdown',
+                name: 'content',
                 path: `${__dirname}/content/`,
             },
         },
+        {
+            resolve: 'gatsby-plugin-react-svg',
+            options: {
+                rule: {
+                    include: /assets/,
+                },
+            },
+        },
+        'gatsby-plugin-image',
         'gatsby-plugin-react-helmet',
         'gatsby-plugin-sharp',
         'gatsby-plugin-styled-components',
         'gatsby-plugin-react-helmet',
+        `gatsby-transformer-sharp`,
         {
             resolve: 'gatsby-transformer-remark',
             options: {
@@ -30,6 +40,7 @@ module.exports = {
                         options: {
                             maxWidth: 750,
                             linkImagesToOriginal: false,
+                            backgroundColor: 'transparent',
                         },
                     },
                 ],
