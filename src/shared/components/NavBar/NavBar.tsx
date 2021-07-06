@@ -78,6 +78,7 @@ const NavBar = () => {
         <Header>
             <a href="/videos">
                 <StaticImage
+                    style={{ height: '50px' }}
                     imgStyle={{ objectFit: 'contain', width: '150px' }}
                     alt="amplify"
                     src="../../../images/amplify.png"
