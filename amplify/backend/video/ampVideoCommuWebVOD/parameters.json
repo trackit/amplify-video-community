@@ -4,13 +4,13 @@
     },
     "GraphQLAPIId": {
         "Fn::GetAtt": [
-            "apiamplifyVideoCommuAPI",
+            "apiampVideoCommuWebAPI",
             "Outputs.GraphQLAPIIdOutput"
         ]
     },
     "GraphQLEndpoint": {
         "Fn::GetAtt": [
-            "apiamplifyVideoCommuAPI",
+            "apiampVideoCommuWebAPI",
             "Outputs.GraphQLAPIEndpointOutput"
         ]
     }

@@ -1,6 +1,6 @@
 {
     "shared": {
-        "resourceName": "amplifyVideoCommuVOD"
+        "resourceName": "ampVideoCommuWebVOD"
     },
     "template": {
         "type": [
@@ -21,13 +21,13 @@
         },
         "GraphQLAPIId": {
             "Fn::GetAtt": [
-                "apiamplifyVideoCommuAPI",
+                "apiampVideoCommuWebAPI",
                 "Outputs.GraphQLAPIIdOutput"
             ]
         },
         "GraphQLEndpoint": {
             "Fn::GetAtt": [
-                "apiamplifyVideoCommuAPI",
+                "apiampVideoCommuWebAPI",
                 "Outputs.GraphQLAPIEndpointOutput"
             ]
         }
@@ -39,6 +39,6 @@
     },
     "cms": {
         "overrideSchema": true,
-        "editAPI": true
+        "editAPI": false
     }
 }

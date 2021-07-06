@@ -24,7 +24,7 @@ const VideoPlayer = ({ video }: VideoPlayerProps) => {
         controls: true,
         sources: [
             {
-                src: `https://${awsvideoconfig.awsOutputVideo}/${video?.id}/${video?.id}.m3u8`,
+                src: `https://${awsvideoconfig.awsOutputVideo}/public/${video?.id}/${video?.id}.m3u8`,
                 type: 'application/x-mpegURL',
             },
         ],
@@ -100,8 +100,9 @@ const VideoPage = (props: PageProps) => {
     const [loaded, setLoaded] = useState<boolean>(false)
     const [vodAssets, setVodAssets] = useState<Array<VideoOnDemand>>([])
     const [sections, setSections] = useState<Array<Section>>([])
-    const [nextTokenVodFiles, setNextTokenVodFiles] =
-        useState<string | null>(null)
+    const [nextTokenVodFiles, setNextTokenVodFiles] = useState<string | null>(
+        null
+    )
     const [loadingVodFiles, setLoadingVodFiles] = useState<boolean>(false)
     const [loadingSections, setLoadingSections] = useState<boolean>(false)
     const [thumbnails, setThumbnails] = useState<

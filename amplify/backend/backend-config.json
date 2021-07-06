@@ -1,6 +1,6 @@
 {
   "auth": {
-    "amplifyvideocommuf4da7910": {
+    "ampvideocommuweb4bb49c01": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -12,7 +12,7 @@
       "dependsOn": [
         {
           "category": "auth",
-          "resourceName": "amplifyvideocommuf4da7910",
+          "resourceName": "ampvideocommuweb4bb49c01",
           "attributes": [
             "UserPoolId",
             "AppClientIDWeb",
@@ -24,7 +24,7 @@
     }
   },
   "api": {
-    "amplifyVideoCommuAPI": {
+    "ampVideoCommuWebAPI": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {
@@ -32,7 +32,7 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authamplifyvideocommuf4da7910"
+              "userPoolId": "authampvideocommuweb4bb49c01"
             }
           },
           "additionalAuthenticationProviders": [
@@ -45,20 +45,20 @@
     }
   },
   "video": {
-    "amplifyVideoCommuVOD": {
+    "ampVideoCommuWebVOD": {
       "service": "video",
       "serviceType": "video-on-demand",
       "providerPlugin": "awscloudformation"
     }
   },
   "storage": {
-    "amplifyVideoCommuAssets": {
+    "ampVideoCommuWebAssets": {
       "service": "S3",
       "providerPlugin": "awscloudformation",
       "dependsOn": [
         {
           "category": "auth",
-          "resourceName": "amplifyvideocommuf4da7910",
+          "resourceName": "ampvideocommuweb4bb49c01",
           "attributes": [
             "UserPoolId"
           ]
