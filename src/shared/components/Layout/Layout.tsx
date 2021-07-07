@@ -79,14 +79,10 @@ const query = graphql`
     }
 `
 
-const Body = styled.body`
+const SubBody = styled.div`
     background-color: ${(props) => props.theme.palette.primary.background};
-    min-height: 100vh;
-`
-
-const SubBody = styled.body`
-    margin-left: 50px;
-    margin-right: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
 `
 
 type LayoutProps = {
@@ -96,20 +92,16 @@ type LayoutProps = {
 
 const Layout = ({ children, seo }: LayoutProps) => {
     return (
-        <div>
+        <ThemeProvider theme={theme}>
             <SEO
                 title={seo?.title}
                 description={seo?.description}
                 image={seo?.image}
                 article={seo?.article}
             />
-            <ThemeProvider theme={theme}>
-                <NavBar />
-                <Body>
-                    <SubBody>{children}</SubBody>
-                </Body>
-            </ThemeProvider>
-        </div>
+            <NavBar />
+            <SubBody>{children}</SubBody>
+        </ThemeProvider>
     )
 }
 
