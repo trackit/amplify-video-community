@@ -22,6 +22,7 @@ const Slide = styled.div`
 
 const StyledSection = styled.div`
     margin: 0 15px;
+    border-bottom: 3px solid black;
 `
 
 const SectionContainer = ({ section, vodAssets, thumbnails }: SectionProps) => {
