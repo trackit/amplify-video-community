@@ -22,7 +22,7 @@ const Slide = styled.div`
 
 const StyledSection = styled.div`
     margin: 0 15px;
-    border-bottom: 1px solid #dedede;
+    border-bottom: 1px solid ${(props) => props.theme.palette.primary.ternary};
 
     &:last-child {
         border-bottom: none;

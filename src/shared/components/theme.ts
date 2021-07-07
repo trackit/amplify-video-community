@@ -6,6 +6,8 @@ const defaultTheme: DefaultTheme = {
             main: 'var(--amplify-primary-color)',
             contrastText: 'var(--amplify-primary-contrast)',
             background: '#f2f3f3',
+            ternary: '#dedede',
+            darkblue: '#050029',
         },
         textMd: 'var(--amplify-text-md)',
     },
