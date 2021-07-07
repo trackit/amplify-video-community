@@ -13,7 +13,7 @@ const Header = styled.header`
     align-items: center;
     padding: 5px 10px;
     background-color: ${(props) => props.theme.palette.primary.main};
-    box-shadow: 0px 3px 3px #dedede;
+    box-shadow: 0px 3px 3px ${(props) => props.theme.palette.primary.ternary};
     justify-content: space-between;
     height: 64px;
     position: sticky;
@@ -44,7 +44,6 @@ const ExternalLink = styled.a`
 
     &:hover {
         font-weight: bold;
-        font-size: ${(props) => props.theme.palette.textMd};
     }
 `
 

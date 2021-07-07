@@ -32,6 +32,7 @@ const StyledSearchInput = styled.input`
     padding: 0px 5px;
     border-radius: 50px;
     font-size: 18px;
+    background: none;
 
     &:focus {
         outline: none;
@@ -108,8 +109,10 @@ const SearchPage = () => {
     const [searchValue, setSearchValue] = useState<string>('')
 
     const filterAssets = (elem: VideoOnDemand) =>
-        elem.media?.title.includes(searchValue) ||
-        elem.media?.description.includes(searchValue)
+        elem.media?.title.toLowerCase().includes(searchValue.toLowerCase()) ||
+        elem.media?.description
+            .toLowerCase()
+            .includes(searchValue.toLowerCase())
 
     useEffect(() => {
         ;(async () => {
