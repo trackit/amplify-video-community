@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "amplifyvideocommuf4da7910_identitypool_f4da7910",
+    "identityPoolName": "ampvideocommuweb4bb49c01_identitypool_4bb49c01",
     "allowUnauthenticatedIdentities": true,
-    "resourceNameTruncated": "ampliff4da7910",
-    "userPoolName": "amplifyvideocommuf4da7910_userpool_f4da7910",
+    "resourceNameTruncated": "ampvid4bb49c01",
+    "userPoolName": "ampvideocommuweb4bb49c01_userpool_4bb49c01",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -28,10 +28,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "ampliff4da7910_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "ampvid4bb49c01_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "f4da7910",
-    "resourceName": "amplifyvideocommuf4da7910",
+    "sharedId": "4bb49c01",
+    "resourceName": "ampvideocommuweb4bb49c01",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [

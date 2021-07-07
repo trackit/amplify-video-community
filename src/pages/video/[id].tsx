@@ -24,7 +24,7 @@ const VideoPlayer = ({ video }: VideoPlayerProps) => {
         controls: true,
         sources: [
             {
-                src: `https://${awsvideoconfig.awsOutputVideo}/${video?.id}/${video?.id}.m3u8`,
+                src: `https://${awsvideoconfig.awsOutputVideo}/public/${video?.id}/${video?.id}.m3u8`,
                 type: 'application/x-mpegURL',
             },
         ],
