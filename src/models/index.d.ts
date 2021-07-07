@@ -54,7 +54,7 @@ export declare class Thumbnail {
 export declare class VideoOnDemand {
   readonly id: string;
   readonly media?: Media;
-  readonly src: string;
+  readonly src?: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<VideoOnDemand>);
@@ -64,8 +64,8 @@ export declare class VideoOnDemand {
 export declare class Livestream {
   readonly id: string;
   readonly media?: Media;
-  readonly url: string;
-  readonly isLive?: boolean;
+  readonly url?: string;
+  readonly isLive: boolean;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<Livestream>);

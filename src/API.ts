@@ -1009,14 +1009,14 @@ export type GetMediaQuery = {
   } | null,
 };
 
-export type ListMediasQueryVariables = {
+export type ListMediaQueryVariables = {
   filter?: ModelMediaFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListMediasQuery = {
-  listMedias?:  {
+export type ListMediaQuery = {
+  listMedia?:  {
     __typename: "ModelMediaConnection",
     items?:  Array< {
       __typename: "Media",
@@ -1174,14 +1174,14 @@ export type GetMediasSectionsQuery = {
   } | null,
 };
 
-export type ListMediasSectionssQueryVariables = {
+export type ListMediasSectionsQueryVariables = {
   filter?: ModelMediasSectionsFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListMediasSectionssQuery = {
-  listMediasSectionss?:  {
+export type ListMediasSectionsQuery = {
+  listMediasSections?:  {
     __typename: "ModelMediasSectionsConnection",
     items?:  Array< {
       __typename: "MediasSections",

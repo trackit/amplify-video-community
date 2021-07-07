@@ -31,13 +31,13 @@ export const getMedia = /* GraphQL */ `
     }
   }
 `;
-export const listMedias = /* GraphQL */ `
-  query ListMedias(
+export const listMedia = /* GraphQL */ `
+  query ListMedia(
     $filter: ModelMediaFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listMedias(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listMedia(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         title
@@ -165,13 +165,13 @@ export const getMediasSections = /* GraphQL */ `
     }
   }
 `;
-export const listMediasSectionss = /* GraphQL */ `
-  query ListMediasSectionss(
+export const listMediasSections = /* GraphQL */ `
+  query ListMediasSections(
     $filter: ModelMediasSectionsFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listMediasSectionss(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listMediasSections(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         sectionID

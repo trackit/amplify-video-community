@@ -22,7 +22,11 @@ const Slide = styled.div`
 
 const StyledSection = styled.div`
     margin: 0 15px;
-    border-bottom: 3px solid black;
+    border-bottom: 1px solid #dedede;
+
+    &:last-child {
+        border-bottom: none;
+    }
 `
 
 const SectionContainer = ({ section, vodAssets, thumbnails }: SectionProps) => {

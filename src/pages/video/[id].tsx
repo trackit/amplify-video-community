@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import Loader from 'react-loader-spinner'
 import { PageProps } from 'gatsby'
 
 import awsvideoconfig from '../../aws-video-exports'
@@ -11,6 +10,7 @@ import {
     Layout,
     SectionContainer,
     HighlightedSection,
+    BasicLoader,
 } from '../../shared/components'
 import { VideoOnDemand, Section, Thumbnail } from '../../models'
 
@@ -24,7 +24,7 @@ const VideoPlayer = ({ video }: VideoPlayerProps) => {
         controls: true,
         sources: [
             {
-                src: `https://${awsvideoconfig.awsOutputVideo}/${video?.id}/${video?.id}.m3u8`,
+                src: `https://${awsvideoconfig.awsOutputVideo}/public/${video?.id}/${video?.id}.m3u8`,
                 type: 'application/x-mpegURL',
             },
         ],
@@ -180,18 +180,12 @@ const VideoPage = (props: PageProps) => {
         <Layout>
             <>
                 {asset === null ? (
-                    <p>{!loaded ? 'Loading ...' : 'Video Not Found'}</p>
+                    <p>{loaded && 'Video Not Found'}</p>
                 ) : (
                     <VideoCard asset={asset} />
                 )}
                 {loadingVodFiles || loadingSections ? (
-                    <Loader
-                        type="Bars"
-                        color="#FFA41C"
-                        height={100}
-                        width={100}
-                        timeout={3000}
-                    />
+                    <BasicLoader />
                 ) : (
                     <StyledSection>
                         <h1>Linked Contents</h1>

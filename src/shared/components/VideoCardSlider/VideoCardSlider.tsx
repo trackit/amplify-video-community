@@ -17,6 +17,11 @@ type VideoCardSliderProps = {
 const StyledVideoCardSlider = styled.div`
     margin: 4vh;
     margin-bottom: 0;
+    border-bottom: 1px solid #dedede;
+
+    &:last-child {
+        border-bottom: none;
+    }
 `
 
 const Slide = styled.div`

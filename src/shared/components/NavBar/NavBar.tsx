@@ -29,22 +29,18 @@ const LogoLink = styled.a`
 const Link = styled(GatsbyLink)`
     color: ${(props) => props.theme.palette.primary.contrastText};
     text-decoration: none;
-    transition: all 0.3s ease 0s;
 
     &:hover {
-        font-weight: bold;
-        font-size: ${(props) => props.theme.palette.textMd};
+        cursor: pointer;
     }
 `
 
 const ExternalLink = styled.a`
     color: ${(props) => props.theme.palette.primary.contrastText};
     text-decoration: none;
-    transition: all 0.3s ease 0s;
 
     &:hover {
-        font-weight: bold;
-        font-size: ${(props) => props.theme.palette.textMd};
+        cursor: pointer;
     }
 `
 

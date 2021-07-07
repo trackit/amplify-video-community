@@ -490,7 +490,7 @@ export const schema = {
                     "name": "src",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "createdAt": {
@@ -593,14 +593,14 @@ export const schema = {
                     "name": "url",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "isLive": {
                     "name": "isLive",
                     "isArray": false,
                     "type": "Boolean",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "createdAt": {
@@ -688,5 +688,5 @@ export const schema = {
         }
     },
     "nonModels": {},
-    "version": "9ff447027f229bc9764691196a865519"
+    "version": "98d6a8683f731119bb5b80dc678aeab6"
 };
