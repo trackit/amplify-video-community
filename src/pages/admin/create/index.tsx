@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
+import { navigate } from 'gatsby'
 
 import { AdminLayout } from '../../../shared/components'
-import { navigate } from 'gatsby'
 
 const SourceSelectionStyled = styled.div`
     display: flex;

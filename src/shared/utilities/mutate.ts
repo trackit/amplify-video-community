@@ -1,4 +1,6 @@
 import { API, graphqlOperation } from 'aws-amplify'
+import { Storage } from 'aws-amplify'
+import { GraphQLResult } from '@aws-amplify/api-graphql'
 import { v4 as uuidv4 } from 'uuid'
 
 import { createSection } from '../../graphql/mutations'
@@ -6,8 +8,6 @@ import { uploadSourceSelf, uploadSourceYoutube } from './vod-mutate'
 import { uploadSourceTwitch } from './live-mutate'
 import * as APIt from '../../API'
 import { Media } from '../../models'
-import { Storage } from 'aws-amplify'
-import { GraphQLResult } from '@aws-amplify/api-graphql'
 
 import {
     createThumbnail,
