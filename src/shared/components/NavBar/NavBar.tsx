@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { AiOutlineSearch, AiOutlineSetting } from 'react-icons/ai'
-import styled from 'styled-components'
+import styled, { DefaultTheme } from 'styled-components'
 import { Auth } from 'aws-amplify'
 import { Link as GatsbyLink } from 'gatsby'
 import { StaticImage } from 'gatsby-plugin-image'
@@ -12,8 +12,8 @@ const Header = styled.header`
     justify-content: flex-end;
     align-items: center;
     padding: 5px 10px;
-    background-color: ${(props) => props.theme.palette.primary.main};
-    box-shadow: 0px 3px 3px ${(props) => props.theme.palette.primary.ternary};
+    background-color: ${(props) => props.theme.palette.navbar.main};
+    box-shadow: ${(props) => props.theme.palette.navbar.boxShadow};
     justify-content: space-between;
     height: 64px;
     position: sticky;
@@ -24,10 +24,12 @@ const Header = styled.header`
 
 const LogoLink = styled.a`
     margin-left: 50px;
+    height: 50px;
+    width: 150px;
 `
 
 const Link = styled(GatsbyLink)`
-    color: ${(props) => props.theme.palette.primary.contrastText};
+    color: ${(props) => props.theme.palette.navbar.contrastText};
     text-decoration: none;
 
     &:hover {
@@ -36,7 +38,7 @@ const Link = styled(GatsbyLink)`
 `
 
 const ExternalLink = styled.a`
-    color: ${(props) => props.theme.palette.primary.contrastText};
+    color: ${(props) => props.theme.palette.navbar.contrastText};
     text-decoration: none;
 
     &:hover {
@@ -68,7 +70,11 @@ const Toggle = ({ to, content }: ToggleProps) => {
     )
 }
 
-const NavBar = () => {
+type NavBarProps = {
+    theme: DefaultTheme
+}
+
+const NavBar = ({ theme }: NavBarProps) => {
     const [groups, setGroups] = useState<Array<string>>([])
 
     useEffect(() => {
@@ -81,9 +87,10 @@ const NavBar = () => {
     }, [])
 
     return (
-        <Header>
-            <LogoLink href="/videos">
+        <Header theme={theme}>
+            <LogoLink href="/">
                 <StaticImage
+                    style={{ height: '50px' }}
                     imgStyle={{ objectFit: 'contain', width: '150px' }}
                     alt="amplify"
                     src="../../../images/amplify.png"

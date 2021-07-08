@@ -9,6 +9,11 @@ const defaultTheme: DefaultTheme = {
             ternary: '#dedede',
             darkblue: '#050029',
         },
+        navbar: {
+            main: 'var(--amplify-primary-color)',
+            boxShadow: '0px 3px 3px #dedede',
+            contrastText: 'var(--amplify-primary-contrast)',
+        },
         textMd: 'var(--amplify-text-md)',
     },
 }

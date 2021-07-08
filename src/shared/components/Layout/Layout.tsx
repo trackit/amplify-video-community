@@ -1,7 +1,7 @@
 import React from 'react'
 import { useLocation } from '@reach/router'
 import Amplify from 'aws-amplify'
-import styled, { ThemeProvider } from 'styled-components'
+import styled, { DefaultTheme, ThemeProvider } from 'styled-components'
 import { Helmet } from 'react-helmet'
 import { graphql, useStaticQuery } from 'gatsby'
 
@@ -88,9 +88,10 @@ const SubBody = styled.div`
 type LayoutProps = {
     children: React.ReactNode
     seo?: SEOProps
+    navBarTheme?: DefaultTheme
 }
 
-const Layout = ({ children, seo }: LayoutProps) => {
+const Layout = ({ children, seo, navBarTheme }: LayoutProps) => {
     return (
         <ThemeProvider theme={theme}>
             <SEO
@@ -99,7 +100,7 @@ const Layout = ({ children, seo }: LayoutProps) => {
                 image={seo?.image}
                 article={seo?.article}
             />
-            <NavBar />
+            <NavBar theme={navBarTheme || theme} />
             <SubBody>{children}</SubBody>
         </ThemeProvider>
     )
