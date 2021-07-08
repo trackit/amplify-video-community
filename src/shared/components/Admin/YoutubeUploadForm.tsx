@@ -1,36 +1,12 @@
 import React, { useEffect, useState } from 'react'
 
-import { fetchSections, uploadVideo } from '../../../shared/utilities'
-import { AdminLayout } from '../../../shared/components'
+import { fetchSections, uploadContent } from '../../../shared/utilities'
 import { Section } from '../../../models'
+import { Media } from '../../../models'
+import * as APIt from '../../../API'
 
-type DropZoneProps = {
-    setVodFile: React.Dispatch<React.SetStateAction<File | null>>
-}
-
-const DropZone = ({ setVodFile }: DropZoneProps) => {
-    return (
-        <div id="drop-area">
-            <p>Drop a file or</p>
-            <input
-                type="file"
-                accept="video/*"
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                    if (event.target.files === null) {
-                        return
-                    }
-                    setVodFile(event.target.files[0])
-                }}
-            />
-        </div>
-    )
-}
-
-type VideoAddFormProps = {
-    vodFile: File | null
-}
-
-const VideoAddForm = ({ vodFile }: VideoAddFormProps) => {
+const YoutubeUploadForm = () => {
+    const [youtubeSource, setYoutubeSource] = useState<string>('')
     const [title, setTitle] = useState<string>('')
     const [description, setDescription] = useState<string>('')
     const [thumbnailFile, setThumbnailFile] = useState<File | null>(null)
@@ -44,30 +20,50 @@ const VideoAddForm = ({ vodFile }: VideoAddFormProps) => {
                 const { data } = await fetchSections()
                 setExistingSections(data?.listSections?.items as Array<Section>)
             } catch (error) {
-                console.error('video/add.tsx(fetchSections):', error)
+                console.error(
+                    'admin/YoutubeUploadForm.tsx(fetchSections):',
+                    error
+                )
             }
         })()
     }, [setExistingSections])
 
+    const parseYoutubeSource = (input: string) => {
+        const url = new URL(input)
+        const urlParams = new URLSearchParams(url.search)
+        return urlParams.get('v')
+    }
+
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault()
+        const youtubeID = parseYoutubeSource(youtubeSource)
+        if (youtubeID === '' || thumbnailFile === null) {
+            return
+        }
         ;(async () => {
-            if (vodFile === null || thumbnailFile === null) {
-                return
-            }
             try {
-                await uploadVideo(
+                const media: Media = {
+                    id: '',
                     title,
                     description,
-                    vodFile,
-                    thumbnailFile,
                     highlighted,
+                }
+                await uploadContent(
+                    media,
+                    APIt.Source.YOUTUBE,
                     selectedSections.map((sec) => {
                         return sec && sec.id
-                    })
+                    }),
+                    thumbnailFile,
+                    null,
+                    `https://youtube.com/embed/${youtubeID}`,
+                    ''
                 )
             } catch (error) {
-                console.error('video/add.tsx(uploadVideo):', error)
+                console.error(
+                    'admin/YoutubeUploadForm.tsx(uploadVideo):',
+                    error
+                )
             }
         })()
     }
@@ -94,15 +90,28 @@ const VideoAddForm = ({ vodFile }: VideoAddFormProps) => {
                 </div>
                 <div style={{ margin: '15px' }}>
                     <label htmlFor="_add_vod_description">Description</label>
-                    <input
+                    <textarea
                         id="_add_vod_description"
-                        type="text"
                         placeholder="Description"
                         value={description}
                         onChange={(
-                            event: React.ChangeEvent<HTMLInputElement>
+                            event: React.ChangeEvent<HTMLTextAreaElement>
                         ) => {
                             setDescription(event.target.value)
+                        }}
+                    />
+                </div>
+                <div style={{ margin: '15px' }}>
+                    <label htmlFor="_add_vod_youtube_source">Youtube URL</label>
+                    <input
+                        id="_add_vod_youtube_source"
+                        type="text"
+                        placeholder="http://youtube.com/..."
+                        value={youtubeSource}
+                        onChange={(
+                            event: React.ChangeEvent<HTMLInputElement>
+                        ) => {
+                            setYoutubeSource(event.target.value)
                         }}
                     />
                 </div>
@@ -196,23 +205,11 @@ const VideoAddForm = ({ vodFile }: VideoAddFormProps) => {
                     </select>
                 </div>
                 <div style={{ margin: '15px' }}>
-                    <input type="submit" value="Upload video" />
+                    <input type="submit" value="Upload Content" />
                 </div>
             </form>
         </div>
     )
 }
 
-const DashboardVideoAdd = () => {
-    const [vodFile, setVodFile] = useState<File | null>(null)
-
-    return (
-        <AdminLayout>
-            <h1>Video Add</h1>
-            {!vodFile && <DropZone setVodFile={setVodFile} />}
-            {vodFile && <VideoAddForm vodFile={vodFile} />}
-        </AdminLayout>
-    )
-}
-
-export default DashboardVideoAdd
+export { YoutubeUploadForm }
