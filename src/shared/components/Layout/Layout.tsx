@@ -1,6 +1,6 @@
 import React from 'react'
 import Amplify from 'aws-amplify'
-import { ThemeProvider } from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
 
 import { NavBar } from '../'
 import theme from '../theme'
@@ -12,11 +12,15 @@ type LayoutProps = {
     children: React.ReactNode
 }
 
+const Container = styled.div`
+    height: 100%;
+`
+
 const Layout = ({ children }: LayoutProps) => {
     return (
         <ThemeProvider theme={theme}>
             <NavBar />
-            {children}
+            <Container>{children}</Container>
         </ThemeProvider>
     )
 }

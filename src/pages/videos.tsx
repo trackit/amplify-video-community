@@ -54,11 +54,10 @@ const VodApp = () => {
                     obj: Thumbnail | undefined
                     url: string
                 }> = []
-
                 if (
                     assets.findIndex(
                         (elem) => elem.media?.highlighted === true
-                    ) > 0
+                    ) !== -1
                 ) {
                     setHaveHighlightedContent(true)
                 }
