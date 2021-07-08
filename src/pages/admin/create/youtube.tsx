@@ -3,7 +3,7 @@ import React from 'react'
 import { YoutubeUploadForm } from '../../../shared/components/Admin/YoutubeUploadForm'
 import { AdminLayout } from '../../../shared/components'
 
-const HomePage = () => {
+const CreateYoutube = () => {
     return (
         <AdminLayout>
             <YoutubeUploadForm />
@@ -11,4 +11,4 @@ const HomePage = () => {
     )
 }
 
-export default HomePage
+export default CreateYoutube

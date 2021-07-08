@@ -3,7 +3,7 @@ import React from 'react'
 import { VideoUploadForm } from '../../../shared/components/Admin/VideoUploadForm'
 import { AdminLayout } from '../../../shared/components'
 
-const HomePage = () => {
+const CreateVideo = () => {
     return (
         <AdminLayout>
             <VideoUploadForm />
@@ -11,4 +11,4 @@ const HomePage = () => {
     )
 }
 
-export default HomePage
+export default CreateVideo
