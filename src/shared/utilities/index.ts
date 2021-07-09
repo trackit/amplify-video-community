@@ -4,13 +4,17 @@ import {
     fetchHighlightedVideos,
     fetchVodSections,
 } from './vod-fetch'
-import { uploadVideo } from './vod-mutate'
+import { uploadSourceSelf, uploadSourceYoutube } from './vod-mutate'
+
+import { uploadContent } from './mutate'
 
 export {
     fetchVodFiles,
     fetchHighlightedVideos,
     fetchSections,
-    uploadVideo,
+    uploadSourceYoutube,
+    uploadSourceSelf,
     fetchThumbnail,
     fetchVodSections,
+    uploadContent,
 }
