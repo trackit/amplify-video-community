@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import styled, { DefaultTheme } from 'styled-components'
 import { FaPauseCircle, FaPlayCircle } from 'react-icons/fa'
 
@@ -57,10 +57,6 @@ const TextContainer = styled.div`
 const HomePage = () => {
     const vidRef = useRef<HTMLVideoElement>()
     const [paused, setPaused] = useState<boolean>(true)
-
-    useEffect(() => {
-        //navigate('/videos')
-    })
 
     const handlePlayVideo = () => {
         if (paused) vidRef.current?.play()
