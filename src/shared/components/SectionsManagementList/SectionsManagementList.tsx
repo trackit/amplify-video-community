@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 
 import { fetchSection } from '../../utilities/fetch'
-import { vodAsset, section } from '../../../models'
+import { Section, VideoOnDemand } from '../../../models'
 import * as API from '../../../API'
 import { fetchVodAsset } from '../../utilities/vod-fetch'
 
 type SectionsManagementListItemProps = {
-    section: section
-    selectedSection: section | null
-    setSelectedSection: (section: section) => void
+    section: Section
+    selectedSection: Section | null
+    setSelectedSection: (section: Section) => void
 }
 
 const SectionsManagementListItem = ({
@@ -59,33 +59,32 @@ const SectionsManagementListItem = ({
 }
 
 type SectionVideosProps = {
-    videos: Array<API.VideoSection>
+    videos: Array<API.MediasSections>
 }
 
 const SectionVideos = ({ videos }: SectionVideosProps) => {
-    useEffect(() => {
-        console.log('65.', videos)
-    }, [])
-
     return (
         <div>
             {videos.length > 0 ? (
                 <ul>
                     {videos.map((video) => {
-                        const [vod, setVod] = useState<vodAsset | null>(null)
+                        const [vod, setVod] =
+                            useState<VideoOnDemand | null>(null)
 
                         useEffect(() => {
                             ;(async () => {
                                 try {
                                     const { data } = await fetchVodAsset(
-                                        video.videoID
+                                        video.mediaID
                                     )
-                                    if (data?.getVodAsset === null) {
+                                    if (data?.getVideoOnDemand === null) {
                                         console.error(
                                             'SectionsManagementList.tsx(SectionVideos): object doesnt exist'
                                         )
                                     } else {
-                                        setVod(data?.getVodAsset as vodAsset)
+                                        setVod(
+                                            data?.getVideoOnDemand as VideoOnDemand
+                                        )
                                     }
                                 } catch (error) {
                                     console.error(
@@ -98,8 +97,10 @@ const SectionVideos = ({ videos }: SectionVideosProps) => {
 
                         if (vod) {
                             return (
-                                <li key={vod.id}>
-                                    <a href={`/video/${vod.id}`}>{vod.title}</a>
+                                <li key={vod.media?.id}>
+                                    <a href={`/video/${vod.media?.id}`}>
+                                        {vod.media?.title}
+                                    </a>
                                 </li>
                             )
                         } else {
@@ -115,11 +116,11 @@ const SectionVideos = ({ videos }: SectionVideosProps) => {
 }
 
 type CurrentSectionProps = {
-    selectedSection: section
+    selectedSection: Section
 }
 
 const CurrentSection = ({ selectedSection }: CurrentSectionProps) => {
-    const [videos, setVideos] = useState<Array<API.VideoSection> | null>(null)
+    const [videos, setVideos] = useState<Array<API.MediasSections> | null>(null)
 
     const deleteSection = () => {
         console.log('delete section ' + selectedSection.id)
@@ -127,14 +128,13 @@ const CurrentSection = ({ selectedSection }: CurrentSectionProps) => {
 
     useEffect(() => {
         ;(async () => {
-            console.log(selectedSection.id)
             if (selectedSection.id !== null) {
                 try {
                     const { data } = await fetchSection(selectedSection.id)
                     console.log('SectionsManagementList.tsx: ', data)
                     setVideos(
-                        data?.getSection?.videos
-                            ?.items as Array<API.VideoSection>
+                        data?.getSection?.medias
+                            ?.items as Array<API.MediasSections>
                     )
                 } catch (e) {
                     console.error('SectionsManagementList.tsx: ', e)
@@ -154,14 +154,14 @@ const CurrentSection = ({ selectedSection }: CurrentSectionProps) => {
 }
 
 type SectionsManagementListProps = {
-    sections: Array<section>
+    sections: Array<Section>
 }
 
 const SectionsManagementList = ({ sections }: SectionsManagementListProps) => {
-    const [selectedSection, setSelectedSection] = useState<section | null>(null)
+    const [selectedSection, setSelectedSection] = useState<Section | null>(null)
     const [searchValue, setSearchValue] = useState('')
 
-    const filterSections = (elem: section) => {
+    const filterSections = (elem: Section) => {
         return elem.label.toLowerCase().includes(searchValue.toLowerCase())
     }
 
@@ -194,7 +194,7 @@ const SectionsManagementList = ({ sections }: SectionsManagementListProps) => {
                     <div>
                         {sections
                             .filter(filterSections)
-                            .map((elem: section) => {
+                            .map((elem: Section) => {
                                 return (
                                     <SectionsManagementListItem
                                         key={elem.id}

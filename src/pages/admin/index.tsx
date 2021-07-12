@@ -54,6 +54,12 @@ const Dashboard = () => {
                 navigate('/admin/sections/create')
             },
         },
+        {
+            title: 'Manage Sections',
+            onClick: () => {
+                navigate('/admin/sections/manage')
+            },
+        },
     ]
 
     return (
