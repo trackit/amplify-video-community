@@ -1,18 +1,35 @@
 module.exports = {
     siteMetadata: {
-        title: 'amplify-video-community',
+        title: 'Amplify Video Community',
+        titleTemplate: '%s',
+        description:
+            'Amplify Video Community is a community website created by TrackIt using Amplify only.',
+        url: 'https://amplify-video-community.trackit.io',
+        image: 'src/images/favicon.png',
+        twitterUsername: '@TrackItCloud',
     },
     plugins: [
         {
             resolve: 'gatsby-source-filesystem',
             options: {
-                name: 'markdown',
+                name: 'content',
                 path: `${__dirname}/content/`,
             },
         },
+        {
+            resolve: 'gatsby-plugin-react-svg',
+            options: {
+                rule: {
+                    include: /assets/,
+                },
+            },
+        },
+        'gatsby-plugin-image',
+        'gatsby-plugin-react-helmet',
         'gatsby-plugin-sharp',
         'gatsby-plugin-styled-components',
         'gatsby-plugin-react-helmet',
+        `gatsby-transformer-sharp`,
         {
             resolve: 'gatsby-transformer-remark',
             options: {
@@ -23,6 +40,7 @@ module.exports = {
                         options: {
                             maxWidth: 750,
                             linkImagesToOriginal: false,
+                            backgroundColor: 'transparent',
                         },
                     },
                 ],

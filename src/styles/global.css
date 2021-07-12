@@ -7,6 +7,11 @@ body {
     font-family: var(--amplify-font-family);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: #f2f3f3;
+}
+
+h1, h2, h3, h4 {
+    color: #050029;
 }
 
 code {

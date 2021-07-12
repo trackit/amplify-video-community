@@ -11,11 +11,12 @@ const StyledSearchItem = styled.div`
     margin: auto;
     margin-top: 20px;
     margin-bottom: 20px;
-    border: 4px solid ${(props) => props.theme.palette.primary.main};
+    border: 2px solid ${(props) => props.theme.palette.primary.main};
     border-radius: 50px;
     position: relative;
     height: 42px;
     width: 300px;
+    padding: 10px;
 
     table {
         width: 100%;
@@ -31,6 +32,7 @@ const StyledSearchInput = styled.input`
     padding: 0px 5px;
     border-radius: 50px;
     font-size: 18px;
+    background: none;
 
     &:focus {
         outline: none;
@@ -95,7 +97,15 @@ const VideoItem = ({ asset }: VideoItemProps) => {
 
     return (
         <StyledVideoCard>
-            <VideoCard thumbnail={thumbnail} vod={asset} />
+            <VideoCard
+                thumbnail={thumbnail}
+                vod={asset}
+                style={{
+                    width: 'calc(0.29 * 100vw)',
+                    display: 'flex',
+                    justifyContent: 'center',
+                }}
+            />
             <h3>{asset.media?.title}</h3>
         </StyledVideoCard>
     )
@@ -107,8 +117,10 @@ const SearchPage = () => {
     const [searchValue, setSearchValue] = useState<string>('')
 
     const filterAssets = (elem: VideoOnDemand) =>
-        elem.media?.title.includes(searchValue) ||
-        elem.media?.description.includes(searchValue)
+        elem.media?.title.toLowerCase().includes(searchValue.toLowerCase()) ||
+        elem.media?.description
+            .toLowerCase()
+            .includes(searchValue.toLowerCase())
 
     useEffect(() => {
         ;(async () => {

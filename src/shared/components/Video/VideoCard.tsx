@@ -1,7 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
 import Loader from 'react-loader-spinner'
 import { navigate } from 'gatsby'
+import CSS from 'csstype'
 
 import { VideoOnDemand, Thumbnail } from '../../../models'
 
@@ -13,26 +13,24 @@ type VideoCardProps = {
           }
         | undefined
     vod: VideoOnDemand | undefined
+    style?: CSS.Properties
+    imgStyle?: CSS.Properties
 }
 
-const StyledVideoCard = styled.div`
-    display: flex;
-    justify-content: center;
-`
-
-const Image = styled.img`
-    cursor: pointer;
-    width: 100%;
-    transform: scale(0.85);
-`
-
-const VideoCard = ({ vod, thumbnail }: VideoCardProps) => {
+const VideoCard = ({ vod, thumbnail, imgStyle, style }: VideoCardProps) => {
     const onClick = () => {
         navigate(`/video/${vod?.id}`)
     }
 
+    const defaultImgStyle: CSS.Properties = {
+        cursor: 'pointer',
+        width: '100%',
+        transform: 'scale(0.85)',
+        boxShadow: 'black 0px 0px 10px',
+    }
+
     return (
-        <StyledVideoCard>
+        <div style={style}>
             {!thumbnail ? (
                 <Loader
                     type="Rings"
@@ -42,9 +40,14 @@ const VideoCard = ({ vod, thumbnail }: VideoCardProps) => {
                     timeout={3000}
                 />
             ) : (
-                <Image src={thumbnail.url} alt="thumbnail" onClick={onClick} />
+                <img
+                    style={imgStyle || defaultImgStyle}
+                    src={thumbnail.url}
+                    alt="thumbnail"
+                    onClick={onClick}
+                />
             )}
-        </StyledVideoCard>
+        </div>
     )
 }
 

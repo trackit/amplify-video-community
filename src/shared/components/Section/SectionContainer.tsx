@@ -14,7 +14,7 @@ type SectionProps = {
     }>
 }
 
-const StyledTitle = styled.h1``
+const StyledTitle = styled.h2``
 
 const Slide = styled.div`
     margin: 0 auto;
@@ -22,6 +22,11 @@ const Slide = styled.div`
 
 const StyledSection = styled.div`
     margin: 0 15px;
+    border-bottom: 1px solid ${(props) => props.theme.palette.primary.ternary};
+
+    &:last-child {
+        border-bottom: none;
+    }
 `
 
 const SectionContainer = ({ section, vodAssets, thumbnails }: SectionProps) => {
@@ -32,6 +37,7 @@ const SectionContainer = ({ section, vodAssets, thumbnails }: SectionProps) => {
         filteredAssets.length >= slidesNumber
             ? slidesNumber
             : filteredAssets.length
+
     const sliderSettings = {
         infinite: false,
         draggable: true,
@@ -42,13 +48,25 @@ const SectionContainer = ({ section, vodAssets, thumbnails }: SectionProps) => {
         centerPadding: 0,
         responsive: [
             {
-                breakpoint: 768,
+                breakpoint: 1700,
+                settings: {
+                    slidesToShow: slidesToShow(4),
+                },
+            },
+            {
+                breakpoint: 1560,
                 settings: {
                     slidesToShow: slidesToShow(3),
                 },
             },
             {
-                breakpoint: 640,
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: slidesToShow(2),
+                },
+            },
+            {
+                breakpoint: 900,
                 settings: {
                     slidesToShow: slidesToShow(1),
                 },
@@ -86,6 +104,12 @@ const SectionContainer = ({ section, vodAssets, thumbnails }: SectionProps) => {
                                         thumbnail.obj?.id
                                 )}
                                 vod={asset}
+                                style={{
+                                    width: '380px',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    margin: 'auto',
+                                }}
                             />
                         </Slide>
                     ))}

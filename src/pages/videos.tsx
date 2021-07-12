@@ -1,5 +1,4 @@
 import React from 'react'
-import Loader from 'react-loader-spinner'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
@@ -8,6 +7,7 @@ import {
     SectionContainer,
     HighlightedSection,
     VideoCardSlider,
+    BasicLoader,
 } from '../shared/components'
 import {
     fetchSections,
@@ -117,13 +117,7 @@ const VodApp = () => {
     return (
         <Layout>
             {loadingVodFiles || loadingSections ? (
-                <Loader
-                    type="Bars"
-                    color="#FFA41C"
-                    height={100}
-                    width={100}
-                    timeout={3000}
-                />
+                <BasicLoader />
             ) : (
                 <Container>
                     <VideoCardSlider vod={vodAssets} thumbnails={thumbnails} />
