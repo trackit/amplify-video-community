@@ -97,7 +97,15 @@ const VideoItem = ({ asset }: VideoItemProps) => {
 
     return (
         <StyledVideoCard>
-            <VideoCard thumbnail={thumbnail} vod={asset} />
+            <VideoCard
+                thumbnail={thumbnail}
+                vod={asset}
+                style={{
+                    width: 'calc(0.29 * 100vw)',
+                    display: 'flex',
+                    justifyContent: 'center',
+                }}
+            />
             <h3>{asset.media?.title}</h3>
         </StyledVideoCard>
     )
