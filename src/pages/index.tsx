@@ -30,7 +30,6 @@ const Video = styled.video`
     bottom: 0;
     min-width: 100%;
     min-height: 100%;
-    filter: blur(2px);
 `
 
 const TextContainer = styled.div`
