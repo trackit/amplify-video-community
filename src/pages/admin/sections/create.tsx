@@ -3,6 +3,11 @@ import { navigate } from 'gatsby'
 
 import { createNewSection } from '../../../shared/utilities/mutate'
 import { AdminLayout } from '../../../shared/components'
+import styled from 'styled-components'
+
+const FormItem = styled.div`
+    margin: 15px;
+`
 
 const CreateSection = () => {
     const [name, setName] = useState<string>('')
@@ -26,7 +31,7 @@ const CreateSection = () => {
     return (
         <AdminLayout>
             <form onSubmit={onSubmit}>
-                <div style={{ margin: '15px' }}>
+                <FormItem>
                     <label htmlFor="_add_section_name">Section Title</label>
                     <input
                         id="_add_section_name"
@@ -38,10 +43,10 @@ const CreateSection = () => {
                             setName(event.target.value)
                         }}
                     />
-                </div>
-                <div style={{ margin: '15px' }}>
+                </FormItem>
+                <FormItem>
                     <input type="submit" value="Create section" />
-                </div>
+                </FormItem>
             </form>
         </AdminLayout>
     )

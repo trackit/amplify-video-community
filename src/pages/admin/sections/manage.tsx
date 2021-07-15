@@ -5,6 +5,21 @@ import { fetchSections } from '../../../shared/utilities'
 import { AdminLayout } from '../../../shared/components'
 import SectionsManagementList from '../../../shared/components/SectionsManagementList/SectionsManagementList'
 import { Section } from '../../../models'
+import styled from 'styled-components'
+import { navigate } from 'gatsby'
+
+const TitleContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+`
+
+const Button = styled.div`
+    border: solid 1px black;
+
+    &:hover {
+        cursor: pointer;
+    }
+`
 
 const SectionManage = () => {
     const [loading, setLoading] = useState<boolean>(false)
@@ -25,7 +40,16 @@ const SectionManage = () => {
 
     return (
         <AdminLayout>
-            <h1>Manage sections</h1>
+            <TitleContainer>
+                <h1>Manage sections</h1>
+                <Button
+                    onClick={() => {
+                        navigate('/admin/sections/create')
+                    }}
+                >
+                    Create new section
+                </Button>
+            </TitleContainer>
             {loading ? (
                 <Loader
                     type="Bars"
