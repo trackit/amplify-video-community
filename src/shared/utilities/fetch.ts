@@ -17,7 +17,7 @@ async function fetchSections() {
 async function fetchSection(id: string) {
     return API.graphql({
         query: getSection,
-        variables: { input: { id } },
+        variables: { id },
         authMode: getAuthMode(),
     }) as GraphQLResult<APIt.GetSectionQuery>
 }
