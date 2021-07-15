@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { navigate } from 'gatsby'
+import styled from 'styled-components'
 
 import { createNewSection } from '../../../shared/utilities/mutate'
 import { AdminLayout } from '../../../shared/components'
-import styled from 'styled-components'
 
 const FormItem = styled.div`
     margin: 15px;

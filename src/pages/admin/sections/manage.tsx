@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Loader from 'react-loader-spinner'
+import styled from 'styled-components'
+import { navigate } from 'gatsby'
 
 import { fetchSections } from '../../../shared/utilities'
 import { AdminLayout } from '../../../shared/components'
 import SectionsManagementList from '../../../shared/components/SectionsManagementList/SectionsManagementList'
 import { Section } from '../../../models'
-import styled from 'styled-components'
-import { navigate } from 'gatsby'
 
 const TitleContainer = styled.div`
     display: flex;
