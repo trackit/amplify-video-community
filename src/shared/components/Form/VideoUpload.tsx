@@ -23,10 +23,7 @@ const VideoUploadForm = () => {
                 const { data } = await fetchSections()
                 setExistingSections(data?.listSections?.items as Array<Section>)
             } catch (error) {
-                console.error(
-                    'admin/VideoUploadForm.tsx(fetchSections):',
-                    error
-                )
+                console.error('Form/VideoUpload.tsx(fetchSections):', error)
             }
         })()
     }, [setExistingSections])
