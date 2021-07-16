@@ -42,6 +42,11 @@ const SEO = ({ title, description, image, article }: SEOProps) => {
         <Helmet title={seo.title} titleTemplate={titleTemplate}>
             <meta name="description" content={seo.description} />
             <meta name="image" content={seo.image} />
+            <meta
+                property="og:video"
+                content="https://www.youtube.com/v/7ekxPmVNV8k"
+            />
+            <meta property="og:site_name" content={seo.title} />
             {seo.url && <meta property="og:url" content={seo.url} />}
             {(article ? true : null) && (
                 <meta property="og:type" content="article" />
@@ -60,6 +65,22 @@ const SEO = ({ title, description, image, article }: SEOProps) => {
                 <meta name="twitter:description" content={seo.description} />
             )}
             {seo.image && <meta name="twitter:image" content={seo.image} />}
+            <base target="_blank" />
+            <base target="_top" />
+            <link
+                rel="canonical"
+                href="https://amplify-video-community.trackit.io/"
+            />
+            <meta
+                name="viewport"
+                content="width=device-width, initial-scale=1"
+            />
+            <title>Why you should use Amplify</title>
+            <title>Amplify Video Community</title>
+            <title>TrackIt Amplify</title>
+            <title>TrackIt Amplify Video</title>
+            <meta name="robots" />
+            <meta name="googlebot" />
         </Helmet>
     )
 }
