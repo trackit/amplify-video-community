@@ -83,7 +83,7 @@ const VideoItem = ({ asset }: VideoItemProps) => {
         ;(async () => {
             try {
                 if (asset.media?.thumbnail) {
-                    const data = await fetchThumbnail(asset)
+                    const data = await fetchThumbnail(asset.media)
                     setThumbnail({
                         obj: asset.media?.thumbnail,
                         url: data as string,

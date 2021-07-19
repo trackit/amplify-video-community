@@ -1,4 +1,10 @@
-import { fetchSections, fetchThumbnail } from './fetch'
+import {
+    fetchSections,
+    fetchThumbnail,
+    fetchMedia,
+    fetchMedias,
+    fetchMediaSections,
+} from './fetch'
 import {
     fetchVodFiles,
     fetchHighlightedVideos,
@@ -6,7 +12,14 @@ import {
 } from './vod-fetch'
 import { uploadSourceSelf, uploadSourceYoutube } from './vod-mutate'
 
-import { uploadContent } from './mutate'
+import {
+    uploadContent,
+    removeMedia,
+    modifyMedia,
+    removeThumbnailFile,
+    removeMediasSections,
+    setMediasSections,
+} from './mutate'
 
 export {
     fetchVodFiles,
@@ -17,4 +30,12 @@ export {
     fetchThumbnail,
     fetchVodSections,
     uploadContent,
+    fetchMedia,
+    fetchMedias,
+    fetchMediaSections,
+    removeMedia,
+    modifyMedia,
+    removeThumbnailFile,
+    removeMediasSections,
+    setMediasSections,
 }

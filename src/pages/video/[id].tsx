@@ -148,7 +148,7 @@ const VideoPage = (props: PageProps) => {
                 }> = []
                 await Promise.all(
                     assets.map(async (asset) => {
-                        const data = await fetchThumbnail(asset)
+                        const data = await fetchThumbnail(asset.media)
                         thumbnailArr.push({
                             obj: asset.media?.thumbnail,
                             url: data as string,

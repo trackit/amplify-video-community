@@ -14,7 +14,6 @@ type Media
     rules: [
       { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
       { allow: public, provider: iam, operations: [read] }
-      { allow: groups, groups: ["everyone"], operations: [read] }
     ]
   )
 {
@@ -37,7 +36,6 @@ type Thumbnail
     rules: [
       { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
       { allow: public, provider: iam, operations: [read] }
-      { allow: groups, groups: ["everyone"], operations: [read] }
     ]
   )
 {
@@ -53,7 +51,6 @@ type Section
     rules: [
       { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
       { allow: public, provider: iam, operations: [read] }
-      { allow: groups, groups: ["everyone"], operations: [read] }
     ]
   )
 {
@@ -70,7 +67,6 @@ type MediasSections
     rules: [
       { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
       { allow: public, provider: iam, operations: [read] }
-      { allow: groups, groups: ["everyone"], operations: [read] }
     ]
   )
 @key(name: "bySection", fields: ["sectionID", "mediaID"])
@@ -92,7 +88,6 @@ type VideoOnDemand
     rules: [
       { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
       { allow: public, provider: iam, operations: [read] }
-      { allow: groups, groups: ["everyone"], operations: [read] }
     ]
   )
 {
@@ -111,7 +106,6 @@ type Livestream
     rules: [
       { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
       { allow: public, provider: iam, operations: [read] }
-      { allow: groups, groups: ["everyone"], operations: [read] }
     ]
   )
 {

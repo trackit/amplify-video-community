@@ -1,35 +1,27 @@
 import React, { useState, useEffect } from 'react'
 import Loader from 'react-loader-spinner'
 
-import AssetsManagementList from '../../../shared/components/AssetsManagementList/AssetsManagementList'
-import { fetchVodFiles } from '../../../shared/utilities'
+import MediaManagementList from '../../../shared/components/MediaManagementList/MediaManagementList'
+import { fetchMedias } from '../../../shared/utilities'
 import { AdminLayout } from '../../../shared/components'
-import { VideoOnDemand } from '../../../models'
+import { Media } from '../../../models'
 
 const DashboardVideoManage = () => {
-    const [vodAssets, setVodAssets] = useState<Array<VideoOnDemand>>([])
-    const [nextToken, setNextToken] = useState<string | null>(null)
+    const [medias, setMedias] = useState<Array<Media>>([])
     const [loading, setLoading] = useState<boolean>(false)
 
     useEffect(() => {
         ;(async () => {
             setLoading(true)
             try {
-                const { data } = await fetchVodFiles(nextToken)
-                setNextToken(
-                    data?.listVideoOnDemands?.nextToken
-                        ? data.listVideoOnDemands.nextToken
-                        : null
-                )
-                setVodAssets(
-                    data?.listVideoOnDemands?.items as Array<VideoOnDemand>
-                )
+                const { data } = await fetchMedias()
+                setMedias(data?.listMedia?.items as Array<Media>)
             } catch (error) {
-                console.error('video/manage.tsx(fetchVodFiles):', error)
+                console.error('admin/manage/index.tsx(fetchMedias):', error)
             }
             setLoading(false)
         })()
-    }, [nextToken])
+    }, [])
 
     return (
         <AdminLayout>
@@ -42,7 +34,7 @@ const DashboardVideoManage = () => {
                     timeout={3000}
                 />
             ) : (
-                <AssetsManagementList assets={vodAssets} />
+                <MediaManagementList medias={medias} setMedias={setMedias} />
             )}
         </AdminLayout>
     )
