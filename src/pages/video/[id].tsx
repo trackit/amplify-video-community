@@ -110,6 +110,7 @@ const VideoPage = (props: PageProps) => {
             url: string
         }>
     >([])
+    //const [thumbnail, setThumbnail] = useState<Thumbnail | undefined>(undefined)
 
     useEffect(() => {
         ;(async () => {
@@ -121,6 +122,7 @@ const VideoPage = (props: PageProps) => {
                     setAsset(data?.getVideoOnDemand as VideoOnDemand)
                 }
                 setLoaded(true)
+                //const { data } = await fetchThumbnail(data?.getVideoOnDemand as VideoOnDemand)
             } catch (error) {
                 console.error(error)
                 setLoaded(false)
@@ -177,7 +179,12 @@ const VideoPage = (props: PageProps) => {
     }, [])
 
     return (
-        <Layout>
+        <Layout
+            seo={{
+                title: 'Amplify Video Community - ' + asset?.media?.title,
+                description: asset?.media?.description,
+            }}
+        >
             <>
                 {asset === null ? (
                     <p>{loaded && 'Video Not Found'}</p>
