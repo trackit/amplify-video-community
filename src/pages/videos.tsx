@@ -115,7 +115,13 @@ const VodApp = () => {
     }, [])
 
     return (
-        <Layout>
+        <Layout
+            seo={{
+                title: 'Amplify Video Community - ' + 'Videos',
+                description:
+                    'Amplify Video Community allows you to find Amplify Tutorials & Creative Contents which are videos as a demo for Amplify.',
+            }}
+        >
             {loadingVodFiles || loadingSections ? (
                 <BasicLoader />
             ) : (

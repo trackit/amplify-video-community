@@ -110,7 +110,7 @@ const VideoPage = (props: PageProps) => {
             url: string
         }>
     >([])
-    //const [thumbnail, setThumbnail] = useState<Thumbnail | undefined>(undefined)
+    const [thumbnail, setThumbnail] = useState<string | undefined>(undefined)
 
     useEffect(() => {
         ;(async () => {
@@ -121,8 +121,11 @@ const VideoPage = (props: PageProps) => {
                 } else {
                     setAsset(data?.getVideoOnDemand as VideoOnDemand)
                 }
+                const thumb = await fetchThumbnail(
+                    data?.getVideoOnDemand as VideoOnDemand
+                )
+                setThumbnail(thumb as string)
                 setLoaded(true)
-                //const { data } = await fetchThumbnail(data?.getVideoOnDemand as VideoOnDemand)
             } catch (error) {
                 console.error(error)
                 setLoaded(false)
@@ -183,6 +186,7 @@ const VideoPage = (props: PageProps) => {
             seo={{
                 title: 'Amplify Video Community - ' + asset?.media?.title,
                 description: asset?.media?.description,
+                image: thumbnail,
             }}
         >
             <>

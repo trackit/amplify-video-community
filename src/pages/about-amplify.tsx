@@ -9,7 +9,13 @@ const PostContent = styled.div`
 
 const AboutAmplify = ({ data }: PageProps) => {
     return (
-        <Layout>
+        <Layout
+            seo={{
+                title: 'Amplify Video Community - ' + 'About Amplify',
+                description:
+                    'About Amplify page explain you what is AWS Amplify and what are the use cases.',
+            }}
+        >
             <PostContent
                 dangerouslySetInnerHTML={{
                     __html: data.aboutAmplify.childMarkdownRemark.html,

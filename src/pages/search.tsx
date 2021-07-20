@@ -141,7 +141,13 @@ const SearchPage = () => {
     }, [nextToken])
 
     return (
-        <Layout>
+        <Layout
+            seo={{
+                title: 'Amplify Video Community - ' + 'Search Videos',
+                description:
+                    'Amplify Video Community allows you to search Amplify Tutorials & Creative Contents which are videos as a demo for Amplify.',
+            }}
+        >
             <StyledSearchItem>
                 <table>
                     <tr>
