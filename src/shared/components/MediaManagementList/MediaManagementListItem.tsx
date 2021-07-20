@@ -176,12 +176,17 @@ const MediaManagementListItem = ({
         }
 
         const saveChanges = async () => {
-            await modifyMedia({
-                id: selectedMedia.id,
-                title,
-                description,
-                highlighted,
-            })
+            try {
+                await modifyMedia({
+                    id: selectedMedia.id,
+                    title,
+                    description,
+                    highlighted,
+                })
+            } catch (error) {
+                console.error('MediaManagementListItem.tsx(modifyMedia)', error)
+                return
+            }
             const objIndex = medias.findIndex((m) => m.id === selectedMedia.id)
             const updatedMedia = {
                 ...medias[objIndex],
@@ -194,33 +199,51 @@ const MediaManagementListItem = ({
                 updatedMedia,
                 ...medias.slice(objIndex + 1),
             ]
-            setMedias(updatedMedias)
-            mediaSections
-                .filter((section) => {
-                    return !selectedSections.includes(section)
-                })
-                .map(async (section) => {
-                    const relation = mediasSections.find(
-                        (ms) =>
-                            ms.section.id === section.id &&
-                            ms.media.id === selectedMedia.id
-                    )
-                    if (relation) {
-                        await removeMediasSections({ id: relation.id })
-                    }
-                })
-            selectedSections
-                .filter((ss) => {
-                    return !mediaSections.includes(ss)
-                })
-                .map(async (ms) => {
-                    await createMediasSections({
-                        sectionID: ms.id,
-                        mediaID: selectedMedia.id,
+            try {
+                mediaSections
+                    .filter((section) => {
+                        return !selectedSections.includes(section)
                     })
-                })
+                    .map(async (section) => {
+                        const relation = mediasSections.find(
+                            (ms) =>
+                                ms.section.id === section.id &&
+                                ms.media.id === selectedMedia.id
+                        )
+                        if (relation) {
+                            await removeMediasSections({ id: relation.id })
+                        }
+                    })
+            } catch (error) {
+                console.error(
+                    'MediaManagementListItem.tsx(removeMediasSections)',
+                    error
+                )
+                return
+            }
+            try {
+                selectedSections
+                    .filter((ss) => {
+                        return !mediaSections.includes(ss)
+                    })
+                    .map(async (ms) => {
+                        await createMediasSections({
+                            sectionID: ms.id,
+                            mediaID: selectedMedia.id,
+                        })
+                    })
+            } catch (error) {
+                console.error(
+                    'MediaManagementListItem.tsx(createMediasSections)',
+                    error
+                )
+                return
+            }
+
+            setMedias(updatedMedias)
             setSelectedMedia(updatedMedia)
             setMediaSections(selectedSections)
+            setSelectedSections(selectedSections)
         }
 
         return (
@@ -325,8 +348,10 @@ const MediaManagementListItem = ({
                     </Action>
                     <Action
                         onClick={() => {
-                            saveChanges()
-                            setEdititonMode(false)
+                            ;(async () => {
+                                await saveChanges()
+                                setEdititonMode(false)
+                            })()
                         }}
                         theme={{ actionColor: 'cornflowerblue' }}
                     >
@@ -352,7 +377,9 @@ const MediaManagementListItem = ({
                 <Actions>
                     <Action
                         onClick={() => {
-                            deleteMedia()
+                            ;(async () => {
+                                await deleteMedia()
+                            })()
                         }}
                         theme={{ actionColor: 'orangered' }}
                     >
