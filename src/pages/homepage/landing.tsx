@@ -24,7 +24,6 @@ const VideoPlayer = styled.video`
 const TextContainer = styled.div`
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(2px);
   display: flex;
   align-items: center;
 `
@@ -35,16 +34,20 @@ const TextWrapper = styled.div`
   width: 33%;
 `
 
+const TextShadow = css`
+  text-shadow: 0px 4px 8px black;
+`
+
 const Title = styled.h1`
   font-size: 48px;
-  text-shadow: 2px 2px 2px black;
+  ${TextShadow}
   color: #ffffff;
   margin: 0;
 `
 
 const CommonText = css`
   font-size: 20px;
-  text-shadow: 2px 2px 2px black;
+  ${TextShadow}
 `
 
 const Text = styled.p`
