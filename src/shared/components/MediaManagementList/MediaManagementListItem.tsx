@@ -136,9 +136,17 @@ const MediaManagementListItem = ({
         ;(async () => {
             try {
                 const { data } = await fetchMediaSections()
-                setMediasSections(
-                    data?.listMediasSections?.items as Array<MediasSections>
+                const mediassections = data?.listMediasSections
+                    ?.items as Array<MediasSections>
+                setMediasSections(mediassections)
+                const value = sections.filter(
+                    (s) =>
+                        mediassections
+                            .filter((ms) => ms.media.id === selectedMedia.id)
+                            .filter((ms) => s.id === ms.section.id).length > 0
                 )
+                setMediaSections(value)
+                setSelectedSections(value)
             } catch (error) {
                 console.error(
                     'fetchMediaSections(MediaManagementListItem.tsx): ',
@@ -147,17 +155,6 @@ const MediaManagementListItem = ({
             }
         })()
     }, [selectedMedia])
-
-    useEffect(() => {
-        const value = sections.filter(
-            (s) =>
-                mediasSections
-                    .filter((ms) => ms.media.id === selectedMedia.id)
-                    .filter((ms) => s.id === ms.section.id).length > 0
-        )
-        setMediaSections(value)
-        setSelectedSections(value)
-    }, [mediasSections])
 
     const EditMode = () => {
         const [title, setTitle] = useState(selectedMedia.title)
@@ -239,11 +236,8 @@ const MediaManagementListItem = ({
                 )
                 return
             }
-
             setMedias(updatedMedias)
             setSelectedMedia(updatedMedia)
-            setMediaSections(selectedSections)
-            setSelectedSections(selectedSections)
         }
 
         return (
