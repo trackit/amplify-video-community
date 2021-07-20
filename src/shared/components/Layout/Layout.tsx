@@ -81,8 +81,6 @@ const query = graphql`
 
 const SubBody = styled.div`
     background-color: ${(props) => props.theme.palette.primary.background};
-    padding-left: 50px;
-    padding-right: 50px;
 `
 
 type LayoutProps = {

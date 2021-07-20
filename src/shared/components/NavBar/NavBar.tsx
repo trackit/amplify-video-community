@@ -16,7 +16,7 @@ const Header = styled.header`
     box-shadow: ${(props) => props.theme.palette.navbar.boxShadow};
     justify-content: space-between;
     height: 64px;
-    position: sticky;
+    position: fixed;
     top: 0;
     z-index: 100;
     width: 100%;
