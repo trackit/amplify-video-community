@@ -2,8 +2,9 @@
 
 enum Source {
   TWITCH
-  YOUTUBE
   SELF
+  YOUTUBE
+  LIVESTREAM_SELF
 }
 
 type Media
@@ -42,7 +43,7 @@ type UserSubmissions
   description: String!
   comment: String!
   source: Source
-  thumbnail: Thumbnail @connection
+  #thumbnail: Thumbnail @connection
 }
 
 ### General
@@ -131,5 +132,5 @@ type Livestream
   id: ID!
   media: Media @connection
   url: String
-  isLive: Boolean!
+  isLive: Boolean
 }

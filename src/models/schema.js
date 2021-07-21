@@ -777,7 +777,7 @@ export const schema = {
                     "name": "isLive",
                     "isArray": false,
                     "type": "Boolean",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "createdAt": {
@@ -848,11 +848,12 @@ export const schema = {
             "name": "Source",
             "values": [
                 "TWITCH",
+                "SELF",
                 "YOUTUBE",
-                "SELF"
+                "LIVESTREAM_SELF"
             ]
         }
     },
     "nonModels": {},
-    "version": "7b363a3a5f34d7cc818ecd668d75bef1"
+    "version": "d0564fe924bb5cf87fb65bbb98f74ba0"
 };

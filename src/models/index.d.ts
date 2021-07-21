@@ -1,9 +1,10 @@
-import { ModelInit, MutableModel } from "@aws-amplify/datastore";
+import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplify/datastore";
 
 export enum Source {
   TWITCH = "TWITCH",
+  SELF = "SELF",
   YOUTUBE = "YOUTUBE",
-  SELF = "SELF"
+  LIVESTREAM_SELF = "LIVESTREAM_SELF"
 }
 
 
@@ -85,7 +86,6 @@ export declare class UserSubmissions {
   readonly description: string;
   readonly comment: string;
   readonly source?: Source | keyof typeof Source;
-  readonly thumbnail?: Thumbnail;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<UserSubmissions, UserSubmissionsMetaData>);
@@ -119,7 +119,7 @@ export declare class Livestream {
   readonly id: string;
   readonly media?: Media;
   readonly url?: string;
-  readonly isLive: boolean;
+  readonly isLive?: boolean;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<Livestream, LivestreamMetaData>);

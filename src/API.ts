@@ -13,8 +13,9 @@ export type CreateMediaInput = {
 
 export enum Source {
   TWITCH = "TWITCH",
-  YOUTUBE = "YOUTUBE",
   SELF = "SELF",
+  YOUTUBE = "YOUTUBE",
+  LIVESTREAM_SELF = "LIVESTREAM_SELF",
 }
 
 
@@ -292,7 +293,7 @@ export type DeleteVideoOnDemandInput = {
 export type CreateLivestreamInput = {
   id?: string | null,
   url?: string | null,
-  isLive: boolean,
+  isLive?: boolean | null,
   livestreamMediaId?: string | null,
 };
 
@@ -308,7 +309,7 @@ export type Livestream = {
   __typename: "Livestream",
   id: string,
   url?: string | null,
-  isLive: boolean,
+  isLive?: boolean | null,
   createdAt: string,
   updatedAt: string,
   media?: Media | null,
@@ -983,7 +984,7 @@ export type CreateLivestreamMutation = {
     __typename: "Livestream",
     id: string,
     url?: string | null,
-    isLive: boolean,
+    isLive?: boolean | null,
     createdAt: string,
     updatedAt: string,
     media?:  {
@@ -1020,7 +1021,7 @@ export type UpdateLivestreamMutation = {
     __typename: "Livestream",
     id: string,
     url?: string | null,
-    isLive: boolean,
+    isLive?: boolean | null,
     createdAt: string,
     updatedAt: string,
     media?:  {
@@ -1057,7 +1058,7 @@ export type DeleteLivestreamMutation = {
     __typename: "Livestream",
     id: string,
     url?: string | null,
-    isLive: boolean,
+    isLive?: boolean | null,
     createdAt: string,
     updatedAt: string,
     media?:  {
@@ -1476,7 +1477,7 @@ export type GetLivestreamQuery = {
     __typename: "Livestream",
     id: string,
     url?: string | null,
-    isLive: boolean,
+    isLive?: boolean | null,
     createdAt: string,
     updatedAt: string,
     media?:  {
@@ -1516,7 +1517,7 @@ export type ListLivestreamsQuery = {
       __typename: "Livestream",
       id: string,
       url?: string | null,
-      isLive: boolean,
+      isLive?: boolean | null,
       createdAt: string,
       updatedAt: string,
       media?:  {
@@ -2013,7 +2014,7 @@ export type OnCreateLivestreamSubscription = {
     __typename: "Livestream",
     id: string,
     url?: string | null,
-    isLive: boolean,
+    isLive?: boolean | null,
     createdAt: string,
     updatedAt: string,
     media?:  {
@@ -2045,7 +2046,7 @@ export type OnUpdateLivestreamSubscription = {
     __typename: "Livestream",
     id: string,
     url?: string | null,
-    isLive: boolean,
+    isLive?: boolean | null,
     createdAt: string,
     updatedAt: string,
     media?:  {
@@ -2077,7 +2078,7 @@ export type OnDeleteLivestreamSubscription = {
     __typename: "Livestream",
     id: string,
     url?: string | null,
-    isLive: boolean,
+    isLive?: boolean | null,
     createdAt: string,
     updatedAt: string,
     media?:  {
