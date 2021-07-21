@@ -11,7 +11,8 @@ import {
     removeMediasSections,
     setMediasSections as createMediasSections,
 } from '../../utilities'
-import { Media, MediasSections, Section } from '../../../models'
+import { Media, MediasSections, Section, Source } from '../../../models'
+import { removeVideoOnDemand } from '../../utilities/mutate'
 
 type MediaManagementListItemProps = {
     medias: Array<Media>
@@ -102,6 +103,23 @@ const MediaManagementListItem = ({
         } catch (error) {
             console.error('removeMedia(MediaManagementListItem.tsx):', error)
             return
+        }
+        switch (selectedMedia.source) {
+            case Source.SELF:
+            case Source.YOUTUBE:
+            case Source.TWITCH:
+                try {
+                    await removeVideoOnDemand({ id: selectedMedia.id })
+                } catch (error) {
+                    console.error(
+                        'removeVideoOnDemand(MediaManagementListItem.tsx):',
+                        error
+                    )
+                    return
+                }
+                break
+            default:
+                break
         }
         try {
             await removeThumbnailFile(selectedMedia.thumbnail)

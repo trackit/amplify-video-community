@@ -9,6 +9,8 @@ import {
     updateMedia,
     deleteThumbnail,
     deleteMediasSections,
+    deleteVideoOnDemand,
+    deleteLivestream,
 } from '../../graphql/mutations'
 import { uploadSourceSelf, uploadSourceYoutube } from './vod-mutate'
 import { uploadSourceTwitch } from './live-mutate'
@@ -105,10 +107,23 @@ async function setMedia(input: APIt.CreateMediaInput) {
     )
 }
 
+async function removeVideoOnDemand(input: APIt.DeleteVideoOnDemandInput) {
+    return API.graphql(
+        graphqlOperation(deleteVideoOnDemand, {
+            input,
+        })
+    )
+}
+
+async function removeLivestream(input: APIt.DeleteLivestreamInput) {
+    return API.graphql(
+        graphqlOperation(deleteLivestream, {
+            input,
+        })
+    )
+}
+
 async function removeMedia(input: APIt.DeleteMediaInput) {
-    // delete mediasections
-    // delete thumbnail
-    // delete related resources (vod, yt, twitch)
     return API.graphql(
         graphqlOperation(deleteMedia, {
             input,
@@ -126,11 +141,11 @@ async function modifyMedia(input: APIt.UpdateMediaInput) {
 
 function checkfileExtention(filename: string) {
     const validThumbnailExtention = ['png', 'jpg', 'jpeg']
-    const validVodFileExtention = ['mp4', 'avi', 'mov', 'mkv']
+    // const validVodFileExtention = ['mp4', 'avi', 'mov', 'mkv']
     const filePart = filename.toLowerCase().split('.')
     return (
         !validThumbnailExtention.includes(filePart[filePart.length - 1]) &&
-        !validVodFileExtention.includes(filePart[filePart.length - 1]) &&
+        /*!validVodFileExtention.includes(filePart[filePart.length - 1]) &&*/
         filePart.length <= 1
     )
 }
@@ -192,4 +207,6 @@ export {
     modifyMedia,
     removeThumbnailFile,
     removeMediasSections,
+    removeVideoOnDemand,
+    removeLivestream,
 }

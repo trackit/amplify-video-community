@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import { navigate } from 'gatsby'
+import Loader from 'react-loader-spinner'
 
 import { fetchSections, uploadContent } from '../../../shared/utilities'
 import { Section } from '../../../models'
@@ -6,6 +8,7 @@ import { Media } from '../../../models'
 import * as APIt from '../../../API'
 
 const VideoUploadForm = () => {
+    const [uploading, setUploading] = useState<boolean>(false)
     const [vodFile, setVodFile] = useState<File | null>(null)
     const [title, setTitle] = useState<string>('')
     const [description, setDescription] = useState<string>('')
@@ -30,10 +33,11 @@ const VideoUploadForm = () => {
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault()
+        if (vodFile === null || thumbnailFile === null) {
+            return
+        }
         ;(async () => {
-            if (vodFile === null || thumbnailFile === null) {
-                return
-            }
+            setUploading(true)
             try {
                 const media: Media = {
                     id: '',
@@ -54,7 +58,10 @@ const VideoUploadForm = () => {
                 )
             } catch (error) {
                 console.error('admin/VideoUploadForm.tsx(uploadVideo):', error)
+                setUploading(false)
+                return
             }
+            navigate('/admin')
         })()
     }
 
@@ -198,7 +205,20 @@ const VideoUploadForm = () => {
                     </select>
                 </div>
                 <div style={{ margin: '15px' }}>
-                    <input type="submit" value="Upload Content" />
+                    {uploading ? (
+                        <Loader
+                            type="Rings"
+                            color="#FFA41C"
+                            height={50}
+                            width={50}
+                        />
+                    ) : (
+                        <input
+                            disabled={uploading}
+                            type="submit"
+                            value="Upload Content"
+                        />
+                    )}
                 </div>
             </form>
         </div>

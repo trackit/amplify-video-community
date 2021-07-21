@@ -19,6 +19,7 @@ import {
     removeThumbnailFile,
     removeMediasSections,
     setMediasSections,
+    createNewSection,
 } from './mutate'
 
 export {
@@ -38,4 +39,5 @@ export {
     removeThumbnailFile,
     removeMediasSections,
     setMediasSections,
+    createNewSection,
 }

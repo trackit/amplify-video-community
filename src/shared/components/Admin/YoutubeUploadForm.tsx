@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
+import Loader from 'react-loader-spinner'
 
 import { fetchSections, uploadContent } from '../../../shared/utilities'
 import { Section } from '../../../models'
 import { Media } from '../../../models'
 import * as APIt from '../../../API'
+import { navigate } from 'gatsby'
 
 const YoutubeUploadForm = () => {
+    const [uploading, setUploading] = useState<boolean>(false)
     const [youtubeSource, setYoutubeSource] = useState<string>('')
     const [title, setTitle] = useState<string>('')
     const [description, setDescription] = useState<string>('')
@@ -41,6 +44,7 @@ const YoutubeUploadForm = () => {
             return
         }
         ;(async () => {
+            setUploading(true)
             try {
                 const media: Media = {
                     id: '',
@@ -64,7 +68,10 @@ const YoutubeUploadForm = () => {
                     'admin/YoutubeUploadForm.tsx(uploadVideo):',
                     error
                 )
+                setUploading(false)
+                return
             }
+            navigate('/admin')
         })()
     }
 
@@ -205,7 +212,20 @@ const YoutubeUploadForm = () => {
                     </select>
                 </div>
                 <div style={{ margin: '15px' }}>
-                    <input type="submit" value="Upload Content" />
+                    {uploading ? (
+                        <Loader
+                            type="Rings"
+                            color="#FFA41C"
+                            height={50}
+                            width={50}
+                        />
+                    ) : (
+                        <input
+                            disabled={uploading}
+                            type="submit"
+                            value="Upload Content"
+                        />
+                    )}
                 </div>
             </form>
         </div>
