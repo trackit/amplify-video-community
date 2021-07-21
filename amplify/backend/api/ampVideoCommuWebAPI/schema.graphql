@@ -26,6 +26,25 @@ type Media
   thumbnail: Thumbnail @connection
 }
 
+type UserSubmissions
+@model
+@aws_iam
+@aws_cognito_user_pools
+@auth(
+  rules: [
+    { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
+    { allow: public, provider: iam, operations: [create, read] }
+  ]
+)
+{
+  id: ID!
+  title: String!
+  description: String!
+  comment: String!
+  source: Source
+  thumbnail: Thumbnail @connection
+}
+
 ### General
 
 type Thumbnail
