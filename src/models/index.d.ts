@@ -1,4 +1,4 @@
-import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplify/datastore";
+import { ModelInit, MutableModel } from "@aws-amplify/datastore";
 
 export enum Source {
   TWITCH = "TWITCH",
@@ -7,6 +7,34 @@ export enum Source {
 }
 
 
+
+type MediaMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
+type MediasSectionsMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
+type SectionMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
+type ThumbnailMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
+type UserSubmissionsMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
+type VideoOnDemandMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
+type LivestreamMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
 
 export declare class Media {
   readonly id: string;
@@ -18,8 +46,8 @@ export declare class Media {
   readonly thumbnail?: Thumbnail;
   readonly createdAt?: string;
   readonly updatedAt?: string;
-  constructor(init: ModelInit<Media>);
-  static copyOf(source: Media, mutator: (draft: MutableModel<Media>) => MutableModel<Media> | void): Media;
+  constructor(init: ModelInit<Media, MediaMetaData>);
+  static copyOf(source: Media, mutator: (draft: MutableModel<Media, MediaMetaData>) => MutableModel<Media, MediaMetaData> | void): Media;
 }
 
 export declare class MediasSections {
@@ -28,8 +56,8 @@ export declare class MediasSections {
   readonly media: Media;
   readonly createdAt?: string;
   readonly updatedAt?: string;
-  constructor(init: ModelInit<MediasSections>);
-  static copyOf(source: MediasSections, mutator: (draft: MutableModel<MediasSections>) => MutableModel<MediasSections> | void): MediasSections;
+  constructor(init: ModelInit<MediasSections, MediasSectionsMetaData>);
+  static copyOf(source: MediasSections, mutator: (draft: MutableModel<MediasSections, MediasSectionsMetaData>) => MutableModel<MediasSections, MediasSectionsMetaData> | void): MediasSections;
 }
 
 export declare class Section {
@@ -38,8 +66,8 @@ export declare class Section {
   readonly medias?: (MediasSections | null)[];
   readonly createdAt?: string;
   readonly updatedAt?: string;
-  constructor(init: ModelInit<Section>);
-  static copyOf(source: Section, mutator: (draft: MutableModel<Section>) => MutableModel<Section> | void): Section;
+  constructor(init: ModelInit<Section, SectionMetaData>);
+  static copyOf(source: Section, mutator: (draft: MutableModel<Section, SectionMetaData>) => MutableModel<Section, SectionMetaData> | void): Section;
 }
 
 export declare class Thumbnail {
@@ -47,8 +75,21 @@ export declare class Thumbnail {
   readonly ext: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
-  constructor(init: ModelInit<Thumbnail>);
-  static copyOf(source: Thumbnail, mutator: (draft: MutableModel<Thumbnail>) => MutableModel<Thumbnail> | void): Thumbnail;
+  constructor(init: ModelInit<Thumbnail, ThumbnailMetaData>);
+  static copyOf(source: Thumbnail, mutator: (draft: MutableModel<Thumbnail, ThumbnailMetaData>) => MutableModel<Thumbnail, ThumbnailMetaData> | void): Thumbnail;
+}
+
+export declare class UserSubmissions {
+  readonly id: string;
+  readonly title: string;
+  readonly description: string;
+  readonly comment: string;
+  readonly source?: Source | keyof typeof Source;
+  readonly thumbnail?: Thumbnail;
+  readonly createdAt?: string;
+  readonly updatedAt?: string;
+  constructor(init: ModelInit<UserSubmissions, UserSubmissionsMetaData>);
+  static copyOf(source: UserSubmissions, mutator: (draft: MutableModel<UserSubmissions, UserSubmissionsMetaData>) => MutableModel<UserSubmissions, UserSubmissionsMetaData> | void): UserSubmissions;
 }
 
 export declare class UserSubmissions {
@@ -70,8 +111,8 @@ export declare class VideoOnDemand {
   readonly src?: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
-  constructor(init: ModelInit<VideoOnDemand>);
-  static copyOf(source: VideoOnDemand, mutator: (draft: MutableModel<VideoOnDemand>) => MutableModel<VideoOnDemand> | void): VideoOnDemand;
+  constructor(init: ModelInit<VideoOnDemand, VideoOnDemandMetaData>);
+  static copyOf(source: VideoOnDemand, mutator: (draft: MutableModel<VideoOnDemand, VideoOnDemandMetaData>) => MutableModel<VideoOnDemand, VideoOnDemandMetaData> | void): VideoOnDemand;
 }
 
 export declare class Livestream {
@@ -81,6 +122,6 @@ export declare class Livestream {
   readonly isLive: boolean;
   readonly createdAt?: string;
   readonly updatedAt?: string;
-  constructor(init: ModelInit<Livestream>);
-  static copyOf(source: Livestream, mutator: (draft: MutableModel<Livestream>) => MutableModel<Livestream> | void): Livestream;
+  constructor(init: ModelInit<Livestream, LivestreamMetaData>);
+  static copyOf(source: Livestream, mutator: (draft: MutableModel<Livestream, LivestreamMetaData>) => MutableModel<Livestream, LivestreamMetaData> | void): Livestream;
 }

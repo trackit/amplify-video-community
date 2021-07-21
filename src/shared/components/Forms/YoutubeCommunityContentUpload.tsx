@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react'
 
-import { fetchSections, uploadContent } from '../../../utilities'
-import { Section } from '../../../../models'
-import { Media } from '../../../../models'
-import * as APIt from '../../../../API'
+import { fetchSections, uploadContent } from '../../utilities'
+import { Section } from '../../../models'
+import { Media } from '../../../models'
+import * as APIt from '../../../API'
 
-const CommunityContentUpload = () => {
+const YoutubeCommunityContentUpload = () => {
     const [youtubeSource, setYoutubeSource] = useState<string>('')
     const [title, setTitle] = useState<string>('')
     const [description, setDescription] = useState<string>('')
     const [commentForAdmin, setCommentForAdmin] = useState<string>('')
     const [thumbnailFile, setThumbnailFile] = useState<File | null>(null)
-    //const [highlighted, setHighlighted] = useState<boolean>(false)
     const [existingSections, setExistingSections] = useState<Array<Section>>([])
     const [selectedSections, setSelectedSections] = useState<Array<Section>>([])
 
@@ -22,7 +21,7 @@ const CommunityContentUpload = () => {
                 setExistingSections(data?.listSections?.items as Array<Section>)
             } catch (error) {
                 console.error(
-                    'Form/Youtube/AdminUpload.tsx(fetchSections):',
+                    'Form/Youtube/CommunityContentUpload.tsx(fetchSections):',
                     error
                 )
             }
@@ -63,7 +62,7 @@ const CommunityContentUpload = () => {
                 )
             } catch (error) {
                 console.error(
-                    'Form/Youtube/AdminUpload.tsx(uploadVideo):',
+                    'Form/Youtube/CommunityContentUpload.tsx(uploadVideo):',
                     error
                 )
             }
@@ -217,4 +216,4 @@ const CommunityContentUpload = () => {
     )
 }
 
-export { CommunityContentUpload }
+export { YoutubeCommunityContentUpload }
