@@ -51,6 +51,19 @@ export declare class Thumbnail {
   static copyOf(source: Thumbnail, mutator: (draft: MutableModel<Thumbnail>) => MutableModel<Thumbnail> | void): Thumbnail;
 }
 
+export declare class UserSubmissions {
+  readonly id: string;
+  readonly title: string;
+  readonly description: string;
+  readonly comment: string;
+  readonly source?: Source | keyof typeof Source;
+  readonly thumbnail?: Thumbnail;
+  readonly createdAt?: string;
+  readonly updatedAt?: string;
+  constructor(init: ModelInit<UserSubmissions>);
+  static copyOf(source: UserSubmissions, mutator: (draft: MutableModel<UserSubmissions>) => MutableModel<UserSubmissions> | void): UserSubmissions;
+}
+
 export declare class VideoOnDemand {
   readonly id: string;
   readonly media?: Media;

@@ -10,9 +10,9 @@ import {
     fetchMediaSections,
     removeMediasSections,
     setMediasSections as createMediasSections,
-} from '../../utilities'
-import { Media, MediasSections, Section, Source } from '../../../models'
-import { removeVideoOnDemand } from '../../utilities/mutate'
+} from '../../../utilities'
+import { Media, MediasSections, Section, Source } from '../../../../models'
+import { removeVideoOnDemand } from '../../../utilities/mutate'
 
 type MediaManagementListItemProps = {
     medias: Array<Media>

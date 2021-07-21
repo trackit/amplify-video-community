@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Loader from 'react-loader-spinner'
 
-import MediaManagementList from '../../../shared/components/MediaManagementList/MediaManagementList'
+import { MediaManagementList } from '../../../shared/components/'
 import { fetchMedias } from '../../../shared/utilities'
 import { AdminLayout } from '../../../shared/components'
 import { Media } from '../../../models'

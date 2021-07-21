@@ -89,6 +89,63 @@ export const onDeleteMedia = /* GraphQL */ `
     }
   }
 `;
+export const onCreateUserSubmissions = /* GraphQL */ `
+  subscription OnCreateUserSubmissions {
+    onCreateUserSubmissions {
+      id
+      title
+      description
+      comment
+      source
+      createdAt
+      updatedAt
+      thumbnail {
+        id
+        ext
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+export const onUpdateUserSubmissions = /* GraphQL */ `
+  subscription OnUpdateUserSubmissions {
+    onUpdateUserSubmissions {
+      id
+      title
+      description
+      comment
+      source
+      createdAt
+      updatedAt
+      thumbnail {
+        id
+        ext
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+export const onDeleteUserSubmissions = /* GraphQL */ `
+  subscription OnDeleteUserSubmissions {
+    onDeleteUserSubmissions {
+      id
+      title
+      description
+      comment
+      source
+      createdAt
+      updatedAt
+      thumbnail {
+        id
+        ext
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
 export const onCreateThumbnail = /* GraphQL */ `
   subscription OnCreateThumbnail {
     onCreateThumbnail {

@@ -98,6 +98,50 @@ export const deleteMedia = /* GraphQL */ `
     }
   }
 `;
+export const updateUserSubmissions = /* GraphQL */ `
+  mutation UpdateUserSubmissions(
+    $input: UpdateUserSubmissionsInput!
+    $condition: ModelUserSubmissionsConditionInput
+  ) {
+    updateUserSubmissions(input: $input, condition: $condition) {
+      id
+      title
+      description
+      comment
+      source
+      createdAt
+      updatedAt
+      thumbnail {
+        id
+        ext
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+export const deleteUserSubmissions = /* GraphQL */ `
+  mutation DeleteUserSubmissions(
+    $input: DeleteUserSubmissionsInput!
+    $condition: ModelUserSubmissionsConditionInput
+  ) {
+    deleteUserSubmissions(input: $input, condition: $condition) {
+      id
+      title
+      description
+      comment
+      source
+      createdAt
+      updatedAt
+      thumbnail {
+        id
+        ext
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
 export const createThumbnail = /* GraphQL */ `
   mutation CreateThumbnail(
     $input: CreateThumbnailInput!
@@ -514,6 +558,28 @@ export const deleteLivestream = /* GraphQL */ `
         sections {
           nextToken
         }
+      }
+    }
+  }
+`;
+export const createUserSubmissions = /* GraphQL */ `
+  mutation CreateUserSubmissions(
+    $input: CreateUserSubmissionsInput!
+    $condition: ModelUserSubmissionsConditionInput
+  ) {
+    createUserSubmissions(input: $input, condition: $condition) {
+      id
+      title
+      description
+      comment
+      source
+      createdAt
+      updatedAt
+      thumbnail {
+        id
+        ext
+        createdAt
+        updatedAt
       }
     }
   }

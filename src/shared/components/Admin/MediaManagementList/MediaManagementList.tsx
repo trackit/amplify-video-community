@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
-import { Media, Section } from '../../../models'
-import { fetchSections } from '../../utilities'
+import { Media, Section } from '../../../../models'
+import { fetchSections } from '../../../utilities'
 import MediaManagementListItem from './MediaManagementListItem'
 import MediaManagementListItemList from './MediaManagementListItemList'
 

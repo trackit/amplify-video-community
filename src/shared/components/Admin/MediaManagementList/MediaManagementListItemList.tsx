@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Media } from '../../../models'
+import { Media } from '../../../../models'
 
 type AssetsManagementListItemListProps = {
     media: Media

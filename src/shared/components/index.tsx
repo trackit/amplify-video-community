@@ -6,6 +6,8 @@ import SectionContainer from './Section/SectionContainer'
 import HighlightedSection from './Section/HighlightedSection'
 import VideoCardSlider from './VideoCardSlider/VideoCardSlider'
 import BasicLoader from './Loader'
+import MediaManagementList from './Admin/MediaManagementList/MediaManagementList'
+import SectionsManagementList from './Admin/SectionsManagementList/SectionsManagementList'
 
 export {
     NavBar,
@@ -16,4 +18,6 @@ export {
     HighlightedSection,
     VideoCardSlider,
     BasicLoader,
+    MediaManagementList,
+    SectionsManagementList,
 }

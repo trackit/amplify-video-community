@@ -5,7 +5,7 @@ import { navigate } from 'gatsby'
 
 import { fetchSections } from '../../../shared/utilities'
 import { AdminLayout } from '../../../shared/components'
-import SectionsManagementList from '../../../shared/components/SectionsManagementList/SectionsManagementList'
+import { SectionsManagementList } from '../../../shared/components'
 import { Section } from '../../../models'
 
 const TitleContainer = styled.div`
