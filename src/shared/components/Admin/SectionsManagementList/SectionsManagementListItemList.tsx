@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Section } from '../../../models'
+import { Section } from '../../../../models'
 
 type SectionsManagementListItemProps = {
     section: Section

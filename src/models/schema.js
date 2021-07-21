@@ -123,17 +123,6 @@ export const schema = {
                                 "operations": [
                                     "read"
                                 ]
-                            },
-                            {
-                                "groupClaim": "cognito:groups",
-                                "provider": "userPools",
-                                "allow": "groups",
-                                "groups": [
-                                    "everyone"
-                                ],
-                                "operations": [
-                                    "read"
-                                ]
                             }
                         ]
                     }
@@ -252,17 +241,6 @@ export const schema = {
                                 "operations": [
                                     "read"
                                 ]
-                            },
-                            {
-                                "groupClaim": "cognito:groups",
-                                "provider": "userPools",
-                                "allow": "groups",
-                                "groups": [
-                                    "everyone"
-                                ],
-                                "operations": [
-                                    "read"
-                                ]
                             }
                         ]
                     }
@@ -356,17 +334,6 @@ export const schema = {
                                 "operations": [
                                     "read"
                                 ]
-                            },
-                            {
-                                "groupClaim": "cognito:groups",
-                                "provider": "userPools",
-                                "allow": "groups",
-                                "groups": [
-                                    "everyone"
-                                ],
-                                "operations": [
-                                    "read"
-                                ]
                             }
                         ]
                     }
@@ -446,15 +413,120 @@ export const schema = {
                                 "operations": [
                                     "read"
                                 ]
-                            },
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "UserSubmissions": {
+            "name": "UserSubmissions",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "title": {
+                    "name": "title",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "description": {
+                    "name": "description",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "comment": {
+                    "name": "comment",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "source": {
+                    "name": "source",
+                    "isArray": false,
+                    "type": {
+                        "enum": "Source"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "thumbnail": {
+                    "name": "thumbnail",
+                    "isArray": false,
+                    "type": {
+                        "model": "Thumbnail"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetName": "userSubmissionsThumbnailId"
+                    }
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "UserSubmissions",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "aws_iam",
+                    "properties": {}
+                },
+                {
+                    "type": "aws_cognito_user_pools",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
                             {
                                 "groupClaim": "cognito:groups",
                                 "provider": "userPools",
                                 "allow": "groups",
                                 "groups": [
-                                    "everyone"
+                                    "Admin"
                                 ],
                                 "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            },
+                            {
+                                "allow": "public",
+                                "provider": "iam",
+                                "operations": [
+                                    "create",
                                     "read"
                                 ]
                             }
@@ -546,17 +618,6 @@ export const schema = {
                             {
                                 "allow": "public",
                                 "provider": "iam",
-                                "operations": [
-                                    "read"
-                                ]
-                            },
-                            {
-                                "groupClaim": "cognito:groups",
-                                "provider": "userPools",
-                                "allow": "groups",
-                                "groups": [
-                                    "everyone"
-                                ],
                                 "operations": [
                                     "read"
                                 ]
@@ -659,17 +720,6 @@ export const schema = {
                                 "operations": [
                                     "read"
                                 ]
-                            },
-                            {
-                                "groupClaim": "cognito:groups",
-                                "provider": "userPools",
-                                "allow": "groups",
-                                "groups": [
-                                    "everyone"
-                                ],
-                                "operations": [
-                                    "read"
-                                ]
                             }
                         ]
                     }
@@ -688,5 +738,5 @@ export const schema = {
         }
     },
     "nonModels": {},
-    "version": "98d6a8683f731119bb5b80dc678aeab6"
+    "version": "7b363a3a5f34d7cc818ecd668d75bef1"
 };

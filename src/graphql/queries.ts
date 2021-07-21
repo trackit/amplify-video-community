@@ -60,6 +60,51 @@ export const listMedia = /* GraphQL */ `
     }
   }
 `;
+export const getUserSubmissions = /* GraphQL */ `
+  query GetUserSubmissions($id: ID!) {
+    getUserSubmissions(id: $id) {
+      id
+      title
+      description
+      comment
+      source
+      createdAt
+      updatedAt
+      thumbnail {
+        id
+        ext
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+export const listUserSubmissions = /* GraphQL */ `
+  query ListUserSubmissions(
+    $filter: ModelUserSubmissionsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUserSubmissions(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        title
+        description
+        comment
+        source
+        createdAt
+        updatedAt
+        thumbnail {
+          id
+          ext
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`;
 export const getThumbnail = /* GraphQL */ `
   query GetThumbnail($id: ID!) {
     getThumbnail(id: $id) {

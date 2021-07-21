@@ -3,11 +3,19 @@ import { Storage } from 'aws-amplify'
 import { GraphQLResult } from '@aws-amplify/api-graphql'
 import { v4 as uuidv4 } from 'uuid'
 
-import { createSection } from '../../graphql/mutations'
+import {
+    createSection,
+    deleteMedia,
+    updateMedia,
+    deleteThumbnail,
+    deleteMediasSections,
+    deleteVideoOnDemand,
+    deleteLivestream,
+} from '../../graphql/mutations'
 import { uploadSourceSelf, uploadSourceYoutube } from './vod-mutate'
 import { uploadSourceTwitch } from './live-mutate'
 import * as APIt from '../../API'
-import { Media } from '../../models'
+import { Media, Thumbnail } from '../../models'
 
 import {
     createThumbnail,
@@ -26,14 +34,37 @@ const createNewSection = async (name: string) => {
     )
 }
 
-async function setMediasSections(
-    mediasSections: APIt.CreateMediasSectionsInput
-) {
+async function setMediasSections(input: APIt.CreateMediasSectionsInput) {
     return API.graphql(
         graphqlOperation(createMediasSections, {
-            input: mediasSections,
+            input,
         })
     ) as GraphQLResult<APIt.CreateMediasSectionsMutation>
+}
+
+async function removeMediasSections(input: APIt.DeleteMediasSectionsInput) {
+    return API.graphql(
+        graphqlOperation(deleteMediasSections, {
+            input,
+        })
+    ) as GraphQLResult<APIt.DeleteMediasSectionsInput>
+}
+
+async function removeThumbnailFile(thumbnail: Thumbnail | undefined) {
+    if (!thumbnail) {
+        return
+    }
+    await API.graphql(
+        graphqlOperation(deleteThumbnail, {
+            input: {
+                id: thumbnail.id,
+            },
+        })
+    )
+    await Storage.remove(`thumbnails/${thumbnail.id}.${thumbnail.ext}`, {
+        bucket: awsmobile.aws_user_files_s3_bucket,
+        level: 'public',
+    })
 }
 
 async function putThumbnailFile(
@@ -76,13 +107,45 @@ async function setMedia(input: APIt.CreateMediaInput) {
     )
 }
 
+async function removeVideoOnDemand(input: APIt.DeleteVideoOnDemandInput) {
+    return API.graphql(
+        graphqlOperation(deleteVideoOnDemand, {
+            input,
+        })
+    )
+}
+
+async function removeLivestream(input: APIt.DeleteLivestreamInput) {
+    return API.graphql(
+        graphqlOperation(deleteLivestream, {
+            input,
+        })
+    )
+}
+
+async function removeMedia(input: APIt.DeleteMediaInput) {
+    return API.graphql(
+        graphqlOperation(deleteMedia, {
+            input,
+        })
+    )
+}
+
+async function modifyMedia(input: APIt.UpdateMediaInput) {
+    return API.graphql(
+        graphqlOperation(updateMedia, {
+            input,
+        })
+    )
+}
+
 function checkfileExtention(filename: string) {
     const validThumbnailExtention = ['png', 'jpg', 'jpeg']
-    const validVodFileExtention = ['mp4', 'avi', 'mov', 'mkv']
+    // const validVodFileExtention = ['mp4', 'avi', 'mov', 'mkv']
     const filePart = filename.toLowerCase().split('.')
     return (
         !validThumbnailExtention.includes(filePart[filePart.length - 1]) &&
-        !validVodFileExtention.includes(filePart[filePart.length - 1]) &&
+        /*!validVodFileExtention.includes(filePart[filePart.length - 1]) &&*/
         filePart.length <= 1
     )
 }
@@ -140,4 +203,10 @@ export {
     setMediasSections,
     setThumbnail,
     checkfileExtention,
+    removeMedia,
+    modifyMedia,
+    removeThumbnailFile,
+    removeMediasSections,
+    removeVideoOnDemand,
+    removeLivestream,
 }

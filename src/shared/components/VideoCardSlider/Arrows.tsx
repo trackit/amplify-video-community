@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { CustomArrowProps } from 'react-slick'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 
 const StyledArrow = styled.div`
@@ -22,11 +23,7 @@ const StyledNextArrow = styled(StyledArrow)`
     top 50%;
 `
 
-type ArrowProps = {
-    onClick: () => void
-}
-
-const NextArrow = ({ onClick }: ArrowProps) => {
+const NextArrow = ({ onClick }: CustomArrowProps) => {
     return (
         <StyledNextArrow onClick={onClick}>
             <FaArrowRight />
@@ -39,7 +36,7 @@ const StyledPrevArrow = styled(StyledArrow)`
     top 50%;
 `
 
-const PrevArrow = ({ onClick }: ArrowProps) => {
+const PrevArrow = ({ onClick }: CustomArrowProps) => {
     return (
         <StyledPrevArrow onClick={onClick}>
             <FaArrowLeft />

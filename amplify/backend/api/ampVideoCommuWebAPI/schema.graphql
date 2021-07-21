@@ -14,7 +14,6 @@ type Media
     rules: [
       { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
       { allow: public, provider: iam, operations: [read] }
-      { allow: groups, groups: ["everyone"], operations: [read] }
     ]
   )
 {
@@ -23,6 +22,25 @@ type Media
   description: String!
   highlighted: Boolean!
   sections: [MediasSections] @connection(keyName: "byMedia", fields: ["id"])
+  source: Source
+  thumbnail: Thumbnail @connection
+}
+
+type UserSubmissions
+@model
+@aws_iam
+@aws_cognito_user_pools
+@auth(
+  rules: [
+    { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
+    { allow: public, provider: iam, operations: [create, read] }
+  ]
+)
+{
+  id: ID!
+  title: String!
+  description: String!
+  comment: String!
   source: Source
   thumbnail: Thumbnail @connection
 }
@@ -37,7 +55,6 @@ type Thumbnail
     rules: [
       { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
       { allow: public, provider: iam, operations: [read] }
-      { allow: groups, groups: ["everyone"], operations: [read] }
     ]
   )
 {
@@ -53,7 +70,6 @@ type Section
     rules: [
       { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
       { allow: public, provider: iam, operations: [read] }
-      { allow: groups, groups: ["everyone"], operations: [read] }
     ]
   )
 {
@@ -70,7 +86,6 @@ type MediasSections
     rules: [
       { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
       { allow: public, provider: iam, operations: [read] }
-      { allow: groups, groups: ["everyone"], operations: [read] }
     ]
   )
 @key(name: "bySection", fields: ["sectionID", "mediaID"])
@@ -92,7 +107,6 @@ type VideoOnDemand
     rules: [
       { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
       { allow: public, provider: iam, operations: [read] }
-      { allow: groups, groups: ["everyone"], operations: [read] }
     ]
   )
 {
@@ -111,7 +125,6 @@ type Livestream
     rules: [
       { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
       { allow: public, provider: iam, operations: [read] }
-      { allow: groups, groups: ["everyone"], operations: [read] }
     ]
   )
 {

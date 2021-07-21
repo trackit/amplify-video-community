@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { Section } from '../../../models'
+import { Section } from '../../../../models'
 import SectionsManagementListItem from './SectionsManagementListItem'
 import SectionsManagementListItemList from './SectionsManagementListItemList'
 

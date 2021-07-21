@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
-import { fetchSection } from '../../utilities/fetch'
-import { Section, VideoOnDemand } from '../../../models'
-import * as API from '../../../API'
-import { fetchVodAsset } from '../../utilities/vod-fetch'
+import { fetchSection } from '../../../utilities/fetch'
+import { Section, VideoOnDemand } from '../../../../models'
+import * as API from '../../../../API'
+import { fetchVodAsset } from '../../../utilities/vod-fetch'
 
 type SectionVideoProps = {
     media: API.MediasSections

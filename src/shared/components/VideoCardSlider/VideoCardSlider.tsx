@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import Slider from 'react-slick'
+import Slider, { Settings } from 'react-slick'
 
 import { NextArrow, PrevArrow } from './Arrows'
 import VideoCard from '../Video/VideoCard'
@@ -45,17 +45,17 @@ const VideoCardSlider = ({ vod, thumbnails }: VideoCardSliderProps) => {
     const slidesToShow = (slidesNumber: number) =>
         thumbnails.length >= slidesNumber ? slidesNumber : thumbnails.length
 
-    const sliderSettings = {
+    const sliderSettings: Settings = {
         infinite: true,
         className: 'center',
         centerMode: true,
-        lazyLoad: true,
+        lazyLoad: 'progressive',
         autoplay: false,
         autoplaySpeed: 3500,
         draggable: true,
         speed: 300,
         slidesToShow: slidesToShow(3),
-        centerPadding: 0,
+        centerPadding: '0',
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />,
         beforeChange: (current: number, next: number) => setImageIndex(next),
@@ -71,9 +71,9 @@ const VideoCardSlider = ({ vod, thumbnails }: VideoCardSliderProps) => {
 
     return (
         <StyledVideoCardSlider>
-            <Slider {...sliderSettings}>
-                {thumbnails &&
-                    thumbnails.map((thumbnail, idx) =>
+            {thumbnails && (
+                <Slider {...sliderSettings}>
+                    {thumbnails.map((thumbnail, idx) =>
                         idx === imageIndex ? (
                             <ActiveSlide key={thumbnail?.obj?.id}>
                                 <VideoCard
@@ -98,7 +98,8 @@ const VideoCardSlider = ({ vod, thumbnails }: VideoCardSliderProps) => {
                             </Slide>
                         )
                     )}
-            </Slider>
+                </Slider>
+            )}
         </StyledVideoCardSlider>
     )
 }
