@@ -14,6 +14,7 @@ import { uploadSourceSelf, uploadSourceYoutube } from './vod-mutate'
 
 import {
     uploadContent,
+    setUserSubmissions,
     removeMedia,
     modifyMedia,
     removeThumbnailFile,
@@ -21,6 +22,7 @@ import {
     setMediasSections,
     createNewSection,
 } from './mutate'
+import { uploadUserSubmissions } from './user-submission-mutate'
 
 export {
     fetchVodFiles,
@@ -40,4 +42,6 @@ export {
     removeMediasSections,
     setMediasSections,
     createNewSection,
+    setUserSubmissions,
+    uploadUserSubmissions,
 }

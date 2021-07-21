@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react'
 
-import { fetchSections, uploadContent } from '../../utilities'
-import { Section } from '../../../models'
-import { Media } from '../../../models'
-import * as APIt from '../../../API'
+import { fetchSections, uploadUserSubmissions } from '../../utilities'
+import { Section, UserSubmissions } from '../../../models'
 
 const YoutubeCommunityContentUpload = () => {
     const [youtubeSource, setYoutubeSource] = useState<string>('')
     const [title, setTitle] = useState<string>('')
     const [description, setDescription] = useState<string>('')
-    const [commentForAdmin, setCommentForAdmin] = useState<string>('')
+    const [comment, setComment] = useState<string>('')
     const [thumbnailFile, setThumbnailFile] = useState<File | null>(null)
     const [existingSections, setExistingSections] = useState<Array<Section>>([])
     const [selectedSections, setSelectedSections] = useState<Array<Section>>([])
@@ -21,7 +19,7 @@ const YoutubeCommunityContentUpload = () => {
                 setExistingSections(data?.listSections?.items as Array<Section>)
             } catch (error) {
                 console.error(
-                    'Form/Youtube/CommunityContentUpload.tsx(fetchSections):',
+                    'Form/YoutubeCommunityContentUpload.tsx(fetchSections):',
                     error
                 )
             }
@@ -42,27 +40,20 @@ const YoutubeCommunityContentUpload = () => {
         }
         ;(async () => {
             try {
-                const media: Media = {
+                const userSubmissions: UserSubmissions = {
                     id: '',
                     title,
                     description,
-                    highlighted: false,
-                    //commentForAdmin,
+                    comment: comment,
                 }
-                await uploadContent(
-                    media,
-                    APIt.Source.YOUTUBE,
-                    selectedSections.map((sec) => {
-                        return sec && sec.id
-                    }),
+                await uploadUserSubmissions(
+                    userSubmissions,
                     thumbnailFile,
-                    null,
-                    `https://youtube.com/embed/${youtubeID}`,
-                    ''
+                    `https://youtube.com/embed/${youtubeID}`
                 )
             } catch (error) {
                 console.error(
-                    'Form/Youtube/CommunityContentUpload.tsx(uploadVideo):',
+                    'Form/YoutubeCommunityContentUpload.tsx(uploadVideo):',
                     error
                 )
             }
@@ -200,11 +191,11 @@ const YoutubeCommunityContentUpload = () => {
                     <textarea
                         id="_add_vod_comment_for_admin"
                         placeholder="Comment for administrators"
-                        value={commentForAdmin}
+                        value={comment}
                         onChange={(
                             event: React.ChangeEvent<HTMLTextAreaElement>
                         ) => {
-                            setCommentForAdmin(event.target.value)
+                            setComment(event.target.value)
                         }}
                     />
                 </div>
