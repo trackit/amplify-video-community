@@ -1,12 +1,12 @@
 import React from 'react'
 
-import { AdminUpload } from '../../../shared/components/Form/Youtube/AdminUpload'
+import { YoutubeAdminUpload } from '../../../shared/components/Forms/YoutubeAdminUpload'
 import { AdminLayout } from '../../../shared/components'
 
 const CreateYoutube = () => {
     return (
         <AdminLayout>
-            <AdminUpload />
+            <YoutubeAdminUpload />
         </AdminLayout>
     )
 }
