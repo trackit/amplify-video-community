@@ -23,6 +23,7 @@ import {
     createMedia,
 } from '../../graphql/mutations'
 import awsmobile from '../../aws-exports'
+import { getAuthMode } from './helper'
 
 const createNewSection = async (name: string) => {
     return API.graphql(
@@ -108,11 +109,12 @@ async function setMedia(input: APIt.CreateMediaInput) {
 }
 
 async function setUserSubmissions(input: APIt.CreateUserSubmissionsInput) {
-    return API.graphql(
-        graphqlOperation(createUserSubmissions, {
-            input,
-        })
-    )
+    console.log(input)
+    return API.graphql({
+        query: createUserSubmissions,
+        authMode: getAuthMode(),
+        variables: input,
+    })
 }
 
 async function removeVideoOnDemand(input: APIt.DeleteVideoOnDemandInput) {

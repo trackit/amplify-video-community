@@ -1,12 +1,13 @@
 import { UserSubmissions } from '../../models'
 import {
     checkfileExtention,
-    putThumbnailFile,
-    setThumbnail,
+    //putThumbnailFile,
+    //setThumbnail,
     setUserSubmissions,
 } from './mutate'
 import { v4 as uuidv4 } from 'uuid'
-import { createVOD } from './vod-mutate'
+//import { createVOD } from './vod-mutate'
+import * as APIt from '../../API'
 
 const uploadUserSubmissions = async (
     userSubmissions: UserSubmissions,
@@ -20,16 +21,23 @@ const uploadUserSubmissions = async (
     }
     const thumbnailExtension = thumbnailFile.name.toLowerCase().split('.')
     try {
-        await putThumbnailFile(thumbnailFile, id, thumbnailExtension)
+        console.log(
+            'Should put ThumbnailFile',
+            thumbnailFile,
+            id,
+            thumbnailExtension
+        )
+        //await putThumbnailFile(thumbnailFile, id, thumbnailExtension)
     } catch (error) {
-        console.error('vod-mutate.ts(putThumbnailFile): ', error)
+        console.error('user-submission-mutate.ts(putThumbnailFile): ', error)
         return
     }
 
     try {
-        await setThumbnail(id, thumbnailExtension)
+        console.log('Should setThumbnail', id, thumbnailExtension)
+        //await setThumbnail(id, thumbnailExtension)
     } catch (error) {
-        console.error('vod-mutate.tx(setThumbnail): ', error)
+        console.error('user-submission-mutate.ts(setThumbnail): ', error)
         return
     }
 
@@ -40,20 +48,28 @@ const uploadUserSubmissions = async (
             description: userSubmissions.description,
             comment: userSubmissions.comment,
             userSubmissionsThumbnailId: id,
+            source: APIt.Source.YOUTUBE,
         })
     } catch (error) {
-        console.error('vod-mutate.tx(setMedia): ', error)
+        console.error('user-submission-mutate.ts(setUserSubmissions): ', error)
         return
     }
 
     try {
+        console.log('Should send VOD', {
+            id,
+            videoOnDemandMediaId: id,
+            src: youtubeSrc,
+        })
+        /*
         await createVOD({
             id,
             videoOnDemandMediaId: id,
             src: youtubeSrc,
         })
+        */
     } catch (error) {
-        console.error('vod-mutate.tx(createVOD): ', error)
+        console.error('user-submission-mutate.ts(createVOD): ', error)
         return
     }
 }
