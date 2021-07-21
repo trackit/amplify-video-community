@@ -13,7 +13,6 @@ import {
     deleteLivestream,
 } from '../../graphql/mutations'
 import { uploadSourceSelf, uploadSourceYoutube } from './vod-mutate'
-import { uploadSourceTwitch } from './live-mutate'
 import * as APIt from '../../API'
 import { Media, Thumbnail } from '../../models'
 
@@ -165,8 +164,7 @@ const uploadContent = async (
     sectionsId: Array<undefined | string>,
     thumbnailFile: File,
     vodFile: File | null,
-    youtubeSrc: string,
-    twitchSrc: string
+    youtubeSrc: string
 ) => {
     const id: string = uuidv4()
 
@@ -186,10 +184,6 @@ const uploadContent = async (
 
         case APIt.Source.YOUTUBE:
             await uploadSourceYoutube(id, media, thumbnailFile, youtubeSrc)
-            break
-
-        case APIt.Source.TWITCH:
-            await uploadSourceTwitch(id, media, thumbnailFile, twitchSrc)
             break
 
         default:

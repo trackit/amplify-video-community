@@ -1,7 +1,6 @@
 ### Interfaces
 
 enum Source {
-  TWITCH
   SELF
   YOUTUBE
   LIVESTREAM_SELF

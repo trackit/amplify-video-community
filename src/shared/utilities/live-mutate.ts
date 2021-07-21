@@ -1,17 +1,30 @@
+import { API, graphqlOperation } from 'aws-amplify'
+
 import * as APIt from '../../API'
+import { createLivestream } from '../../graphql/mutations'
 import { Media } from '../../models'
 import {
     checkfileExtention,
     putThumbnailFile,
     setThumbnail,
     setMedia,
+    setMediasSections,
 } from './mutate'
 
-const uploadSourceTwitch = async (
+async function setLivestream(input: APIt.CreateLivestreamInput) {
+    return API.graphql(
+        graphqlOperation(createLivestream, {
+            input,
+        })
+    )
+}
+
+const createNewLivestream = async (
     id: string,
     media: Media,
     thumbnailFile: File,
-    twitchSrc: string
+    src: string,
+    sectionsId: Array<undefined | string>
 ) => {
     if (checkfileExtention(thumbnailFile.name)) {
         return
@@ -20,14 +33,14 @@ const uploadSourceTwitch = async (
     try {
         await putThumbnailFile(thumbnailFile, id, thumbnailExtension)
     } catch (error) {
-        console.error('vod-mutate.ts(putThumbnailFile): ', error)
+        console.error('live-mutate.ts(putThumbnailFile): ', error)
         return
     }
 
     try {
         await setThumbnail(id, thumbnailExtension)
     } catch (error) {
-        console.error('vod-mutate.tx(setThumbnail): ', error)
+        console.error('live-mutate.tx(setThumbnail): ', error)
         return
     }
 
@@ -37,16 +50,35 @@ const uploadSourceTwitch = async (
             title: media.title,
             description: media.description,
             highlighted: media.highlighted,
-            source: APIt.Source.YOUTUBE,
+            source: APIt.Source.LIVESTREAM_SELF,
             mediaThumbnailId: id,
         })
     } catch (error) {
-        console.error('vod-mutate.tx(setMedia): ', error)
+        console.error('live-mutate.tx(setMedia): ', error)
         return
     }
-    console.log(twitchSrc)
-    // create livestream
-    // add created vod to its sections
+    try {
+        await setLivestream({
+            id,
+            url: src,
+            isLive: false,
+            livestreamMediaId: id,
+        })
+    } catch (error) {
+        console.error('live-mutate.tx(setLivestream): ', error)
+        return
+    }
+    try {
+        for (let i = 0; i < sectionsId.length; i++) {
+            await setMediasSections({
+                sectionID: sectionsId[i] as string,
+                mediaID: id,
+            })
+        }
+    } catch (error) {
+        console.error('live-mutate.tx(setMediasSections): ', error)
+        return
+    }
 }
 
-export { uploadSourceTwitch }
+export { createNewLivestream }
