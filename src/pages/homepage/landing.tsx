@@ -6,7 +6,6 @@ import Modal from 'react-modal'
 import intro from '../../videos/introduction-video.mp4'
 
 const LandingContainer = styled.div`
-  position: relative;
   background-color: black;
   width: 100vw;
   height: 100vh;
@@ -16,9 +15,10 @@ const VideoPlayer = styled.video`
   object-fit: cover;
   width: 100vw;
   height: 100vh;
-  position: fixed;
+  position: relative;
   top: 0;
   left: 0;
+  z-index: 1;
 `
 
 const TextContainer = styled.div`
@@ -26,16 +26,19 @@ const TextContainer = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
+  position: relative;
+  top: -100vh;
+  left: 0;
+  z-index: 2;
 `
 
 const TextWrapper = styled.div`
-  position: fixed;
   margin-left: 120px;
   width: 33%;
 `
 
 const TextShadow = css`
-  text-shadow: 0px 4px 8px black;
+  text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.6);
 `
 
 const Title = styled.h1`
@@ -96,7 +99,6 @@ const customStyles = {
   }
 };
 
-// Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement('#___gatsby');
 
 const Landing = () => {
