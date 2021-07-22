@@ -109,14 +109,10 @@ export const updateUserSubmissions = /* GraphQL */ `
       description
       comment
       source
+      src
+      email
       createdAt
       updatedAt
-      thumbnail {
-        id
-        ext
-        createdAt
-        updatedAt
-      }
     }
   }
 `;
@@ -131,14 +127,46 @@ export const deleteUserSubmissions = /* GraphQL */ `
       description
       comment
       source
+      src
+      email
       createdAt
       updatedAt
-      thumbnail {
-        id
-        ext
-        createdAt
-        updatedAt
-      }
+    }
+  }
+`;
+export const updateContentSubmission = /* GraphQL */ `
+  mutation UpdateContentSubmission(
+    $input: UpdateContentSubmissionInput!
+    $condition: ModelContentSubmissionConditionInput
+  ) {
+    updateContentSubmission(input: $input, condition: $condition) {
+      id
+      title
+      description
+      comment
+      source
+      src
+      email
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteContentSubmission = /* GraphQL */ `
+  mutation DeleteContentSubmission(
+    $input: DeleteContentSubmissionInput!
+    $condition: ModelContentSubmissionConditionInput
+  ) {
+    deleteContentSubmission(input: $input, condition: $condition) {
+      id
+      title
+      description
+      comment
+      source
+      src
+      email
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -573,14 +601,28 @@ export const createUserSubmissions = /* GraphQL */ `
       description
       comment
       source
+      src
+      email
       createdAt
       updatedAt
-      thumbnail {
-        id
-        ext
-        createdAt
-        updatedAt
-      }
+    }
+  }
+`;
+export const createContentSubmission = /* GraphQL */ `
+  mutation CreateContentSubmission(
+    $input: CreateContentSubmissionInput!
+    $condition: ModelContentSubmissionConditionInput
+  ) {
+    createContentSubmission(input: $input, condition: $condition) {
+      id
+      title
+      description
+      comment
+      source
+      src
+      email
+      createdAt
+      updatedAt
     }
   }
 `;

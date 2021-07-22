@@ -27,7 +27,7 @@ type Media
   thumbnail: Thumbnail @connection
 }
 
-type UserSubmissions
+type UserSubmissions # Deprecated (We need to redeploy a new backend to remove this)
 @model
 @aws_iam
 @aws_cognito_user_pools
@@ -39,11 +39,32 @@ type UserSubmissions
 )
 {
   id: ID!
-  title: String!
-  description: String!
-  comment: String!
+  title: String
+  description: String
+  comment: String
   source: Source
-  #thumbnail: Thumbnail @connection
+  src: String!
+  email: String!
+}
+
+type ContentSubmission
+@model
+@aws_iam
+@aws_cognito_user_pools
+@auth(
+  rules: [
+    { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
+    { allow: public, provider: iam, operations: [create, read] }
+  ]
+)
+{
+  id: ID!
+  title: String
+  description: String
+  comment: String
+  source: Source
+  src: String
+  email: String
 }
 
 ### General

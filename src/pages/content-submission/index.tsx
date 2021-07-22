@@ -1,12 +1,12 @@
 import React from 'react'
 
-import { YoutubeCommunityContentUpload } from '../../shared/components/Forms/YoutubeCommunityContentUpload'
+import { ContentSubmissionForm } from '../../shared/components/Forms/ContentSubmissionForm'
 import { Layout } from '../../shared/components'
 
 const CreateYoutube = () => {
     return (
         <Layout>
-            <YoutubeCommunityContentUpload />
+            <ContentSubmissionForm />
         </Layout>
     )
 }

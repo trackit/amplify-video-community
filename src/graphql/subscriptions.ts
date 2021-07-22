@@ -97,14 +97,10 @@ export const onCreateUserSubmissions = /* GraphQL */ `
       description
       comment
       source
+      src
+      email
       createdAt
       updatedAt
-      thumbnail {
-        id
-        ext
-        createdAt
-        updatedAt
-      }
     }
   }
 `;
@@ -116,14 +112,10 @@ export const onUpdateUserSubmissions = /* GraphQL */ `
       description
       comment
       source
+      src
+      email
       createdAt
       updatedAt
-      thumbnail {
-        id
-        ext
-        createdAt
-        updatedAt
-      }
     }
   }
 `;
@@ -135,14 +127,55 @@ export const onDeleteUserSubmissions = /* GraphQL */ `
       description
       comment
       source
+      src
+      email
       createdAt
       updatedAt
-      thumbnail {
-        id
-        ext
-        createdAt
-        updatedAt
-      }
+    }
+  }
+`;
+export const onCreateContentSubmission = /* GraphQL */ `
+  subscription OnCreateContentSubmission {
+    onCreateContentSubmission {
+      id
+      title
+      description
+      comment
+      source
+      src
+      email
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateContentSubmission = /* GraphQL */ `
+  subscription OnUpdateContentSubmission {
+    onUpdateContentSubmission {
+      id
+      title
+      description
+      comment
+      source
+      src
+      email
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteContentSubmission = /* GraphQL */ `
+  subscription OnDeleteContentSubmission {
+    onDeleteContentSubmission {
+      id
+      title
+      description
+      comment
+      source
+      src
+      email
+      createdAt
+      updatedAt
     }
   }
 `;

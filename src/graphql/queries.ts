@@ -68,14 +68,10 @@ export const getUserSubmissions = /* GraphQL */ `
       description
       comment
       source
+      src
+      email
       createdAt
       updatedAt
-      thumbnail {
-        id
-        ext
-        createdAt
-        updatedAt
-      }
     }
   }
 `;
@@ -92,14 +88,51 @@ export const listUserSubmissions = /* GraphQL */ `
         description
         comment
         source
+        src
+        email
         createdAt
         updatedAt
-        thumbnail {
-          id
-          ext
-          createdAt
-          updatedAt
-        }
+      }
+      nextToken
+    }
+  }
+`;
+export const getContentSubmission = /* GraphQL */ `
+  query GetContentSubmission($id: ID!) {
+    getContentSubmission(id: $id) {
+      id
+      title
+      description
+      comment
+      source
+      src
+      email
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listContentSubmissions = /* GraphQL */ `
+  query ListContentSubmissions(
+    $filter: ModelContentSubmissionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listContentSubmissions(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        title
+        description
+        comment
+        source
+        src
+        email
+        createdAt
+        updatedAt
       }
       nextToken
     }

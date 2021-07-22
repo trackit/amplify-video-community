@@ -23,7 +23,6 @@ import {
     createMedia,
 } from '../../graphql/mutations'
 import awsmobile from '../../aws-exports'
-import { getAuthMode } from './helper'
 
 const createNewSection = async (name: string) => {
     return API.graphql(
