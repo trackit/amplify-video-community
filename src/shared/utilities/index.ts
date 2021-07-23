@@ -23,7 +23,6 @@ import {
     setMediasSections,
     createNewSection,
 } from './mutate'
-import { uploadUserSubmissions } from './user-submission-mutate'
 
 export {
     fetchVodFiles,
@@ -44,6 +43,5 @@ export {
     setMediasSections,
     createNewSection,
     setUserSubmissions,
-    uploadUserSubmissions,
     setContentSubmission,
 }
