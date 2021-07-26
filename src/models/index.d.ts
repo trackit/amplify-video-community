@@ -2,8 +2,9 @@ import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplif
 
 export enum Source {
   TWITCH = "TWITCH",
+  SELF = "SELF",
   YOUTUBE = "YOUTUBE",
-  SELF = "SELF"
+  LIVESTREAM_SELF = "LIVESTREAM_SELF"
 }
 
 
@@ -53,6 +54,34 @@ export declare class Thumbnail {
 
 export declare class UserSubmissions {
   readonly id: string;
+  readonly title?: string;
+  readonly description?: string;
+  readonly comment?: string;
+  readonly source?: Source | keyof typeof Source;
+  readonly src: string;
+  readonly email: string;
+  readonly createdAt?: string;
+  readonly updatedAt?: string;
+  constructor(init: ModelInit<UserSubmissions>);
+  static copyOf(source: UserSubmissions, mutator: (draft: MutableModel<UserSubmissions>) => MutableModel<UserSubmissions> | void): UserSubmissions;
+}
+
+export declare class ContentSubmission {
+  readonly id: string;
+  readonly title?: string;
+  readonly description?: string;
+  readonly comment?: string;
+  readonly source?: Source | keyof typeof Source;
+  readonly src?: string;
+  readonly email?: string;
+  readonly createdAt?: string;
+  readonly updatedAt?: string;
+  constructor(init: ModelInit<ContentSubmission>);
+  static copyOf(source: ContentSubmission, mutator: (draft: MutableModel<ContentSubmission>) => MutableModel<ContentSubmission> | void): ContentSubmission;
+}
+
+export declare class UserSubmissions {
+  readonly id: string;
   readonly title: string;
   readonly description: string;
   readonly comment: string;
@@ -78,7 +107,7 @@ export declare class Livestream {
   readonly id: string;
   readonly media?: Media;
   readonly url?: string;
-  readonly isLive: boolean;
+  readonly isLive?: boolean;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<Livestream>);

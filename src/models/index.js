@@ -4,11 +4,12 @@ import { schema } from './schema';
 
 const Source = {
   "TWITCH": "TWITCH",
+  "SELF": "SELF",
   "YOUTUBE": "YOUTUBE",
-  "SELF": "SELF"
+  "LIVESTREAM_SELF": "LIVESTREAM_SELF"
 };
 
-const { Media, MediasSections, Section, Thumbnail, UserSubmissions, VideoOnDemand, Livestream } = initSchema(schema);
+const { Media, MediasSections, Section, Thumbnail, UserSubmissions, ContentSubmission, VideoOnDemand, Livestream } = initSchema(schema);
 
 export {
   Media,
@@ -16,6 +17,7 @@ export {
   Section,
   Thumbnail,
   UserSubmissions,
+  ContentSubmission,
   VideoOnDemand,
   Livestream,
   Source

@@ -12,8 +12,10 @@ import {
 } from './vod-fetch'
 import { uploadSourceSelf, uploadSourceYoutube } from './vod-mutate'
 
+import { setContentSubmission } from './content-submission-mutate'
 import {
     uploadContent,
+    setUserSubmissions,
     removeMedia,
     modifyMedia,
     removeThumbnailFile,
@@ -40,4 +42,6 @@ export {
     removeMediasSections,
     setMediasSections,
     createNewSection,
+    setUserSubmissions,
+    setContentSubmission,
 }

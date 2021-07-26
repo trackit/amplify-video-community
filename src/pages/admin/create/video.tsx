@@ -1,12 +1,12 @@
 import React from 'react'
 
-import { VideoUploadForm } from '../../../shared/components/Admin/VideoUploadForm'
+import { VideoAdminUpload } from '../../../shared/components/Forms/VideoAdminUpload'
 import { AdminLayout } from '../../../shared/components'
 
 const CreateVideo = () => {
     return (
         <AdminLayout>
-            <VideoUploadForm />
+            <VideoAdminUpload />
         </AdminLayout>
     )
 }

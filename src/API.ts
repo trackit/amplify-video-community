@@ -13,8 +13,9 @@ export type CreateMediaInput = {
 
 export enum Source {
   TWITCH = "TWITCH",
-  YOUTUBE = "YOUTUBE",
   SELF = "SELF",
+  YOUTUBE = "YOUTUBE",
+  LIVESTREAM_SELF = "LIVESTREAM_SELF",
 }
 
 
@@ -146,7 +147,8 @@ export type UpdateUserSubmissionsInput = {
   description?: string | null,
   comment?: string | null,
   source?: Source | null,
-  userSubmissionsThumbnailId?: string | null,
+  src?: string | null,
+  email?: string | null,
 };
 
 export type ModelUserSubmissionsConditionInput = {
@@ -154,6 +156,8 @@ export type ModelUserSubmissionsConditionInput = {
   description?: ModelStringInput | null,
   comment?: ModelStringInput | null,
   source?: ModelSourceInput | null,
+  src?: ModelStringInput | null,
+  email?: ModelStringInput | null,
   and?: Array< ModelUserSubmissionsConditionInput | null > | null,
   or?: Array< ModelUserSubmissionsConditionInput | null > | null,
   not?: ModelUserSubmissionsConditionInput | null,
@@ -162,16 +166,56 @@ export type ModelUserSubmissionsConditionInput = {
 export type UserSubmissions = {
   __typename: "UserSubmissions",
   id: string,
-  title: string,
-  description: string,
-  comment: string,
+  title?: string | null,
+  description?: string | null,
+  comment?: string | null,
   source?: Source | null,
+  src: string,
+  email: string,
   createdAt: string,
   updatedAt: string,
-  thumbnail?: Thumbnail | null,
 };
 
 export type DeleteUserSubmissionsInput = {
+  id: string,
+};
+
+export type UpdateContentSubmissionInput = {
+  id: string,
+  title?: string | null,
+  description?: string | null,
+  comment?: string | null,
+  source?: Source | null,
+  src?: string | null,
+  email?: string | null,
+};
+
+export type ModelContentSubmissionConditionInput = {
+  title?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  comment?: ModelStringInput | null,
+  source?: ModelSourceInput | null,
+  src?: ModelStringInput | null,
+  email?: ModelStringInput | null,
+  and?: Array< ModelContentSubmissionConditionInput | null > | null,
+  or?: Array< ModelContentSubmissionConditionInput | null > | null,
+  not?: ModelContentSubmissionConditionInput | null,
+};
+
+export type ContentSubmission = {
+  __typename: "ContentSubmission",
+  id: string,
+  title?: string | null,
+  description?: string | null,
+  comment?: string | null,
+  source?: Source | null,
+  src?: string | null,
+  email?: string | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type DeleteContentSubmissionInput = {
   id: string,
 };
 
@@ -292,7 +336,7 @@ export type DeleteVideoOnDemandInput = {
 export type CreateLivestreamInput = {
   id?: string | null,
   url?: string | null,
-  isLive: boolean,
+  isLive?: boolean | null,
   livestreamMediaId?: string | null,
 };
 
@@ -308,7 +352,7 @@ export type Livestream = {
   __typename: "Livestream",
   id: string,
   url?: string | null,
-  isLive: boolean,
+  isLive?: boolean | null,
   createdAt: string,
   updatedAt: string,
   media?: Media | null,
@@ -327,11 +371,22 @@ export type DeleteLivestreamInput = {
 
 export type CreateUserSubmissionsInput = {
   id?: string | null,
-  title: string,
-  description: string,
-  comment: string,
+  title?: string | null,
+  description?: string | null,
+  comment?: string | null,
   source?: Source | null,
-  userSubmissionsThumbnailId?: string | null,
+  src: string,
+  email: string,
+};
+
+export type CreateContentSubmissionInput = {
+  id?: string | null,
+  title?: string | null,
+  description?: string | null,
+  comment?: string | null,
+  source?: Source | null,
+  src?: string | null,
+  email?: string | null,
 };
 
 export type ModelMediaFilterInput = {
@@ -357,6 +412,8 @@ export type ModelUserSubmissionsFilterInput = {
   description?: ModelStringInput | null,
   comment?: ModelStringInput | null,
   source?: ModelSourceInput | null,
+  src?: ModelStringInput | null,
+  email?: ModelStringInput | null,
   and?: Array< ModelUserSubmissionsFilterInput | null > | null,
   or?: Array< ModelUserSubmissionsFilterInput | null > | null,
   not?: ModelUserSubmissionsFilterInput | null,
@@ -365,6 +422,25 @@ export type ModelUserSubmissionsFilterInput = {
 export type ModelUserSubmissionsConnection = {
   __typename: "ModelUserSubmissionsConnection",
   items?:  Array<UserSubmissions | null > | null,
+  nextToken?: string | null,
+};
+
+export type ModelContentSubmissionFilterInput = {
+  id?: ModelIDInput | null,
+  title?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  comment?: ModelStringInput | null,
+  source?: ModelSourceInput | null,
+  src?: ModelStringInput | null,
+  email?: ModelStringInput | null,
+  and?: Array< ModelContentSubmissionFilterInput | null > | null,
+  or?: Array< ModelContentSubmissionFilterInput | null > | null,
+  not?: ModelContentSubmissionFilterInput | null,
+};
+
+export type ModelContentSubmissionConnection = {
+  __typename: "ModelContentSubmissionConnection",
+  items?:  Array<ContentSubmission | null > | null,
   nextToken?: string | null,
 };
 
@@ -554,19 +630,14 @@ export type UpdateUserSubmissionsMutation = {
   updateUserSubmissions?:  {
     __typename: "UserSubmissions",
     id: string,
-    title: string,
-    description: string,
-    comment: string,
+    title?: string | null,
+    description?: string | null,
+    comment?: string | null,
     source?: Source | null,
+    src: string,
+    email: string,
     createdAt: string,
     updatedAt: string,
-    thumbnail?:  {
-      __typename: "Thumbnail",
-      id: string,
-      ext: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
   } | null,
 };
 
@@ -579,19 +650,54 @@ export type DeleteUserSubmissionsMutation = {
   deleteUserSubmissions?:  {
     __typename: "UserSubmissions",
     id: string,
-    title: string,
-    description: string,
-    comment: string,
+    title?: string | null,
+    description?: string | null,
+    comment?: string | null,
     source?: Source | null,
+    src: string,
+    email: string,
     createdAt: string,
     updatedAt: string,
-    thumbnail?:  {
-      __typename: "Thumbnail",
-      id: string,
-      ext: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
+  } | null,
+};
+
+export type UpdateContentSubmissionMutationVariables = {
+  input: UpdateContentSubmissionInput,
+  condition?: ModelContentSubmissionConditionInput | null,
+};
+
+export type UpdateContentSubmissionMutation = {
+  updateContentSubmission?:  {
+    __typename: "ContentSubmission",
+    id: string,
+    title?: string | null,
+    description?: string | null,
+    comment?: string | null,
+    source?: Source | null,
+    src?: string | null,
+    email?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteContentSubmissionMutationVariables = {
+  input: DeleteContentSubmissionInput,
+  condition?: ModelContentSubmissionConditionInput | null,
+};
+
+export type DeleteContentSubmissionMutation = {
+  deleteContentSubmission?:  {
+    __typename: "ContentSubmission",
+    id: string,
+    title?: string | null,
+    description?: string | null,
+    comment?: string | null,
+    source?: Source | null,
+    src?: string | null,
+    email?: string | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
@@ -983,7 +1089,7 @@ export type CreateLivestreamMutation = {
     __typename: "Livestream",
     id: string,
     url?: string | null,
-    isLive: boolean,
+    isLive?: boolean | null,
     createdAt: string,
     updatedAt: string,
     media?:  {
@@ -1020,7 +1126,7 @@ export type UpdateLivestreamMutation = {
     __typename: "Livestream",
     id: string,
     url?: string | null,
-    isLive: boolean,
+    isLive?: boolean | null,
     createdAt: string,
     updatedAt: string,
     media?:  {
@@ -1057,7 +1163,7 @@ export type DeleteLivestreamMutation = {
     __typename: "Livestream",
     id: string,
     url?: string | null,
-    isLive: boolean,
+    isLive?: boolean | null,
     createdAt: string,
     updatedAt: string,
     media?:  {
@@ -1093,19 +1199,34 @@ export type CreateUserSubmissionsMutation = {
   createUserSubmissions?:  {
     __typename: "UserSubmissions",
     id: string,
-    title: string,
-    description: string,
-    comment: string,
+    title?: string | null,
+    description?: string | null,
+    comment?: string | null,
     source?: Source | null,
+    src: string,
+    email: string,
     createdAt: string,
     updatedAt: string,
-    thumbnail?:  {
-      __typename: "Thumbnail",
-      id: string,
-      ext: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
+  } | null,
+};
+
+export type CreateContentSubmissionMutationVariables = {
+  input: CreateContentSubmissionInput,
+  condition?: ModelContentSubmissionConditionInput | null,
+};
+
+export type CreateContentSubmissionMutation = {
+  createContentSubmission?:  {
+    __typename: "ContentSubmission",
+    id: string,
+    title?: string | null,
+    description?: string | null,
+    comment?: string | null,
+    source?: Source | null,
+    src?: string | null,
+    email?: string | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
@@ -1187,19 +1308,14 @@ export type GetUserSubmissionsQuery = {
   getUserSubmissions?:  {
     __typename: "UserSubmissions",
     id: string,
-    title: string,
-    description: string,
-    comment: string,
+    title?: string | null,
+    description?: string | null,
+    comment?: string | null,
     source?: Source | null,
+    src: string,
+    email: string,
     createdAt: string,
     updatedAt: string,
-    thumbnail?:  {
-      __typename: "Thumbnail",
-      id: string,
-      ext: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
   } | null,
 };
 
@@ -1215,19 +1331,58 @@ export type ListUserSubmissionsQuery = {
     items?:  Array< {
       __typename: "UserSubmissions",
       id: string,
-      title: string,
-      description: string,
-      comment: string,
+      title?: string | null,
+      description?: string | null,
+      comment?: string | null,
       source?: Source | null,
+      src: string,
+      email: string,
       createdAt: string,
       updatedAt: string,
-      thumbnail?:  {
-        __typename: "Thumbnail",
-        id: string,
-        ext: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetContentSubmissionQueryVariables = {
+  id: string,
+};
+
+export type GetContentSubmissionQuery = {
+  getContentSubmission?:  {
+    __typename: "ContentSubmission",
+    id: string,
+    title?: string | null,
+    description?: string | null,
+    comment?: string | null,
+    source?: Source | null,
+    src?: string | null,
+    email?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListContentSubmissionsQueryVariables = {
+  filter?: ModelContentSubmissionFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListContentSubmissionsQuery = {
+  listContentSubmissions?:  {
+    __typename: "ModelContentSubmissionConnection",
+    items?:  Array< {
+      __typename: "ContentSubmission",
+      id: string,
+      title?: string | null,
+      description?: string | null,
+      comment?: string | null,
+      source?: Source | null,
+      src?: string | null,
+      email?: string | null,
+      createdAt: string,
+      updatedAt: string,
     } | null > | null,
     nextToken?: string | null,
   } | null,
@@ -1476,7 +1631,7 @@ export type GetLivestreamQuery = {
     __typename: "Livestream",
     id: string,
     url?: string | null,
-    isLive: boolean,
+    isLive?: boolean | null,
     createdAt: string,
     updatedAt: string,
     media?:  {
@@ -1516,7 +1671,7 @@ export type ListLivestreamsQuery = {
       __typename: "Livestream",
       id: string,
       url?: string | null,
-      isLive: boolean,
+      isLive?: boolean | null,
       createdAt: string,
       updatedAt: string,
       media?:  {
@@ -1634,19 +1789,14 @@ export type OnCreateUserSubmissionsSubscription = {
   onCreateUserSubmissions?:  {
     __typename: "UserSubmissions",
     id: string,
-    title: string,
-    description: string,
-    comment: string,
+    title?: string | null,
+    description?: string | null,
+    comment?: string | null,
     source?: Source | null,
+    src: string,
+    email: string,
     createdAt: string,
     updatedAt: string,
-    thumbnail?:  {
-      __typename: "Thumbnail",
-      id: string,
-      ext: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
   } | null,
 };
 
@@ -1654,19 +1804,14 @@ export type OnUpdateUserSubmissionsSubscription = {
   onUpdateUserSubmissions?:  {
     __typename: "UserSubmissions",
     id: string,
-    title: string,
-    description: string,
-    comment: string,
+    title?: string | null,
+    description?: string | null,
+    comment?: string | null,
     source?: Source | null,
+    src: string,
+    email: string,
     createdAt: string,
     updatedAt: string,
-    thumbnail?:  {
-      __typename: "Thumbnail",
-      id: string,
-      ext: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
   } | null,
 };
 
@@ -1674,19 +1819,59 @@ export type OnDeleteUserSubmissionsSubscription = {
   onDeleteUserSubmissions?:  {
     __typename: "UserSubmissions",
     id: string,
-    title: string,
-    description: string,
-    comment: string,
+    title?: string | null,
+    description?: string | null,
+    comment?: string | null,
     source?: Source | null,
+    src: string,
+    email: string,
     createdAt: string,
     updatedAt: string,
-    thumbnail?:  {
-      __typename: "Thumbnail",
-      id: string,
-      ext: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
+  } | null,
+};
+
+export type OnCreateContentSubmissionSubscription = {
+  onCreateContentSubmission?:  {
+    __typename: "ContentSubmission",
+    id: string,
+    title?: string | null,
+    description?: string | null,
+    comment?: string | null,
+    source?: Source | null,
+    src?: string | null,
+    email?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateContentSubmissionSubscription = {
+  onUpdateContentSubmission?:  {
+    __typename: "ContentSubmission",
+    id: string,
+    title?: string | null,
+    description?: string | null,
+    comment?: string | null,
+    source?: Source | null,
+    src?: string | null,
+    email?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteContentSubmissionSubscription = {
+  onDeleteContentSubmission?:  {
+    __typename: "ContentSubmission",
+    id: string,
+    title?: string | null,
+    description?: string | null,
+    comment?: string | null,
+    source?: Source | null,
+    src?: string | null,
+    email?: string | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
@@ -2013,7 +2198,7 @@ export type OnCreateLivestreamSubscription = {
     __typename: "Livestream",
     id: string,
     url?: string | null,
-    isLive: boolean,
+    isLive?: boolean | null,
     createdAt: string,
     updatedAt: string,
     media?:  {
@@ -2045,7 +2230,7 @@ export type OnUpdateLivestreamSubscription = {
     __typename: "Livestream",
     id: string,
     url?: string | null,
-    isLive: boolean,
+    isLive?: boolean | null,
     createdAt: string,
     updatedAt: string,
     media?:  {
@@ -2077,7 +2262,7 @@ export type OnDeleteLivestreamSubscription = {
     __typename: "Livestream",
     id: string,
     url?: string | null,
-    isLive: boolean,
+    isLive?: boolean | null,
     createdAt: string,
     updatedAt: string,
     media?:  {

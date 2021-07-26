@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Loader from 'react-loader-spinner'
 import { navigate } from 'gatsby'
 
-import { fetchSections, uploadContent } from '../../../shared/utilities'
+import { fetchSections, uploadContent } from '../../utilities'
 import { Section } from '../../../models'
 import { Media } from '../../../models'
 import * as APIt from '../../../API'
@@ -24,7 +24,7 @@ const YoutubeUploadForm = () => {
                 setExistingSections(data?.listSections?.items as Array<Section>)
             } catch (error) {
                 console.error(
-                    'admin/YoutubeUploadForm.tsx(fetchSections):',
+                    'Form/Youtube/AdminUpload.tsx(fetchSections):',
                     error
                 )
             }
@@ -65,7 +65,7 @@ const YoutubeUploadForm = () => {
                 )
             } catch (error) {
                 console.error(
-                    'admin/YoutubeUploadForm.tsx(uploadVideo):',
+                    'Form/Youtube/AdminUpload.tsx(uploadVideo):',
                     error
                 )
                 setUploading(false)
