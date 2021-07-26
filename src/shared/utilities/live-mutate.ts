@@ -1,4 +1,5 @@
 import { API, graphqlOperation } from 'aws-amplify'
+import { v4 as uuidv4 } from 'uuid'
 
 import * as APIt from '../../API'
 import { createLivestream } from '../../graphql/mutations'
@@ -20,12 +21,12 @@ async function setLivestream(input: APIt.CreateLivestreamInput) {
 }
 
 const createNewLivestream = async (
-    id: string,
     media: Media,
     thumbnailFile: File,
     src: string,
     sectionsId: Array<undefined | string>
 ) => {
+    const id: string = uuidv4()
     if (checkfileExtention(thumbnailFile.name)) {
         return
     }

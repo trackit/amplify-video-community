@@ -2,7 +2,8 @@
 
 const awsvideoconfig = {
     "awsInputVideo": "ampvideocommuwebvod-dev-input-4o5cgig7",
-    "awsOutputVideo": "d10sjps9rnmoab.cloudfront.net"
+    "awsOutputVideo": "d10sjps9rnmoab.cloudfront.net",
+    "awsOutputLiveLL": "https://lwhdhcoskwxw57.data.mediastore.us-west-2.amazonaws.com/p/index.m3u8"
 };
 
 export default awsvideoconfig;

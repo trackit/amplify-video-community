@@ -6,7 +6,7 @@ export {
     fetchMediaSections,
 } from './fetch'
 
-import {
+export {
     uploadContent,
     removeMedia,
     modifyMedia,
@@ -25,7 +25,7 @@ export {
 
 export { uploadSourceSelf, uploadSourceYoutube } from './vod-mutate'
 
-import { setContentSubmission } from './content-submission-mutate'
+export { setContentSubmission } from './content-submission-mutate'
 
 export { fetchLivestreams } from './live-fetch'
 

@@ -60,6 +60,12 @@ const Dashboard = () => {
                 navigate('/admin/sections/manage')
             },
         },
+        {
+            title: 'Livestream',
+            onClick: () => {
+                navigate('/admin/livestream')
+            },
+        },
     ]
 
     return (
