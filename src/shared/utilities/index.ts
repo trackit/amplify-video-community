@@ -14,7 +14,6 @@ export {
     removeMediasSections,
     setMediasSections,
     createNewSection,
-    setUserSubmissions,
 } from './mutate'
 
 export {
@@ -27,6 +26,6 @@ export { uploadSourceSelf, uploadSourceYoutube } from './vod-mutate'
 
 export { setContentSubmission } from './content-submission-mutate'
 
-export { fetchLivestreams } from './live-fetch'
+export { fetchLivestreams, fetchLivestream } from './live-fetch'
 
-export { createNewLivestream } from './live-mutate'
+export { createNewLivestream, modifyLivestream } from './live-mutate'

@@ -106,15 +106,6 @@ async function setMedia(input: APIt.CreateMediaInput) {
     )
 }
 
-async function setUserSubmissions(input: APIt.CreateUserSubmissionsInput) {
-    console.log(input)
-    return API.graphql({
-        query: createUserSubmissions,
-        authMode: getAuthMode(),
-        variables: input,
-    })
-}
-
 async function removeVideoOnDemand(input: APIt.DeleteVideoOnDemandInput) {
     return API.graphql(
         graphqlOperation(deleteVideoOnDemand, {
@@ -212,5 +203,4 @@ export {
     removeMediasSections,
     removeVideoOnDemand,
     removeLivestream,
-    setUserSubmissions,
 }

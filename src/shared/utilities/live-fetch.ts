@@ -3,7 +3,7 @@ import { GraphQLResult } from '@aws-amplify/api-graphql'
 
 import * as APIt from '../../API'
 import { getAuthMode } from './helper'
-import { listLivestreams } from '../../graphql/queries'
+import { listLivestreams, getLivestream } from '../../graphql/queries'
 
 async function fetchLivestreams() {
     return API.graphql({
@@ -12,4 +12,12 @@ async function fetchLivestreams() {
     }) as GraphQLResult<APIt.ListLivestreamsQuery>
 }
 
-export { fetchLivestreams }
+async function fetchLivestream(id: string) {
+    return API.graphql({
+        query: getLivestream,
+        authMode: getAuthMode(),
+        variables: { id },
+    }) as GraphQLResult<APIt.GetLivestreamQuery>
+}
+
+export { fetchLivestreams, fetchLivestream }

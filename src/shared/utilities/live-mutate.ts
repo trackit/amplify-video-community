@@ -2,7 +2,7 @@ import { API, graphqlOperation } from 'aws-amplify'
 import { v4 as uuidv4 } from 'uuid'
 
 import * as APIt from '../../API'
-import { createLivestream } from '../../graphql/mutations'
+import { createLivestream, updateLivestream } from '../../graphql/mutations'
 import { Media } from '../../models'
 import {
     checkfileExtention,
@@ -15,6 +15,14 @@ import {
 async function setLivestream(input: APIt.CreateLivestreamInput) {
     return API.graphql(
         graphqlOperation(createLivestream, {
+            input,
+        })
+    )
+}
+
+async function modifyLivestream(input: APIt.UpdateLivestreamInput) {
+    return API.graphql(
+        graphqlOperation(updateLivestream, {
             input,
         })
     )
@@ -82,4 +90,4 @@ const createNewLivestream = async (
     }
 }
 
-export { createNewLivestream }
+export { createNewLivestream, modifyLivestream }
