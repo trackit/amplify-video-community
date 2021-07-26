@@ -46,15 +46,18 @@ const StartButton = styled.button`
 const LivestreamManagement = () => {
     const [livestreams, setLivestreams] = useState<Array<Livestream>>([])
     const [loading, setLoading] = useState<boolean>(false)
+    const [title, setTitle] = useState<string>('')
+    const [description, setDescription] = useState<string>('')
 
     useEffect(() => {
         ;(async () => {
             setLoading(true)
             try {
                 const { data } = await fetchLivestreams()
-                setLivestreams(
-                    data?.listLivestreams?.items as Array<Livestream>
-                )
+                const lives = data?.listLivestreams?.items as Array<Livestream>
+                setTitle(lives[0].media?.title || '')
+                setDescription(lives[0].media?.description || '')
+                setLivestreams(lives)
             } catch (error) {
                 console.error(
                     'admin/livestream/index.tsx(fetchLivestreams):',
@@ -81,7 +84,7 @@ const LivestreamManagement = () => {
                         // TODO:
                         // video player for the livestream, show thumbnail
                         // when isLive => stop button,
-                        // when !isLive => start button, form to set title, desc, thumbnail
+                        // when !isLive => start button, form to set title, desc
                         console.log(live)
                         return (
                             live && (
@@ -98,6 +101,25 @@ const LivestreamManagement = () => {
                                             <StartButton>
                                                 Start Streaming
                                             </StartButton>
+                                            <input
+                                                type="text"
+                                                value={title}
+                                                onChange={(
+                                                    event: React.ChangeEvent<HTMLInputElement>
+                                                ) => {
+                                                    setTitle(event.target.value)
+                                                }}
+                                            />
+                                            <textarea
+                                                value={description}
+                                                onChange={(
+                                                    event: React.ChangeEvent<HTMLTextAreaElement>
+                                                ) => {
+                                                    setDescription(
+                                                        event.target.value
+                                                    )
+                                                }}
+                                            />
                                         </div>
                                     )}
                                 </div>

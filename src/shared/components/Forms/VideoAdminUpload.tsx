@@ -7,7 +7,7 @@ import { Section } from '../../../models'
 import { Media } from '../../../models'
 import * as APIt from '../../../API'
 
-const VideoUploadForm = () => {
+const VideoAdminUpload = () => {
     const [uploading, setUploading] = useState<boolean>(false)
     const [vodFile, setVodFile] = useState<File | null>(null)
     const [title, setTitle] = useState<string>('')
@@ -50,11 +50,10 @@ const VideoUploadForm = () => {
                     }),
                     thumbnailFile,
                     vodFile,
-                    '',
                     ''
                 )
             } catch (error) {
-                console.error('admin/VideoUploadForm.tsx(uploadVideo):', error)
+                console.error('admin/VideoAdminUpload.tsx(uploadVideo):', error)
                 setUploading(false)
                 return
             }
@@ -222,4 +221,4 @@ const VideoUploadForm = () => {
     )
 }
 
-export { VideoUploadForm }
+export { VideoAdminUpload }
