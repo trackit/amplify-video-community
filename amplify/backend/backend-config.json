@@ -52,7 +52,7 @@
     },
     "ampVideoCommuWebLive": {
       "service": "video",
-      "serviceType": "livestream",
+      "serviceType": "ivs",
       "providerPlugin": "awscloudformation"
     }
   },

@@ -1,23 +1,10 @@
 {
     "shared": {
-        "resourceName": "ampVideoCommuWebLive"
+        "resourceName": "ampVideoCommuWebLive",
+        "bucket": "amplify-ampvideocommuweb-dev-172928-deployment"
     },
-    "advanced": {
-        "gopSize": "1",
-        "gopPerSegment": "2",
-        "segsPerPlist": "3",
-        "advancedChoice": false
-    },
-    "mediaLive": {
-        "securityGroup": "0.0.0.0/0",
-        "ingestType": "RTMP_PUSH",
-        "encodingProfile": "FULL",
-        "autoStart": "YES"
-    },
-    "mediaStorage": {
-        "storageType": "mStore"
-    },
-    "cloudFront": {
-        "enableDistribution": "NO"
+    "channel": {
+        "channelQuality": "STANDARD",
+        "channelLatency": "LOW"
     }
 }
