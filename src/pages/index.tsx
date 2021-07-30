@@ -67,7 +67,7 @@ const HomePage = () => {
     })
 
     return (
-        <Layout overrideTheme={theme}>
+        <Layout overrideTheme={theme} removePaddingTop>
             <Landing />
             <IntroductionSection />
             <StreamingContent />

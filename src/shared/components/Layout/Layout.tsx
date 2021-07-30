@@ -96,9 +96,15 @@ type LayoutProps = {
     children: React.ReactNode
     seo?: SEOProps
     overrideTheme?: Theme
+    removePaddingTop?: boolean
 }
 
-const Layout = ({ children, seo, overrideTheme }: LayoutProps) => {
+const Layout = ({
+    children,
+    seo,
+    overrideTheme,
+    removePaddingTop,
+}: LayoutProps) => {
     const [usedTheme, setUsedTheme] = useState(overrideTheme || theme)
     const [headerHeight, setHeaderHeight] = useState(0)
 
@@ -122,7 +128,9 @@ const Layout = ({ children, seo, overrideTheme }: LayoutProps) => {
             />
             <Container>
                 <NavBar navbarTheme={usedTheme.palette.navbar} />
-                <SubBody style={{ paddingTop: headerHeight }}>
+                <SubBody
+                    style={{ paddingTop: !removePaddingTop ? headerHeight : 0 }}
+                >
                     {children}
                 </SubBody>
                 <Footer />
