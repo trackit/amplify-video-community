@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { AiOutlineSearch, AiOutlineSetting } from 'react-icons/ai'
-import styled, { DefaultTheme } from 'styled-components'
+import styled from 'styled-components'
 import { Auth } from 'aws-amplify'
 import { StaticImage } from 'gatsby-plugin-image'
 
 import HeaderLink from './Link'
 import Search from './Search'
+import { NavbarTheme } from '../theme'
 
 const Header = styled.header`
     box-sizing: border-box;
@@ -14,8 +14,8 @@ const Header = styled.header`
     justify-content: flex-end;
     align-items: center;
     padding: 0 50px;
-    background-color: ${(props) => props.theme.palette.navbar.main};
-    box-shadow: ${(props) => props.theme.palette.navbar.boxShadow};
+    background-color: ${(props) => props.theme.main};
+    box-shadow: ${(props) => props.theme.boxShadow};
     justify-content: space-between;
     height: 64px;
     position: fixed;
@@ -36,7 +36,7 @@ const LogoWrapper = styled.div`
 `
 
 const LogoText = styled.span`
-    color: ${(props) => props.theme.palette.navbar.amplifyText};
+    color: ${(props) => props.theme.amplifyText};
     margin-left: 10px;
     font-weight: 500;
     font-size: 18px;
@@ -56,10 +56,10 @@ const RightItemsWrapper = styled.div`
 `
 
 type NavBarProps = {
-    theme: any // TODO: create reel type
+    navbarTheme: NavbarTheme
 }
 
-const NavBar = ({ theme }: NavBarProps) => {
+const NavBar = ({ navbarTheme }: NavBarProps) => {
     const [groups, setGroups] = useState<Array<string>>([])
 
     useEffect(() => {
@@ -72,11 +72,11 @@ const NavBar = ({ theme }: NavBarProps) => {
     }, [])
 
     return (
-        <Header theme={theme}>
+        <Header id="video-community-header" theme={navbarTheme}>
             <LogoLink href="/">
                 <LogoWrapper>
-                    {theme.palette.navbar.amplifyLogo === 'light'
-                        ? <StaticImage
+                    {navbarTheme.amplifyLogo === 'light' ? (
+                        <StaticImage
                             backgroundColor="transparent"
                             placeholder="none"
                             style={{ height: '30px', width: '40px' }}
@@ -84,32 +84,52 @@ const NavBar = ({ theme }: NavBarProps) => {
                             alt="amplify"
                             src="../../../assets/logo/logo-light.png"
                         />
-                        : <StaticImage
+                    ) : (
+                        <StaticImage
                             backgroundColor="transparent"
                             placeholder="none"
                             style={{ height: '30px', width: '40px' }}
                             imgStyle={{ objectFit: 'contain' }}
                             alt="amplify"
                             src="../../../assets/logo/logo-dark.png"
-                        />}
-                    <LogoText theme={theme}>Amplify Video</LogoText>
+                        />
+                    )}
+                    <LogoText theme={navbarTheme}>Amplify Video</LogoText>
                 </LogoWrapper>
             </LogoLink>
             <RightItemsWrapper>
                 <LinkListContainer>
-                    <HeaderLink theme={theme} to="/videos" content="Videos" />
-                    <HeaderLink theme={theme} to="/live" content="Live" />
-                    <HeaderLink theme={theme} to="/webinars" content="Webinars" />
-                    <HeaderLink theme={theme} to="/about-amplify" content="About Amplify" />
                     <HeaderLink
-                        theme={theme}
+                        theme={navbarTheme}
+                        to="/videos"
+                        content="Videos"
+                    />
+                    <HeaderLink theme={navbarTheme} to="/live" content="Live" />
+                    <HeaderLink
+                        theme={navbarTheme}
+                        to="/webinars"
+                        content="Webinars"
+                    />
+                    <HeaderLink
+                        theme={navbarTheme}
+                        to="/about-amplify"
+                        content="About Amplify"
+                    />
+                    <HeaderLink
+                        theme={navbarTheme}
                         isExternal
                         to="https://docs-amplify.trackit.io/"
                         content="Documentation"
                     />
-                    {groups.includes('Admin') && (<HeaderLink theme={theme} to="/admin" content="Admin" />)}
+                    {groups.includes('Admin') && (
+                        <HeaderLink
+                            theme={navbarTheme}
+                            to="/admin"
+                            content="Admin"
+                        />
+                    )}
                 </LinkListContainer>
-                <Search theme={theme} to="/search" />
+                <Search theme={navbarTheme} to="/search" />
             </RightItemsWrapper>
         </Header>
     )

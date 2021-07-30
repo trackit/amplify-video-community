@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useLocation } from '@reach/router'
 import Amplify from 'aws-amplify'
-import styled, { DefaultTheme, ThemeProvider } from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
 import { Helmet } from 'react-helmet'
 import { graphql, useStaticQuery } from 'gatsby'
 
 import { NavBar } from '../'
-import theme from '../theme'
+import theme, { Theme } from '../theme'
 import awsmobile from '../../../aws-exports'
+import Footer from '../Footer/Footer'
 
 Amplify.configure(awsmobile)
 
@@ -79,27 +80,53 @@ const query = graphql`
     }
 `
 
+const Container = styled.div`
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+`
+
 const SubBody = styled.div`
     background-color: ${(props) => props.theme.palette.primary.background};
+    flex: 1;
+    p
 `
 
 type LayoutProps = {
     children: React.ReactNode
     seo?: SEOProps
-    navBarTheme?: DefaultTheme
+    overrideTheme?: Theme
 }
 
-const Layout = ({ children, seo, navBarTheme }: LayoutProps) => {
+const Layout = ({ children, seo, overrideTheme }: LayoutProps) => {
+    const [usedTheme, setUsedTheme] = useState(overrideTheme || theme)
+    const [headerHeight, setHeaderHeight] = useState(0)
+
+    useEffect(() => {
+        setUsedTheme(overrideTheme || theme)
+    }, [overrideTheme])
+
+    useEffect(() => {
+        setHeaderHeight(
+            document.getElementById('video-community-header')?.clientHeight || 0
+        )
+    })
+
     return (
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={usedTheme}>
             <SEO
                 title={seo?.title}
                 description={seo?.description}
                 image={seo?.image}
                 article={seo?.article}
             />
-            <NavBar theme={navBarTheme || theme} />
-            <SubBody>{children}</SubBody>
+            <Container>
+                <NavBar navbarTheme={usedTheme.palette.navbar} />
+                <SubBody style={{ paddingTop: headerHeight }}>
+                    {children}
+                </SubBody>
+                <Footer />
+            </Container>
         </ThemeProvider>
     )
 }

@@ -34,10 +34,10 @@ type BasicLoaderProps = {
 
 const BasicLoader = ({ style, loader }: BasicLoaderProps) => {
     const defaultStyle: CSS.Properties = {
-        position: 'fixed',
-        top: '50%',
-        left: '50%',
-        transform: 'translateX(-50%)',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1,
     }
 
     return (
@@ -47,7 +47,7 @@ const BasicLoader = ({ style, loader }: BasicLoaderProps) => {
                 color={loader?.color || '#FFA41C'}
                 height={loader?.height || 100}
                 width={loader?.width || 100}
-                timeout={loader?.timeout || 3000}
+                timeout={loader?.timeout || 30000}
             />
         </div>
     )
