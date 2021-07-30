@@ -24,7 +24,13 @@ export {
 
 export { uploadSourceSelf, uploadSourceYoutube } from './vod-mutate'
 
-export { setContentSubmission } from './content-submission-mutate'
+export {
+    setContentSubmission,
+    acceptContentSubmission,
+    declineContentSubmission,
+} from './content-submission-mutate'
+
+export { fetchContentSubmissions } from './content-submission-fetch'
 
 export { fetchLivestreams, fetchLivestream } from './live-fetch'
 

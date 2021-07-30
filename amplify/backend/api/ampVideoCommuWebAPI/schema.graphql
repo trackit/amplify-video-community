@@ -81,6 +81,7 @@ type Thumbnail
 {
   id: ID!
   ext: String!
+  src: String
 }
 
 type Section
