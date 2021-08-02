@@ -1,7 +1,6 @@
 import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplify/datastore";
 
 export enum Source {
-  TWITCH = "TWITCH",
   SELF = "SELF",
   YOUTUBE = "YOUTUBE",
   LIVESTREAM_SELF = "LIVESTREAM_SELF"
@@ -78,19 +77,6 @@ export declare class ContentSubmission {
   readonly updatedAt?: string;
   constructor(init: ModelInit<ContentSubmission>);
   static copyOf(source: ContentSubmission, mutator: (draft: MutableModel<ContentSubmission>) => MutableModel<ContentSubmission> | void): ContentSubmission;
-}
-
-export declare class UserSubmissions {
-  readonly id: string;
-  readonly title: string;
-  readonly description: string;
-  readonly comment: string;
-  readonly source?: Source | keyof typeof Source;
-  readonly thumbnail?: Thumbnail;
-  readonly createdAt?: string;
-  readonly updatedAt?: string;
-  constructor(init: ModelInit<UserSubmissions>);
-  static copyOf(source: UserSubmissions, mutator: (draft: MutableModel<UserSubmissions>) => MutableModel<UserSubmissions> | void): UserSubmissions;
 }
 
 export declare class VideoOnDemand {

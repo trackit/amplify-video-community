@@ -8,6 +8,7 @@ import VideoCardSlider from './VideoCardSlider/VideoCardSlider'
 import BasicLoader from './Loader'
 import MediaManagementList from './Admin/MediaManagementList/MediaManagementList'
 import SectionsManagementList from './Admin/SectionsManagementList/SectionsManagementList'
+import SubmissionsManagementList from './Admin/SubmissionsManagementList/SubmissionsManagementList'
 
 export {
     NavBar,
@@ -20,4 +21,5 @@ export {
     BasicLoader,
     MediaManagementList,
     SectionsManagementList,
+    SubmissionsManagementList,
 }

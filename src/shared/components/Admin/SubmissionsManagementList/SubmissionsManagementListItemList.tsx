@@ -1,21 +1,21 @@
 import React, { useState } from 'react'
-import { DateTime } from 'luxon'
 
-import { Media } from '../../../../models'
+import { ContentSubmission } from '../../../../models'
 
-type AssetsManagementListItemListProps = {
-    media: Media
-    selectedMedia: Media | null
-    setSelectedMedia: React.Dispatch<React.SetStateAction<Media | null>>
+type SubmissionsListItemListProps = {
+    contentSubmission: ContentSubmission
+    selectedContentSubmission: ContentSubmission | null
+    setSelectedContentSubmission: React.Dispatch<
+        React.SetStateAction<ContentSubmission | null>
+    >
 }
 
-const AssetsManagementListItemList = ({
-    media,
-    selectedMedia,
-    setSelectedMedia,
-}: AssetsManagementListItemListProps) => {
+const SubmissionsListItemList = ({
+    contentSubmission,
+    selectedContentSubmission,
+    setSelectedContentSubmission,
+}: SubmissionsListItemListProps) => {
     const [hover, setHover] = useState<boolean>(false)
-    const createdAtDate = DateTime.fromISO(media.createdAt || '')
     const hoverStyles = {
         backgroundColor: '#969696',
         cursor: 'pointer',
@@ -23,18 +23,19 @@ const AssetsManagementListItemList = ({
     const selectedStyles = {
         backgroundColor: '#E3E3E3',
     }
-
     return (
-        media && (
+        contentSubmission && (
             <div
                 style={{
                     borderBottom: 'solid 1px black',
                     display: 'flex',
                     ...(hover ? hoverStyles : null),
-                    ...(selectedMedia === media ? selectedStyles : null),
+                    ...(selectedContentSubmission === contentSubmission
+                        ? selectedStyles
+                        : null),
                 }}
                 onClick={() => {
-                    setSelectedMedia(media)
+                    setSelectedContentSubmission(contentSubmission)
                 }}
                 onMouseEnter={() => {
                     setHover(true)
@@ -44,9 +45,8 @@ const AssetsManagementListItemList = ({
                 }}
             >
                 <div>
-                    <p>{media?.title}</p>
-                    <p>{media?.description}</p>
-                    <p>{createdAtDate.toLocaleString(DateTime.DATETIME_MED)}</p>
+                    <p>{contentSubmission?.title}</p>
+                    <p>{contentSubmission?.description}</p>
                 </div>
                 <div>
                     <p>{'>'}</p>
@@ -56,4 +56,4 @@ const AssetsManagementListItemList = ({
     )
 }
 
-export default AssetsManagementListItemList
+export default SubmissionsListItemList

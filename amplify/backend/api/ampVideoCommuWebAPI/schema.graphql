@@ -1,7 +1,6 @@
 ### Interfaces
 
 enum Source {
-  TWITCH
   SELF
   YOUTUBE
   LIVESTREAM_SELF
@@ -82,6 +81,7 @@ type Thumbnail
 {
   id: ID!
   ext: String!
+  src: String
 }
 
 type Section

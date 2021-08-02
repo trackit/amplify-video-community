@@ -12,7 +12,6 @@ export type CreateMediaInput = {
 };
 
 export enum Source {
-  TWITCH = "TWITCH",
   SELF = "SELF",
   YOUTUBE = "YOUTUBE",
   LIVESTREAM_SELF = "LIVESTREAM_SELF",

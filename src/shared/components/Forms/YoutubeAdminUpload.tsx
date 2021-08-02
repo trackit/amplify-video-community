@@ -7,7 +7,7 @@ import { Section } from '../../../models'
 import { Media } from '../../../models'
 import * as APIt from '../../../API'
 
-const YoutubeUploadForm = () => {
+const YoutubeAdminUpload = () => {
     const [uploading, setUploading] = useState<boolean>(false)
     const [youtubeSource, setYoutubeSource] = useState<string>('')
     const [title, setTitle] = useState<string>('')
@@ -60,8 +60,7 @@ const YoutubeUploadForm = () => {
                     }),
                     thumbnailFile,
                     null,
-                    `https://youtube.com/embed/${youtubeID}`,
-                    ''
+                    `https://youtube.com/embed/${youtubeID}`
                 )
             } catch (error) {
                 console.error(
@@ -232,4 +231,4 @@ const YoutubeUploadForm = () => {
     )
 }
 
-export { YoutubeUploadForm }
+export { YoutubeAdminUpload }

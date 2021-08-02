@@ -45,7 +45,7 @@ const SectionContainer = ({ section, vodAssets, thumbnails }: SectionProps) => {
         swipeToSlide: true,
         speed: 300,
         slidesToShow: slidesToShow(5),
-        centerPadding: 0,
+        centerPadding: '0',
         responsive: [
             {
                 breakpoint: 1700,

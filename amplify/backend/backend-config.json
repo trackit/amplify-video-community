@@ -49,6 +49,11 @@
       "service": "video",
       "serviceType": "video-on-demand",
       "providerPlugin": "awscloudformation"
+    },
+    "ampVideoCommuWebLive": {
+      "service": "video",
+      "serviceType": "ivs",
+      "providerPlugin": "awscloudformation"
     }
   },
   "storage": {

@@ -13,7 +13,6 @@ import {
     deleteLivestream,
 } from '../../graphql/mutations'
 import { uploadSourceSelf, uploadSourceYoutube } from './vod-mutate'
-import { uploadSourceTwitch } from './live-mutate'
 import * as APIt from '../../API'
 import { Media, Thumbnail } from '../../models'
 
@@ -107,15 +106,6 @@ async function setMedia(input: APIt.CreateMediaInput) {
     )
 }
 
-async function setUserSubmissions(input: APIt.CreateUserSubmissionsInput) {
-    console.log(input)
-    return API.graphql({
-        query: createUserSubmissions,
-        authMode: getAuthMode(),
-        variables: input,
-    })
-}
-
 async function removeVideoOnDemand(input: APIt.DeleteVideoOnDemandInput) {
     return API.graphql(
         graphqlOperation(deleteVideoOnDemand, {
@@ -165,8 +155,7 @@ const uploadContent = async (
     sectionsId: Array<undefined | string>,
     thumbnailFile: File,
     vodFile: File | null,
-    youtubeSrc: string,
-    twitchSrc: string
+    youtubeSrc: string
 ) => {
     const id: string = uuidv4()
 
@@ -186,10 +175,6 @@ const uploadContent = async (
 
         case APIt.Source.YOUTUBE:
             await uploadSourceYoutube(id, media, thumbnailFile, youtubeSrc)
-            break
-
-        case APIt.Source.TWITCH:
-            await uploadSourceTwitch(id, media, thumbnailFile, twitchSrc)
             break
 
         default:
@@ -218,5 +203,4 @@ export {
     removeMediasSections,
     removeVideoOnDemand,
     removeLivestream,
-    setUserSubmissions,
 }
