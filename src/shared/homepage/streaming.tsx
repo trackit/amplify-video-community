@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import LiveSlider from '../components/LiveSlider/slider'
+
 import { Livestream, Thumbnail } from '../../models'
 
 const Container = styled.div`
