@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FaAws, FaGithub } from 'react-icons/fa'
-import LandingButton from './components/Button/link'
+import LandingButton from '../components/Button/link'
 
 import Logo from '../../assets/logo/logo-dark.svg'
 

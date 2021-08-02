@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import LandingLink from '../../../pages/homepage/components/Button/link'
+import LandingLink from '../Button/link'
 
 const Container = styled.div`
     background-color: #242f3e;

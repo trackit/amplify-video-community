@@ -53,16 +53,30 @@ type Props = {
     name: string
     multipleLine?: boolean
     last?: boolean
+    onChangeInput?: React.ChangeEventHandler<HTMLInputElement>
+    onChangeTextArea?: React.ChangeEventHandler<HTMLTextAreaElement>
+    value: string
 }
 
-const FormInput = ({ name, multipleLine, last }: Props) => {
+const FormInput = ({
+    name,
+    multipleLine,
+    last,
+    onChangeInput,
+    onChangeTextArea,
+    value,
+}: Props) => {
     return (
         <Container last={last} multipleLine={multipleLine}>
             <FiedNameContainer>
                 <FieldName>{name}</FieldName>
             </FiedNameContainer>
             <InputContainer>
-                {multipleLine ? <TextArea /> : <Input />}
+                {multipleLine ? (
+                    <TextArea onChange={onChangeTextArea} value={value} />
+                ) : (
+                    <Input onChange={onChangeInput} value={value} />
+                )}
             </InputContainer>
         </Container>
     )

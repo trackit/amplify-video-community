@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 
 import { Layout } from '../shared/components'
-import Landing from './homepage/landing'
-import CommunityContent from './homepage/communityContent'
-import IntroductionSection from './homepage/introduction'
-import StreamingContent from './homepage/streaming'
-import Form from './homepage/form'
+import Landing from '../shared/homepage/landing'
+import CommunityContent from '../shared/homepage/communityContent'
+import IntroductionSection from '../shared/homepage/introduction'
+import StreamingContent from '../shared/homepage/streaming'
+import Form from '../shared/homepage/form'
 import defaultTheme, {
     NavbarTheme,
     defaultNavbar,
