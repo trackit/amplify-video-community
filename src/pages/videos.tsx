@@ -22,6 +22,10 @@ const Container = styled.div`
     gap: 25px;
 `
 
+const LoaderWrapper = styled.div`
+    padding-top: 50px;
+`
+
 const VodApp = () => {
     const [vodAssets, setVodAssets] = useState<Array<VideoOnDemand>>([])
     const [thumbnails, setThumbnails] = useState<
@@ -116,36 +120,43 @@ const VodApp = () => {
 
     return (
         <Layout>
-            {loadingVodFiles || loadingSections ? (
-                <BasicLoader />
-            ) : (
-                <Container>
-                    <VideoCardSlider vod={vodAssets} thumbnails={thumbnails} />
-                    {sections &&
-                        sections.map((section: Section) => {
-                            return section.label === 'Highlighted' ? (
-                                <HighlightedSection
-                                    key={section.id}
-                                    title={section.label}
-                                    vodAsset={vodAssets
-                                        .filter(
-                                            (item: VideoOnDemand) =>
-                                                item.media?.highlighted
-                                        )
-                                        .pop()}
-                                    thumbnails={thumbnails}
-                                />
-                            ) : (
-                                <SectionContainer
-                                    key={section.id}
-                                    section={section}
-                                    vodAssets={vodAssets}
-                                    thumbnails={thumbnails}
-                                />
-                            )
-                        })}
-                </Container>
-            )}
+            <Container>
+                {loadingVodFiles || loadingSections ? (
+                    <LoaderWrapper>
+                        <BasicLoader />
+                    </LoaderWrapper>
+                ) : (
+                    <>
+                        <VideoCardSlider
+                            vod={vodAssets}
+                            thumbnails={thumbnails}
+                        />
+                        {sections &&
+                            sections.map((section: Section) => {
+                                return section.label === 'Highlighted' ? (
+                                    <HighlightedSection
+                                        key={section.id}
+                                        title={section.label}
+                                        vodAsset={vodAssets
+                                            .filter(
+                                                (item: VideoOnDemand) =>
+                                                    item.media?.highlighted
+                                            )
+                                            .pop()}
+                                        thumbnails={thumbnails}
+                                    />
+                                ) : (
+                                    <SectionContainer
+                                        key={section.id}
+                                        section={section}
+                                        vodAssets={vodAssets}
+                                        thumbnails={thumbnails}
+                                    />
+                                )
+                            })}
+                    </>
+                )}
+            </Container>
         </Layout>
     )
 }

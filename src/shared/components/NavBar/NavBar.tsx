@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { AiOutlineSearch, AiOutlineSetting } from 'react-icons/ai'
-import styled, { DefaultTheme } from 'styled-components'
+import styled from 'styled-components'
 import { Auth } from 'aws-amplify'
-import { Link as GatsbyLink } from 'gatsby'
 import { StaticImage } from 'gatsby-plugin-image'
+
+import HeaderLink from './Link'
+import Search from './Search'
+import { NavbarTheme } from '../theme'
 
 const Header = styled.header`
     box-sizing: border-box;
@@ -11,70 +13,53 @@ const Header = styled.header`
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding: 5px 10px;
-    background-color: ${(props) => props.theme.palette.navbar.main};
-    box-shadow: ${(props) => props.theme.palette.navbar.boxShadow};
+    padding: 0 50px;
+    background-color: ${(props) => props.theme.main};
+    box-shadow: ${(props) => props.theme.boxShadow};
     justify-content: space-between;
     height: 64px;
-    position: sticky;
+    position: fixed;
     top: 0;
     z-index: 100;
     width: 100%;
+    transition: 0.2s;
 `
 
 const LogoLink = styled.a`
-    margin-left: 50px;
-    height: 50px;
-    width: 150px;
-`
-
-const Link = styled(GatsbyLink)`
-    color: ${(props) => props.theme.palette.navbar.contrastText};
     text-decoration: none;
-
-    &:hover {
-        cursor: pointer;
-    }
+    padding: 5px 0;
 `
 
-const ExternalLink = styled.a`
-    color: ${(props) => props.theme.palette.navbar.contrastText};
-    text-decoration: none;
-
-    &:hover {
-        cursor: pointer;
-    }
+const LogoWrapper = styled.div`
+    display: flex;
+    align-items: center;
 `
 
-const Container = styled.ul`
+const LogoText = styled.span`
+    color: ${(props) => props.theme.amplifyText};
+    margin-left: 10px;
+    font-weight: 500;
+    font-size: 18px;
+`
+
+const LinkListContainer = styled.ul`
     list-style: none;
     display: flex;
-    margin-right: 50px;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 `
 
-const Item = styled.li`
-    padding: 0 20px;
-    white-space: nowrap;
+const RightItemsWrapper = styled.div`
+    display: flex;
+    height: 100%;
 `
-
-type ToggleProps = {
-    to: string
-    content: React.ReactElement
-}
-
-const Toggle = ({ to, content }: ToggleProps) => {
-    return (
-        <Item>
-            <Link to={to}>{content}</Link>
-        </Item>
-    )
-}
 
 type NavBarProps = {
-    theme: DefaultTheme
+    navbarTheme: NavbarTheme
 }
 
-const NavBar = ({ theme }: NavBarProps) => {
+const NavBar = ({ navbarTheme }: NavBarProps) => {
     const [groups, setGroups] = useState<Array<string>>([])
 
     useEffect(() => {
@@ -87,34 +72,65 @@ const NavBar = ({ theme }: NavBarProps) => {
     }, [])
 
     return (
-        <Header theme={theme}>
+        <Header id="video-community-header" theme={navbarTheme}>
             <LogoLink href="/">
-                <StaticImage
-                    style={{ height: '50px' }}
-                    imgStyle={{ objectFit: 'contain', width: '150px' }}
-                    alt="amplify"
-                    src="../../../images/amplify.png"
-                />
+                <LogoWrapper>
+                    {navbarTheme.amplifyLogo === 'light' ? (
+                        <StaticImage
+                            backgroundColor="transparent"
+                            placeholder="none"
+                            style={{ height: '30px', width: '40px' }}
+                            imgStyle={{ objectFit: 'contain' }}
+                            alt="amplify"
+                            src="../../../assets/logo/logo-light.png"
+                        />
+                    ) : (
+                        <StaticImage
+                            backgroundColor="transparent"
+                            placeholder="none"
+                            style={{ height: '30px', width: '40px' }}
+                            imgStyle={{ objectFit: 'contain' }}
+                            alt="amplify"
+                            src="../../../assets/logo/logo-dark.png"
+                        />
+                    )}
+                    <LogoText theme={navbarTheme}>Amplify Video</LogoText>
+                </LogoWrapper>
             </LogoLink>
-            <Container>
-                <Toggle to="/videos" content={<>Videos</>} />
-                <Toggle to="/live" content={<>Live</>} />
-                <Toggle to="/webinars" content={<>Webinars</>} />
-                <Toggle to="/about-amplify" content={<>About Amplify</>} />
-                <Item>
-                    <ExternalLink
-                        href="https://docs-amplify.trackit.io/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Documentation
-                    </ExternalLink>
-                </Item>
-                <Toggle to="/search" content={<AiOutlineSearch />} />
-                {groups.includes('Admin') && (
-                    <Toggle to="/admin" content={<AiOutlineSetting />} />
-                )}
-            </Container>
+            <RightItemsWrapper>
+                <LinkListContainer>
+                    <HeaderLink
+                        theme={navbarTheme}
+                        to="/videos"
+                        content="Videos"
+                    />
+                    <HeaderLink theme={navbarTheme} to="/live" content="Live" />
+                    <HeaderLink
+                        theme={navbarTheme}
+                        to="/webinars"
+                        content="Webinars"
+                    />
+                    <HeaderLink
+                        theme={navbarTheme}
+                        to="/about-amplify"
+                        content="About Amplify"
+                    />
+                    <HeaderLink
+                        theme={navbarTheme}
+                        isExternal
+                        to="https://docs-amplify.trackit.io/"
+                        content="Documentation"
+                    />
+                    {groups.includes('Admin') && (
+                        <HeaderLink
+                            theme={navbarTheme}
+                            to="/admin"
+                            content="Admin"
+                        />
+                    )}
+                </LinkListContainer>
+                <Search theme={navbarTheme} to="/search" />
+            </RightItemsWrapper>
         </Header>
     )
 }
