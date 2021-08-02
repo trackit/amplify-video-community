@@ -105,6 +105,11 @@ const Form = () => {
             } catch (error) {
                 console.error('homepage/form.tsx(setContentSubmission):', error)
             }
+            setYoutubeSource('')
+            setEmail('')
+            setTitle('')
+            setDescription('')
+            setComment('')
         })()
     }
 
