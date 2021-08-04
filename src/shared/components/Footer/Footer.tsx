@@ -117,7 +117,7 @@ const Footer = () => (
                 />
             </Content>
             <Content last>
-                <ContentTitle>Usefull links</ContentTitle>
+                <ContentTitle>Useful links</ContentTitle>
                 <ContentLink
                     href="https://aws.amazon.com/amplify/"
                     text="AWS Amplify"
