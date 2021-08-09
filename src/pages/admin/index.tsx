@@ -1,12 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { navigate } from 'gatsby'
-import {
-    AiFillFileAdd,
-    FaUserFriends,
-    FcEnteringHeavenAlive,
-    SiGoogletagmanager,
-} from 'react-icons/all'
+import { AiFillFileAdd, SiGoogletagmanager } from 'react-icons/all'
 import { IconType } from 'react-icons/lib'
 import { AdminLayout } from '../../shared/components'
 import LandingButton from '../../shared/components/Button/link'
@@ -41,8 +36,8 @@ const TitleWrapper = styled.div`
 `
 
 const Title = styled.p`
-    color: ${(props) => props.color || '#000000'};
-    font-size: 48px;
+    color: #000000;
+    font-size: 38px;
     font-weight: 600;
     margin: 0;
 `
@@ -61,7 +56,7 @@ const ContentWrapper = () => (
         <Button
             redirection={() => navigate('/admin/create')}
             icon={AiFillFileAdd}
-            color="#ff9900"
+            color="#000000"
             text="Create"
         />
         <Button
@@ -81,7 +76,7 @@ const SectionWrapper = () => (
         <Button
             redirection={() => navigate('/admin/sections/create')}
             icon={AiFillFileAdd}
-            color="#ff9900"
+            color="#000000"
             text="Create"
         />
         <Button
@@ -100,8 +95,8 @@ const LivestreamWrapper = () => (
         </TitleWrapper>
         <Button
             redirection={() => navigate('/admin/livestream')}
-            icon={FcEnteringHeavenAlive}
-            color="#ff9900"
+            icon={SiGoogletagmanager}
+            color="#000000"
             text="Manage"
         />
     </TextContainer>
@@ -114,8 +109,8 @@ const UserSubmissionWrapper = () => (
         </TitleWrapper>
         <Button
             redirection={() => navigate('/admin/submissions')}
-            icon={FaUserFriends}
-            color="#ff9900"
+            icon={SiGoogletagmanager}
+            color="#000000"
             text="Manage"
         />
     </TextContainer>
