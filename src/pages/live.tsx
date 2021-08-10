@@ -15,8 +15,8 @@ type VideoPlayerProps = {
 
 const VideoPlayerWrapper = styled.div`
     background: black;
+    margin: 20px 0;
 `
-
 const VideoPlayer = ({ source }: VideoPlayerProps) => {
     const videoJsOptions = {
         autoplay: false,
@@ -35,10 +35,30 @@ const VideoPlayer = ({ source }: VideoPlayerProps) => {
     )
 }
 
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin: 50px 25px;
+`
+
 const LivestreamContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: stretch;
+`
+
+const Message = styled.div`
+    font-size: 2em;
+    text-align: center;
+`
+
+const LivestreamTitle = styled.h1`
+    font-size: 2em;
+`
+
+const LivestreamDescription = styled.h2`
+    font-size: 1.3em;
 `
 
 const LivestreamManagement = () => {
@@ -74,23 +94,21 @@ const LivestreamManagement = () => {
                     timeout={3000}
                 />
             ) : (
-                <LivestreamContainer>
-                    {livestream && (
-                        <>
-                            {livestream.isLive ? (
-                                <div>
-                                    <h1>{livestream.media?.title}</h1>
-                                    <VideoPlayer
-                                        source={livestream.url || ''}
-                                    />
-                                    <p>{livestream.media?.description}</p>
-                                </div>
-                            ) : (
-                                <p>Livestream has not started</p>
-                            )}
-                        </>
+                <Container>
+                    {livestream && livestream.isLive ? (
+                        <LivestreamContainer>
+                            <LivestreamTitle>
+                                {livestream.media?.title}
+                            </LivestreamTitle>
+                            <VideoPlayer source={livestream.url || ''} />
+                            <LivestreamDescription>
+                                {livestream.media?.description}
+                            </LivestreamDescription>
+                        </LivestreamContainer>
+                    ) : (
+                        <Message>Livestream has not started</Message>
                     )}
-                </LivestreamContainer>
+                </Container>
             )}
         </Layout>
     )
