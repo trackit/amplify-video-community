@@ -16,7 +16,7 @@ import { getAuthMode } from './helper'
 async function fetchSections() {
     return API.graphql({
         query: listSections,
-        authMode: getAuthMode(),
+        authMode: await getAuthMode(),
     }) as GraphQLResult<APIt.ListSectionsQuery>
 }
 
@@ -24,7 +24,7 @@ async function fetchSection(id: string) {
     return API.graphql({
         query: getSection,
         variables: { id },
-        authMode: getAuthMode(),
+        authMode: await getAuthMode(),
     }) as GraphQLResult<APIt.GetSectionQuery>
 }
 
@@ -41,7 +41,7 @@ async function fetchThumbnail(media: Media | undefined) {
 async function fetchMedias() {
     return API.graphql({
         query: listMedia,
-        authMode: getAuthMode(),
+        authMode: await getAuthMode(),
     }) as GraphQLResult<APIt.ListMediaQuery>
 }
 
@@ -49,14 +49,14 @@ async function fetchMedia(id: string) {
     return API.graphql({
         query: getMedia,
         variables: { id },
-        authMode: getAuthMode(),
+        authMode: await getAuthMode(),
     }) as GraphQLResult<APIt.GetMediaQuery>
 }
 
 async function fetchMediaSections() {
     return API.graphql({
         query: listMediasSections,
-        authMode: getAuthMode(),
+        authMode: await getAuthMode(),
     }) as GraphQLResult<APIt.ListMediasSectionsQuery>
 }
 

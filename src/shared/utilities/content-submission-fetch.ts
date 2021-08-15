@@ -8,7 +8,7 @@ import { getAuthMode } from './helper'
 async function fetchContentSubmissions() {
     return API.graphql({
         query: listContentSubmissions,
-        authMode: getAuthMode(),
+        authMode: await getAuthMode(),
     }) as GraphQLResult<APIt.ListContentSubmissionsQuery>
 }
 
