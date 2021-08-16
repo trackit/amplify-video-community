@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import VideoList from '../components/VideoPlayer/list'
+import VideoList from '../components/YoutubeVideoPlayer/list'
 
 const Container = styled.div`
     padding: 100px 0;

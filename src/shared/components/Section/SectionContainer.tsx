@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import Slider from 'react-slick'
+import CSS from 'csstype'
 
 import { VideoOnDemand, Section, Thumbnail } from '../../../models'
-import VideoCard from '../Video/VideoCard'
+import VideoCardList from '../VideoCardSlider/VideoCardList'
 
 type SectionProps = {
     section: Section
@@ -14,107 +14,70 @@ type SectionProps = {
     }>
 }
 
-const StyledTitle = styled.h2``
+type VideoInfo = {
+    thumbnail:
+        | {
+              obj: Thumbnail | undefined
+              url: string
+          }
+        | undefined
+    vod: VideoOnDemand | undefined
+    style?: CSS.Properties
+    imgStyle?: CSS.Properties
+}
 
-const Slide = styled.div`
-    margin: 0 auto;
+const Container = styled.div`
+    padding: 100px 0;
+    background-color: #f9f9f9;
 `
 
-const StyledSection = styled.div`
-    margin: 0 15px;
-    border-bottom: 1px solid ${(props) => props.theme.palette.primary.ternary};
-
-    &:last-child {
-        border-bottom: none;
-    }
+const Title = styled.h2`
+    font-weight: 600;
+    font-size: 28px;
+    margin: 0 0 0 100px;
 `
 
 const SectionContainer = ({ section, vodAssets, thumbnails }: SectionProps) => {
-    const [filteredAssets, setFilteredAssets] = useState<Array<VideoOnDemand>>(
-        []
-    )
-    const slidesToShow = (slidesNumber: number) =>
-        filteredAssets.length >= slidesNumber
-            ? slidesNumber
-            : filteredAssets.length
-
-    const sliderSettings = {
-        infinite: false,
-        draggable: true,
-        swipe: true,
-        swipeToSlide: true,
-        speed: 300,
-        slidesToShow: slidesToShow(5),
-        centerPadding: '0',
-        responsive: [
-            {
-                breakpoint: 1700,
-                settings: {
-                    slidesToShow: slidesToShow(4),
-                },
-            },
-            {
-                breakpoint: 1560,
-                settings: {
-                    slidesToShow: slidesToShow(3),
-                },
-            },
-            {
-                breakpoint: 1200,
-                settings: {
-                    slidesToShow: slidesToShow(2),
-                },
-            },
-            {
-                breakpoint: 900,
-                settings: {
-                    slidesToShow: slidesToShow(1),
-                },
-            },
-        ],
-    }
+    const [videoInfos, setVideoInfos] = useState<Array<VideoInfo>>([])
 
     useEffect(() => {
-        setFilteredAssets(
-            vodAssets.filter((asset) => {
-                let returnValue = false
-                // TODO: create according model for vodAssets (with sections details from custom graphql call)
-                // eslint-disable-next-line
-                asset.media?.sections?.items.forEach((item) => {
-                    if (item?.section.id === section.id) {
-                        returnValue = true
-                    }
-                })
-                return returnValue
+        const fAssets: Array<VideoInfo> = []
+        const assets = vodAssets.filter((asset) => {
+            let returnValue = false
+            // eslint-disable-next-line
+            asset.media?.sections?.items.forEach((item) => {
+                if (item?.section.id === section.id) {
+                    returnValue = true
+                }
             })
-        )
+            return returnValue
+        })
+        assets.forEach((a) => {
+            fAssets.push({
+                thumbnail: thumbnails.find(
+                    (thumbnail) => a.media?.thumbnail?.id === thumbnail.obj?.id
+                ),
+                vod: a,
+            })
+        })
+        setVideoInfos(fAssets)
     }, [])
 
     return (
-        <StyledSection>
-            <StyledTitle>{section.label}</StyledTitle>
-            <Slider {...sliderSettings}>
-                {filteredAssets &&
-                    filteredAssets.map((asset) => (
-                        <Slide key={asset.id}>
-                            <VideoCard
-                                thumbnail={thumbnails.find(
-                                    (thumbnail) =>
-                                        asset.media?.thumbnail?.id ===
-                                        thumbnail.obj?.id
-                                )}
-                                vod={asset}
-                                style={{
-                                    width: '380px',
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    margin: 'auto',
-                                }}
-                            />
-                        </Slide>
-                    ))}
-            </Slider>
-        </StyledSection>
+        <>
+            {videoInfos && videoInfos.length > 0 && (
+                <Container>
+                    <Title>{section.label}</Title>
+                    <VideoCardList
+                        videoInfos={videoInfos}
+                        config={{
+                            width: 480,
+                            height: 270,
+                        }}
+                    />
+                </Container>
+            )}
+        </>
     )
 }
 

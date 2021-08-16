@@ -6,7 +6,6 @@ import {
     Layout,
     SectionContainer,
     HighlightedSection,
-    VideoCardSlider,
     BasicLoader,
 } from '../shared/components'
 import {
@@ -127,10 +126,6 @@ const VodApp = () => {
                     </LoaderWrapper>
                 ) : (
                     <>
-                        <VideoCardSlider
-                            vod={vodAssets}
-                            thumbnails={thumbnails}
-                        />
                         {sections &&
                             sections.map((section: Section) => {
                                 return section.label === 'Highlighted' ? (
