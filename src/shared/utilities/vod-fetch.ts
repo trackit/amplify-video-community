@@ -55,12 +55,12 @@ async function fetchVodFiles(nextToken: string | null) {
             variables: {
                 nextToken,
             },
-            authMode: getAuthMode(),
+            authMode: await getAuthMode(),
         }) as GraphQLResult<APIt.ListVideoOnDemandsQuery>
     else
         return API.graphql({
             query: listVideoOnDemands,
-            authMode: getAuthMode(),
+            authMode: await getAuthMode(),
         }) as GraphQLResult<APIt.ListVideoOnDemandsQuery>
 }
 
@@ -74,7 +74,7 @@ async function fetchHighlightedVideos() {
                 },
             },
         },
-        authMode: getAuthMode(),
+        authMode: await getAuthMode(),
     }) as GraphQLResult<APIt.GetVideoOnDemandQuery>
 }
 
@@ -84,7 +84,7 @@ async function fetchVodAsset(id: string) {
         variables: {
             id,
         },
-        authMode: getAuthMode(),
+        authMode: await getAuthMode(),
     }) as GraphQLResult<APIt.GetVideoOnDemandQuery>
 }
 
@@ -160,7 +160,7 @@ async function fetchVodSections(id: string) {
         variables: {
             id: id,
         },
-        authMode: getAuthMode(),
+        authMode: await getAuthMode(),
     }) as GraphQLResult<ListVodSections>
 }
 
