@@ -115,8 +115,8 @@ const NavBar = ({ navbarTheme }: NavBarProps) => {
                     />
                     <HeaderLink
                         theme={navbarTheme}
-                        to="/about-amplify"
-                        content="About Amplify"
+                        to="/about"
+                        content="About"
                     />
                     <HeaderLink
                         theme={navbarTheme}
