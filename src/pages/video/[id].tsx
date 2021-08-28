@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { PageProps } from 'gatsby'
+import moment from 'moment'
 
 import awsvideoconfig from '../../aws-video-exports'
 import { fetchVodAsset } from '../../shared/utilities/vod-fetch'
@@ -184,9 +185,6 @@ const VideoPage = (props: PageProps) => {
         })()
     }, [])
 
-    const date = new Date(asset?.createdAt || '')
-    const formatedDate = `${date.getMonth()}/${date.getDay()}/${date.getFullYear()} at ${date.getHours()}:${date.getMinutes()}`
-
     return (
         <Layout>
             <Container>
@@ -213,7 +211,11 @@ const VideoPage = (props: PageProps) => {
                                     )
                                 })}
                             </div>
-                            <FormatedDate>{formatedDate}</FormatedDate>
+                            <FormatedDate>
+                                {moment(asset.media?.createdAt).format(
+                                    'MMM Do YYYY'
+                                )}
+                            </FormatedDate>
                         </SectionAndDate>
                         <Title>{asset.media?.title}</Title>
                         <AuthorAndViewCount>
