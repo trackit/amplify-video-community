@@ -1,6 +1,6 @@
 {
   "auth": {
-    "ampvideocommuweb4bb49c01": {
+    "ampvideocommuwebaa182671": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -12,7 +12,7 @@
       "dependsOn": [
         {
           "category": "auth",
-          "resourceName": "ampvideocommuweb4bb49c01",
+          "resourceName": "ampvideocommuwebaa182671",
           "attributes": [
             "UserPoolId",
             "AppClientIDWeb",
@@ -32,7 +32,7 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authampvideocommuweb4bb49c01"
+              "userPoolId": "authampvideocommuwebaa182671"
             }
           },
           "additionalAuthenticationProviders": [
@@ -50,7 +50,7 @@
       "serviceType": "video-on-demand",
       "providerPlugin": "awscloudformation"
     },
-    "ampVideoCommuWebLive": {
+    "ampVideoCommuLive": {
       "service": "video",
       "serviceType": "ivs",
       "providerPlugin": "awscloudformation"
@@ -63,7 +63,7 @@
       "dependsOn": [
         {
           "category": "auth",
-          "resourceName": "ampvideocommuweb4bb49c01",
+          "resourceName": "ampvideocommuwebaa182671",
           "attributes": [
             "UserPoolId"
           ]

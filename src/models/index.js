@@ -8,14 +8,13 @@ const Source = {
   "LIVESTREAM_SELF": "LIVESTREAM_SELF"
 };
 
-const { Media, MediasSections, Section, Thumbnail, UserSubmissions, ContentSubmission, VideoOnDemand, Livestream } = initSchema(schema);
+const { Media, MediasSections, Section, Thumbnail, ContentSubmission, VideoOnDemand, Livestream } = initSchema(schema);
 
 export {
   Media,
   MediasSections,
   Section,
   Thumbnail,
-  UserSubmissions,
   ContentSubmission,
   VideoOnDemand,
   Livestream,

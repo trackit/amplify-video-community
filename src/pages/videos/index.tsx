@@ -4,28 +4,51 @@ import styled from 'styled-components'
 
 import {
     Layout,
-    SectionContainer,
-    HighlightedSection,
+    VideosSectionContainer,
     BasicLoader,
-} from '../shared/components'
+} from '../../shared/components'
 import {
     fetchSections,
     fetchVodFiles,
     fetchThumbnail,
-} from '../shared/utilities'
-import { Thumbnail, VideoOnDemand, Section } from '../models'
+} from '../../shared/utilities'
+import { Thumbnail, VideoOnDemand, Section } from '../../models'
 
 const Container = styled.div`
     display: flex;
     flex-direction: column;
     gap: 25px;
+    background-color: #f9f9f9;
+`
+
+const Header = styled.div`
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+`
+
+const Title = styled.h1`
+    margin-top: 30px;
+    font-size: 36px;
+`
+
+const Separator = styled.div`
+    background-color: #ff9900;
+    height: 2px;
+    width: 100px;
+    margin-bottom: 20px;
+`
+
+const Description = styled.h2`
+    font-size: 14px;
 `
 
 const LoaderWrapper = styled.div`
     padding-top: 50px;
 `
 
-const VodApp = () => {
+const VideoPage = () => {
     const [vodAssets, setVodAssets] = useState<Array<VideoOnDemand>>([])
     const [thumbnails, setThumbnails] = useState<
         Array<{
@@ -34,8 +57,9 @@ const VodApp = () => {
         }>
     >([])
     const [sections, setSections] = useState<Array<Section> | null>(null)
-    const [nextTokenVodFiles, setNextTokenVodFiles] =
-        useState<string | null>(null)
+    const [nextTokenVodFiles, setNextTokenVodFiles] = useState<string | null>(
+        null
+    )
     const [loadingVodFiles, setLoadingVodFiles] = useState<boolean>(false)
     const [loadingSections, setLoadingSections] = useState<boolean>(false)
     const [haveHighlightedContent, setHaveHighlightedContent] = useState(false)
@@ -94,6 +118,7 @@ const VodApp = () => {
                             arr.push({
                                 label: 'Highlighted',
                                 id: `Highlighted${index}`,
+                                description: 'Highlighted content',
                             })
                             nonce = false
                         }
@@ -105,6 +130,7 @@ const VodApp = () => {
                             arr.splice(index, 0, {
                                 label: 'Highlighted',
                                 id: `Highlighted${index}`,
+                                description: 'Highlighted content',
                             })
                         }
                     })
@@ -120,40 +146,32 @@ const VodApp = () => {
     return (
         <Layout>
             <Container>
+                <Header>
+                    <Title>Videos</Title>
+                    <Separator />
+                    <Description>
+                        From tutorials to simple showcase of Amplify Video,
+                        discover the content created by our community.
+                    </Description>
+                </Header>
                 {loadingVodFiles || loadingSections ? (
                     <LoaderWrapper>
                         <BasicLoader />
                     </LoaderWrapper>
                 ) : (
-                    <>
-                        {sections &&
-                            sections.map((section: Section) => {
-                                return section.label === 'Highlighted' ? (
-                                    <HighlightedSection
-                                        key={section.id}
-                                        title={section.label}
-                                        vodAsset={vodAssets
-                                            .filter(
-                                                (item: VideoOnDemand) =>
-                                                    item.media?.highlighted
-                                            )
-                                            .pop()}
-                                        thumbnails={thumbnails}
-                                    />
-                                ) : (
-                                    <SectionContainer
-                                        key={section.id}
-                                        section={section}
-                                        vodAssets={vodAssets}
-                                        thumbnails={thumbnails}
-                                    />
-                                )
-                            })}
-                    </>
+                    sections &&
+                    sections.map((section: Section) => (
+                        <VideosSectionContainer
+                            key={section.id}
+                            section={section}
+                            vodAssets={vodAssets}
+                            thumbnails={thumbnails}
+                        />
+                    ))
                 )}
             </Container>
         </Layout>
     )
 }
 
-export default VodApp
+export default VideoPage

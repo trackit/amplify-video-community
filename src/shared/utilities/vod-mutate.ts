@@ -77,6 +77,7 @@ const uploadSourceSelf = async (
             title: media.title,
             description: media.description,
             highlighted: media.highlighted,
+            author: media.author,
             source: APIt.Source.SELF,
             mediaThumbnailId: id,
         })
@@ -132,6 +133,7 @@ const uploadSourceYoutube = async (
             id,
             title: media.title,
             description: media.description,
+            author: media.author,
             highlighted: media.highlighted,
             source: APIt.Source.YOUTUBE,
             mediaThumbnailId: id,

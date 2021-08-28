@@ -30,6 +30,7 @@ async function declineContentSubmission(
 
 async function acceptContentSubmission(
     submission: ContentSubmission,
+    author: string,
     thumbnailFile: File,
     sectionsId: Array<string>
 ) {
@@ -38,6 +39,7 @@ async function acceptContentSubmission(
         title: submission.title || '',
         description: submission.description || '',
         highlighted: false,
+        author,
     }
     await uploadSourceYoutube(
         submission.id,

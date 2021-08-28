@@ -24,26 +24,8 @@ type Media
   sections: [MediasSections] @connection(keyName: "byMedia", fields: ["id"])
   source: Source
   thumbnail: Thumbnail @connection
-}
-
-type UserSubmissions # Deprecated (We need to redeploy a new backend to remove this)
-@model
-@aws_iam
-@aws_cognito_user_pools
-@auth(
-  rules: [
-    { allow: groups, groups: ["Admin"], operations: [create, update, delete, read] }
-    { allow: public, provider: iam, operations: [create, read] }
-  ]
-)
-{
-  id: ID!
-  title: String
-  description: String
-  comment: String
-  source: Source
-  src: String!
-  email: String!
+  author: String!
+  viewCount: Int
 }
 
 type ContentSubmission
@@ -97,6 +79,7 @@ type Section
 {
   id: ID!
   label: String!
+  description: String!
   medias: [MediasSections] @connection(keyName: "bySection", fields: ["id"])
 }
 

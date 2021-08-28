@@ -1,23 +1,23 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
     "Parameters": {
-        "authampvideocommuweb4bb49c01UserPoolId": {
+        "authampvideocommuwebaa182671UserPoolId": {
             "Type": "String",
-            "Default": "authampvideocommuweb4bb49c01UserPoolId"
+            "Default": "authampvideocommuwebaa182671UserPoolId"
         },
         
-        "authampvideocommuweb4bb49c01IdentityPoolId": {
+        "authampvideocommuwebaa182671IdentityPoolId": {
             "Type": "String",
-            "Default": "authampvideocommuweb4bb49c01IdentityPoolId"
+            "Default": "authampvideocommuwebaa182671IdentityPoolId"
         },
         
-        "authampvideocommuweb4bb49c01AppClientID": {
+        "authampvideocommuwebaa182671AppClientID": {
             "Type": "String",
-            "Default": "authampvideocommuweb4bb49c01AppClientID"
+            "Default": "authampvideocommuwebaa182671AppClientID"
         },
-        "authampvideocommuweb4bb49c01AppClientIDWeb": {
+        "authampvideocommuwebaa182671AppClientIDWeb": {
             "Type": "String",
-            "Default": "authampvideocommuweb4bb49c01AppClientIDWeb"
+            "Default": "authampvideocommuwebaa182671AppClientIDWeb"
         },
         "AuthRoleArn": {
             "Type": "String"
@@ -55,7 +55,7 @@
               },
               
               "UserPoolId" : {
-                "Ref": "authampvideocommuweb4bb49c01UserPoolId"
+                "Ref": "authampvideocommuwebaa182671UserPoolId"
               }
             }
         },
@@ -68,7 +68,7 @@
                         "",
                         [
                           {
-                            "Ref": "authampvideocommuweb4bb49c01UserPoolId"
+                            "Ref": "authampvideocommuwebaa182671UserPoolId"
                           },
                           "-AdminGroupRole"
                         ]
@@ -85,7 +85,7 @@
                             },
                             "Action": "sts:AssumeRoleWithWebIdentity",
                             "Condition": {
-                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authampvideocommuweb4bb49c01IdentityPoolId"}},
+                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authampvideocommuwebaa182671IdentityPoolId"}},
                               "ForAnyValue:StringLike": {"cognito-identity.amazonaws.com:amr": "authenticated"}
                             }
                         }
@@ -93,7 +93,7 @@
                 },
                 "Policies": [
     {
-        "PolicyName": "ampvideocommuweb4bb49c01-admin-group-policy",
+        "PolicyName": "ampvideocommuwebaa182671-admin-group-policy",
         "PolicyDocument": {
             "Version": "2012-10-17",
             "Statement": [
@@ -104,7 +104,7 @@
                         "s3:PutObject",
                         "s3:DeleteObject"
                     ],
-                    "Resource": "arn:aws:s3:::ampvideocommuwebvod-dev-input-4o5cgig7/*"
+                    "Resource": "arn:aws:s3:::ampvideocommuwebvod-dev-input-pgay281b/*"
                 }
             ]
         }
@@ -131,7 +131,7 @@
                                 "",
                                 [
 
-                                  "ampvideocommuweb4bb49c01",
+                                  "ampvideocommuwebaa182671",
                                   "-ExecutionRole-",
                                   {
                                     "Ref": "env"
@@ -292,16 +292,16 @@
                     "Ref": "UnauthRoleArn"
                 },
                 "identityPoolId": {
-                    "Ref": "authampvideocommuweb4bb49c01IdentityPoolId"
+                    "Ref": "authampvideocommuwebaa182671IdentityPoolId"
                 },
                 "userPoolId": {
-                    "Ref": "authampvideocommuweb4bb49c01UserPoolId"
+                    "Ref": "authampvideocommuwebaa182671UserPoolId"
                 },
                 "appClientIDWeb": {
-                    "Ref": "authampvideocommuweb4bb49c01AppClientIDWeb"
+                    "Ref": "authampvideocommuwebaa182671AppClientIDWeb"
                 },
                 "appClientID": {
-                    "Ref": "authampvideocommuweb4bb49c01AppClientID"
+                    "Ref": "authampvideocommuwebaa182671AppClientID"
                 },
                 "region": {
                     "Ref": "AWS::Region"
