@@ -2,6 +2,7 @@ import { API, graphqlOperation } from 'aws-amplify'
 import { Storage } from 'aws-amplify'
 import { GraphQLResult } from '@aws-amplify/api-graphql'
 import { v4 as uuidv4 } from 'uuid'
+import Resizer from 'react-image-file-resizer'
 
 import {
     createSection,
@@ -67,33 +68,50 @@ async function removeThumbnailFile(thumbnail: Thumbnail | undefined) {
     })
 }
 
+const resizeFile = (file: File, fileExtension: string) =>
+    new Promise((resolve) => {
+        Resizer.imageFileResizer(
+            file,
+            1280,
+            720,
+            fileExtension.toUpperCase(),
+            75,
+            0,
+            (uri) => {
+                resolve(uri)
+            },
+            'file'
+        )
+    })
+
 async function putThumbnailFile(
     file: File,
     id: string,
+    // eslint-disable-next-line
     thumbnailExtension: string[]
 ) {
-    return Storage.put(
-        `thumbnails/${id}.${thumbnailExtension[thumbnailExtension.length - 1]}`,
-        file,
-        {
-            bucket: awsmobile.aws_user_files_s3_bucket,
-            level: 'public',
-            // eslint-disable-next-line
-            progressCallback(progress: any) {
-                console.log(
-                    `thumbnailFile Uploaded: ${progress.loaded}/${progress.total}`
-                )
-            },
-        }
-    )
+    const fileExtension = 'jpeg' //thumbnailExtension[thumbnailExtension.length - 1]
+    const fileResized = await resizeFile(file, fileExtension)
+
+    return Storage.put(`thumbnails/${id}.${fileExtension}`, fileResized, {
+        bucket: awsmobile.aws_user_files_s3_bucket,
+        level: 'public',
+        // eslint-disable-next-line
+        progressCallback(progress: any) {
+            console.log(
+                `thumbnailFile Uploaded: ${progress.loaded}/${progress.total}`
+            )
+        },
+    })
 }
 
+// eslint-disable-next-line
 async function setThumbnail(id: string, thumbnailExtension: string[]) {
     return API.graphql(
         graphqlOperation(createThumbnail, {
             input: {
                 id: id,
-                ext: thumbnailExtension[thumbnailExtension.length - 1],
+                ext: 'jpeg', //thumbnailExtension[thumbnailExtension.length - 1],
             },
         })
     )
