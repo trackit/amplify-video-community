@@ -13,7 +13,7 @@ import { setMediasSections } from './mutate'
 async function setContentSubmission(input: APIt.CreateContentSubmissionInput) {
     return API.graphql({
         query: createContentSubmission,
-        authMode: getAuthMode(),
+        authMode: await getAuthMode(),
         variables: { input: input },
     })
 }
@@ -23,13 +23,14 @@ async function declineContentSubmission(
 ) {
     return API.graphql({
         query: deleteContentSubmission,
-        authMode: getAuthMode(),
+        authMode: await getAuthMode(),
         variables: { input },
     })
 }
 
 async function acceptContentSubmission(
     submission: ContentSubmission,
+    author: string,
     thumbnailFile: File,
     sectionsId: Array<string>
 ) {
@@ -38,6 +39,7 @@ async function acceptContentSubmission(
         title: submission.title || '',
         description: submission.description || '',
         highlighted: false,
+        author,
     }
     await uploadSourceYoutube(
         submission.id,

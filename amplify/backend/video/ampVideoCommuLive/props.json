@@ -1,7 +1,7 @@
 {
     "shared": {
-        "resourceName": "ampVideoCommuWebLive",
-        "bucket": "amplify-ampvideocommuweb-dev-172928-deployment"
+        "resourceName": "ampVideoCommuLive",
+        "bucket": "amplify-ampvideocommuweb-dev-150313-deployment"
     },
     "channel": {
         "channelQuality": "STANDARD",

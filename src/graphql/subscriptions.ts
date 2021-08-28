@@ -10,11 +10,14 @@ export const onCreateMedia = /* GraphQL */ `
       description
       highlighted
       source
+      author
+      viewCount
       createdAt
       updatedAt
       thumbnail {
         id
         ext
+        src
         createdAt
         updatedAt
       }
@@ -39,11 +42,14 @@ export const onUpdateMedia = /* GraphQL */ `
       description
       highlighted
       source
+      author
+      viewCount
       createdAt
       updatedAt
       thumbnail {
         id
         ext
+        src
         createdAt
         updatedAt
       }
@@ -68,11 +74,14 @@ export const onDeleteMedia = /* GraphQL */ `
       description
       highlighted
       source
+      author
+      viewCount
       createdAt
       updatedAt
       thumbnail {
         id
         ext
+        src
         createdAt
         updatedAt
       }
@@ -86,51 +95,6 @@ export const onDeleteMedia = /* GraphQL */ `
         }
         nextToken
       }
-    }
-  }
-`;
-export const onCreateUserSubmissions = /* GraphQL */ `
-  subscription OnCreateUserSubmissions {
-    onCreateUserSubmissions {
-      id
-      title
-      description
-      comment
-      source
-      src
-      email
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateUserSubmissions = /* GraphQL */ `
-  subscription OnUpdateUserSubmissions {
-    onUpdateUserSubmissions {
-      id
-      title
-      description
-      comment
-      source
-      src
-      email
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteUserSubmissions = /* GraphQL */ `
-  subscription OnDeleteUserSubmissions {
-    onDeleteUserSubmissions {
-      id
-      title
-      description
-      comment
-      source
-      src
-      email
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -184,6 +148,7 @@ export const onCreateThumbnail = /* GraphQL */ `
     onCreateThumbnail {
       id
       ext
+      src
       createdAt
       updatedAt
     }
@@ -194,6 +159,7 @@ export const onUpdateThumbnail = /* GraphQL */ `
     onUpdateThumbnail {
       id
       ext
+      src
       createdAt
       updatedAt
     }
@@ -204,6 +170,7 @@ export const onDeleteThumbnail = /* GraphQL */ `
     onDeleteThumbnail {
       id
       ext
+      src
       createdAt
       updatedAt
     }
@@ -214,6 +181,7 @@ export const onCreateSection = /* GraphQL */ `
     onCreateSection {
       id
       label
+      description
       createdAt
       updatedAt
       medias {
@@ -234,6 +202,7 @@ export const onUpdateSection = /* GraphQL */ `
     onUpdateSection {
       id
       label
+      description
       createdAt
       updatedAt
       medias {
@@ -254,6 +223,7 @@ export const onDeleteSection = /* GraphQL */ `
     onDeleteSection {
       id
       label
+      description
       createdAt
       updatedAt
       medias {
@@ -283,11 +253,14 @@ export const onCreateMediasSections = /* GraphQL */ `
         description
         highlighted
         source
+        author
+        viewCount
         createdAt
         updatedAt
         thumbnail {
           id
           ext
+          src
           createdAt
           updatedAt
         }
@@ -298,6 +271,7 @@ export const onCreateMediasSections = /* GraphQL */ `
       section {
         id
         label
+        description
         createdAt
         updatedAt
         medias {
@@ -321,11 +295,14 @@ export const onUpdateMediasSections = /* GraphQL */ `
         description
         highlighted
         source
+        author
+        viewCount
         createdAt
         updatedAt
         thumbnail {
           id
           ext
+          src
           createdAt
           updatedAt
         }
@@ -336,6 +313,7 @@ export const onUpdateMediasSections = /* GraphQL */ `
       section {
         id
         label
+        description
         createdAt
         updatedAt
         medias {
@@ -359,11 +337,14 @@ export const onDeleteMediasSections = /* GraphQL */ `
         description
         highlighted
         source
+        author
+        viewCount
         createdAt
         updatedAt
         thumbnail {
           id
           ext
+          src
           createdAt
           updatedAt
         }
@@ -374,6 +355,7 @@ export const onDeleteMediasSections = /* GraphQL */ `
       section {
         id
         label
+        description
         createdAt
         updatedAt
         medias {
@@ -396,11 +378,14 @@ export const onCreateVideoOnDemand = /* GraphQL */ `
         description
         highlighted
         source
+        author
+        viewCount
         createdAt
         updatedAt
         thumbnail {
           id
           ext
+          src
           createdAt
           updatedAt
         }
@@ -424,11 +409,14 @@ export const onUpdateVideoOnDemand = /* GraphQL */ `
         description
         highlighted
         source
+        author
+        viewCount
         createdAt
         updatedAt
         thumbnail {
           id
           ext
+          src
           createdAt
           updatedAt
         }
@@ -452,11 +440,14 @@ export const onDeleteVideoOnDemand = /* GraphQL */ `
         description
         highlighted
         source
+        author
+        viewCount
         createdAt
         updatedAt
         thumbnail {
           id
           ext
+          src
           createdAt
           updatedAt
         }
@@ -481,11 +472,14 @@ export const onCreateLivestream = /* GraphQL */ `
         description
         highlighted
         source
+        author
+        viewCount
         createdAt
         updatedAt
         thumbnail {
           id
           ext
+          src
           createdAt
           updatedAt
         }
@@ -510,11 +504,14 @@ export const onUpdateLivestream = /* GraphQL */ `
         description
         highlighted
         source
+        author
+        viewCount
         createdAt
         updatedAt
         thumbnail {
           id
           ext
+          src
           createdAt
           updatedAt
         }
@@ -539,11 +536,14 @@ export const onDeleteLivestream = /* GraphQL */ `
         description
         highlighted
         source
+        author
+        viewCount
         createdAt
         updatedAt
         thumbnail {
           id
           ext
+          src
           createdAt
           updatedAt
         }

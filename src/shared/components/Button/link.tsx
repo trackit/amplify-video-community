@@ -8,7 +8,7 @@ type Props = {
     secondaryColor?: string
     text?: string
     last?: boolean
-    redirection: string
+    redirection?: string
 }
 
 type WithColorProps = {

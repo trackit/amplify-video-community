@@ -12,6 +12,7 @@ const YoutubeAdminUpload = () => {
     const [youtubeSource, setYoutubeSource] = useState<string>('')
     const [title, setTitle] = useState<string>('')
     const [description, setDescription] = useState<string>('')
+    const [author, setAuthor] = useState<string>('')
     const [thumbnailFile, setThumbnailFile] = useState<File | null>(null)
     const [highlighted, setHighlighted] = useState<boolean>(false)
     const [existingSections, setExistingSections] = useState<Array<Section>>([])
@@ -51,6 +52,7 @@ const YoutubeAdminUpload = () => {
                     title,
                     description,
                     highlighted,
+                    author,
                 }
                 await uploadContent(
                     media,
@@ -104,6 +106,20 @@ const YoutubeAdminUpload = () => {
                             event: React.ChangeEvent<HTMLTextAreaElement>
                         ) => {
                             setDescription(event.target.value)
+                        }}
+                    />
+                </div>
+                <div style={{ margin: '15px' }}>
+                    <label htmlFor="_add_vod_author">Author</label>
+                    <input
+                        id="_add_vod_author"
+                        type="text"
+                        placeholder="Author"
+                        value={author}
+                        onChange={(
+                            event: React.ChangeEvent<HTMLInputElement>
+                        ) => {
+                            setAuthor(event.target.value)
                         }}
                     />
                 </div>

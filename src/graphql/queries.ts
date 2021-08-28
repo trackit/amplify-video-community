@@ -10,11 +10,14 @@ export const getMedia = /* GraphQL */ `
       description
       highlighted
       source
+      author
+      viewCount
       createdAt
       updatedAt
       thumbnail {
         id
         ext
+        src
         createdAt
         updatedAt
       }
@@ -44,54 +47,20 @@ export const listMedia = /* GraphQL */ `
         description
         highlighted
         source
+        author
+        viewCount
         createdAt
         updatedAt
         thumbnail {
           id
           ext
+          src
           createdAt
           updatedAt
         }
         sections {
           nextToken
         }
-      }
-      nextToken
-    }
-  }
-`;
-export const getUserSubmissions = /* GraphQL */ `
-  query GetUserSubmissions($id: ID!) {
-    getUserSubmissions(id: $id) {
-      id
-      title
-      description
-      comment
-      source
-      src
-      email
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listUserSubmissions = /* GraphQL */ `
-  query ListUserSubmissions(
-    $filter: ModelUserSubmissionsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listUserSubmissions(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        title
-        description
-        comment
-        source
-        src
-        email
-        createdAt
-        updatedAt
       }
       nextToken
     }
@@ -143,6 +112,7 @@ export const getThumbnail = /* GraphQL */ `
     getThumbnail(id: $id) {
       id
       ext
+      src
       createdAt
       updatedAt
     }
@@ -158,6 +128,7 @@ export const listThumbnails = /* GraphQL */ `
       items {
         id
         ext
+        src
         createdAt
         updatedAt
       }
@@ -170,6 +141,7 @@ export const getSection = /* GraphQL */ `
     getSection(id: $id) {
       id
       label
+      description
       createdAt
       updatedAt
       medias {
@@ -195,6 +167,7 @@ export const listSections = /* GraphQL */ `
       items {
         id
         label
+        description
         createdAt
         updatedAt
         medias {
@@ -219,11 +192,14 @@ export const getMediasSections = /* GraphQL */ `
         description
         highlighted
         source
+        author
+        viewCount
         createdAt
         updatedAt
         thumbnail {
           id
           ext
+          src
           createdAt
           updatedAt
         }
@@ -234,6 +210,7 @@ export const getMediasSections = /* GraphQL */ `
       section {
         id
         label
+        description
         createdAt
         updatedAt
         medias {
@@ -262,12 +239,15 @@ export const listMediasSections = /* GraphQL */ `
           description
           highlighted
           source
+          author
+          viewCount
           createdAt
           updatedAt
         }
         section {
           id
           label
+          description
           createdAt
           updatedAt
         }
@@ -289,11 +269,14 @@ export const getVideoOnDemand = /* GraphQL */ `
         description
         highlighted
         source
+        author
+        viewCount
         createdAt
         updatedAt
         thumbnail {
           id
           ext
+          src
           createdAt
           updatedAt
         }
@@ -322,6 +305,8 @@ export const listVideoOnDemands = /* GraphQL */ `
           description
           highlighted
           source
+          author
+          viewCount
           createdAt
           updatedAt
         }
@@ -344,11 +329,14 @@ export const getLivestream = /* GraphQL */ `
         description
         highlighted
         source
+        author
+        viewCount
         createdAt
         updatedAt
         thumbnail {
           id
           ext
+          src
           createdAt
           updatedAt
         }
@@ -378,6 +366,8 @@ export const listLivestreams = /* GraphQL */ `
           description
           highlighted
           source
+          author
+          viewCount
           createdAt
           updatedAt
         }

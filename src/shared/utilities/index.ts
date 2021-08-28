@@ -4,6 +4,9 @@ export {
     fetchMedia,
     fetchMedias,
     fetchMediaSections,
+    fetchMediasSections,
+    fetchMediasSectionsFiltered,
+    fetchSection,
 } from './fetch'
 
 export {

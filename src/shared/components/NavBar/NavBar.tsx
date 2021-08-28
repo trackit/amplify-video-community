@@ -63,12 +63,15 @@ const NavBar = ({ navbarTheme }: NavBarProps) => {
     const [groups, setGroups] = useState<Array<string>>([])
 
     useEffect(() => {
-        if (Auth.Credentials.getCredSource() === 'userPool') {
-            Auth.currentSession().then((data) => {
-                const groupsData = data.getIdToken().payload['cognito:groups']
-                if (groupsData !== undefined) setGroups(groupsData)
-            })
-        }
+        Auth.Credentials.get().then(() => {
+            if (Auth.Credentials.getCredSource() === 'userPool') {
+                Auth.currentSession().then((data) => {
+                    const groupsData =
+                        data.getIdToken().payload['cognito:groups']
+                    if (groupsData !== undefined) setGroups(groupsData)
+                })
+            }
+        })
     }, [])
 
     return (
@@ -112,8 +115,8 @@ const NavBar = ({ navbarTheme }: NavBarProps) => {
                     />
                     <HeaderLink
                         theme={navbarTheme}
-                        to="/about-amplify"
-                        content="About Amplify"
+                        to="/about"
+                        content="About"
                     />
                     <HeaderLink
                         theme={navbarTheme}

@@ -3,6 +3,7 @@ import VideoPlayer from './VideoPlayer'
 import Layout from './Layout/Layout'
 import AdminLayout from './Layout/AdminLayout'
 import SectionContainer from './Section/SectionContainer'
+import VideosSectionContainer from './Section/VideosSectionContainer'
 import HighlightedSection from './Section/HighlightedSection'
 import BasicLoader from './Loader'
 import MediaManagementList from './Admin/MediaManagementList/MediaManagementList'
@@ -20,4 +21,5 @@ export {
     MediaManagementList,
     SectionsManagementList,
     SubmissionsManagementList,
+    VideosSectionContainer,
 }

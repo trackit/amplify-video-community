@@ -23,11 +23,12 @@ import {
 } from '../../graphql/mutations'
 import awsmobile from '../../aws-exports'
 
-const createNewSection = async (name: string) => {
+const createNewSection = async (label: string, description: string) => {
     return API.graphql(
         graphqlOperation(createSection, {
             input: {
-                label: name,
+                label,
+                description,
             },
         })
     )

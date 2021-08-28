@@ -7,12 +7,12 @@ const PostContent = styled.div`
     padding: 5%;
 `
 
-const AboutAmplify = ({ data }: PageProps) => {
+const About = ({ data }: PageProps) => {
     return (
         <Layout>
             <PostContent
                 dangerouslySetInnerHTML={{
-                    __html: data.aboutAmplify.childMarkdownRemark.html,
+                    __html: data.about.childMarkdownRemark.html,
                 }}
             />
         </Layout>
@@ -21,7 +21,7 @@ const AboutAmplify = ({ data }: PageProps) => {
 
 export const pageQuery = graphql`
     query {
-        aboutAmplify: file(relativePath: { eq: "about-amplify.md" }) {
+        about: file(relativePath: { eq: "about.md" }) {
             id
             childMarkdownRemark {
                 id
@@ -31,4 +31,4 @@ export const pageQuery = graphql`
     }
 `
 
-export default AboutAmplify
+export default About

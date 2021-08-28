@@ -3,20 +3,21 @@ import styled from 'styled-components'
 import { PageProps } from 'gatsby'
 
 import awsvideoconfig from '../../aws-video-exports'
-import { fetchVodAsset, fetchVodFiles } from '../../shared/utilities/vod-fetch'
-import { fetchSections, fetchThumbnail } from '../../shared/utilities'
+import { fetchVodAsset } from '../../shared/utilities/vod-fetch'
+import { fetchMediasSectionsFiltered } from '../../shared/utilities'
 import {
     VideoPlayer as VideoPlayerComponent,
     Layout,
-    SectionContainer,
-    HighlightedSection,
-    BasicLoader,
 } from '../../shared/components'
-import { VideoOnDemand, Section, Thumbnail } from '../../models'
+import { VideoOnDemand, MediasSections } from '../../models'
 
 type VideoPlayerProps = {
     video: VideoOnDemand | undefined
 }
+
+const VideoPlayerWrapper = styled.div`
+    background: black;
+`
 
 const VideoPlayer = ({ video }: VideoPlayerProps) => {
     const videoJsOptions = {
@@ -29,26 +30,26 @@ const VideoPlayer = ({ video }: VideoPlayerProps) => {
             },
         ],
     }
-
-    const Wrapper = styled.div`
-        background: black;
-    `
-    return <Wrapper>{<VideoPlayerComponent {...videoJsOptions} />}</Wrapper>
+    return (
+        <VideoPlayerWrapper>
+            {<VideoPlayerComponent {...videoJsOptions} />}
+        </VideoPlayerWrapper>
+    )
 }
 
 type IframeVideoPlayerProps = {
     asset: VideoOnDemand
 }
 
-const IframeVideoPlayer = ({ asset }: IframeVideoPlayerProps) => {
-    const Wrapper = styled.div`
-        display: flex;
-        background-color: black;
-        justify-content: center;
-    `
+const IFrameWrapper = styled.div`
+    display: flex;
+    background-color: black;
+    justify-content: center;
+`
 
+const IframeVideoPlayer = ({ asset }: IframeVideoPlayerProps) => {
     return (
-        <Wrapper>
+        <IFrameWrapper>
             <iframe
                 width="1280"
                 height="720"
@@ -58,58 +59,96 @@ const IframeVideoPlayer = ({ asset }: IframeVideoPlayerProps) => {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
             />
-        </Wrapper>
+        </IFrameWrapper>
     )
-}
-
-type VideoCardProps = {
-    asset: VideoOnDemand
 }
 
 const Card = styled.div`
-    padding: 10px;
     box-sizing: border-box;
 `
 
-const Title = styled.h2`
-    margin-bottom: 0;
+const BreadCrumb = styled.div`
+    padding-top: 20px;
+    padding-bottom: 13px;
+    font-size: 14px;
+    color: #000000;
+    &:first-child {
+        color: #666666;
+    }
 `
 
-const VideoCard = ({ asset }: VideoCardProps) => {
-    return (
-        <Card>
-            {asset.src === null ? (
-                <VideoPlayer video={asset} />
-            ) : (
-                <IframeVideoPlayer asset={asset} />
-            )}
-            <Title>{asset.media?.title}</Title>
-            <p>{asset.media?.description}</p>
-        </Card>
-    )
-}
-
-const StyledSection = styled.div`
+const SectionAndDate = styled.div`
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: baseline;
+    align-items: flex-end;
+    margin-top: 20px;
+`
+
+const FormatedDate = styled.span`
+    color: #666666;
+    font-size: 16px;
+`
+
+const SectionName = styled.span`
+    font-size: 16px;
+    color: #ff9900;
+
+    &:after {
+        content: ' / ';
+    }
+`
+
+const Title = styled.h1`
+    margin-top: 10px;
+    font-size: 26px;
+`
+
+const Description = styled.p`
+    font-size: 22px;
+    margin-top: 30px;
+    padding-bottom: 50px;
+`
+
+const AuthorAndViewCount = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+`
+
+const Author = styled.span`
+    display: flex;
+    font-size: 22px;
+    color: #000000;
+    align-items: center;
+`
+
+const AuthorImage = styled.div`
+    background-color: #c4c4c4;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+`
+
+const ViewCount = styled.span`
+    color: #666666;
+    font-size: 22px;
+`
+
+const Container = styled.div`
+    background-color: #f9f9f9;
+    padding: 0 100px;
 `
 
 const VideoPage = (props: PageProps) => {
     const id = props.params.id
     const [asset, setAsset] = useState<VideoOnDemand | null>(null)
     const [loaded, setLoaded] = useState<boolean>(false)
-    const [vodAssets, setVodAssets] = useState<Array<VideoOnDemand>>([])
-    const [sections, setSections] = useState<Array<Section>>([])
-    const [nextTokenVodFiles, setNextTokenVodFiles] =
-        useState<string | null>(null)
-    const [loadingVodFiles, setLoadingVodFiles] = useState<boolean>(false)
-    const [loadingSections, setLoadingSections] = useState<boolean>(false)
-    const [thumbnails, setThumbnails] = useState<
-        Array<{
-            obj: Thumbnail | undefined
-            url: string
-        }>
-    >([])
+    const [mediaSections, setMediaSections] = useState<Array<MediasSections>>(
+        []
+    )
 
     useEffect(() => {
         ;(async () => {
@@ -122,7 +161,7 @@ const VideoPage = (props: PageProps) => {
                 }
                 setLoaded(true)
             } catch (error) {
-                console.error(error)
+                console.error('video/[id].tsx(fetchVodAsset)', error)
                 setLoaded(false)
             }
         })()
@@ -130,91 +169,64 @@ const VideoPage = (props: PageProps) => {
 
     useEffect(() => {
         ;(async () => {
-            setLoadingVodFiles(true)
             try {
-                const { data } = await fetchVodFiles(nextTokenVodFiles)
-                setNextTokenVodFiles(
-                    data?.listVideoOnDemands?.nextToken
-                        ? data.listVideoOnDemands.nextToken
-                        : null
-                )
-                const assets = data?.listVideoOnDemands
-                    ?.items as Array<VideoOnDemand>
-                setVodAssets(assets)
-
-                const thumbnailArr: Array<{
-                    obj: Thumbnail | undefined
-                    url: string
-                }> = []
-                await Promise.all(
-                    assets.map(async (asset) => {
-                        const data = await fetchThumbnail(asset.media)
-                        thumbnailArr.push({
-                            obj: asset.media?.thumbnail,
-                            url: data as string,
-                        })
-                    })
-                )
-                setThumbnails(thumbnailArr)
+                const { data } = await fetchMediasSectionsFiltered({
+                    mediaID: {
+                        eq: id,
+                    },
+                })
+                const items = data?.listMediasSections
+                    ?.items as Array<MediasSections>
+                setMediaSections(items)
             } catch (error) {
-                console.error('video/[id].tsx(fetchVodFiles):', error)
+                console.error('video/[id].tsx(fetchMediaSections)', error)
             }
-            setLoadingVodFiles(false)
-        })()
-    }, [nextTokenVodFiles])
-
-    useEffect(() => {
-        ;(async () => {
-            setLoadingSections(true)
-            try {
-                const { data } = await fetchSections()
-                setSections(data?.listSections?.items as Array<Section>)
-            } catch (error) {
-                console.error('videos.tsx(fetchSections)', error)
-            }
-            setLoadingSections(false)
         })()
     }, [])
 
+    const date = new Date(asset?.createdAt || '')
+    const formatedDate = `${date.getMonth()}/${date.getDay()}/${date.getFullYear()} at ${date.getHours()}:${date.getMinutes()}`
+
     return (
         <Layout>
-            <>
+            <Container>
                 {asset === null ? (
                     <p>{loaded && 'Video Not Found'}</p>
                 ) : (
-                    <VideoCard asset={asset} />
+                    <Card>
+                        <BreadCrumb>
+                            <span>Video / </span>
+                            <span>{asset.media?.title}</span>
+                        </BreadCrumb>
+                        {asset.src === null ? (
+                            <VideoPlayer video={asset} />
+                        ) : (
+                            <IframeVideoPlayer asset={asset} />
+                        )}
+                        <SectionAndDate>
+                            <div>
+                                {mediaSections?.map((ms) => {
+                                    return (
+                                        <SectionName key={ms.id}>
+                                            {ms.section.label}
+                                        </SectionName>
+                                    )
+                                })}
+                            </div>
+                            <FormatedDate>{formatedDate}</FormatedDate>
+                        </SectionAndDate>
+                        <Title>{asset.media?.title}</Title>
+                        <AuthorAndViewCount>
+                            <Author>
+                                <AuthorImage />
+                                Author name
+                            </Author>
+                            <ViewCount>View count</ViewCount>
+                        </AuthorAndViewCount>
+                        <Description>{asset.media?.description}</Description>
+                    </Card>
                 )}
-                {loadingVodFiles || loadingSections ? (
-                    <BasicLoader />
-                ) : (
-                    <StyledSection>
-                        <h1>Linked Contents</h1>
-                        {sections &&
-                            sections.map((section: Section) => {
-                                return section.label === 'Highlighted' ? (
-                                    <HighlightedSection
-                                        key={section.id}
-                                        title={section.label}
-                                        thumbnails={thumbnails}
-                                        vodAsset={vodAssets
-                                            .filter(
-                                                (item: VideoOnDemand) =>
-                                                    item.media?.highlighted
-                                            )
-                                            .pop()}
-                                    />
-                                ) : (
-                                    <SectionContainer
-                                        key={section.id}
-                                        section={section}
-                                        vodAssets={vodAssets}
-                                        thumbnails={thumbnails}
-                                    />
-                                )
-                            })}
-                    </StyledSection>
-                )}
-            </>
+            </Container>
         </Layout>
     )
 }
