@@ -57,8 +57,9 @@ const VideoPage = () => {
         }>
     >([])
     const [sections, setSections] = useState<Array<Section> | null>(null)
-    const [nextTokenVodFiles, setNextTokenVodFiles] =
-        useState<string | null>(null)
+    const [nextTokenVodFiles, setNextTokenVodFiles] = useState<string | null>(
+        null
+    )
     const [loadingVodFiles, setLoadingVodFiles] = useState<boolean>(false)
     const [loadingSections, setLoadingSections] = useState<boolean>(false)
     const [haveHighlightedContent, setHaveHighlightedContent] = useState(false)
