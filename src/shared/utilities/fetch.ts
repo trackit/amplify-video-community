@@ -7,6 +7,7 @@ import {
     listMedia,
     getMedia,
     listMediasSections,
+    getMediasSections,
 } from '../../graphql/queries'
 import awsmobile from '../../aws-exports'
 import * as APIt from '../../API'
@@ -53,11 +54,29 @@ async function fetchMedia(id: string) {
     }) as GraphQLResult<APIt.GetMediaQuery>
 }
 
-async function fetchMediaSections() {
+async function fetchMediasSections() {
     return API.graphql({
         query: listMediasSections,
         authMode: await getAuthMode(),
     }) as GraphQLResult<APIt.ListMediasSectionsQuery>
+}
+
+async function fetchMediasSectionsFiltered(
+    filter: APIt.ModelMediasSectionsFilterInput
+) {
+    return API.graphql({
+        query: listMediasSections,
+        authMode: await getAuthMode(),
+        variables: { filter },
+    }) as GraphQLResult<APIt.ListMediasSectionsQuery>
+}
+
+async function fetchMediaSections(id: string) {
+    return API.graphql({
+        query: getMediasSections,
+        variables: { id },
+        authMode: await getAuthMode(),
+    }) as GraphQLResult<APIt.GetMediasSectionsQuery>
 }
 
 export {
@@ -66,5 +85,7 @@ export {
     fetchThumbnail,
     fetchMedias,
     fetchMedia,
+    fetchMediasSections,
     fetchMediaSections,
+    fetchMediasSectionsFiltered,
 }

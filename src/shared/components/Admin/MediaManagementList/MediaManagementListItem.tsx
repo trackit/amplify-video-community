@@ -7,7 +7,7 @@ import {
     removeMedia,
     modifyMedia,
     removeThumbnailFile,
-    fetchMediaSections,
+    fetchMediasSections,
     removeMediasSections,
     setMediasSections as createMediasSections,
 } from '../../../utilities'
@@ -107,7 +107,6 @@ const MediaManagementListItem = ({
         switch (selectedMedia.source) {
             case Source.SELF:
             case Source.YOUTUBE:
-            case Source.TWITCH:
                 try {
                     await removeVideoOnDemand({ id: selectedMedia.id })
                 } catch (error) {
@@ -153,7 +152,7 @@ const MediaManagementListItem = ({
     useEffect(() => {
         ;(async () => {
             try {
-                const { data } = await fetchMediaSections()
+                const { data } = await fetchMediasSections()
                 const mediassections = data?.listMediasSections
                     ?.items as Array<MediasSections>
                 setMediasSections(mediassections)
@@ -167,7 +166,7 @@ const MediaManagementListItem = ({
                 setSelectedSections(value)
             } catch (error) {
                 console.error(
-                    'fetchMediaSections(MediaManagementListItem.tsx): ',
+                    'fetchMediasSections(MediaManagementListItem.tsx): ',
                     error
                 )
             }

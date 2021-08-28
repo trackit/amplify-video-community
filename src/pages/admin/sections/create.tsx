@@ -15,6 +15,7 @@ const CreateSection = () => {
     const [loading, setLoading] = useState<boolean>(false)
     const [sections, setSections] = useState<Array<Section>>([])
     const [name, setName] = useState<string>('')
+    const [description, setDescription] = useState<string>('')
 
     useEffect(() => {
         ;(async () => {
@@ -33,7 +34,7 @@ const CreateSection = () => {
         event.preventDefault()
         if (name !== undefined || name !== '') {
             try {
-                await createNewSection(name)
+                await createNewSection(name, description)
             } catch (error) {
                 console.error(
                     'admin/sections/create.tsx(createNewSection)',
@@ -63,9 +64,12 @@ const CreateSection = () => {
                             {sections &&
                                 sections.map((section) => {
                                     return (
-                                        <span key={section.id}>
-                                            {section.label}
-                                        </span>
+                                        <>
+                                            <span key={section.id}>
+                                                {section.label}
+                                            </span>
+                                            {'  '}
+                                        </>
                                     )
                                 })}
                         </div>
@@ -82,6 +86,21 @@ const CreateSection = () => {
                                 event: React.ChangeEvent<HTMLInputElement>
                             ) => {
                                 setName(event.target.value)
+                            }}
+                        />
+                    </FormItem>
+                    <FormItem>
+                        <label htmlFor="_add_section_description">
+                            Section Description
+                        </label>
+                        <input
+                            id="_add_section_description"
+                            type="text"
+                            value={description}
+                            onChange={(
+                                event: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                                setDescription(event.target.value)
                             }}
                         />
                     </FormItem>

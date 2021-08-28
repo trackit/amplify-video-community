@@ -13,11 +13,14 @@ export const createMedia = /* GraphQL */ `
       description
       highlighted
       source
+      author
+      viewCount
       createdAt
       updatedAt
       thumbnail {
         id
         ext
+        src
         createdAt
         updatedAt
       }
@@ -45,11 +48,14 @@ export const updateMedia = /* GraphQL */ `
       description
       highlighted
       source
+      author
+      viewCount
       createdAt
       updatedAt
       thumbnail {
         id
         ext
+        src
         createdAt
         updatedAt
       }
@@ -77,11 +83,14 @@ export const deleteMedia = /* GraphQL */ `
       description
       highlighted
       source
+      author
+      viewCount
       createdAt
       updatedAt
       thumbnail {
         id
         ext
+        src
         createdAt
         updatedAt
       }
@@ -95,42 +104,6 @@ export const deleteMedia = /* GraphQL */ `
         }
         nextToken
       }
-    }
-  }
-`;
-export const updateUserSubmissions = /* GraphQL */ `
-  mutation UpdateUserSubmissions(
-    $input: UpdateUserSubmissionsInput!
-    $condition: ModelUserSubmissionsConditionInput
-  ) {
-    updateUserSubmissions(input: $input, condition: $condition) {
-      id
-      title
-      description
-      comment
-      source
-      src
-      email
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteUserSubmissions = /* GraphQL */ `
-  mutation DeleteUserSubmissions(
-    $input: DeleteUserSubmissionsInput!
-    $condition: ModelUserSubmissionsConditionInput
-  ) {
-    deleteUserSubmissions(input: $input, condition: $condition) {
-      id
-      title
-      description
-      comment
-      source
-      src
-      email
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -178,6 +151,7 @@ export const createThumbnail = /* GraphQL */ `
     createThumbnail(input: $input, condition: $condition) {
       id
       ext
+      src
       createdAt
       updatedAt
     }
@@ -191,6 +165,7 @@ export const updateThumbnail = /* GraphQL */ `
     updateThumbnail(input: $input, condition: $condition) {
       id
       ext
+      src
       createdAt
       updatedAt
     }
@@ -204,6 +179,7 @@ export const deleteThumbnail = /* GraphQL */ `
     deleteThumbnail(input: $input, condition: $condition) {
       id
       ext
+      src
       createdAt
       updatedAt
     }
@@ -217,6 +193,7 @@ export const createSection = /* GraphQL */ `
     createSection(input: $input, condition: $condition) {
       id
       label
+      description
       createdAt
       updatedAt
       medias {
@@ -240,6 +217,7 @@ export const updateSection = /* GraphQL */ `
     updateSection(input: $input, condition: $condition) {
       id
       label
+      description
       createdAt
       updatedAt
       medias {
@@ -263,6 +241,7 @@ export const deleteSection = /* GraphQL */ `
     deleteSection(input: $input, condition: $condition) {
       id
       label
+      description
       createdAt
       updatedAt
       medias {
@@ -295,11 +274,14 @@ export const createMediasSections = /* GraphQL */ `
         description
         highlighted
         source
+        author
+        viewCount
         createdAt
         updatedAt
         thumbnail {
           id
           ext
+          src
           createdAt
           updatedAt
         }
@@ -310,6 +292,7 @@ export const createMediasSections = /* GraphQL */ `
       section {
         id
         label
+        description
         createdAt
         updatedAt
         medias {
@@ -336,11 +319,14 @@ export const updateMediasSections = /* GraphQL */ `
         description
         highlighted
         source
+        author
+        viewCount
         createdAt
         updatedAt
         thumbnail {
           id
           ext
+          src
           createdAt
           updatedAt
         }
@@ -351,6 +337,7 @@ export const updateMediasSections = /* GraphQL */ `
       section {
         id
         label
+        description
         createdAt
         updatedAt
         medias {
@@ -377,11 +364,14 @@ export const deleteMediasSections = /* GraphQL */ `
         description
         highlighted
         source
+        author
+        viewCount
         createdAt
         updatedAt
         thumbnail {
           id
           ext
+          src
           createdAt
           updatedAt
         }
@@ -392,6 +382,7 @@ export const deleteMediasSections = /* GraphQL */ `
       section {
         id
         label
+        description
         createdAt
         updatedAt
         medias {
@@ -417,11 +408,14 @@ export const createVideoOnDemand = /* GraphQL */ `
         description
         highlighted
         source
+        author
+        viewCount
         createdAt
         updatedAt
         thumbnail {
           id
           ext
+          src
           createdAt
           updatedAt
         }
@@ -448,11 +442,14 @@ export const updateVideoOnDemand = /* GraphQL */ `
         description
         highlighted
         source
+        author
+        viewCount
         createdAt
         updatedAt
         thumbnail {
           id
           ext
+          src
           createdAt
           updatedAt
         }
@@ -479,11 +476,14 @@ export const deleteVideoOnDemand = /* GraphQL */ `
         description
         highlighted
         source
+        author
+        viewCount
         createdAt
         updatedAt
         thumbnail {
           id
           ext
+          src
           createdAt
           updatedAt
         }
@@ -511,11 +511,14 @@ export const createLivestream = /* GraphQL */ `
         description
         highlighted
         source
+        author
+        viewCount
         createdAt
         updatedAt
         thumbnail {
           id
           ext
+          src
           createdAt
           updatedAt
         }
@@ -543,11 +546,14 @@ export const updateLivestream = /* GraphQL */ `
         description
         highlighted
         source
+        author
+        viewCount
         createdAt
         updatedAt
         thumbnail {
           id
           ext
+          src
           createdAt
           updatedAt
         }
@@ -575,11 +581,14 @@ export const deleteLivestream = /* GraphQL */ `
         description
         highlighted
         source
+        author
+        viewCount
         createdAt
         updatedAt
         thumbnail {
           id
           ext
+          src
           createdAt
           updatedAt
         }
@@ -587,24 +596,6 @@ export const deleteLivestream = /* GraphQL */ `
           nextToken
         }
       }
-    }
-  }
-`;
-export const createUserSubmissions = /* GraphQL */ `
-  mutation CreateUserSubmissions(
-    $input: CreateUserSubmissionsInput!
-    $condition: ModelUserSubmissionsConditionInput
-  ) {
-    createUserSubmissions(input: $input, condition: $condition) {
-      id
-      title
-      description
-      comment
-      source
-      src
-      email
-      createdAt
-      updatedAt
     }
   }
 `;

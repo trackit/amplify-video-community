@@ -43,6 +43,7 @@ const SubmissionManagementListItem = ({
     selectedContentSubmission,
 }: SubmissionManagementListItemProps) => {
     const [uploading, setUploading] = useState<boolean>(false)
+    const [author, setAuthor] = useState<string>('')
     const [thumbnailFile, setThumbnailFile] = useState<File | null>(null)
     const [existingSections, setExistingSections] = useState<Array<Section>>([])
     const [selectedSections, setSelectedSections] = useState<Array<Section>>([])
@@ -67,6 +68,7 @@ const SubmissionManagementListItem = ({
                 setUploading(true)
                 await acceptContentSubmission(
                     selectedContentSubmission,
+                    author,
                     thumbnailFile,
                     selectedSections.map((sec) => {
                         return sec.id
@@ -146,6 +148,20 @@ const SubmissionManagementListItem = ({
                                 return
                             }
                             setThumbnailFile(event?.target?.files[0])
+                        }}
+                    />
+                </div>
+                <div style={{ margin: '15px' }}>
+                    <label htmlFor="_add_vod_author">Author</label>
+                    <input
+                        id="_add_vod_author"
+                        type="text"
+                        placeholder="Author"
+                        value={author}
+                        onChange={(
+                            event: React.ChangeEvent<HTMLInputElement>
+                        ) => {
+                            setAuthor(event.target.value)
                         }}
                     />
                 </div>

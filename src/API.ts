@@ -8,6 +8,8 @@ export type CreateMediaInput = {
   description: string,
   highlighted: boolean,
   source?: Source | null,
+  author: string,
+  viewCount?: number | null,
   mediaThumbnailId?: string | null,
 };
 
@@ -23,6 +25,8 @@ export type ModelMediaConditionInput = {
   description?: ModelStringInput | null,
   highlighted?: ModelBooleanInput | null,
   source?: ModelSourceInput | null,
+  author?: ModelStringInput | null,
+  viewCount?: ModelIntInput | null,
   and?: Array< ModelMediaConditionInput | null > | null,
   or?: Array< ModelMediaConditionInput | null > | null,
   not?: ModelMediaConditionInput | null,
@@ -80,6 +84,18 @@ export type ModelSourceInput = {
   ne?: Source | null,
 };
 
+export type ModelIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
 export type Media = {
   __typename: "Media",
   id: string,
@@ -87,6 +103,8 @@ export type Media = {
   description: string,
   highlighted: boolean,
   source?: Source | null,
+  author: string,
+  viewCount?: number | null,
   createdAt: string,
   updatedAt: string,
   thumbnail?: Thumbnail | null,
@@ -97,6 +115,7 @@ export type Thumbnail = {
   __typename: "Thumbnail",
   id: string,
   ext: string,
+  src?: string | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -122,6 +141,7 @@ export type Section = {
   __typename: "Section",
   id: string,
   label: string,
+  description: string,
   createdAt: string,
   updatedAt: string,
   medias?: ModelMediasSectionsConnection | null,
@@ -133,49 +153,12 @@ export type UpdateMediaInput = {
   description?: string | null,
   highlighted?: boolean | null,
   source?: Source | null,
+  author?: string | null,
+  viewCount?: number | null,
   mediaThumbnailId?: string | null,
 };
 
 export type DeleteMediaInput = {
-  id: string,
-};
-
-export type UpdateUserSubmissionsInput = {
-  id: string,
-  title?: string | null,
-  description?: string | null,
-  comment?: string | null,
-  source?: Source | null,
-  src?: string | null,
-  email?: string | null,
-};
-
-export type ModelUserSubmissionsConditionInput = {
-  title?: ModelStringInput | null,
-  description?: ModelStringInput | null,
-  comment?: ModelStringInput | null,
-  source?: ModelSourceInput | null,
-  src?: ModelStringInput | null,
-  email?: ModelStringInput | null,
-  and?: Array< ModelUserSubmissionsConditionInput | null > | null,
-  or?: Array< ModelUserSubmissionsConditionInput | null > | null,
-  not?: ModelUserSubmissionsConditionInput | null,
-};
-
-export type UserSubmissions = {
-  __typename: "UserSubmissions",
-  id: string,
-  title?: string | null,
-  description?: string | null,
-  comment?: string | null,
-  source?: Source | null,
-  src: string,
-  email: string,
-  createdAt: string,
-  updatedAt: string,
-};
-
-export type DeleteUserSubmissionsInput = {
   id: string,
 };
 
@@ -221,10 +204,12 @@ export type DeleteContentSubmissionInput = {
 export type CreateThumbnailInput = {
   id?: string | null,
   ext: string,
+  src?: string | null,
 };
 
 export type ModelThumbnailConditionInput = {
   ext?: ModelStringInput | null,
+  src?: ModelStringInput | null,
   and?: Array< ModelThumbnailConditionInput | null > | null,
   or?: Array< ModelThumbnailConditionInput | null > | null,
   not?: ModelThumbnailConditionInput | null,
@@ -233,6 +218,7 @@ export type ModelThumbnailConditionInput = {
 export type UpdateThumbnailInput = {
   id: string,
   ext?: string | null,
+  src?: string | null,
 };
 
 export type DeleteThumbnailInput = {
@@ -242,10 +228,12 @@ export type DeleteThumbnailInput = {
 export type CreateSectionInput = {
   id?: string | null,
   label: string,
+  description: string,
 };
 
 export type ModelSectionConditionInput = {
   label?: ModelStringInput | null,
+  description?: ModelStringInput | null,
   and?: Array< ModelSectionConditionInput | null > | null,
   or?: Array< ModelSectionConditionInput | null > | null,
   not?: ModelSectionConditionInput | null,
@@ -254,6 +242,7 @@ export type ModelSectionConditionInput = {
 export type UpdateSectionInput = {
   id: string,
   label?: string | null,
+  description?: string | null,
 };
 
 export type DeleteSectionInput = {
@@ -368,16 +357,6 @@ export type DeleteLivestreamInput = {
   id: string,
 };
 
-export type CreateUserSubmissionsInput = {
-  id?: string | null,
-  title?: string | null,
-  description?: string | null,
-  comment?: string | null,
-  source?: Source | null,
-  src: string,
-  email: string,
-};
-
 export type CreateContentSubmissionInput = {
   id?: string | null,
   title?: string | null,
@@ -394,6 +373,8 @@ export type ModelMediaFilterInput = {
   description?: ModelStringInput | null,
   highlighted?: ModelBooleanInput | null,
   source?: ModelSourceInput | null,
+  author?: ModelStringInput | null,
+  viewCount?: ModelIntInput | null,
   and?: Array< ModelMediaFilterInput | null > | null,
   or?: Array< ModelMediaFilterInput | null > | null,
   not?: ModelMediaFilterInput | null,
@@ -402,25 +383,6 @@ export type ModelMediaFilterInput = {
 export type ModelMediaConnection = {
   __typename: "ModelMediaConnection",
   items?:  Array<Media | null > | null,
-  nextToken?: string | null,
-};
-
-export type ModelUserSubmissionsFilterInput = {
-  id?: ModelIDInput | null,
-  title?: ModelStringInput | null,
-  description?: ModelStringInput | null,
-  comment?: ModelStringInput | null,
-  source?: ModelSourceInput | null,
-  src?: ModelStringInput | null,
-  email?: ModelStringInput | null,
-  and?: Array< ModelUserSubmissionsFilterInput | null > | null,
-  or?: Array< ModelUserSubmissionsFilterInput | null > | null,
-  not?: ModelUserSubmissionsFilterInput | null,
-};
-
-export type ModelUserSubmissionsConnection = {
-  __typename: "ModelUserSubmissionsConnection",
-  items?:  Array<UserSubmissions | null > | null,
   nextToken?: string | null,
 };
 
@@ -446,6 +408,7 @@ export type ModelContentSubmissionConnection = {
 export type ModelThumbnailFilterInput = {
   id?: ModelIDInput | null,
   ext?: ModelStringInput | null,
+  src?: ModelStringInput | null,
   and?: Array< ModelThumbnailFilterInput | null > | null,
   or?: Array< ModelThumbnailFilterInput | null > | null,
   not?: ModelThumbnailFilterInput | null,
@@ -460,6 +423,7 @@ export type ModelThumbnailConnection = {
 export type ModelSectionFilterInput = {
   id?: ModelIDInput | null,
   label?: ModelStringInput | null,
+  description?: ModelStringInput | null,
   and?: Array< ModelSectionFilterInput | null > | null,
   or?: Array< ModelSectionFilterInput | null > | null,
   not?: ModelSectionFilterInput | null,
@@ -522,12 +486,15 @@ export type CreateMediaMutation = {
     description: string,
     highlighted: boolean,
     source?: Source | null,
+    author: string,
+    viewCount?: number | null,
     createdAt: string,
     updatedAt: string,
     thumbnail?:  {
       __typename: "Thumbnail",
       id: string,
       ext: string,
+      src?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -559,12 +526,15 @@ export type UpdateMediaMutation = {
     description: string,
     highlighted: boolean,
     source?: Source | null,
+    author: string,
+    viewCount?: number | null,
     createdAt: string,
     updatedAt: string,
     thumbnail?:  {
       __typename: "Thumbnail",
       id: string,
       ext: string,
+      src?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -596,12 +566,15 @@ export type DeleteMediaMutation = {
     description: string,
     highlighted: boolean,
     source?: Source | null,
+    author: string,
+    viewCount?: number | null,
     createdAt: string,
     updatedAt: string,
     thumbnail?:  {
       __typename: "Thumbnail",
       id: string,
       ext: string,
+      src?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -617,46 +590,6 @@ export type DeleteMediaMutation = {
       } | null > | null,
       nextToken?: string | null,
     } | null,
-  } | null,
-};
-
-export type UpdateUserSubmissionsMutationVariables = {
-  input: UpdateUserSubmissionsInput,
-  condition?: ModelUserSubmissionsConditionInput | null,
-};
-
-export type UpdateUserSubmissionsMutation = {
-  updateUserSubmissions?:  {
-    __typename: "UserSubmissions",
-    id: string,
-    title?: string | null,
-    description?: string | null,
-    comment?: string | null,
-    source?: Source | null,
-    src: string,
-    email: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type DeleteUserSubmissionsMutationVariables = {
-  input: DeleteUserSubmissionsInput,
-  condition?: ModelUserSubmissionsConditionInput | null,
-};
-
-export type DeleteUserSubmissionsMutation = {
-  deleteUserSubmissions?:  {
-    __typename: "UserSubmissions",
-    id: string,
-    title?: string | null,
-    description?: string | null,
-    comment?: string | null,
-    source?: Source | null,
-    src: string,
-    email: string,
-    createdAt: string,
-    updatedAt: string,
   } | null,
 };
 
@@ -710,6 +643,7 @@ export type CreateThumbnailMutation = {
     __typename: "Thumbnail",
     id: string,
     ext: string,
+    src?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -725,6 +659,7 @@ export type UpdateThumbnailMutation = {
     __typename: "Thumbnail",
     id: string,
     ext: string,
+    src?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -740,6 +675,7 @@ export type DeleteThumbnailMutation = {
     __typename: "Thumbnail",
     id: string,
     ext: string,
+    src?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -755,6 +691,7 @@ export type CreateSectionMutation = {
     __typename: "Section",
     id: string,
     label: string,
+    description: string,
     createdAt: string,
     updatedAt: string,
     medias?:  {
@@ -782,6 +719,7 @@ export type UpdateSectionMutation = {
     __typename: "Section",
     id: string,
     label: string,
+    description: string,
     createdAt: string,
     updatedAt: string,
     medias?:  {
@@ -809,6 +747,7 @@ export type DeleteSectionMutation = {
     __typename: "Section",
     id: string,
     label: string,
+    description: string,
     createdAt: string,
     updatedAt: string,
     medias?:  {
@@ -846,12 +785,15 @@ export type CreateMediasSectionsMutation = {
       description: string,
       highlighted: boolean,
       source?: Source | null,
+      author: string,
+      viewCount?: number | null,
       createdAt: string,
       updatedAt: string,
       thumbnail?:  {
         __typename: "Thumbnail",
         id: string,
         ext: string,
+        src?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -864,6 +806,7 @@ export type CreateMediasSectionsMutation = {
       __typename: "Section",
       id: string,
       label: string,
+      description: string,
       createdAt: string,
       updatedAt: string,
       medias?:  {
@@ -894,12 +837,15 @@ export type UpdateMediasSectionsMutation = {
       description: string,
       highlighted: boolean,
       source?: Source | null,
+      author: string,
+      viewCount?: number | null,
       createdAt: string,
       updatedAt: string,
       thumbnail?:  {
         __typename: "Thumbnail",
         id: string,
         ext: string,
+        src?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -912,6 +858,7 @@ export type UpdateMediasSectionsMutation = {
       __typename: "Section",
       id: string,
       label: string,
+      description: string,
       createdAt: string,
       updatedAt: string,
       medias?:  {
@@ -942,12 +889,15 @@ export type DeleteMediasSectionsMutation = {
       description: string,
       highlighted: boolean,
       source?: Source | null,
+      author: string,
+      viewCount?: number | null,
       createdAt: string,
       updatedAt: string,
       thumbnail?:  {
         __typename: "Thumbnail",
         id: string,
         ext: string,
+        src?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -960,6 +910,7 @@ export type DeleteMediasSectionsMutation = {
       __typename: "Section",
       id: string,
       label: string,
+      description: string,
       createdAt: string,
       updatedAt: string,
       medias?:  {
@@ -989,12 +940,15 @@ export type CreateVideoOnDemandMutation = {
       description: string,
       highlighted: boolean,
       source?: Source | null,
+      author: string,
+      viewCount?: number | null,
       createdAt: string,
       updatedAt: string,
       thumbnail?:  {
         __typename: "Thumbnail",
         id: string,
         ext: string,
+        src?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -1025,12 +979,15 @@ export type UpdateVideoOnDemandMutation = {
       description: string,
       highlighted: boolean,
       source?: Source | null,
+      author: string,
+      viewCount?: number | null,
       createdAt: string,
       updatedAt: string,
       thumbnail?:  {
         __typename: "Thumbnail",
         id: string,
         ext: string,
+        src?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -1061,12 +1018,15 @@ export type DeleteVideoOnDemandMutation = {
       description: string,
       highlighted: boolean,
       source?: Source | null,
+      author: string,
+      viewCount?: number | null,
       createdAt: string,
       updatedAt: string,
       thumbnail?:  {
         __typename: "Thumbnail",
         id: string,
         ext: string,
+        src?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -1098,12 +1058,15 @@ export type CreateLivestreamMutation = {
       description: string,
       highlighted: boolean,
       source?: Source | null,
+      author: string,
+      viewCount?: number | null,
       createdAt: string,
       updatedAt: string,
       thumbnail?:  {
         __typename: "Thumbnail",
         id: string,
         ext: string,
+        src?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -1135,12 +1098,15 @@ export type UpdateLivestreamMutation = {
       description: string,
       highlighted: boolean,
       source?: Source | null,
+      author: string,
+      viewCount?: number | null,
       createdAt: string,
       updatedAt: string,
       thumbnail?:  {
         __typename: "Thumbnail",
         id: string,
         ext: string,
+        src?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -1172,12 +1138,15 @@ export type DeleteLivestreamMutation = {
       description: string,
       highlighted: boolean,
       source?: Source | null,
+      author: string,
+      viewCount?: number | null,
       createdAt: string,
       updatedAt: string,
       thumbnail?:  {
         __typename: "Thumbnail",
         id: string,
         ext: string,
+        src?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -1186,26 +1155,6 @@ export type DeleteLivestreamMutation = {
         nextToken?: string | null,
       } | null,
     } | null,
-  } | null,
-};
-
-export type CreateUserSubmissionsMutationVariables = {
-  input: CreateUserSubmissionsInput,
-  condition?: ModelUserSubmissionsConditionInput | null,
-};
-
-export type CreateUserSubmissionsMutation = {
-  createUserSubmissions?:  {
-    __typename: "UserSubmissions",
-    id: string,
-    title?: string | null,
-    description?: string | null,
-    comment?: string | null,
-    source?: Source | null,
-    src: string,
-    email: string,
-    createdAt: string,
-    updatedAt: string,
   } | null,
 };
 
@@ -1241,12 +1190,15 @@ export type GetMediaQuery = {
     description: string,
     highlighted: boolean,
     source?: Source | null,
+    author: string,
+    viewCount?: number | null,
     createdAt: string,
     updatedAt: string,
     thumbnail?:  {
       __typename: "Thumbnail",
       id: string,
       ext: string,
+      src?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -1281,12 +1233,15 @@ export type ListMediaQuery = {
       description: string,
       highlighted: boolean,
       source?: Source | null,
+      author: string,
+      viewCount?: number | null,
       createdAt: string,
       updatedAt: string,
       thumbnail?:  {
         __typename: "Thumbnail",
         id: string,
         ext: string,
+        src?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -1294,50 +1249,6 @@ export type ListMediaQuery = {
         __typename: "ModelMediasSectionsConnection",
         nextToken?: string | null,
       } | null,
-    } | null > | null,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type GetUserSubmissionsQueryVariables = {
-  id: string,
-};
-
-export type GetUserSubmissionsQuery = {
-  getUserSubmissions?:  {
-    __typename: "UserSubmissions",
-    id: string,
-    title?: string | null,
-    description?: string | null,
-    comment?: string | null,
-    source?: Source | null,
-    src: string,
-    email: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type ListUserSubmissionsQueryVariables = {
-  filter?: ModelUserSubmissionsFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListUserSubmissionsQuery = {
-  listUserSubmissions?:  {
-    __typename: "ModelUserSubmissionsConnection",
-    items?:  Array< {
-      __typename: "UserSubmissions",
-      id: string,
-      title?: string | null,
-      description?: string | null,
-      comment?: string | null,
-      source?: Source | null,
-      src: string,
-      email: string,
-      createdAt: string,
-      updatedAt: string,
     } | null > | null,
     nextToken?: string | null,
   } | null,
@@ -1396,6 +1307,7 @@ export type GetThumbnailQuery = {
     __typename: "Thumbnail",
     id: string,
     ext: string,
+    src?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1414,6 +1326,7 @@ export type ListThumbnailsQuery = {
       __typename: "Thumbnail",
       id: string,
       ext: string,
+      src?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null > | null,
@@ -1430,6 +1343,7 @@ export type GetSectionQuery = {
     __typename: "Section",
     id: string,
     label: string,
+    description: string,
     createdAt: string,
     updatedAt: string,
     medias?:  {
@@ -1460,6 +1374,7 @@ export type ListSectionsQuery = {
       __typename: "Section",
       id: string,
       label: string,
+      description: string,
       createdAt: string,
       updatedAt: string,
       medias?:  {
@@ -1490,12 +1405,15 @@ export type GetMediasSectionsQuery = {
       description: string,
       highlighted: boolean,
       source?: Source | null,
+      author: string,
+      viewCount?: number | null,
       createdAt: string,
       updatedAt: string,
       thumbnail?:  {
         __typename: "Thumbnail",
         id: string,
         ext: string,
+        src?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -1508,6 +1426,7 @@ export type GetMediasSectionsQuery = {
       __typename: "Section",
       id: string,
       label: string,
+      description: string,
       createdAt: string,
       updatedAt: string,
       medias?:  {
@@ -1541,6 +1460,8 @@ export type ListMediasSectionsQuery = {
         description: string,
         highlighted: boolean,
         source?: Source | null,
+        author: string,
+        viewCount?: number | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -1548,6 +1469,7 @@ export type ListMediasSectionsQuery = {
         __typename: "Section",
         id: string,
         label: string,
+        description: string,
         createdAt: string,
         updatedAt: string,
       },
@@ -1574,12 +1496,15 @@ export type GetVideoOnDemandQuery = {
       description: string,
       highlighted: boolean,
       source?: Source | null,
+      author: string,
+      viewCount?: number | null,
       createdAt: string,
       updatedAt: string,
       thumbnail?:  {
         __typename: "Thumbnail",
         id: string,
         ext: string,
+        src?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -1613,6 +1538,8 @@ export type ListVideoOnDemandsQuery = {
         description: string,
         highlighted: boolean,
         source?: Source | null,
+        author: string,
+        viewCount?: number | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -1640,12 +1567,15 @@ export type GetLivestreamQuery = {
       description: string,
       highlighted: boolean,
       source?: Source | null,
+      author: string,
+      viewCount?: number | null,
       createdAt: string,
       updatedAt: string,
       thumbnail?:  {
         __typename: "Thumbnail",
         id: string,
         ext: string,
+        src?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -1680,6 +1610,8 @@ export type ListLivestreamsQuery = {
         description: string,
         highlighted: boolean,
         source?: Source | null,
+        author: string,
+        viewCount?: number | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -1696,12 +1628,15 @@ export type OnCreateMediaSubscription = {
     description: string,
     highlighted: boolean,
     source?: Source | null,
+    author: string,
+    viewCount?: number | null,
     createdAt: string,
     updatedAt: string,
     thumbnail?:  {
       __typename: "Thumbnail",
       id: string,
       ext: string,
+      src?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -1728,12 +1663,15 @@ export type OnUpdateMediaSubscription = {
     description: string,
     highlighted: boolean,
     source?: Source | null,
+    author: string,
+    viewCount?: number | null,
     createdAt: string,
     updatedAt: string,
     thumbnail?:  {
       __typename: "Thumbnail",
       id: string,
       ext: string,
+      src?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -1760,12 +1698,15 @@ export type OnDeleteMediaSubscription = {
     description: string,
     highlighted: boolean,
     source?: Source | null,
+    author: string,
+    viewCount?: number | null,
     createdAt: string,
     updatedAt: string,
     thumbnail?:  {
       __typename: "Thumbnail",
       id: string,
       ext: string,
+      src?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -1781,51 +1722,6 @@ export type OnDeleteMediaSubscription = {
       } | null > | null,
       nextToken?: string | null,
     } | null,
-  } | null,
-};
-
-export type OnCreateUserSubmissionsSubscription = {
-  onCreateUserSubmissions?:  {
-    __typename: "UserSubmissions",
-    id: string,
-    title?: string | null,
-    description?: string | null,
-    comment?: string | null,
-    source?: Source | null,
-    src: string,
-    email: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateUserSubmissionsSubscription = {
-  onUpdateUserSubmissions?:  {
-    __typename: "UserSubmissions",
-    id: string,
-    title?: string | null,
-    description?: string | null,
-    comment?: string | null,
-    source?: Source | null,
-    src: string,
-    email: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnDeleteUserSubmissionsSubscription = {
-  onDeleteUserSubmissions?:  {
-    __typename: "UserSubmissions",
-    id: string,
-    title?: string | null,
-    description?: string | null,
-    comment?: string | null,
-    source?: Source | null,
-    src: string,
-    email: string,
-    createdAt: string,
-    updatedAt: string,
   } | null,
 };
 
@@ -1879,6 +1775,7 @@ export type OnCreateThumbnailSubscription = {
     __typename: "Thumbnail",
     id: string,
     ext: string,
+    src?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1889,6 +1786,7 @@ export type OnUpdateThumbnailSubscription = {
     __typename: "Thumbnail",
     id: string,
     ext: string,
+    src?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1899,6 +1797,7 @@ export type OnDeleteThumbnailSubscription = {
     __typename: "Thumbnail",
     id: string,
     ext: string,
+    src?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1909,6 +1808,7 @@ export type OnCreateSectionSubscription = {
     __typename: "Section",
     id: string,
     label: string,
+    description: string,
     createdAt: string,
     updatedAt: string,
     medias?:  {
@@ -1931,6 +1831,7 @@ export type OnUpdateSectionSubscription = {
     __typename: "Section",
     id: string,
     label: string,
+    description: string,
     createdAt: string,
     updatedAt: string,
     medias?:  {
@@ -1953,6 +1854,7 @@ export type OnDeleteSectionSubscription = {
     __typename: "Section",
     id: string,
     label: string,
+    description: string,
     createdAt: string,
     updatedAt: string,
     medias?:  {
@@ -1985,12 +1887,15 @@ export type OnCreateMediasSectionsSubscription = {
       description: string,
       highlighted: boolean,
       source?: Source | null,
+      author: string,
+      viewCount?: number | null,
       createdAt: string,
       updatedAt: string,
       thumbnail?:  {
         __typename: "Thumbnail",
         id: string,
         ext: string,
+        src?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -2003,6 +1908,7 @@ export type OnCreateMediasSectionsSubscription = {
       __typename: "Section",
       id: string,
       label: string,
+      description: string,
       createdAt: string,
       updatedAt: string,
       medias?:  {
@@ -2028,12 +1934,15 @@ export type OnUpdateMediasSectionsSubscription = {
       description: string,
       highlighted: boolean,
       source?: Source | null,
+      author: string,
+      viewCount?: number | null,
       createdAt: string,
       updatedAt: string,
       thumbnail?:  {
         __typename: "Thumbnail",
         id: string,
         ext: string,
+        src?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -2046,6 +1955,7 @@ export type OnUpdateMediasSectionsSubscription = {
       __typename: "Section",
       id: string,
       label: string,
+      description: string,
       createdAt: string,
       updatedAt: string,
       medias?:  {
@@ -2071,12 +1981,15 @@ export type OnDeleteMediasSectionsSubscription = {
       description: string,
       highlighted: boolean,
       source?: Source | null,
+      author: string,
+      viewCount?: number | null,
       createdAt: string,
       updatedAt: string,
       thumbnail?:  {
         __typename: "Thumbnail",
         id: string,
         ext: string,
+        src?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -2089,6 +2002,7 @@ export type OnDeleteMediasSectionsSubscription = {
       __typename: "Section",
       id: string,
       label: string,
+      description: string,
       createdAt: string,
       updatedAt: string,
       medias?:  {
@@ -2113,12 +2027,15 @@ export type OnCreateVideoOnDemandSubscription = {
       description: string,
       highlighted: boolean,
       source?: Source | null,
+      author: string,
+      viewCount?: number | null,
       createdAt: string,
       updatedAt: string,
       thumbnail?:  {
         __typename: "Thumbnail",
         id: string,
         ext: string,
+        src?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -2144,12 +2061,15 @@ export type OnUpdateVideoOnDemandSubscription = {
       description: string,
       highlighted: boolean,
       source?: Source | null,
+      author: string,
+      viewCount?: number | null,
       createdAt: string,
       updatedAt: string,
       thumbnail?:  {
         __typename: "Thumbnail",
         id: string,
         ext: string,
+        src?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -2175,12 +2095,15 @@ export type OnDeleteVideoOnDemandSubscription = {
       description: string,
       highlighted: boolean,
       source?: Source | null,
+      author: string,
+      viewCount?: number | null,
       createdAt: string,
       updatedAt: string,
       thumbnail?:  {
         __typename: "Thumbnail",
         id: string,
         ext: string,
+        src?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -2207,12 +2130,15 @@ export type OnCreateLivestreamSubscription = {
       description: string,
       highlighted: boolean,
       source?: Source | null,
+      author: string,
+      viewCount?: number | null,
       createdAt: string,
       updatedAt: string,
       thumbnail?:  {
         __typename: "Thumbnail",
         id: string,
         ext: string,
+        src?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -2239,12 +2165,15 @@ export type OnUpdateLivestreamSubscription = {
       description: string,
       highlighted: boolean,
       source?: Source | null,
+      author: string,
+      viewCount?: number | null,
       createdAt: string,
       updatedAt: string,
       thumbnail?:  {
         __typename: "Thumbnail",
         id: string,
         ext: string,
+        src?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -2271,12 +2200,15 @@ export type OnDeleteLivestreamSubscription = {
       description: string,
       highlighted: boolean,
       source?: Source | null,
+      author: string,
+      viewCount?: number | null,
       createdAt: string,
       updatedAt: string,
       thumbnail?:  {
         __typename: "Thumbnail",
         id: string,
         ext: string,
+        src?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,

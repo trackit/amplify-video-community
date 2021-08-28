@@ -4,7 +4,7 @@
   "DynamoDBEnableServerSideEncryption": false,
   "AuthCognitoUserPoolId": {
     "Fn::GetAtt": [
-      "authampvideocommuweb4bb49c01",
+      "authampvideocommuwebaa182671",
       "Outputs.UserPoolId"
     ]
   }
