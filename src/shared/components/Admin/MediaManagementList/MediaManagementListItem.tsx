@@ -181,6 +181,7 @@ const MediaManagementListItem = ({
         const [highlighted, setHighlighted] = useState(
             selectedMedia.highlighted
         )
+        const [author, setAuthor] = useState(selectedMedia.author)
 
         const onChange = (
             value: string,
@@ -196,6 +197,7 @@ const MediaManagementListItem = ({
                     title,
                     description,
                     highlighted,
+                    author,
                 })
             } catch (error) {
                 console.error('MediaManagementListItem.tsx(modifyMedia)', error)
@@ -275,6 +277,14 @@ const MediaManagementListItem = ({
                         onChange={(e) =>
                             onChange(e.target.value, setDescription)
                         }
+                    />
+                </div>
+                <div>
+                    <span>Author</span>
+                    <input
+                        type="text"
+                        value={author}
+                        onChange={(e) => onChange(e.target.value, setAuthor)}
                     />
                 </div>
                 <div>
@@ -379,6 +389,7 @@ const MediaManagementListItem = ({
                 {thumbnail}
                 <p>Title: {selectedMedia?.title}</p>
                 <p>Description: {selectedMedia?.description}</p>
+                <p>Author: {selectedMedia?.author}</p>
                 Sections:
                 <Tags>
                     {mediaSections.map((s) => {
