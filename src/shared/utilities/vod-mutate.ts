@@ -3,7 +3,6 @@ import { GraphQLResult } from '@aws-amplify/api-graphql'
 
 import { createVideoOnDemand } from '../../graphql/mutations'
 import {
-    checkfileExtention,
     putThumbnailFile,
     setThumbnail,
     setMedia,
@@ -42,14 +41,7 @@ const uploadSourceSelf = async (
     vodFile: File,
     sectionsId: Array<undefined | string>
 ) => {
-    if (
-        checkfileExtention(thumbnailFile.name) ||
-        checkfileExtention(vodFile.name)
-    ) {
-        return
-    }
     const vodExtension = vodFile.name.toLowerCase().split('.')
-    const thumbnailExtension = thumbnailFile.name.toLowerCase().split('.')
     try {
         await putVodFile(vodFile, id, vodExtension)
     } catch (error) {
@@ -58,14 +50,14 @@ const uploadSourceSelf = async (
     }
 
     try {
-        await putThumbnailFile(thumbnailFile, id, thumbnailExtension)
+        await putThumbnailFile(thumbnailFile, id)
     } catch (error) {
         console.error('vod-mutate.ts(putThumbnailFile): ', error)
         return
     }
 
     try {
-        await setThumbnail(id, thumbnailExtension)
+        await setThumbnail(id)
     } catch (error) {
         console.error('vod-mutate.tx(setThumbnail): ', error)
         return
@@ -110,19 +102,15 @@ const uploadSourceYoutube = async (
     thumbnailFile: File,
     youtubeSrc: string
 ) => {
-    if (checkfileExtention(thumbnailFile.name)) {
-        return
-    }
-    const thumbnailExtension = thumbnailFile.name.toLowerCase().split('.')
     try {
-        await putThumbnailFile(thumbnailFile, id, thumbnailExtension)
+        await putThumbnailFile(thumbnailFile, id)
     } catch (error) {
         console.error('vod-mutate.ts(putThumbnailFile): ', error)
         return
     }
 
     try {
-        await setThumbnail(id, thumbnailExtension)
+        await setThumbnail(id)
     } catch (error) {
         console.error('vod-mutate.tx(setThumbnail): ', error)
         return

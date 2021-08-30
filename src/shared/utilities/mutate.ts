@@ -2,6 +2,7 @@ import { API, graphqlOperation } from 'aws-amplify'
 import { Storage } from 'aws-amplify'
 import { GraphQLResult } from '@aws-amplify/api-graphql'
 import { v4 as uuidv4 } from 'uuid'
+import Resizer from 'react-image-file-resizer'
 
 import {
     createSection,
@@ -22,6 +23,8 @@ import {
     createMedia,
 } from '../../graphql/mutations'
 import awsmobile from '../../aws-exports'
+
+const thumbnailExtension = 'jpeg'
 
 const createNewSection = async (label: string, description: string) => {
     return API.graphql(
@@ -67,33 +70,44 @@ async function removeThumbnailFile(thumbnail: Thumbnail | undefined) {
     })
 }
 
-async function putThumbnailFile(
-    file: File,
-    id: string,
-    thumbnailExtension: string[]
-) {
-    return Storage.put(
-        `thumbnails/${id}.${thumbnailExtension[thumbnailExtension.length - 1]}`,
-        file,
-        {
-            bucket: awsmobile.aws_user_files_s3_bucket,
-            level: 'public',
-            // eslint-disable-next-line
-            progressCallback(progress: any) {
-                console.log(
-                    `thumbnailFile Uploaded: ${progress.loaded}/${progress.total}`
-                )
+const resizeAndConvertThumbnail = (file: File) =>
+    new Promise((resolve) => {
+        Resizer.imageFileResizer(
+            file,
+            600,
+            500,
+            thumbnailExtension.toUpperCase(),
+            100,
+            0,
+            (uri) => {
+                resolve(uri)
             },
-        }
-    )
+            'file'
+        )
+    })
+
+async function putThumbnailFile(file: File, id: string) {
+    const fileResized = await resizeAndConvertThumbnail(file)
+
+    return Storage.put(`thumbnails/${id}.${thumbnailExtension}`, fileResized, {
+        bucket: awsmobile.aws_user_files_s3_bucket,
+        level: 'public',
+        // eslint-disable-next-line
+        progressCallback(progress: any) {
+            console.log(
+                `thumbnailFile Uploaded: ${progress.loaded}/${progress.total}`
+            )
+        },
+    })
 }
 
-async function setThumbnail(id: string, thumbnailExtension: string[]) {
+// eslint-disable-next-line
+async function setThumbnail(id: string) {
     return API.graphql(
         graphqlOperation(createThumbnail, {
             input: {
                 id: id,
-                ext: thumbnailExtension[thumbnailExtension.length - 1],
+                ext: thumbnailExtension,
             },
         })
     )
@@ -136,17 +150,6 @@ async function modifyMedia(input: APIt.UpdateMediaInput) {
         graphqlOperation(updateMedia, {
             input,
         })
-    )
-}
-
-function checkfileExtention(filename: string) {
-    const validThumbnailExtention = ['png', 'jpg', 'jpeg']
-    // const validVodFileExtention = ['mp4', 'avi', 'mov', 'mkv']
-    const filePart = filename.toLowerCase().split('.')
-    return (
-        !validThumbnailExtention.includes(filePart[filePart.length - 1]) &&
-        /*!validVodFileExtention.includes(filePart[filePart.length - 1]) &&*/
-        filePart.length <= 1
     )
 }
 
@@ -197,7 +200,6 @@ export {
     setMedia,
     setMediasSections,
     setThumbnail,
-    checkfileExtention,
     removeMedia,
     modifyMedia,
     removeThumbnailFile,
