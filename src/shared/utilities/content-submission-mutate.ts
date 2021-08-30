@@ -18,7 +18,7 @@ async function setContentSubmission(input: APIt.CreateContentSubmissionInput) {
     })
 }
 
-async function declineContentSubmission(
+async function removeContentSubmission(
     input: APIt.DeleteContentSubmissionInput
 ) {
     return API.graphql({
@@ -57,6 +57,6 @@ async function acceptContentSubmission(
 
 export {
     setContentSubmission,
-    declineContentSubmission,
+    removeContentSubmission,
     acceptContentSubmission,
 }

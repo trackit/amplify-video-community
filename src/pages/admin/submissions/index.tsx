@@ -6,7 +6,7 @@ import { ContentSubmission, Section } from '../../../models'
 import { fetchContentSubmissions } from '../../../shared/utilities/content-submission-fetch'
 import {
     acceptContentSubmission,
-    declineContentSubmission,
+    removeContentSubmission,
     fetchSections,
 } from '../../../shared/utilities'
 import { AdminLayout } from '../../../shared/components'
@@ -202,8 +202,8 @@ const SubmissionsManagement = () => {
     }
 
     const onDeclineAccept = async (value: boolean) => {
-        if (value) {
-            if (selectedContentSubmission) {
+        if (selectedContentSubmission) {
+            if (value) {
                 setUploading(true)
                 await acceptContentSubmission(
                     selectedContentSubmission,
@@ -213,27 +213,19 @@ const SubmissionsManagement = () => {
                         return sec.id
                     })
                 )
-                setSubmissions(
-                    submissions.filter(
-                        (sub) => sub.id !== selectedContentSubmission.id
-                    )
-                )
                 setUploading(false)
             }
-        } else {
-            if (selectedContentSubmission) {
-                await declineContentSubmission({
-                    id: selectedContentSubmission?.id,
-                })
-                setSubmissions(
-                    submissions.filter(
-                        (sub) => sub.id !== selectedContentSubmission.id
-                    )
+            await removeContentSubmission({
+                id: selectedContentSubmission?.id,
+            })
+            setSubmissions(
+                submissions.filter(
+                    (sub) => sub.id !== selectedContentSubmission.id
                 )
-            }
+            )
+            setEditMode(false)
+            setModalOpen(false)
         }
-        setEditMode(false)
-        setModalOpen(false)
     }
 
     return (

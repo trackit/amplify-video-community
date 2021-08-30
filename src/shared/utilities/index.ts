@@ -30,7 +30,7 @@ export { uploadSourceSelf, uploadSourceYoutube } from './vod-mutate'
 export {
     setContentSubmission,
     acceptContentSubmission,
-    declineContentSubmission,
+    removeContentSubmission,
 } from './content-submission-mutate'
 
 export { fetchContentSubmissions } from './content-submission-fetch'
