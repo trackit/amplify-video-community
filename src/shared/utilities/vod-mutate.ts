@@ -3,7 +3,6 @@ import { GraphQLResult } from '@aws-amplify/api-graphql'
 
 import { createVideoOnDemand } from '../../graphql/mutations'
 import {
-    checkfileExtention,
     putThumbnailFile,
     setThumbnail,
     setMedia,
@@ -42,9 +41,6 @@ const uploadSourceSelf = async (
     vodFile: File,
     sectionsId: Array<undefined | string>
 ) => {
-    if (checkfileExtention(vodFile.name)) {
-        return
-    }
     const vodExtension = vodFile.name.toLowerCase().split('.')
     try {
         await putVodFile(vodFile, id, vodExtension)

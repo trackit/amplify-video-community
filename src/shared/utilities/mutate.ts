@@ -153,17 +153,6 @@ async function modifyMedia(input: APIt.UpdateMediaInput) {
     )
 }
 
-function checkfileExtention(filename: string) {
-    const validThumbnailExtention = ['png', 'jpg', 'jpeg']
-    // const validVodFileExtention = ['mp4', 'avi', 'mov', 'mkv']
-    const filePart = filename.toLowerCase().split('.')
-    return (
-        !validThumbnailExtention.includes(filePart[filePart.length - 1]) &&
-        /*!validVodFileExtention.includes(filePart[filePart.length - 1]) &&*/
-        filePart.length <= 1
-    )
-}
-
 const uploadContent = async (
     media: Media,
     source: APIt.Source,
@@ -211,7 +200,6 @@ export {
     setMedia,
     setMediasSections,
     setThumbnail,
-    checkfileExtention,
     removeMedia,
     modifyMedia,
     removeThumbnailFile,
