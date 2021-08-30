@@ -5,7 +5,6 @@ import * as APIt from '../../API'
 import { createLivestream, updateLivestream } from '../../graphql/mutations'
 import { Media } from '../../models'
 import {
-    checkfileExtention,
     putThumbnailFile,
     setThumbnail,
     setMedia,
@@ -35,19 +34,15 @@ const createNewLivestream = async (
     sectionsId: Array<undefined | string>
 ) => {
     const id: string = uuidv4()
-    if (checkfileExtention(thumbnailFile.name)) {
-        return
-    }
-    const thumbnailExtension = thumbnailFile.name.toLowerCase().split('.')
     try {
-        await putThumbnailFile(thumbnailFile, id, thumbnailExtension)
+        await putThumbnailFile(thumbnailFile, id)
     } catch (error) {
         console.error('live-mutate.ts(putThumbnailFile): ', error)
         return
     }
 
     try {
-        await setThumbnail(id, thumbnailExtension)
+        await setThumbnail(id)
     } catch (error) {
         console.error('live-mutate.tx(setThumbnail): ', error)
         return

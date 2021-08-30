@@ -24,6 +24,8 @@ import {
 } from '../../graphql/mutations'
 import awsmobile from '../../aws-exports'
 
+const thumbnailExtension = 'jpeg'
+
 const createNewSection = async (label: string, description: string) => {
     return API.graphql(
         graphqlOperation(createSection, {
@@ -68,14 +70,14 @@ async function removeThumbnailFile(thumbnail: Thumbnail | undefined) {
     })
 }
 
-const resizeFile = (file: File, fileExtension: string) =>
+const resizeFile = (file: File) =>
     new Promise((resolve) => {
         Resizer.imageFileResizer(
             file,
-            1280,
-            720,
-            fileExtension.toUpperCase(),
-            75,
+            600,
+            500,
+            thumbnailExtension.toUpperCase(),
+            100,
             0,
             (uri) => {
                 resolve(uri)
@@ -84,16 +86,10 @@ const resizeFile = (file: File, fileExtension: string) =>
         )
     })
 
-async function putThumbnailFile(
-    file: File,
-    id: string,
-    // eslint-disable-next-line
-    thumbnailExtension: string[]
-) {
-    const fileExtension = 'jpeg' //thumbnailExtension[thumbnailExtension.length - 1]
-    const fileResized = await resizeFile(file, fileExtension)
+async function putThumbnailFile(file: File, id: string) {
+    const fileResized = await resizeFile(file)
 
-    return Storage.put(`thumbnails/${id}.${fileExtension}`, fileResized, {
+    return Storage.put(`thumbnails/${id}.${thumbnailExtension}`, fileResized, {
         bucket: awsmobile.aws_user_files_s3_bucket,
         level: 'public',
         // eslint-disable-next-line
@@ -106,12 +102,12 @@ async function putThumbnailFile(
 }
 
 // eslint-disable-next-line
-async function setThumbnail(id: string, thumbnailExtension: string[]) {
+async function setThumbnail(id: string) {
     return API.graphql(
         graphqlOperation(createThumbnail, {
             input: {
                 id: id,
-                ext: 'jpeg', //thumbnailExtension[thumbnailExtension.length - 1],
+                ext: thumbnailExtension,
             },
         })
     )
