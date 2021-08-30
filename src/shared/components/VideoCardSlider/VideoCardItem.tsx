@@ -138,14 +138,22 @@ const VideoCardItem = ({ videoInfo, config }: Props) => {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             playing={videoStatus.playing}
-            thumbUrl={videoInfo.thumbnail?.url}
+            thumbUrl={
+                videoInfo.vod?.media?.source === 'SELF'
+                    ? videoInfo.thumbnail?.url
+                    : videoInfo.thumbnail?.obj?.src
+            }
         >
             <PlayerWrapper playing={videoStatus.playing}>
                 <ReactPlayer
                     ref={playerRef}
                     width="100%"
                     height="100%"
-                    url={`https://${awsvideoconfig.awsOutputVideo}/public/${videoInfo.vod?.id}/${videoInfo.vod?.id}.m3u8`}
+                    url={
+                        videoInfo.vod?.media?.source === 'SELF'
+                            ? `https://${awsvideoconfig.awsOutputVideo}/public/${videoInfo.vod?.id}/${videoInfo.vod?.id}.m3u8`
+                            : videoInfo.vod?.src
+                    }
                     controls={false}
                     playing={videoStatus.playing}
                     muted

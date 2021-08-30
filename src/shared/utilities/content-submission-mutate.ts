@@ -31,7 +31,7 @@ async function declineContentSubmission(
 async function acceptContentSubmission(
     submission: ContentSubmission,
     author: string,
-    thumbnailFile: File,
+    thumbnailFile: File | null,
     sectionsId: Array<string>
 ) {
     const media: Media = {

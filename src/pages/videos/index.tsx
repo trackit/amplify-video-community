@@ -57,8 +57,6 @@ const VideoPage = () => {
         }>
     >([])
     const [sections, setSections] = useState<Array<Section> | null>(null)
-    const [nextTokenVodFiles, setNextTokenVodFiles] =
-        useState<string | null>(null)
     const [loadingVodFiles, setLoadingVodFiles] = useState<boolean>(false)
     const [loadingSections, setLoadingSections] = useState<boolean>(false)
     const [haveHighlightedContent, setHaveHighlightedContent] = useState(false)
@@ -67,12 +65,7 @@ const VideoPage = () => {
         ;(async () => {
             setLoadingVodFiles(true)
             try {
-                const { data } = await fetchVodFiles(nextTokenVodFiles)
-                setNextTokenVodFiles(
-                    data?.listVideoOnDemands?.nextToken
-                        ? data.listVideoOnDemands.nextToken
-                        : null
-                )
+                const { data } = await fetchVodFiles(null)
                 const assets = data?.listVideoOnDemands
                     ?.items as Array<VideoOnDemand>
                 setVodAssets(assets)
@@ -89,11 +82,18 @@ const VideoPage = () => {
                 }
                 await Promise.all(
                     assets.map(async (asset) => {
-                        const data = await fetchThumbnail(asset.media)
-                        thumbnailArr.push({
-                            obj: asset.media?.thumbnail,
-                            url: data as string,
-                        })
+                        if (asset.media?.thumbnail?.src != null) {
+                            thumbnailArr.push({
+                                obj: asset.media.thumbnail,
+                                url: asset.media.thumbnail.src,
+                            })
+                        } else {
+                            const data = await fetchThumbnail(asset.media)
+                            thumbnailArr.push({
+                                obj: asset.media?.thumbnail,
+                                url: data as string,
+                            })
+                        }
                     })
                 )
                 setThumbnails(thumbnailArr)
@@ -102,7 +102,7 @@ const VideoPage = () => {
             }
             setLoadingVodFiles(false)
         })()
-    }, [nextTokenVodFiles])
+    }, [])
 
     useEffect(() => {
         ;(async () => {

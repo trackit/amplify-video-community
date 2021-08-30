@@ -8,7 +8,18 @@ import HighlightedSection from './Section/HighlightedSection'
 import BasicLoader from './Loader'
 import MediaManagementList from './Admin/MediaManagementList/MediaManagementList'
 import SectionsManagementList from './Admin/SectionsManagementList/SectionsManagementList'
-import SubmissionsManagementList from './Admin/SubmissionsManagementList/SubmissionsManagementList'
+
+export {
+    ListContainer,
+    ListModal,
+    ListSearchBarWrapper,
+    ListSearchBarInput,
+    ListSearchBarButton,
+    ListModalContent,
+    ListModalContentHeader,
+    ListModalContentBody,
+    ListModalContentFooter,
+} from './Lists/Lists'
 
 export {
     NavBar,
@@ -20,6 +31,5 @@ export {
     BasicLoader,
     MediaManagementList,
     SectionsManagementList,
-    SubmissionsManagementList,
     VideosSectionContainer,
 }
