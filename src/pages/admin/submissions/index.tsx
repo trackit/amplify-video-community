@@ -111,6 +111,7 @@ const ListModalContentBodyContent = styled.div`
     flex-direction: column;
     justify-content: space-evenly;
     gap: 10px;
+    margin-bottom: 10px;
 `
 
 const ListModalKeyValue = styled.div`
@@ -150,6 +151,7 @@ const SubmissionsManagement = () => {
         useState<ContentSubmission | null>(null)
     const [modalOpen, setModalOpen] = useState(false)
     const [uploading, setUploading] = useState(false)
+    const [useYTThumbnail, setUseYTThumbnail] = useState(true)
     const [author, setAuthor] = useState('Submission')
     const [thumbnailFile, setThumbnailFile] = useState<File | null>(null)
     const [existingSections, setExistingSections] = useState<Array<Section>>([])
@@ -201,19 +203,19 @@ const SubmissionsManagement = () => {
 
     const onDeclineAccept = async (value: boolean) => {
         if (value) {
-            if (thumbnailFile && selectedContentSubmission) {
+            if (selectedContentSubmission) {
                 setUploading(true)
                 await acceptContentSubmission(
                     selectedContentSubmission,
                     'Submission',
-                    thumbnailFile,
+                    useYTThumbnail ? null : thumbnailFile,
                     selectedSections.map((sec) => {
                         return sec.id
                     })
                 )
                 setSubmissions(
                     submissions.filter(
-                        (sub) => sub.id === selectedContentSubmission.id
+                        (sub) => sub.id !== selectedContentSubmission.id
                     )
                 )
                 setUploading(false)
@@ -225,7 +227,7 @@ const SubmissionsManagement = () => {
                 })
                 setSubmissions(
                     submissions.filter(
-                        (sub) => sub.id === selectedContentSubmission.id
+                        (sub) => sub.id !== selectedContentSubmission.id
                     )
                 )
             }
@@ -331,9 +333,9 @@ const SubmissionsManagement = () => {
                                             </ListModalKeyValue>
                                             <ListModalKeyValue>
                                                 <Key>Created At:</Key>
-                                                {
+                                                {moment(
                                                     selectedContentSubmission?.createdAt
-                                                }
+                                                ).format('MMM Do YYYY')}
                                             </ListModalKeyValue>
                                             <ListModalKeyValue>
                                                 <Key>Source:</Key>
@@ -416,131 +418,158 @@ const SubmissionsManagement = () => {
                                             {selectedContentSubmission?.comment}
                                         </ListModalKeyValue>
                                     </ListModalContentBodyContent>
-                                    <ListModalContentBodyContent>
-                                        <label htmlFor="_add_vod_thumbnail">
-                                            Video Thumbnail
-                                        </label>
-                                        <input
-                                            id="_add_vod_thumbnail"
-                                            type="file"
-                                            accept="image/*"
-                                            onChange={(
-                                                event: React.ChangeEvent<HTMLInputElement>
-                                            ) => {
-                                                if (
-                                                    event.target.files === null
-                                                ) {
-                                                    return
-                                                }
-                                                setThumbnailFile(
-                                                    event?.target?.files[0]
-                                                )
-                                            }}
-                                        />
-                                        <label htmlFor="_add_vod_author">
-                                            Author
-                                        </label>
-                                        <input
-                                            id="_add_vod_author"
-                                            type="text"
-                                            placeholder="Author"
-                                            value={author}
-                                            onChange={(
-                                                event: React.ChangeEvent<HTMLInputElement>
-                                            ) => {
-                                                setAuthor(event.target.value)
-                                            }}
-                                        />
-                                        <label htmlFor="_add_vod_tags">
-                                            Video Tags
-                                        </label>
-                                        {selectedSections.map(
-                                            (section: Section | undefined) => {
-                                                return (
-                                                    <div
-                                                        key={
-                                                            section &&
-                                                            section.label
-                                                        }
-                                                    >
-                                                        <span>
-                                                            {section &&
-                                                                section.label}
-                                                        </span>
-                                                        <button
-                                                            onClick={() => {
-                                                                setSelectedSections(
-                                                                    selectedSections.filter(
-                                                                        (
-                                                                            value:
-                                                                                | Section
-                                                                                | undefined
-                                                                        ) =>
-                                                                            value !==
-                                                                            section
-                                                                    )
-                                                                )
-                                                            }}
-                                                        >
-                                                            X
-                                                        </button>
-                                                    </div>
-                                                )
-                                            }
-                                        )}
-                                        <select
-                                            id="_add_vod_tags"
-                                            onChange={(
-                                                event: React.FormEvent<HTMLSelectElement>
-                                            ) => {
-                                                const section =
-                                                    existingSections.find(
-                                                        (section) =>
-                                                            (section &&
-                                                                section.label) ===
-                                                            event.currentTarget
-                                                                .value
-                                                    )
-                                                section !== undefined &&
-                                                    setSelectedSections([
-                                                        ...selectedSections,
-                                                        section,
-                                                    ])
-                                            }}
-                                        >
-                                            <option value="">
-                                                Select a section
-                                            </option>
-                                            {existingSections
-                                                .filter(
-                                                    (section) =>
-                                                        !selectedSections.find(
-                                                            (s) =>
-                                                                s &&
-                                                                section &&
-                                                                s.label ===
-                                                                    section.label
+                                    {editMode && (
+                                        <ListModalContentBodyContent>
+                                            <ListModalKeyValue>
+                                                <Key>
+                                                    Use youtube thumbnail ?:
+                                                </Key>
+                                                <input
+                                                    type="checkbox"
+                                                    checked={useYTThumbnail}
+                                                    onChange={() => {
+                                                        setUseYTThumbnail(
+                                                            !useYTThumbnail
                                                         )
-                                                )
-                                                .map((section) => {
-                                                    return (
-                                                        <option
-                                                            value={
-                                                                section &&
-                                                                section.label
-                                                            }
-                                                            key={
-                                                                section &&
-                                                                section.label
-                                                            }
-                                                        >
-                                                            {section &&
-                                                                section.label}
-                                                        </option>
-                                                    )
-                                                })}
-                                        </select>
-                                    </ListModalContentBodyContent>
+                                                    }}
+                                                />
+                                            </ListModalKeyValue>
+                                            <ListModalKeyValue>
+                                                <Key>Thumbnail:</Key>
+                                                <input
+                                                    disabled={useYTThumbnail}
+                                                    type="file"
+                                                    accept="image/*"
+                                                    onChange={(
+                                                        event: React.ChangeEvent<HTMLInputElement>
+                                                    ) => {
+                                                        if (
+                                                            event.target
+                                                                .files === null
+                                                        ) {
+                                                            return
+                                                        }
+                                                        setThumbnailFile(
+                                                            event?.target
+                                                                ?.files[0]
+                                                        )
+                                                    }}
+                                                />
+                                            </ListModalKeyValue>
+                                            <ListModalKeyValue>
+                                                <Key>Author:</Key>
+                                                <input
+                                                    id="_add_vod_author"
+                                                    type="text"
+                                                    placeholder="Author"
+                                                    value={author}
+                                                    onChange={(
+                                                        event: React.ChangeEvent<HTMLInputElement>
+                                                    ) => {
+                                                        setAuthor(
+                                                            event.target.value
+                                                        )
+                                                    }}
+                                                />
+                                            </ListModalKeyValue>
+                                            <ListModalKeyValue>
+                                                <Key>Video Tags:</Key>
+                                                {selectedSections.map(
+                                                    (
+                                                        section:
+                                                            | Section
+                                                            | undefined
+                                                    ) => {
+                                                        return (
+                                                            <div
+                                                                key={
+                                                                    section &&
+                                                                    section.label
+                                                                }
+                                                            >
+                                                                <span>
+                                                                    {section &&
+                                                                        section.label}
+                                                                </span>
+                                                                <button
+                                                                    onClick={() => {
+                                                                        setSelectedSections(
+                                                                            selectedSections.filter(
+                                                                                (
+                                                                                    value:
+                                                                                        | Section
+                                                                                        | undefined
+                                                                                ) =>
+                                                                                    value !==
+                                                                                    section
+                                                                            )
+                                                                        )
+                                                                    }}
+                                                                >
+                                                                    X
+                                                                </button>
+                                                            </div>
+                                                        )
+                                                    }
+                                                )}
+                                                <select
+                                                    id="_add_vod_tags"
+                                                    onChange={(
+                                                        event: React.FormEvent<HTMLSelectElement>
+                                                    ) => {
+                                                        const section =
+                                                            existingSections.find(
+                                                                (section) =>
+                                                                    (section &&
+                                                                        section.label) ===
+                                                                    event
+                                                                        .currentTarget
+                                                                        .value
+                                                            )
+                                                        section !== undefined &&
+                                                            setSelectedSections(
+                                                                [
+                                                                    ...selectedSections,
+                                                                    section,
+                                                                ]
+                                                            )
+                                                    }}
+                                                >
+                                                    <option value="">
+                                                        Select a section
+                                                    </option>
+                                                    {existingSections
+                                                        .filter(
+                                                            (section) =>
+                                                                !selectedSections.find(
+                                                                    (s) =>
+                                                                        s &&
+                                                                        section &&
+                                                                        s.label ===
+                                                                            section.label
+                                                                )
+                                                        )
+                                                        .map((section) => {
+                                                            return (
+                                                                <option
+                                                                    value={
+                                                                        section &&
+                                                                        section.label
+                                                                    }
+                                                                    key={
+                                                                        section &&
+                                                                        section.label
+                                                                    }
+                                                                >
+                                                                    {section &&
+                                                                        section.label}
+                                                                </option>
+                                                            )
+                                                        })}
+                                                </select>
+                                            </ListModalKeyValue>
+                                        </ListModalContentBodyContent>
+                                    )}
                                 </ListModalContentBody>
                                 <ListModalContentFooter>
                                     {uploading ? (

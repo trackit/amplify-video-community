@@ -102,12 +102,13 @@ async function putThumbnailFile(file: File, id: string) {
 }
 
 // eslint-disable-next-line
-async function setThumbnail(id: string) {
+async function setThumbnail(id: string, src?: string) {
     return API.graphql(
         graphqlOperation(createThumbnail, {
             input: {
                 id: id,
                 ext: thumbnailExtension,
+                src,
             },
         })
     )

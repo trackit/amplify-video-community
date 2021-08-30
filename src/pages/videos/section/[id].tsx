@@ -10,6 +10,7 @@ import {
     fetchThumbnail,
 } from '../../../shared/utilities'
 import { VideoOnDemand, Section, Thumbnail } from '../../../models'
+import moment from 'moment'
 
 type ThumbProps = {
     thumbUrl: string
@@ -219,8 +220,6 @@ const SectionPage = (props: PageProps) => {
             url: string
         }>
     >([])
-    const [nextTokenVodFiles, setNextTokenVodFiles] =
-        useState<string | null>(null)
 
     useEffect(() => {
         ;(async () => {
@@ -232,14 +231,19 @@ const SectionPage = (props: PageProps) => {
     useEffect(() => {
         ;(async () => {
             try {
-                const { data } = await fetchVodFiles(nextTokenVodFiles)
-                setNextTokenVodFiles(
-                    data?.listVideoOnDemands?.nextToken
-                        ? data.listVideoOnDemands.nextToken
-                        : null
-                )
-                const assets = data?.listVideoOnDemands
+                const { data } = await fetchVodFiles(null)
+                const fetchedVodAssets = data?.listVideoOnDemands
                     ?.items as Array<VideoOnDemand>
+                const assets = fetchedVodAssets.filter((asset) => {
+                    let returnValue = false
+                    // eslint-disable-next-line
+                    asset.media?.sections?.items.forEach((item) => {
+                        if (item?.section.id === section.id) {
+                            returnValue = true
+                        }
+                    })
+                    return returnValue
+                })
                 setVodAssets(assets)
                 const thumbnailArr: Array<{
                     obj: Thumbnail | undefined
@@ -247,11 +251,18 @@ const SectionPage = (props: PageProps) => {
                 }> = []
                 await Promise.all(
                     assets.map(async (asset) => {
-                        const data = await fetchThumbnail(asset.media)
-                        thumbnailArr.push({
-                            obj: asset.media?.thumbnail,
-                            url: data as string,
-                        })
+                        if (asset.media?.thumbnail?.src != null) {
+                            thumbnailArr.push({
+                                obj: asset.media.thumbnail,
+                                url: asset.media.thumbnail.src,
+                            })
+                        } else {
+                            const data = await fetchThumbnail(asset.media)
+                            thumbnailArr.push({
+                                obj: asset.media?.thumbnail,
+                                url: data as string,
+                            })
+                        }
                     })
                 )
                 setThumbnails(thumbnailArr)
@@ -259,7 +270,7 @@ const SectionPage = (props: PageProps) => {
                 console.error('videos/section/[id].tsx(fetchVodFiles):', error)
             }
         })()
-    }, [nextTokenVodFiles])
+    }, [section])
 
     return (
         <Layout>
@@ -306,7 +317,10 @@ const SectionPage = (props: PageProps) => {
                                             </LeftPanelItemContentAuthor>
                                             <LeftPanelItemContentCountDate>
                                                 {asset.media?.viewCount || 0}{' '}
-                                                views - {asset.media?.createdAt}
+                                                views -{' '}
+                                                {moment(
+                                                    asset.media?.createdAt
+                                                ).fromNow()}
                                             </LeftPanelItemContentCountDate>
                                         </div>
                                     </LeftPanelItemContent>

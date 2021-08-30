@@ -71,6 +71,7 @@ const ListModalContentBody = styled.div`
     background-color: #ffffff;
     overflow: scroll;
     margin: 25px;
+    gap: 10px;
 `
 
 const ListModalContentFooter = styled.div`

@@ -99,18 +99,26 @@ const uploadSourceSelf = async (
 const uploadSourceYoutube = async (
     id: string,
     media: Media,
-    thumbnailFile: File,
+    thumbnailFile: File | null,
     youtubeSrc: string
 ) => {
-    try {
-        await putThumbnailFile(thumbnailFile, id)
-    } catch (error) {
-        console.error('vod-mutate.ts(putThumbnailFile): ', error)
-        return
+    if (thumbnailFile) {
+        try {
+            await putThumbnailFile(thumbnailFile, id)
+        } catch (error) {
+            console.error('vod-mutate.ts(putThumbnailFile): ', error)
+            return
+        }
     }
-
     try {
-        await setThumbnail(id)
+        await setThumbnail(
+            id,
+            thumbnailFile
+                ? undefined
+                : `https://img.youtube.com/vi/${youtubeSrc
+                      .split('/')
+                      .pop()}/maxresdefault.jpg`
+        )
     } catch (error) {
         console.error('vod-mutate.tx(setThumbnail): ', error)
         return

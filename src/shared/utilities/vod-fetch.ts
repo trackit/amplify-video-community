@@ -18,6 +18,7 @@ export const listVideoOnDemands = /* GraphQL */ `
         ) {
             items {
                 id
+                src
                 createdAt
                 updatedAt
                 media {
@@ -29,6 +30,7 @@ export const listVideoOnDemands = /* GraphQL */ `
                     thumbnail {
                         id
                         ext
+                        src
                     }
                     sections {
                         items {
