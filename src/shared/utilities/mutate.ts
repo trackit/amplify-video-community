@@ -70,7 +70,7 @@ async function removeThumbnailFile(thumbnail: Thumbnail | undefined) {
     })
 }
 
-const resizeFile = (file: File) =>
+const resizeAndConvertThumbnail = (file: File) =>
     new Promise((resolve) => {
         Resizer.imageFileResizer(
             file,
@@ -87,7 +87,7 @@ const resizeFile = (file: File) =>
     })
 
 async function putThumbnailFile(file: File, id: string) {
-    const fileResized = await resizeFile(file)
+    const fileResized = await resizeAndConvertThumbnail(file)
 
     return Storage.put(`thumbnails/${id}.${thumbnailExtension}`, fileResized, {
         bucket: awsmobile.aws_user_files_s3_bucket,
