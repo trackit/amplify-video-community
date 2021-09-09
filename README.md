@@ -16,7 +16,7 @@
     amplify configure
     amplify pull
     ```
-    When it asks "Which app are you working on ?", select ampVideoCommuWebw
+    When it asks "Which app are you working on ?", select ampVideoCommuWeb
 
     2)
     ```shell
