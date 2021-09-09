@@ -14,6 +14,7 @@
     npm install -g @aws-amplify/cli
     npm install -g amplify-category-video
     amplify configure
+    # ask for the aws authorization
     amplify pull
     ```
     When it asks "Which app are you working on ?", select ampVideoCommuWeb
