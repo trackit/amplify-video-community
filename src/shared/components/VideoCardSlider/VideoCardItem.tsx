@@ -1,12 +1,14 @@
 import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
 import ReactPlayer from 'react-player'
-import { FaRegPlayCircle } from 'react-icons/fa'
 import CSS from 'csstype'
 
 import awsvideoconfig from '../../../aws-video-exports'
 import { VideoOnDemand, Thumbnail } from '../../../models'
 import { navigate } from 'gatsby'
+
+import PlayLogo from '../../../assets/logo/logo-play.svg'
+import AmplifyLogo from '../../../assets/logo/logo-dark.svg'
 
 type Props = {
     videoInfo: {
@@ -20,10 +22,8 @@ type Props = {
         style?: CSS.Properties
         imgStyle?: CSS.Properties
     }
-    config: {
-        width: number
-        height: number
-    }
+    spaceBetweenItems?: number
+    itemWidth?: number
 }
 
 type VideoStatus = {
@@ -46,43 +46,54 @@ type ItemContainerProps = {
 }
 
 export const VideoCardItemContainer = styled.div<ItemContainerProps>`
-    background-color: #ffffff;
-    background-image: ${(props) =>
-        props.playing || !props.thumbUrl ? 'none' : `url(${props.thumbUrl})`};
+    display: flex;
+    flex-direction: column;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 
-    min-width: 20vw;
-    min-height: calc(20vw * 9 / 16);
-    ${(props) => (!props.playing ? 'max-height: calc(20vw * 9 / 16)' : '')};
+    min-width: ${(props) => props.width}px;
+    min-height: 318px;
 
-    margin: 0 10px;
-    transition: transform 200ms ease 100ms;
+    transition: box-shadow 200ms ease-out;
+    transition: transform 200ms ease-out;
 
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
+    transform: scale(${(props) => (props.playing ? 1.05 : 1)});
+    ${(props) =>
+        props.playing && 'box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);'};
+
+    margin-right: 40px;
+
+    border-radius: 10px;
     overflow: hidden;
+    cursor: pointer;
+`
 
-    &:hover ~ & {
-        transform: translateX(25%) !important;
-    }
-    &:hover {
-        transform: scale(1.5) !important;
-    }
+const ThumbnailContainer = styled.div`
+    position: relative;
+    background-image: ${(props) =>
+        props.playing || !props.thumbUrl ? 'none' : `url(${props.thumbUrl})`};
+    width: ${(props) => props.width}px;
+    height: 200px;
+    border-radius: ${(props) => (props.hover ? '10px 10px 0 0' : '10px')};
+    overflow: hidden;
 `
 
 const PlayerWrapper = styled.div<PlayerWrapperProps>`
     opacity: ${(props) => (props.playing ? '1' : '0')};
-    width: 20vw;
+    width: 100%;
     aspect-ratio: 16/9;
 `
 
 const VideoInformations = styled.div`
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px;
+    flex: 1;
+    flex-direction: column;
+    justify-content: flex-end;
+    background-color: ${(props) =>
+        props.transparent ? 'transparent' : '#FFFFFF'};
+    padding: 10px;
+    position: relative;
 `
 
 const VideoText = styled.div`
@@ -90,34 +101,61 @@ const VideoText = styled.div`
 `
 
 const VideoTitle = styled.div`
-    font-size: 12px;
+    font-size: 22px;
     font-weight: 500;
+    font-weight: bold;
+    margin-bottom: 5px;
 `
 
 const VideoAuthor = styled.div`
-    font-size: 10px;
+    font-size: 18px;
+    color: #444444;
+    margin-bottom: 5px;
 `
 
-const VideoPlay = styled.a`
-    background: none;
-    border: none;
-    margin: 0;
-    padding: 0;
-    cursor: pointer;
-    color: #000000;
+const ViewsAndDate = styled.div`
+    font-size: 14px;
+`
+
+const TransparentOverlay = styled.div`
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(50, 50, 50, 0.5);
+    width: 100%;
+    height: 100%;
+    border-top-right-radius: 10px;
+    top: 0;
+    transition: opacity 200ms;
+    opacity: ${(props) => (props.visible ? 1 : 0)};
+`
+
+const ChannelLogo = styled.div`
     display: flex;
     align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: #ffffff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    position: absolute;
+    top: -20px;
+    left: 20px;
 `
 
-const VideoCardItem = ({ videoInfo, config }: Props) => {
+const VideoCardItem = ({
+    videoInfo,
+    spaceBetweenItems = 40,
+    itemWidth = 360,
+}: Props) => {
     const [videoStatus, setVideoStatus] = useState<VideoStatus>({
         playing: false,
         played: 0,
         loaded: 0,
         duration: 0,
         seeking: false,
-        width: config.width,
-        height: config.height,
     })
     const playerRef = useRef<ReactPlayer>(null)
 
@@ -138,48 +176,56 @@ const VideoCardItem = ({ videoInfo, config }: Props) => {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             playing={videoStatus.playing}
-            thumbUrl={
-                videoInfo.vod?.media?.source === 'SELF'
-                    ? videoInfo.thumbnail?.url
-                    : videoInfo.thumbnail?.obj?.src
-            }
+            onClick={() => navigate(`/video/${videoInfo.vod?.id}`)}
+            width={itemWidth}
+            margin={spaceBetweenItems}
         >
-            <PlayerWrapper playing={videoStatus.playing}>
-                <ReactPlayer
-                    ref={playerRef}
-                    width="100%"
-                    height="100%"
-                    url={
-                        videoInfo.vod?.media?.source === 'SELF'
-                            ? `https://${awsvideoconfig.awsOutputVideo}/public/${videoInfo.vod?.id}/${videoInfo.vod?.id}.m3u8`
-                            : videoInfo.vod?.src
-                    }
-                    controls={false}
-                    playing={videoStatus.playing}
-                    muted
-                    config={{
-                        youtube: {
-                            playerVars: {
-                                controls: 0,
-                                rel: 0,
+            <ThumbnailContainer
+                thumbUrl={
+                    videoInfo.vod?.media?.source === 'SELF'
+                        ? videoInfo.thumbnail?.url
+                        : videoInfo.thumbnail?.obj?.src
+                }
+                hover={videoStatus.playing}
+                width={itemWidth}
+            >
+                <PlayerWrapper playing={videoStatus.playing}>
+                    <ReactPlayer
+                        ref={playerRef}
+                        width="100%"
+                        height="100%"
+                        url={
+                            videoInfo.vod?.media?.source === 'SELF'
+                                ? `https://${awsvideoconfig.awsOutputVideo}/public/${videoInfo.vod?.id}/${videoInfo.vod?.id}.m3u8`
+                                : videoInfo.vod?.src
+                        }
+                        controls={false}
+                        playing={videoStatus.playing}
+                        muted
+                        config={{
+                            youtube: {
+                                playerVars: {
+                                    controls: 0,
+                                    rel: 0,
+                                },
                             },
-                        },
-                    }}
-                />
-            </PlayerWrapper>
-            {videoStatus.playing && (
-                <VideoInformations>
-                    <VideoText>
-                        <VideoTitle>{videoInfo.vod?.media?.title}</VideoTitle>
-                        <VideoAuthor>Author</VideoAuthor>
-                    </VideoText>
-                    <VideoPlay
-                        onClick={() => navigate(`/video/${videoInfo.vod?.id}`)}
-                    >
-                        <FaRegPlayCircle size={24} />
-                    </VideoPlay>
-                </VideoInformations>
-            )}
+                        }}
+                    />
+                </PlayerWrapper>
+                <TransparentOverlay visible={videoStatus.playing}>
+                    <PlayLogo />
+                </TransparentOverlay>
+            </ThumbnailContainer>
+            <VideoInformations transparent={!videoStatus.playing}>
+                <ChannelLogo>
+                    <AmplifyLogo />
+                </ChannelLogo>
+                <VideoText>
+                    <VideoTitle>{videoInfo.vod?.media?.title}</VideoTitle>
+                    <VideoAuthor>Benoît Xavier Chef</VideoAuthor>
+                    <ViewsAndDate>1M views - 18 sep 2025</ViewsAndDate>
+                </VideoText>
+            </VideoInformations>{' '}
         </VideoCardItemContainer>
     )
 }

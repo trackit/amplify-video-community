@@ -4,23 +4,36 @@ import { CustomArrowProps } from 'react-slick'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 
 const StyledArrow = styled.div`
+    display: flex;
     position: absolute;
     cursor: pointer;
-    z-index: 10;
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    align-items: center;
+    justify-content: center;
     color: black;
+    box-shadow: 0px 4px 5px rgb(100 100 100 / 40%);
+    transition: box-shadow 300ms;
 
     & svg {
         transition: color 300ms;
     }
 
-    & svg:hover {
-        color: ${(props) => props.theme.palette.primary.main};
+    &:hover {
+        box-shadow: 0px 2px 10px rgb(100 100 100 / 40%);
+
+        & svg {
+            color: ${(props) => props.theme.palette.primary.main};
+        }
     }
 `
 
 const StyledNextArrow = styled(StyledArrow)`
-    right: 0%;
-    top 50%;
+    right: 25px;
 `
 
 const NextArrow = ({ onClick }: CustomArrowProps) => {
@@ -32,8 +45,7 @@ const NextArrow = ({ onClick }: CustomArrowProps) => {
 }
 
 const StyledPrevArrow = styled(StyledArrow)`
-    left: 0%;
-    top 50%;
+    left: 25px;
 `
 
 const PrevArrow = ({ onClick }: CustomArrowProps) => {

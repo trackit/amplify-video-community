@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { navigate } from 'gatsby'
 import CSS from 'csstype'
 
-import VideoCardItem, { VideoCardItemContainer } from './VideoCardItem'
+import VideoCardItem from './VideoCardItem'
 import { VideoOnDemand, Thumbnail } from '../../../models'
+import { NextArrow, PrevArrow } from './Arrows'
+import { useWindowDimensions } from '../../hooks'
+import RightArrowLogo from '../../../assets/logo/right-arrow.svg'
 
 type VideoInfo = {
     thumbnail:
@@ -19,30 +23,84 @@ type VideoInfo = {
 
 type Props = {
     videoInfos: Array<VideoInfo>
-    config: {
-        width: number
-        height: number
+    section: {
+        id: string
+        label: string
     }
+    padding?: number
+    itemWidth?: number
+    spaceBetweenItems?: number
 }
 
-const ListContainer = styled.div`
-    overflow-x: scroll;
-    padding: 100px 0px 50px 0px;
-    height: calc(20vw * 9 / 16 * 1.5);
+const SlidingContainer = styled.div`
+    display: flex;
+    height: 340px;
+    align-items: center;
+    width: 100vw;
+    transition: margin-left 500ms ease-out;
+    margin-left: ${(props) => props.left}px;
 `
 
-const Container = styled.div`
+const ListContainer = styled.div`
     display: flex;
-    padding: 0 95px;
-    &:hover ${VideoCardItemContainer} {
-        transform: translateX(-25%);
+    align-items: center;
+    height: 360px;
+    overflow: hidden;
+`
+
+const SeeAllItem = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: ${(props) => props.width}px;
+    width: ${(props) => props.width}px;
+    min-height: 318px;
+    height: 318px;
+    border: 2px solid #ff9900;
+    border-radius: 10px;
+    box-sizing: border-box;
+    transition: transform 200ms ease-out;
+    cursor: pointer;
+
+    &:hover {
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        transform: scale(1.05);
     }
 `
 
-const VideoCardList = ({ videoInfos, config }: Props) => {
+const SeeAllItemText = styled.p`
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 34px;
+    color: #ff9900;
+    text-align: center;
+    margin-bottom: 50px;
+`
+
+const VideoCardList = ({
+    videoInfos,
+    config,
+    section,
+    padding = 50,
+    itemWidth = 360,
+    spaceBetweenItems = 40,
+}: Props) => {
+    const [scroll, setScroll] = useState(0)
+    const { width } = useWindowDimensions()
+
+    const itemTotalWidth = itemWidth + spaceBetweenItems
+    const nbVideoPerSlide = Math.floor(
+        (width - padding + spaceBetweenItems) / itemTotalWidth
+    )
+
+    useEffect(() => {
+        setScroll(0)
+    }, [width])
+
     return (
-        <ListContainer>
-            <Container>
+        <ListContainer padding={padding}>
+            <SlidingContainer left={scroll * itemTotalWidth + padding}>
                 {videoInfos.map(
                     (videoInfo, index: number) =>
                         videoInfo.vod && (
@@ -50,10 +108,33 @@ const VideoCardList = ({ videoInfos, config }: Props) => {
                                 key={videoInfo.vod?.id + index}
                                 videoInfo={videoInfo}
                                 config={config}
+                                spaceBetweenItems={spaceBetweenItems}
+                                itemWidth={itemWidth}
                             />
                         )
                 )}
-            </Container>
+                <SeeAllItem
+                    width={itemWidth}
+                    onClick={() => {
+                        navigate(`/videos/section/${section.id}`)
+                    }}
+                >
+                    <SeeAllItemText>
+                        See all 2056 {section.label} videos.
+                    </SeeAllItemText>
+                    <RightArrowLogo height={50} width={50} />
+                </SeeAllItem>
+            </SlidingContainer>
+            {scroll < 0 && (
+                <PrevArrow
+                    onClick={() => setScroll(scroll + nbVideoPerSlide)}
+                />
+            )}
+            {-scroll < videoInfos.length + 1 - nbVideoPerSlide && (
+                <NextArrow
+                    onClick={() => setScroll(scroll - nbVideoPerSlide)}
+                />
+            )}
         </ListContainer>
     )
 }
