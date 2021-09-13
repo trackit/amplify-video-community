@@ -55,8 +55,7 @@ export const VideoCardItemContainer = styled.div<ItemContainerProps>`
     min-width: ${(props) => props.width}px;
     min-height: 318px;
 
-    transition: box-shadow 200ms ease-out;
-    transition: transform 200ms ease-out;
+    transition: box-shadow 200ms ease-out, transform 200ms ease-out;
 
     transform: scale(${(props) => (props.playing ? 1.05 : 1)});
     ${(props) =>
