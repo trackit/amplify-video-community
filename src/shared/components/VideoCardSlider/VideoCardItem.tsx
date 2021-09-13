@@ -222,7 +222,7 @@ const VideoCardItem = ({
                 </ChannelLogo>
                 <VideoText>
                     <VideoTitle>{videoInfo.vod?.media?.title}</VideoTitle>
-                    <VideoAuthor>Benoît Xavier Chef</VideoAuthor>
+                    <VideoAuthor>Author</VideoAuthor>
                     <ViewsAndDate>1M views - 18 sep 2025</ViewsAndDate>
                 </VideoText>
             </VideoInformations>{' '}
