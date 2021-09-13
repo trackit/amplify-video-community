@@ -24,10 +24,15 @@ const Item = styled.li`
     display: flex;
     white-space: nowrap;
     cursor: pointer;
-    border-bottom: 2px solid rgba(0, 0, 0, 0);
+    border-bottom: 0px solid ${(props) => props.theme.textHoverColor};
+    border-top: 0px solid rgba(0, 0, 0, 0);
+    transition: border-bottom 100ms ease-out, border-top 100ms ease-out;
+    box-sizing: content-box;
 
     &:hover {
-        border-bottom: 2px solid ${(props) => props.theme.textHoverColor};
+        border-bottom: ${(props) => props.borderHeight}px solid
+            ${(props) => props.theme.textHoverColor};
+        border-top: ${(props) => props.borderHeight}px solid rgba(0, 0, 0, 0);
     }
 `
 
@@ -49,12 +54,21 @@ type HeaderLinkProps = {
     to: string
     content: string
     isExternal?: boolean
+    navBarHeight: number
 }
 
-const HeaderLink = ({ to, content, isExternal, theme }: HeaderLinkProps) => {
+const HeaderLink = ({
+    to,
+    content,
+    isExternal,
+    theme,
+    navBarHeight,
+    navBarMinHeight,
+}: HeaderLinkProps) => {
+    const borderHeight = (navBarHeight - navBarMinHeight) / 8 + 2
     if (isExternal)
         return (
-            <Item theme={theme}>
+            <Item theme={theme} borderHeight={borderHeight}>
                 <ExternalLink
                     theme={theme}
                     href={to}
@@ -66,7 +80,7 @@ const HeaderLink = ({ to, content, isExternal, theme }: HeaderLinkProps) => {
             </Item>
         )
     return (
-        <Item theme={theme}>
+        <Item theme={theme} borderHeight={borderHeight}>
             <InternalLink to={to} theme={theme}>
                 <LinkText>{content}</LinkText>
             </InternalLink>

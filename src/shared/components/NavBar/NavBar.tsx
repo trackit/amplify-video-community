@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Auth } from 'aws-amplify'
-import { StaticImage } from 'gatsby-plugin-image'
 
 import HeaderLink from './Link'
 import Search from './Search'
 import { NavbarTheme } from '../theme'
+
+import LogoDark from '../../../assets/logo/logo-dark.svg'
+import LogoLight from '../../../assets/logo/logo-light.svg'
 
 const Header = styled.header`
     box-sizing: border-box;
@@ -15,24 +17,22 @@ const Header = styled.header`
     align-items: center;
     padding: 0 50px;
     background-color: ${(props) => props.theme.main};
-    box-shadow: ${(props) => props.theme.boxShadow};
+    box-shadow: ${(props) =>
+        props.minHeight === props.height ? props.theme.boxShadow : 0};
     justify-content: space-between;
-    height: 64px;
+    height: ${(props) => props.height}px;
     position: fixed;
     top: 0;
     z-index: 100;
     width: 100%;
-    transition: 0.2s;
+    transition: box-shadow 200ms, background-color 200ms;
 `
 
 const LogoLink = styled.a`
     text-decoration: none;
-    padding: 5px 0;
-`
-
-const LogoWrapper = styled.div`
     display: flex;
     align-items: center;
+    height: 100%;
 `
 
 const LogoText = styled.span`
@@ -57,10 +57,30 @@ const RightItemsWrapper = styled.div`
 
 type NavBarProps = {
     navbarTheme: NavbarTheme
+    maxHeight?: number
+    minHeight?: number
 }
 
-const NavBar = ({ navbarTheme }: NavBarProps) => {
+const NavBar = ({
+    navbarTheme,
+    maxHeight = 128,
+    minHeight = 64,
+}: NavBarProps) => {
     const [groups, setGroups] = useState<Array<string>>([])
+    const [height, setHeight] = useState(maxHeight)
+
+    const handleScroll = () => {
+        const newHeight = maxHeight - window.pageYOffset
+        newHeight < minHeight ? setHeight(minHeight) : setHeight(newHeight)
+    }
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll, { passive: true })
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll)
+        }
+    }, [])
 
     useEffect(() => {
         Auth.Credentials.get().then(() => {
@@ -75,51 +95,55 @@ const NavBar = ({ navbarTheme }: NavBarProps) => {
     }, [])
 
     return (
-        <Header id="video-community-header" theme={navbarTheme}>
+        <Header
+            id="video-community-header"
+            theme={navbarTheme}
+            height={height}
+            minHeight={minHeight}
+        >
             <LogoLink href="/">
-                <LogoWrapper>
-                    {navbarTheme.amplifyLogo === 'light' ? (
-                        <StaticImage
-                            backgroundColor="transparent"
-                            placeholder="none"
-                            style={{ height: '30px', width: '40px' }}
-                            imgStyle={{ objectFit: 'contain' }}
-                            alt="amplify"
-                            src="../../../assets/logo/logo-light.png"
-                        />
-                    ) : (
-                        <StaticImage
-                            backgroundColor="transparent"
-                            placeholder="none"
-                            style={{ height: '30px', width: '40px' }}
-                            imgStyle={{ objectFit: 'contain' }}
-                            alt="amplify"
-                            src="../../../assets/logo/logo-dark.png"
-                        />
-                    )}
-                    <LogoText theme={navbarTheme}>Amplify Video</LogoText>
-                </LogoWrapper>
+                {navbarTheme.amplifyLogo === 'light' ? (
+                    <LogoLight height={(height - 10) / 2} width={height / 2} />
+                ) : (
+                    <LogoDark height={(height - 10) / 2} width={height / 2} />
+                )}
+
+                <LogoText theme={navbarTheme}>Amplify Video</LogoText>
             </LogoLink>
             <RightItemsWrapper>
                 <LinkListContainer>
                     <HeaderLink
                         theme={navbarTheme}
+                        navBarHeight={height}
+                        navBarMinHeight={minHeight}
                         to="/videos"
                         content="Videos"
                     />
-                    <HeaderLink theme={navbarTheme} to="/live" content="Live" />
                     <HeaderLink
                         theme={navbarTheme}
+                        to="/live"
+                        content="Live"
+                        navBarHeight={height}
+                        navBarMinHeight={minHeight}
+                    />
+                    <HeaderLink
+                        theme={navbarTheme}
+                        navBarHeight={height}
+                        navBarMinHeight={minHeight}
                         to="/webinars"
                         content="Webinars"
                     />
                     <HeaderLink
                         theme={navbarTheme}
+                        navBarMinHeight={minHeight}
+                        navBarHeight={height}
                         to="/about"
                         content="About"
                     />
                     <HeaderLink
                         theme={navbarTheme}
+                        navBarHeight={height}
+                        navBarMinHeight={minHeight}
                         isExternal
                         to="https://docs-amplify.trackit.io/"
                         content="Documentation"
@@ -127,6 +151,8 @@ const NavBar = ({ navbarTheme }: NavBarProps) => {
                     {groups.includes('Admin') && (
                         <HeaderLink
                             theme={navbarTheme}
+                            navBarHeight={height}
+                            navBarMinHeight={minHeight}
                             to="/admin"
                             content="Admin"
                         />
