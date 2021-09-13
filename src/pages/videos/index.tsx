@@ -19,33 +19,43 @@ const Container = styled.div`
     flex-direction: column;
     gap: 25px;
     background-color: #f9f9f9;
+    padding-bottom: 100px;
 `
 
 const Header = styled.div`
     display: flex;
     flex-direction: column;
-    text-align: center;
     align-items: center;
 `
 
 const Title = styled.h1`
-    margin-top: 30px;
+    margin: 0;
+    margin-bottom: 20px;
+    margin-top: 50px;
     font-size: 36px;
+    font-weight: 700px;
 `
 
 const Separator = styled.div`
     background-color: #ff9900;
-    height: 2px;
-    width: 100px;
+    height: 1.5px;
+    width: 105px;
     margin-bottom: 20px;
 `
 
 const Description = styled.h2`
-    font-size: 14px;
+    font-size: 18px;
+    font-weight: 400px;
+    font-style: normal;
+    margin: 0;
 `
 
 const LoaderWrapper = styled.div`
-    padding-top: 50px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
 
 const VideoPage = () => {
@@ -158,15 +168,26 @@ const VideoPage = () => {
                         <BasicLoader />
                     </LoaderWrapper>
                 ) : (
-                    sections &&
-                    sections.map((section: Section) => (
-                        <VideosSectionContainer
-                            key={section.id}
-                            section={section}
-                            vodAssets={vodAssets}
-                            thumbnails={thumbnails}
-                        />
-                    ))
+                    <>
+                        {sections &&
+                            sections.map((section: Section) => (
+                                <VideosSectionContainer
+                                    key={section.id}
+                                    section={section}
+                                    vodAssets={vodAssets}
+                                    thumbnails={thumbnails}
+                                />
+                            ))}
+                        {sections &&
+                            sections.map((section: Section) => (
+                                <VideosSectionContainer
+                                    key={section.id}
+                                    section={section}
+                                    vodAssets={vodAssets}
+                                    thumbnails={thumbnails}
+                                />
+                            ))}
+                    </>
                 )}
             </Container>
         </Layout>

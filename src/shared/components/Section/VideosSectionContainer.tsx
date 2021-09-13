@@ -5,6 +5,7 @@ import CSS from 'csstype'
 import { VideoOnDemand, Section, Thumbnail } from '../../../models'
 import VideoCardList from '../VideoCardSlider/VideoCardList'
 import { navigate } from 'gatsby'
+import RightArrowLogo from '../../../assets/logo/right-arrow.svg'
 
 type SectionProps = {
     section: Section
@@ -28,8 +29,9 @@ type VideoInfo = {
 }
 
 const Container = styled.div`
-    padding: 100px 0;
+    margin-top: 100px;
     background-color: #f9f9f9;
+    overflow: hidden;
 `
 
 const Header = styled.div`
@@ -45,13 +47,18 @@ const Title = styled.h2`
 `
 
 const SeeAll = styled.div`
+    display: flex;
+    align-items: center;
     color: #ff9900;
     font-size: 22px;
-    margin: 0 100px 0 0;
+    cursor: pointer;
+    margin-right: 100px;
+    line-height: 26px;
+    font-weight: bold;
+`
 
-    &:hover {
-        cursor: pointer;
-    }
+const StyledArrow = styled(RightArrowLogo)`
+    margin-left: 10px;
 `
 
 const VideosSectionContainer = ({
@@ -93,7 +100,8 @@ const VideosSectionContainer = ({
                         navigate(`/videos/section/${section.id}`)
                     }}
                 >
-                    <p>See all</p>
+                    See all
+                    <StyledArrow />
                 </SeeAll>
             </Header>
             <VideoCardList
@@ -102,6 +110,7 @@ const VideosSectionContainer = ({
                     width: 480,
                     height: 270,
                 }}
+                section={section}
             />
         </Container>
     ) : null
