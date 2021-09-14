@@ -84,6 +84,7 @@ const Container = styled.div`
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
 `
 
 const SubBody = styled.div`
