@@ -63,7 +63,7 @@ type NavBarProps = {
 
 const NavBar = ({
     navbarTheme,
-    maxHeight = 128,
+    maxHeight = 100,
     minHeight = 64,
 }: NavBarProps) => {
     const [groups, setGroups] = useState<Array<string>>([])
