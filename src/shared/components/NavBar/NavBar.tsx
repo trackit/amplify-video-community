@@ -128,13 +128,6 @@ const NavBar = ({
                     />
                     <HeaderLink
                         theme={navbarTheme}
-                        navBarHeight={height}
-                        navBarMinHeight={minHeight}
-                        to="/webinars"
-                        content="Webinars"
-                    />
-                    <HeaderLink
-                        theme={navbarTheme}
                         navBarMinHeight={minHeight}
                         navBarHeight={height}
                         to="/about"
