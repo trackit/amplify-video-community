@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import VideoList from '../components/YoutubeVideoPlayer/list'
+import VideoCardList from '../components/VideoCardSlider/VideoCardList'
 
 const Container = styled.div`
     padding: 100px 0;
@@ -11,7 +11,7 @@ const Container = styled.div`
 const Title = styled.h2`
     font-weight: 600;
     font-size: 28px;
-    margin: 0 0 0 100px;
+    margin: 50px 100px 20px 100px;
 `
 
 const OrangeText = styled.span`
@@ -36,7 +36,7 @@ const CommunityContent = () => {
                 <OrangeText>discover</OrangeText> the content made by our{' '}
                 <OrangeText>community.</OrangeText>
             </Title>
-            <VideoList
+            <VideoCardList
                 videoInfos={fakeList}
                 config={{
                     width: 480,
@@ -47,7 +47,7 @@ const CommunityContent = () => {
                 Follow tutorials to get started with{' '}
                 <OrangeText>Amplify Video.</OrangeText>
             </Title>
-            <VideoList
+            <VideoCardList
                 videoInfos={fakeList}
                 config={{
                     width: 480,

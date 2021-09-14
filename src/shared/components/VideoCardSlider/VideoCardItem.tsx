@@ -48,9 +48,6 @@ type ItemContainerProps = {
 export const VideoCardItemContainer = styled.div<ItemContainerProps>`
     display: flex;
     flex-direction: column;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
 
     min-width: ${(props) => props.width}px;
     min-height: 318px;
@@ -72,6 +69,9 @@ const ThumbnailContainer = styled.div`
     position: relative;
     background-image: ${(props) =>
         props.playing || !props.thumbUrl ? 'none' : `url(${props.thumbUrl})`};
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     width: ${(props) => props.width}px;
     height: 200px;
     border-radius: ${(props) => (props.hover ? '10px 10px 0 0' : '10px')};
@@ -93,6 +93,7 @@ const VideoInformations = styled.div`
         props.transparent ? 'transparent' : '#FFFFFF'};
     padding: 10px;
     position: relative;
+    transition: background-color 200ms ease-out;
 `
 
 const VideoText = styled.div`
@@ -181,9 +182,11 @@ const VideoCardItem = ({
         >
             <ThumbnailContainer
                 thumbUrl={
-                    videoInfo.vod?.media?.source === 'SELF'
-                        ? videoInfo.thumbnail?.url
-                        : videoInfo.thumbnail?.obj?.src
+                    videoInfo.vod
+                        ? videoInfo.vod?.media?.source === 'SELF'
+                            ? videoInfo.thumbnail?.url
+                            : videoInfo.thumbnail?.obj?.src
+                        : `https://img.youtube.com/vi/${videoInfo.id}/maxresdefault.jpg`
                 }
                 hover={videoStatus.playing}
                 width={itemWidth}
@@ -194,9 +197,11 @@ const VideoCardItem = ({
                         width="100%"
                         height="100%"
                         url={
-                            videoInfo.vod?.media?.source === 'SELF'
-                                ? `https://${awsvideoconfig.awsOutputVideo}/public/${videoInfo.vod?.id}/${videoInfo.vod?.id}.m3u8`
-                                : videoInfo.vod?.src
+                            videoInfo.vod
+                                ? videoInfo.vod?.media?.source === 'SELF'
+                                    ? `https://${awsvideoconfig.awsOutputVideo}/public/${videoInfo.vod?.id}/${videoInfo.vod?.id}.m3u8`
+                                    : videoInfo.vod?.src
+                                : videoInfo.url
                         }
                         controls={false}
                         playing={videoStatus.playing}
@@ -220,7 +225,11 @@ const VideoCardItem = ({
                     <AmplifyLogo />
                 </ChannelLogo>
                 <VideoText>
-                    <VideoTitle>{videoInfo.vod?.media?.title}</VideoTitle>
+                    <VideoTitle>
+                        {videoInfo.vod?.media?.title
+                            ? videoInfo.vod?.media?.title
+                            : 'Video Title'}
+                    </VideoTitle>
                     <VideoAuthor>Author</VideoAuthor>
                     <ViewsAndDate>1M views - 18 sep 2025</ViewsAndDate>
                 </VideoText>
