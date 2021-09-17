@@ -23,7 +23,7 @@ type VideoInfo = {
 
 type Props = {
     videoInfos: Array<VideoInfo>
-    section: {
+    section?: {
         id: string
         label: string
     }
@@ -60,12 +60,14 @@ const SeeAllItem = styled.div`
     border: 2px solid #ff9900;
     border-radius: 10px;
     box-sizing: border-box;
-    transition: transform 200ms ease-out;
+    transition: transform 200ms ease-out, box-shadow 200ms ease-out,
+        background-color 200ms ease-out;
     cursor: pointer;
 
     &:hover {
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         transform: scale(1.05);
+        background-color: #ffffff;
     }
 `
 
@@ -80,8 +82,7 @@ const SeeAllItemText = styled.p`
 
 const VideoCardList = ({
     videoInfos,
-    config,
-    section,
+    section = undefined,
     padding = 50,
     itemWidth = 360,
     spaceBetweenItems = 40,
@@ -101,29 +102,27 @@ const VideoCardList = ({
     return (
         <ListContainer padding={padding}>
             <SlidingContainer left={scroll * itemTotalWidth + padding}>
-                {videoInfos.map(
-                    (videoInfo, index: number) =>
-                        videoInfo.vod && (
-                            <VideoCardItem
-                                key={videoInfo.vod?.id + index}
-                                videoInfo={videoInfo}
-                                config={config}
-                                spaceBetweenItems={spaceBetweenItems}
-                                itemWidth={itemWidth}
-                            />
-                        )
+                {videoInfos.map((videoInfo, index: number) => (
+                    <VideoCardItem
+                        key={videoInfo.vod?.id + index}
+                        videoInfo={videoInfo}
+                        spaceBetweenItems={spaceBetweenItems}
+                        itemWidth={itemWidth}
+                    />
+                ))}
+                {section && (
+                    <SeeAllItem
+                        width={itemWidth}
+                        onClick={() => {
+                            navigate(`/videos/section/${section.id}`)
+                        }}
+                    >
+                        <SeeAllItemText>
+                            See all {videoInfos.length} {section.label} videos.
+                        </SeeAllItemText>
+                        <RightArrowLogo height={50} width={50} />
+                    </SeeAllItem>
                 )}
-                <SeeAllItem
-                    width={itemWidth}
-                    onClick={() => {
-                        navigate(`/videos/section/${section.id}`)
-                    }}
-                >
-                    <SeeAllItemText>
-                        See all 2056 {section.label} videos.
-                    </SeeAllItemText>
-                    <RightArrowLogo height={50} width={50} />
-                </SeeAllItem>
             </SlidingContainer>
             {scroll < 0 && (
                 <PrevArrow

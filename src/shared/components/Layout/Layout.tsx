@@ -81,15 +81,15 @@ const query = graphql`
 `
 
 const Container = styled.div`
-    min-height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
 `
 
 const SubBody = styled.div`
     background-color: ${(props) => props.theme.palette.primary.background};
     flex: 1;
-    p
 `
 
 type LayoutProps = {

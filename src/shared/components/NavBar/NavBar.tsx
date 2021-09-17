@@ -6,6 +6,8 @@ import HeaderLink from './Link'
 import Search from './Search'
 import { NavbarTheme } from '../theme'
 
+import { useWindowDimensions } from '../../hooks'
+
 import LogoDark from '../../../assets/logo/logo-dark.svg'
 import LogoLight from '../../../assets/logo/logo-light.svg'
 
@@ -63,24 +65,31 @@ type NavBarProps = {
 
 const NavBar = ({
     navbarTheme,
-    maxHeight = 128,
-    minHeight = 64,
+    maxHeight = 8, // % of the total height of the screen
+    minHeight = 4, // % of the total height of the screen
 }: NavBarProps) => {
     const [groups, setGroups] = useState<Array<string>>([])
-    const [height, setHeight] = useState(maxHeight)
+    const { height } = useWindowDimensions()
+    const [navBarHeight, setNavBarHeight] = useState(height * (maxHeight / 100))
+
+    const computedMinHeight = height * (minHeight / 100)
 
     const handleScroll = () => {
-        const newHeight = maxHeight - window.pageYOffset
-        newHeight < minHeight ? setHeight(minHeight) : setHeight(newHeight)
+        const newHeight = height * (maxHeight / 100) - window.pageYOffset
+        newHeight < computedMinHeight
+            ? setNavBarHeight(computedMinHeight)
+            : setNavBarHeight(newHeight)
     }
 
     useEffect(() => {
+        handleScroll()
+        window.removeEventListener('scroll', handleScroll)
         window.addEventListener('scroll', handleScroll, { passive: true })
 
         return () => {
             window.removeEventListener('scroll', handleScroll)
         }
-    }, [])
+    }, [height])
 
     useEffect(() => {
         Auth.Credentials.get().then(() => {
@@ -98,14 +107,20 @@ const NavBar = ({
         <Header
             id="video-community-header"
             theme={navbarTheme}
-            height={height}
-            minHeight={minHeight}
+            height={navBarHeight}
+            minHeight={computedMinHeight}
         >
             <LogoLink href="/">
                 {navbarTheme.amplifyLogo === 'light' ? (
-                    <LogoLight height={(height - 10) / 2} width={height / 2} />
+                    <LogoLight
+                        height={(navBarHeight - 10) / 2}
+                        width={navBarHeight / 2}
+                    />
                 ) : (
-                    <LogoDark height={(height - 10) / 2} width={height / 2} />
+                    <LogoDark
+                        height={(navBarHeight - 10) / 2}
+                        width={navBarHeight / 2}
+                    />
                 )}
 
                 <LogoText theme={navbarTheme}>Amplify Video</LogoText>
@@ -114,8 +129,8 @@ const NavBar = ({
                 <LinkListContainer>
                     <HeaderLink
                         theme={navbarTheme}
-                        navBarHeight={height}
-                        navBarMinHeight={minHeight}
+                        navBarHeight={navBarHeight}
+                        navBarMinHeight={computedMinHeight}
                         to="/videos"
                         content="Videos"
                     />
@@ -123,27 +138,20 @@ const NavBar = ({
                         theme={navbarTheme}
                         to="/live"
                         content="Live"
-                        navBarHeight={height}
-                        navBarMinHeight={minHeight}
+                        navBarHeight={navBarHeight}
+                        navBarMinHeight={computedMinHeight}
                     />
                     <HeaderLink
                         theme={navbarTheme}
-                        navBarHeight={height}
-                        navBarMinHeight={minHeight}
-                        to="/webinars"
-                        content="Webinars"
-                    />
-                    <HeaderLink
-                        theme={navbarTheme}
-                        navBarMinHeight={minHeight}
-                        navBarHeight={height}
+                        navBarMinHeight={computedMinHeight}
+                        navBarHeight={navBarHeight}
                         to="/about"
                         content="About"
                     />
                     <HeaderLink
                         theme={navbarTheme}
-                        navBarHeight={height}
-                        navBarMinHeight={minHeight}
+                        navBarHeight={navBarHeight}
+                        navBarMinHeight={computedMinHeight}
                         isExternal
                         to="https://docs-amplify.trackit.io/"
                         content="Documentation"
@@ -151,8 +159,8 @@ const NavBar = ({
                     {groups.includes('Admin') && (
                         <HeaderLink
                             theme={navbarTheme}
-                            navBarHeight={height}
-                            navBarMinHeight={minHeight}
+                            navBarHeight={navBarHeight}
+                            navBarMinHeight={computedMinHeight}
                             to="/admin"
                             content="Admin"
                         />
