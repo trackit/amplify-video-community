@@ -118,7 +118,7 @@ const VideoCardList = ({
                         }}
                     >
                         <SeeAllItemText>
-                            See all 2056 {section.label} videos.
+                            See all {videoInfos.length} {section.label} videos.
                         </SeeAllItemText>
                         <RightArrowLogo height={50} width={50} />
                     </SeeAllItem>
