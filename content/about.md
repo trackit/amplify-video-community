@@ -4,22 +4,71 @@ title: About Amplify Video
 
 ![icon](./aws-amplify-banner.png)
 
-# Introducing AWS Amplify Video
+Amplify Video is an open source category for the [AWS Amplify Framework](https://docs.amplify.aws/) that simplifies the development of serverless video-enabled web applications. With [Amplify Video], application developers or I.T. administrators can build live streaming or video-on-demand integrated web applications in minutes.
 
-Amplify Video is an open source plugin for the Amplify CLI that makes it easy to incorporate video streaming into your mobile and web applications powered by AWS Amplify. In this blog post, we introduce readers to AWS Amplify, AWS Elemental Media Services, and Amplify Video. Then, through a tutorial, we show how they work together to deploy a live stream sourced from a webcam, sent to AWS for processing, and displayed back on a browser.
+Amplify Video allows anyone to compose, deploy, and maintain a live or file-based video streaming application through the Amplify Framework. It includes the following features:
 
-It’s never been easier to produce and distribute video. Armed with a smartphone equivalent of a studio in our pockets, anyone can be a journalist, e-sports broadcaster, or home cooking star with enough time and energy. Platforms like YouTube, Facebook, and Amazon’s Twitch remove distribution hurdles for creators, but these platforms aren’t always ideal for businesses who require full creative control of their content and user-experience.
+## File-Based Streaming (VOD)
 
-Deploying a direct-to-consumer video service starts with a mobile or web application. At AWS, we’ve released numerous services to remove the heavy-lifting from application development and operations. Services like AWS Elastic Beanstalk, AWS OpsWorks, and AWS CloudFormation have served the development community for years, but we believe that there is always room to improve the development experience. That’s why we released AWS Amplify-a platform comprised of a development framework, tools, and services–that makes it easy to create, configure, and implement scalable mobile and web apps powered by AWS. If you haven’t checked out Amplify yet, get started at https://aws.amazon.com/amplify.
+* File-Based Streaming with Media Services, S3, & Cloudfront
+* Tokenization/AuthZ Playback
+* Video Management System 
+* Bring-your-own processing config
+* SNS Notifications for Job Status
+* Player Code Generation
 
-Regardless of how we manage the stack, bringing video into an application demands experience to reliably scale encoding, packaging, and content delivery. For video delivery, much of this undifferentiated heavy lifting is solved by using the AWS Elemental Media Services. Through a decade of experience and innovation by AWS Elemental, these services enable broadcast-quality live and file-based video workflows while managing the underlying infrastructure (failures, patching, and scaling) on your behalf. Launched at re:Invent 2017, the Media Services are already being used to carry live sporting events (NFL and Pac-12) and enrich news experiences through Arc, a platform by The Washington Post.
+## Live Streaming
 
-Customers often ask us – why six separate services? First, this separation grants our service teams the autonomy to innovate on behalf of their customers. Second, it offers an alternative to strings-attached-tightly-coupled-black-box solutions that our customers have told us they simply do not want. Our approach encourages interoperability with industry partners and allows customers to design without fear of lock-in. However, system design is all about trade-offs and with this approach we trade simplicity for flexibility by asking builders to understand and integrate each service in order to deliver their content.
+* Live Streaming with AWS Elemental Media Services & Cloudfront
+* Live Streaming with Amazon IVS
+* Open Broadcaster System (OBS) Auto-Configuration
+* Player Code Generation
 
-![logo](./about-image1.png)
-Four AWS services are used to host a live stream that uses ad insertion and a Content Delivery Network.
+
+## F.A.Q.
 
 
-Enter AWS Amplify Video: an open source plugin for the Amplify Command Line Interface that makes it easy to deploy video services and integrate them into your applications. By answering a few prompts in the command line, Amplify Video spins up infrastructure that adheres to best practices codified by the AWS community. Today, Amplify CLI users can use the Amplify Video plugin to launch and manage their live streams backed by AWS Elemental Media Services. Video-on-demand support and other AWS community requested capabilities will come later in 2019. If you have suggestions, ideas, or feedback on the plugin, please let us know!
+*Q: What are the goals of Amplify Video?*
+A: To...
 
-Read more about amplify-video: https://aws.amazon.com/blogs/media/introducing_aws_amplify_video/
+* Reduce the domain specific knowledge required to deliver highly available, high quality video over the web while increasing speed to market for streaming video applications
+* Provide video-specific solutions not directly addressed through console-services, but composable through a combination of AWS services. For example - Video Analytics, Content Management, Content Protection, and client-side interactivity.
+* Reduce the complexity required to integrate video into applications without obscuring the implementation details for power users
+* Make Video a primitive in modern web application development through the AWS Amplify ecosystem
+
+
+*Q: How can I get started?*
+A: Getting started is easy. You can follow [this walkthrough guide](https://aws.amazon.com/blogs/media/introducing_aws_amplify_video/) on configuring you environment and creating your first project.
+
+*Q: How much does it cost to use Amplify Video?*
+A: There are no costs associated directly with using Amplify Video, however, there are pay-as-you-go charges for the cloud-based resources Amplify Video deploys to provide video streaming capabilities. 
+
+*Q: Is Amplify Video supported by AWS Amplify?*
+A: No, this is a 3rd party category to the AWS Amplify ecosystem maintained by AWS employees and the open source community.
+
+*Q: How does Amplify Video differ from the AWS Solutions for Live Streaming and Video-on-Demand?*
+A: Amplify Video resources are created and managed within your Amplify project enabling you to manage your backend and frontend within a single developer framework. Though developers can easily extend the Video category if necessary, it alleviates the need to dive deep into each service used to host video on AWS. Finally, Amplify Video is an active open source project participating in and taking contributions from the Amplify community. We work with infrastructure architects and developers from the community to codify best practices into the Amplify framework.
+
+*Q: What’s the difference between Amplify Video and the AWS Media Services?*
+A:  Amplify Video deploys AWS Media Services and other AWS services to provide a Video resource for live streaming or Video-on-Demand streaming.
+
+*Q: Can Amplify Video be used outside of the AWS Amplify ecosystem?*
+A: Yes and no. To get started and to generate the project templates you must have the Amplify CLI installed and configure a new Amplify project. After you configure the project you can then run amplify video add. This will create a video resource backed by CloudFormation that you can take outside the AWS Amplify ecosystem.
+
+*Q: What kind of applications can you build with the features launched today?*
+A: Live streaming and video-on-demand streaming applications can be launched in minutes with Amplify Video. There are open source workshops, UnicornTrivia and UnicornFlix, that demonstrate how to users can build a live streaming trivia application and subscription video-on-demand service using AWS Amplify and Amplify Video.
+
+*Q: Who uses Amplify Video today?*
+A: Amplify is targeted at mobile and web application developers. Amplify Video simplifies the deployment, management, and time-to-market for video streaming. Orangetheory Fitness uses Amplify Video for their OrangetheoryAtHome™ service.
+
+*Q: How can I extend Amplify Video?*
+A: Amplify video can be extended in a number of ways. Developers can customize their Amplify Video deployment by editing the provided CloudFormation template to fit the specifications of their use case. Additionally, developers have the flexibility to build new workflows that work in tandem with the resources deployed by Amplify Video.
+
+*Q: How can I contribute to Amplify Video?*
+A: The Amplify Video source code is available publicly on [Github](https://github.com/awslabs/amplify-video). Members of the open source developer community are encouraged to submit pull requests, cut issues, as well as document feature requests as a means of contributing to Amplify 
+Video.
+
+*Q: How long would it take an application developer to create something like Amplify video?*
+A: To build an application from scratch with video streaming, authentication, content management, and analytics would easily take weeks to months without the Amplify framework and Amplify Video
+
+
