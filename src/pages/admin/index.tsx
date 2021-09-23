@@ -6,6 +6,18 @@ import { IconType } from 'react-icons/lib'
 import { AdminLayout } from '../../shared/components'
 import LandingButton from '../../shared/components/Button/link'
 
+import { theme } from './Theme'
+import { Admin, Resource } from 'react-admin'
+import DataProvider from './DataProvider'
+
+import VideoList from './VideoList'
+import VideoEdit from './VideoEdit'
+import VideoCreate from './VideoCreate'
+
+import SectionList from './SectionList'
+import SectionCreate from './SectionCreate'
+import SectionEdit from './SectionEdit'
+
 type Props = {
     text: string
     color: string
@@ -116,6 +128,7 @@ const UserSubmissionWrapper = () => (
     </TextContainer>
 )
 
+// eslint-disable-next-line
 const Dashboard = () => (
     <AdminLayout>
         <Container>
@@ -133,4 +146,23 @@ const Dashboard = () => (
     </AdminLayout>
 )
 
-export default Dashboard
+const AdminMainPage = () => (
+    <AdminLayout>
+        <Admin dataProvider={DataProvider} theme={theme}>
+            <Resource
+                name="Videos"
+                list={VideoList}
+                edit={VideoEdit}
+                create={VideoCreate}
+            />
+            <Resource
+                name="Sections"
+                list={SectionList}
+                edit={SectionEdit}
+                create={SectionCreate}
+            />
+        </Admin>
+    </AdminLayout>
+)
+
+export default AdminMainPage

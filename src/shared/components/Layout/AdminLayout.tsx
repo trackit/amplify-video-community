@@ -11,6 +11,9 @@ type AdminLayoutProps = {
 
 const AdminLayoutStyled = styled.div`
     margin: 25px;
+    width: 100%;
+    max-width: 100%;
+    overflow: scroll;
 `
 
 const AdminLayout = ({ children }: AdminLayoutProps) => {

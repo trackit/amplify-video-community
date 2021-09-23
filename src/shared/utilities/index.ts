@@ -17,6 +17,8 @@ export {
     removeMediasSections,
     setMediasSections,
     createNewSection,
+    removeSection,
+    modifySection,
 } from './mutate'
 
 export {
