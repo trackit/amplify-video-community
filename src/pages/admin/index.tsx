@@ -6,6 +6,9 @@ import { IconType } from 'react-icons/lib'
 import { AdminLayout } from '../../shared/components'
 import LandingButton from '../../shared/components/Button/link'
 
+import OndemandVideoIcon from '@mui/icons-material/OndemandVideo'
+import LabelIcon from '@mui/icons-material/Label'
+
 import { theme } from './Theme'
 import { Admin, Resource } from 'react-admin'
 import DataProvider from './DataProvider'
@@ -154,12 +157,14 @@ const AdminMainPage = () => (
                 list={VideoList}
                 edit={VideoEdit}
                 create={VideoCreate}
+                icon={OndemandVideoIcon}
             />
             <Resource
                 name="Sections"
                 list={SectionList}
                 edit={SectionEdit}
                 create={SectionCreate}
+                icon={LabelIcon}
             />
         </Admin>
     </AdminLayout>
