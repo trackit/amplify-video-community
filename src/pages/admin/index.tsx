@@ -21,6 +21,8 @@ import SectionList from './SectionList'
 import SectionCreate from './SectionCreate'
 import SectionEdit from './SectionEdit'
 
+import Home from './Home'
+
 type Props = {
     text: string
     color: string
@@ -151,7 +153,7 @@ const Dashboard = () => (
 
 const AdminMainPage = () => (
     <AdminLayout>
-        <Admin dataProvider={DataProvider} theme={theme}>
+        <Admin dashboard={Home} dataProvider={DataProvider} theme={theme}>
             <Resource
                 name="Videos"
                 list={VideoList}
