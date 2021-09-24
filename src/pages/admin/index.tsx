@@ -6,6 +6,23 @@ import { IconType } from 'react-icons/lib'
 import { AdminLayout } from '../../shared/components'
 import LandingButton from '../../shared/components/Button/link'
 
+import OndemandVideoIcon from '@mui/icons-material/OndemandVideo'
+import LabelIcon from '@mui/icons-material/Label'
+
+import { theme } from './Theme'
+import { Admin, Resource } from 'react-admin'
+import DataProvider from './DataProvider'
+
+import VideoList from './VideoList'
+import VideoEdit from './VideoEdit'
+import VideoCreate from './VideoCreate'
+
+import SectionList from './SectionList'
+import SectionCreate from './SectionCreate'
+import SectionEdit from './SectionEdit'
+
+import Home from './Home'
+
 type Props = {
     text: string
     color: string
@@ -116,6 +133,7 @@ const UserSubmissionWrapper = () => (
     </TextContainer>
 )
 
+// eslint-disable-next-line
 const Dashboard = () => (
     <AdminLayout>
         <Container>
@@ -133,4 +151,25 @@ const Dashboard = () => (
     </AdminLayout>
 )
 
-export default Dashboard
+const AdminMainPage = () => (
+    <AdminLayout>
+        <Admin dashboard={Home} dataProvider={DataProvider} theme={theme}>
+            <Resource
+                name="Videos"
+                list={VideoList}
+                edit={VideoEdit}
+                create={VideoCreate}
+                icon={OndemandVideoIcon}
+            />
+            <Resource
+                name="Sections"
+                list={SectionList}
+                edit={SectionEdit}
+                create={SectionCreate}
+                icon={LabelIcon}
+            />
+        </Admin>
+    </AdminLayout>
+)
+
+export default AdminMainPage

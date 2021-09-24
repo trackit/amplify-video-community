@@ -105,6 +105,9 @@ const VideoTitle = styled.div`
     font-weight: 500;
     font-weight: bold;
     margin-bottom: 5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 `
 
 const VideoAuthor = styled.div`

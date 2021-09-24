@@ -65,8 +65,8 @@ type NavBarProps = {
 
 const NavBar = ({
     navbarTheme,
-    maxHeight = 8, // % of the total height of the screen
-    minHeight = 4, // % of the total height of the screen
+    maxHeight = 9, // % of the total height of the screen
+    minHeight = 5, // % of the total height of the screen
 }: NavBarProps) => {
     const [groups, setGroups] = useState<Array<string>>([])
     const { height } = useWindowDimensions()

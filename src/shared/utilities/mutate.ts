@@ -12,6 +12,8 @@ import {
     deleteMediasSections,
     deleteVideoOnDemand,
     deleteLivestream,
+    deleteSection,
+    updateSection,
 } from '../../graphql/mutations'
 import { uploadSourceSelf, uploadSourceYoutube } from './vod-mutate'
 import * as APIt from '../../API'
@@ -33,6 +35,22 @@ const createNewSection = async (label: string, description: string) => {
                 label,
                 description,
             },
+        })
+    )
+}
+
+async function removeSection(input: APIt.DeleteSectionInput) {
+    return API.graphql(
+        graphqlOperation(deleteSection, {
+            input,
+        })
+    )
+}
+
+async function modifySection(input: APIt.UpdateSectionInput) {
+    return API.graphql(
+        graphqlOperation(updateSection, {
+            input,
         })
     )
 }
@@ -192,6 +210,7 @@ const uploadContent = async (
             mediaID: id,
         })
     }
+    return { data: { id: id } }
 }
 
 export {
@@ -207,4 +226,6 @@ export {
     removeMediasSections,
     removeVideoOnDemand,
     removeLivestream,
+    removeSection,
+    modifySection,
 }
