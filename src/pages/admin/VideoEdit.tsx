@@ -13,6 +13,8 @@ import {
 import ThumbnailField from './customFields/ThumbnailField'
 // import { fetchSections } from '../../shared/utilities'
 
+// /!\ TODO: implement sections modifications for existing videos
+
 const VideoEdit = (props) => {
     // const [existingSections, setExistingSections] = useState(undefined)
 
