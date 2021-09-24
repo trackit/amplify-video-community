@@ -4,6 +4,7 @@ import {
     modifyMedia,
     uploadContent,
     removeMedia,
+    updateThumbnail,
     fetchSections,
     fetchSection,
     modifySection,
@@ -28,18 +29,32 @@ const ressourcesMap = {
                     ? { data: data.getMedia }
                     : { data: { id: params.id } }
             ),
-        update: (params) =>
-            modifyMedia({
-                ...params.data,
-                createdAt: undefined,
-                updatedAt: undefined,
-                thumbnail: undefined,
-                sections: undefined,
-            }).then(({ data }) =>
-                data && data.updateMedia
-                    ? { data: data.updateMedia }
-                    : { data: {} }
-            ),
+        update: (params) => {
+            const promiseList = []
+            if (params.data.thumbnail.rawFile) {
+                promiseList.push(
+                    updateThumbnail(
+                        params.previousData.thumbnail,
+                        params.previousData.id,
+                        params.data.thumbnail.rawFile
+                    )
+                )
+            }
+            promiseList.push(
+                modifyMedia({
+                    ...params.data,
+                    createdAt: undefined,
+                    updatedAt: undefined,
+                    thumbnail: undefined,
+                    sections: undefined,
+                }).then(({ data }) =>
+                    data && data.updateMedia
+                        ? { data: data.updateMedia }
+                        : { data: {} }
+                )
+            )
+            return Promise.all(promiseList).then((res) => res.at(-1))
+        },
         create: (params) => {
             let youtubeID = ''
             if (params.data.source === 'YOUTUBE') {

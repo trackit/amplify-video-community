@@ -9,9 +9,7 @@ import {
     ImageField,
     FileInput,
     FileField,
-    SelectInput,
-    ArrayInput,
-    SimpleFormIterator,
+    AutocompleteArrayInput,
 } from 'react-admin'
 import { FormDataConsumer } from 'react-admin'
 import styled from 'styled-components'
@@ -48,11 +46,10 @@ const CommonInputs = () => {
             <TextInput source="description" multiline={true} />
             <BooleanInput source="highlighted" />
             <TextInput source="author" />
-            <ArrayInput source="sections">
-                <SimpleFormIterator>
-                    <SelectInput choices={existingSections} label="section" />
-                </SimpleFormIterator>
-            </ArrayInput>
+            <AutocompleteArrayInput
+                source="sections"
+                choices={existingSections}
+            />
         </InputsContainer>
     )
 }

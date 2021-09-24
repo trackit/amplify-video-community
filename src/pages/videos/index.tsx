@@ -178,15 +178,6 @@ const VideoPage = () => {
                                     thumbnails={thumbnails}
                                 />
                             ))}
-                        {sections &&
-                            sections.map((section: Section) => (
-                                <VideosSectionContainer
-                                    key={section.id}
-                                    section={section}
-                                    vodAssets={vodAssets}
-                                    thumbnails={thumbnails}
-                                />
-                            ))}
                     </>
                 )}
             </Container>

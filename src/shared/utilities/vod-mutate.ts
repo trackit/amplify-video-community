@@ -3,6 +3,7 @@ import { GraphQLResult } from '@aws-amplify/api-graphql'
 
 import { createVideoOnDemand } from '../../graphql/mutations'
 import {
+    removeThumbnailFile,
     putThumbnailFile,
     setThumbnail,
     setMedia,
@@ -11,7 +12,7 @@ import {
 import awsvideoconfig from '../../aws-video-exports'
 import awsmobile from '../../aws-exports'
 import * as APIt from '../../API'
-import { Media } from '../../models'
+import { Media, Thumbnail } from '../../models'
 
 async function createVOD(payload: APIt.CreateVideoOnDemandInput) {
     return API.graphql(
@@ -32,6 +33,32 @@ async function putVodFile(file: File, id: string, vodExtension: string[]) {
             )
         },
     })
+}
+
+const updateThumbnail = async (
+    thumbnail: Thumbnail,
+    id: string,
+    thumbnailFile: File
+) => {
+    try {
+        await removeThumbnailFile(thumbnail)
+    } catch (error) {
+        console.error('vod-mutate.ts(removeThumbnailFile): ', error)
+        return
+    }
+
+    try {
+        await putThumbnailFile(thumbnailFile, id)
+    } catch (error) {
+        console.error('vod-mutate.ts(putThumbnailFile): ', error)
+        return
+    }
+
+    try {
+        return await setThumbnail(id)
+    } catch (error) {
+        console.error('vod-mutate.tx(setThumbnail): ', error)
+    }
 }
 
 const uploadSourceSelf = async (
@@ -151,4 +178,4 @@ const uploadSourceYoutube = async (
     }
 }
 
-export { createVOD, uploadSourceSelf, uploadSourceYoutube }
+export { createVOD, uploadSourceSelf, uploadSourceYoutube, updateThumbnail }

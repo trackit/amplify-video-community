@@ -4,8 +4,8 @@ import { fetchThumbnail } from '../../../shared/utilities'
 import styled from 'styled-components'
 
 const Image = styled.div`
-    height: 50px;
-    width: 100px;
+    height: ${(props) => props.height}px;
+    width: ${(props) => props.width}px;
     border-radius: 3px;
     background-image: url(${(props) => props.src});
     background-position: center;
@@ -13,14 +13,14 @@ const Image = styled.div`
     background-size: cover;
 `
 
-const ThumbnailField = () => {
+const ThumbnailField = ({ height = 50, width = 100 }) => {
     const [thumbnail, setThumbnail] = useState(undefined)
     const record = useRecordContext()
 
     useEffect(() => {
         if (!record) return
 
-        if (record.thumbnail.src) {
+        if (record && record.thumbnail && record.thumbnail.src) {
             setThumbnail(record.thumbnail.src)
             return
         }
@@ -31,7 +31,9 @@ const ThumbnailField = () => {
         getThumbnail()
     }, [record])
 
-    return record && thumbnail ? <Image src={thumbnail} /> : null
+    return record && thumbnail ? (
+        <Image src={thumbnail} height={height} width={width} />
+    ) : null
 }
 
 export default ThumbnailField

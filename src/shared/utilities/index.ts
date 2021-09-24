@@ -13,12 +13,13 @@ export {
     uploadContent,
     removeMedia,
     modifyMedia,
-    removeThumbnailFile,
     removeMediasSections,
     setMediasSections,
     createNewSection,
     removeSection,
     modifySection,
+    removeThumbnailFile,
+    putThumbnailFile,
 } from './mutate'
 
 export {
@@ -27,7 +28,11 @@ export {
     fetchVodSections,
 } from './vod-fetch'
 
-export { uploadSourceSelf, uploadSourceYoutube } from './vod-mutate'
+export {
+    uploadSourceSelf,
+    uploadSourceYoutube,
+    updateThumbnail,
+} from './vod-mutate'
 
 export {
     setContentSubmission,
