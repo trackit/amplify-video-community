@@ -1,7 +1,7 @@
 import React from 'react'
 import { useRecordContext } from 'react-admin'
-import AmplifyLogo from '../../../assets/logo/logo-dark.svg'
-import YoutubeLogo from '../../../assets/logo/youtube.svg'
+import AmplifyLogo from '../../../../assets/logo/logo-dark.svg'
+import YoutubeLogo from '../../../../assets/logo/youtube.svg'
 
 const SourceField = ({ source }) => {
     const record = useRecordContext()

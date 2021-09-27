@@ -6,8 +6,6 @@ import SectionContainer from './Section/SectionContainer'
 import VideosSectionContainer from './Section/VideosSectionContainer'
 import HighlightedSection from './Section/HighlightedSection'
 import BasicLoader from './Loader'
-import MediaManagementList from './Admin/MediaManagementList/MediaManagementList'
-import SectionsManagementList from './Admin/SectionsManagementList/SectionsManagementList'
 
 export {
     ListContainer,
@@ -29,7 +27,5 @@ export {
     SectionContainer,
     HighlightedSection,
     BasicLoader,
-    MediaManagementList,
-    SectionsManagementList,
     VideosSectionContainer,
 }

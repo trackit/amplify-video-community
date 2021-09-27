@@ -10,7 +10,7 @@ import {
     modifySection,
     createNewSection,
     removeSection,
-} from '../../shared/utilities'
+} from '../../utilities'
 
 const ressourcesMap = {
     Videos: {
