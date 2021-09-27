@@ -14,7 +14,7 @@ import {
 import { FormDataConsumer } from 'react-admin'
 import styled from 'styled-components'
 
-import { fetchSections } from '../../shared/utilities'
+import { fetchSections } from '../../utilities'
 
 const InputsContainer = styled.div`
     display: flex;

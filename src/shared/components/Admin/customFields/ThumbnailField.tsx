@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useRecordContext } from 'react-admin'
-import { fetchThumbnail } from '../../../shared/utilities'
+import { fetchThumbnail } from '../../../utilities'
 import styled from 'styled-components'
 
 const Image = styled.div`
