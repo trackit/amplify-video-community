@@ -1,0 +1,26 @@
+{
+  "name": "docs-amplify-video-community",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "docsify serve docs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trackit/docs-amplify-video-community.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trackit/docs-amplify-video-community/issues"
+  },
+  "homepage": "https://github.com/trackit/docs-amplify-video-community#readme",
+  "dependencies": {
+    "docsify-cli": "^4.4.3"
+  }
+}

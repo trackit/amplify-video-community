@@ -3,9 +3,13 @@ name: Build
 on:
   push:
     branches: [ main ]
+    paths:
+      - "apps/community-website/**"
   pull_request:
     branches:
       - '*'
+    paths:
+      - "apps/community-website/**"
 
 jobs:
   lint:
@@ -20,6 +24,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Install dependencies
+      working-directory: ./apps/community-website
       run : npm install
     - name: eslint
+      working-directory: ./apps/community-website
       run : npm run lint
