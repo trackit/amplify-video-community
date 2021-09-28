@@ -16,7 +16,7 @@
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
     "pre-commit": "npx lint-staged --config=.lintstagedrc.js",
-    "prepare": "husky install"
+    "prepare": "cd ../.. && husky install apps/community-website/.husky"
   },
   "lint-staged": {
     "src/**/*.+(js|json|ts|tsx)": [
