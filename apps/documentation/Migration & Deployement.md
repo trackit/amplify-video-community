@@ -21,3 +21,24 @@ The init command clones the GitHub repo, initializes the CLI, creates a ‘sampl
 If you already have an AWS profile set up on your local machine, choose “Yes” when prompted by the CLI and select the profile you would like to use.
 
 The whole article can be found [here](https://aws.amazon.com/blogs/mobile/amplify-cli-adds-scaffolding-support-for-amplify-apps-and-authoring-plugins/)
+
+--
+
+# Deployement
+
+## Community website
+
+Deployement
+
+## Documentation
+
+The documentation uses [docsify](https://docsify.js.org/)
+
+[When deploying docsify on AWS Amplify](https://docsify.js.org/#/deploy?id=aws-amplify) make sure to add the following redirect rules in their displayed order. Note that the second record is a PNG image where you can change it with any image format you are using.
+
+| Source address | Target address | Type |
+|---|---|---|
+| /<*>.md | /<*>.md | 200 | (Rewrite) |
+| /<*>.png | /<*>.png | 200 | (Rewrite) |
+| /<*> | /index.html | 200 | (Rewrite) |
+
