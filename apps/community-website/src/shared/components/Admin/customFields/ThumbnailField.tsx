@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useRecordContext } from 'react-admin'
 import { fetchThumbnail } from '../../../utilities'
 import styled from 'styled-components'
+import { get } from 'lodash'
 
 const Image = styled.div`
     height: ${(props) => props.height}px;
@@ -13,9 +14,10 @@ const Image = styled.div`
     background-size: cover;
 `
 
-const ThumbnailField = ({ height = 50, width = 100 }) => {
+const ThumbnailField = ({ height = 50, width = 100, path = null }) => {
     const [thumbnail, setThumbnail] = useState(undefined)
     const record = useRecordContext()
+    console.log('record thum: ', record)
 
     useEffect(() => {
         if (!record) return
@@ -25,9 +27,11 @@ const ThumbnailField = ({ height = 50, width = 100 }) => {
             return
         }
 
-        const getThumbnail = async () =>
-            setThumbnail(await fetchThumbnail(record))
-
+        const getThumbnail = async () => {
+            console.log('oui: ', get(record, path))
+            return setThumbnail(await fetchThumbnail(get(record, path).src))
+            // return setThumbnail(await fetchThumbnail(path ? get(record, path) : record))
+        }
         getThumbnail()
     }, [record])
 

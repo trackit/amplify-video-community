@@ -33,6 +33,7 @@ const createNewLivestream = async (
     src: string,
     sectionsId: Array<undefined | string>
 ) => {
+    let mediaData
     const id: string = uuidv4()
     try {
         await putThumbnailFile(thumbnailFile, id)
@@ -49,14 +50,14 @@ const createNewLivestream = async (
     }
 
     try {
-        await setMedia({
+        mediaData = await setMedia({
             id,
             title: media.title,
+            author: 'AmplifyVideo',
             description: media.description,
             highlighted: media.highlighted,
             source: APIt.Source.LIVESTREAM_SELF,
             mediaThumbnailId: id,
-            author: 'AmplifyVideo',
         })
     } catch (error) {
         console.error('live-mutate.tx(setMedia): ', error)
@@ -84,6 +85,10 @@ const createNewLivestream = async (
         console.error('live-mutate.tx(setMediasSections): ', error)
         return
     }
+    console.log('mediaData: ', mediaData)
+    return new Promise((resolve) =>
+        resolve({ data: mediaData.data.createMedia })
+    )
 }
 
 export { createNewLivestream, modifyLivestream }

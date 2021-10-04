@@ -10,6 +10,11 @@ import {
     modifySection,
     createNewSection,
     removeSection,
+    fetchLivestreams,
+    fetchLivestream,
+    modifyLivestream,
+    createNewLivestream,
+    removeLivestream,
 } from '../../utilities'
 
 const ressourcesMap = {
@@ -144,6 +149,64 @@ const ressourcesMap = {
                     )
                 )
             ).then((deletedVideos) => ({ data: deletedVideos })),
+    },
+    Lives: {
+        getList: () =>
+            fetchLivestreams().then(({ data }) => {
+                return data &&
+                    data.listLivestreams &&
+                    data.listLivestreams.items
+                    ? {
+                          data: data.listLivestreams.items,
+                          total: data.listLivestreams.items.length,
+                      }
+                    : { data: [], total: 0 }
+            }),
+        getOne: (params) =>
+            fetchLivestream(params.id).then(({ data }) =>
+                data && data.getLivestream
+                    ? { data: data.getLivestream }
+                    : { data: { id: params.id } }
+            ),
+        update: (params) =>
+            modifyLivestream({
+                ...params.data,
+                createdAt: undefined,
+                updatedAt: undefined,
+                medias: undefined,
+            }).then(({ data }) =>
+                data && data.updateLivestream
+                    ? { data: data.updateLivestream }
+                    : { data: {} }
+            ),
+        create: (params) => {
+            return createNewLivestream(
+                {
+                    id: '',
+                    title: params.data.title,
+                    description: params.data.description,
+                    highlighted: params.data.highlited
+                        ? params.data.highlited
+                        : false,
+                    author: params.data.author,
+                },
+                params.data.thumbnail.rawFile,
+                params.data.url,
+                params.data.sections
+            ).then(({ data }) => ({ data }))
+        },
+        delete: (params) =>
+            removeLivestream({ id: params.id }).then(({ data }) => ({
+                data: data?.deleteLivestream,
+            })),
+        deleteMany: (params) =>
+            Promise.all(
+                params.ids.map((id) =>
+                    removeLivestream({ id: id }).then(
+                        ({ data }) => data?.deleteLivestream
+                    )
+                )
+            ).then((deletedLivestreams) => ({ data: deletedLivestreams })),
     },
 }
 

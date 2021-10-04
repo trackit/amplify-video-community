@@ -5,6 +5,7 @@ import { AdminLayout } from '../../shared/components'
 
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo'
 import LabelIcon from '@mui/icons-material/Label'
+import LiveTvIcon from '@mui/icons-material/LiveTv'
 
 import { theme } from '../../shared/components/Admin/Theme'
 import DataProvider from '../../shared/components/Admin/DataProvider'
@@ -16,6 +17,10 @@ import VideoCreate from '../../shared/components/Admin/VideoCreate'
 import SectionList from '../../shared/components/Admin/SectionList'
 import SectionCreate from '../../shared/components/Admin/SectionCreate'
 import SectionEdit from '../../shared/components/Admin/SectionEdit'
+
+import LiveList from '../../shared/components/Admin/LiveList'
+import LiveCreate from '../../shared/components/Admin/LiveCreate'
+import LiveEdit from '../../shared/components/Admin/LiveEdit'
 
 import Home from '../../shared/components/Admin/Home'
 
@@ -37,6 +42,13 @@ const AdminMainPage = () => {
                     edit={SectionEdit}
                     create={SectionCreate}
                     icon={LabelIcon}
+                />
+                <Resource
+                    name="Lives"
+                    list={LiveList}
+                    edit={LiveEdit}
+                    create={LiveCreate}
+                    icon={LiveTvIcon}
                 />
             </Admin>
         </AdminLayout>
