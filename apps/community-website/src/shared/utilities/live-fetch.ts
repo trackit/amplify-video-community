@@ -83,7 +83,7 @@ async function fetchLivestreamsWithThumbnail() {
     return API.graphql({
         query: listLivestreamsWithThumbnails,
         authMode: await getAuthMode(),
-    }) as GraphQLResult<APIt.ListLivestreamsQuery>
+    }) as GraphQLResult<ListLivestreamsWithThumbnailQuery>
 }
 
 async function fetchLivestream(id: string) {
