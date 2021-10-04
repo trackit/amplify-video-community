@@ -6,35 +6,40 @@ import { getAuthMode } from './helper'
 import { listLivestreams, getLivestream } from '../../graphql/queries'
 
 export const listLivestreamsWithThumbnails = /* GraphQL */ `
-  query listLivestreamsWithThumbnails() {
-    listLivestreams() {
-      items {
-        id
-        url
-        isLive
-        createdAt
-        updatedAt
-        media {
-          id
-          title
-          description
-          highlighted
-          source
-          author
-          viewCount
-          createdAt
-          updatedAt
-          thumbnail {
-            id
-            ext
-            src
-            createdAt
-            updatedAt
-          }
+    query listLivestreamsWithThumbnails(
+        $filter: ModelLivestreamFilterInput
+        $limit: Int
+        $nextToken: String
+    ) {
+        listLivestreams(filter: $filter, limit: $limit, nextToken: $nextToken) {
+            items {
+                id
+                url
+                isLive
+                createdAt
+                updatedAt
+                media {
+                    id
+                    title
+                    description
+                    highlighted
+                    source
+                    author
+                    viewCount
+                    createdAt
+                    updatedAt
+                    thumbnail {
+                        id
+                        ext
+                        src
+                        createdAt
+                        updatedAt
+                    }
+                }
+            }
+            nextToken
         }
-      }
     }
-  }
 `
 
 async function fetchLivestreams() {
