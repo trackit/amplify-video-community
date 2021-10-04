@@ -56,6 +56,7 @@ const createNewLivestream = async (
             highlighted: media.highlighted,
             source: APIt.Source.LIVESTREAM_SELF,
             mediaThumbnailId: id,
+            author: 'AmplifyVideo',
         })
     } catch (error) {
         console.error('live-mutate.tx(setMedia): ', error)
