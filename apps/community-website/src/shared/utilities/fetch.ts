@@ -1,6 +1,5 @@
 import { API, Storage } from 'aws-amplify'
 import { GraphQLResult } from '@aws-amplify/api-graphql'
-
 import {
     getSection,
     listSections,

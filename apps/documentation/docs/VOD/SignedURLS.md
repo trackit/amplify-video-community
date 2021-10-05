@@ -98,7 +98,7 @@ Example code
 import React from 'react';
 import Amplify, { API, graphqlOperation, Auth } from 'aws-amplify';
 import {listVodAssets, getVodAsset} from '../../graphql/queries.js'
-import awsmobile from '../../aws-exports';
+import awsmobile from '../../../../../../src/aws-exports';
 import { withAuthenticator } from 'aws-amplify-react';
 
 class ListView extends React.Component {
