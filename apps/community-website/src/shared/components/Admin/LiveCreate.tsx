@@ -3,7 +3,6 @@ import {
     Create,
     SimpleForm,
     TextInput,
-    BooleanInput,
     AutocompleteArrayInput,
     ImageInput,
     ImageField,
@@ -44,8 +43,6 @@ const CommonInputs = () => {
         <InputsContainer>
             <TextInput source="title" />
             <TextInput source="description" multiline={true} />
-            <BooleanInput source="highlighted" />
-            <TextInput source="author" />
             <AutocompleteArrayInput
                 source="sections"
                 choices={existingSections}
@@ -72,7 +69,6 @@ const LivestreamCreate = (props) => (
                                 title="Thumbnail"
                             />
                         </ImageInput>
-                        <TextInput source="url" />
                     </InputsContainer>
                 )}
             </FormDataConsumer>

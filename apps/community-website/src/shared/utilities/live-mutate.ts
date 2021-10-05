@@ -85,7 +85,6 @@ const createNewLivestream = async (
         console.error('live-mutate.tx(setMediasSections): ', error)
         return
     }
-    console.log('mediaData: ', mediaData)
     return new Promise((resolve) =>
         resolve({ data: mediaData.data.createMedia })
     )

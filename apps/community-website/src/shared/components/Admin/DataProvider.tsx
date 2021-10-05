@@ -10,12 +10,13 @@ import {
     modifySection,
     createNewSection,
     removeSection,
-    fetchLivestreams,
     fetchLivestream,
     modifyLivestream,
     createNewLivestream,
     removeLivestream,
+    removeThumbnailFile,
 } from '../../utilities'
+import { fetchLivestreamsWithThumbnail } from '../../utilities/live-fetch'
 
 const ressourcesMap = {
     Videos: {
@@ -152,7 +153,7 @@ const ressourcesMap = {
     },
     Lives: {
         getList: () =>
-            fetchLivestreams().then(({ data }) => {
+            fetchLivestreamsWithThumbnail().then(({ data }) => {
                 return data &&
                     data.listLivestreams &&
                     data.listLivestreams.items
@@ -168,44 +169,111 @@ const ressourcesMap = {
                     ? { data: data.getLivestream }
                     : { data: { id: params.id } }
             ),
-        update: (params) =>
-            modifyLivestream({
-                ...params.data,
-                createdAt: undefined,
-                updatedAt: undefined,
-                medias: undefined,
-            }).then(({ data }) =>
-                data && data.updateLivestream
+        update: (params) => {
+            return modifyLivestream({
+                id: params.data.id,
+                url: params.data.url,
+                isLive: params.data.isLive,
+                livestreamMediaId: params.data.media.id,
+            }).then(({ data }) => {
+                return data && data.updateLivestream
                     ? { data: data.updateLivestream }
                     : { data: {} }
-            ),
+            })
+        },
         create: (params) => {
             return createNewLivestream(
                 {
                     id: '',
                     title: params.data.title,
                     description: params.data.description,
-                    highlighted: params.data.highlited
-                        ? params.data.highlited
-                        : false,
-                    author: params.data.author,
+                    highlighted: false,
+                    author: 'AmplifyVideo',
                 },
                 params.data.thumbnail.rawFile,
-                params.data.url,
+                'https://c6d98e9ef5e7.us-west-2.playback.live-video.net/api/video/v1/us-west-2.394125495069.channel.AriVnRGWVwdO.m3u8',
                 params.data.sections
             ).then(({ data }) => ({ data }))
         },
-        delete: (params) =>
-            removeLivestream({ id: params.id }).then(({ data }) => ({
-                data: data?.deleteLivestream,
-            })),
+        delete: async (params) => {
+            let removedLivestream
+            try {
+                removedLivestream = await removeLivestream({ id: params.id })
+            } catch (error) {
+                console.error(
+                    'DataProvider.tsx(delete: removeLivestream): ',
+                    error
+                )
+                return
+            }
+
+            try {
+                await removeMedia({ id: params.previousData.media.id })
+            } catch (error) {
+                console.error('DataProvider.tsx(delete: removeMedia): ', error)
+                return
+            }
+
+            try {
+                await removeThumbnailFile(params.previousData.media.thumbnail)
+            } catch (error) {
+                console.error(
+                    'DataProvider.tsx(delete: removeThumbnailFile): ',
+                    error
+                )
+                return
+            }
+
+            return new Promise((resolve) =>
+                resolve({ data: removedLivestream.data })
+            )
+        },
         deleteMany: (params) =>
             Promise.all(
-                params.ids.map((id) =>
-                    removeLivestream({ id: id }).then(
-                        ({ data }) => data?.deleteLivestream
+                params.ids.map(async (id) => {
+                    let removedLivestream
+                    const live = await fetchLivestream(id)
+
+                    try {
+                        removedLivestream = await removeLivestream({
+                            id: live.data?.getLivestream?.id,
+                        })
+                    } catch (error) {
+                        console.error(
+                            'DataProvider.tsx(deleteMany: removeLivestream): ',
+                            error
+                        )
+                        return
+                    }
+
+                    try {
+                        await removeMedia({
+                            id: live.data?.getLivestream?.media?.id,
+                        })
+                    } catch (error) {
+                        console.error(
+                            'DataProvider.tsx(deleteMany: removeMedia): ',
+                            error
+                        )
+                        return
+                    }
+
+                    try {
+                        await removeThumbnailFile(
+                            live.data?.getLivestream?.media?.thumbnail
+                        )
+                    } catch (error) {
+                        console.error(
+                            'DataProvider.tsx(deleteMany: removeThumbnailFile): ',
+                            error
+                        )
+                        return
+                    }
+
+                    return new Promise((resolve) =>
+                        resolve({ data: removedLivestream.data })
                     )
-                )
+                })
             ).then((deletedLivestreams) => ({ data: deletedLivestreams })),
     },
 }

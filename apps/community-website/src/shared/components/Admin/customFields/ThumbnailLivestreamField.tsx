@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import styled from 'styled-components'
+import React, { useEffect, useState } from 'react'
 import { useRecordContext } from 'react-admin'
 import { fetchThumbnail } from '../../../utilities'
-import styled from 'styled-components'
+import { get } from 'lodash'
 
-const Image = styled.div`
+export const Image = styled.div`
     height: ${(props) => props.height}px;
     width: ${(props) => props.width}px;
     border-radius: 3px;
@@ -12,21 +13,29 @@ const Image = styled.div`
     background-repeat: no-repeat;
     background-size: cover;
 `
-
-const ThumbnailField = ({ height = 50, width = 100 }) => {
+const ThumbnailLivestreamField = ({
+    height = 50,
+    width = 100,
+    path = null,
+}) => {
     const [thumbnail, setThumbnail] = useState(undefined)
     const record = useRecordContext()
 
     useEffect(() => {
         if (!record) return
 
-        if (record && record.thumbnail && record.thumbnail.src) {
-            setThumbnail(record.thumbnail.src)
+        if (
+            record &&
+            record.media &&
+            record.media.thumbnail &&
+            record.media.thumbnail.src
+        ) {
+            setThumbnail(record.media.thumbnail.src)
             return
         }
 
         const getThumbnail = async () =>
-            setThumbnail(await fetchThumbnail(record))
+            setThumbnail(await fetchThumbnail(get(record, path)))
 
         getThumbnail()
     }, [record])
@@ -36,4 +45,4 @@ const ThumbnailField = ({ height = 50, width = 100 }) => {
     ) : null
 }
 
-export default ThumbnailField
+export default ThumbnailLivestreamField
