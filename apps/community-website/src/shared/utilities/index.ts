@@ -21,6 +21,7 @@ export {
     removeThumbnailFile,
     putThumbnailFile,
     removeLivestream,
+    updateMediaSections,
 } from './mutate'
 
 export {

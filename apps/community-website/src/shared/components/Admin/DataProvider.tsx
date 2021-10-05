@@ -1,5 +1,5 @@
 import {
-    fetchMedias,
+    fetchVodFiles,
     fetchMedia,
     modifyMedia,
     uploadContent,
@@ -15,26 +15,66 @@ import {
     createNewLivestream,
     removeLivestream,
     removeThumbnailFile,
+    updateMediaSections,
 } from '../../utilities'
 import { fetchLivestreamsWithThumbnail } from '../../utilities/live-fetch'
 
-const ressourcesMap = {
+const resourcesMap = {
     Videos: {
         getList: () =>
-            fetchMedias().then(({ data }) =>
-                data && data.listMedia && data.listMedia.items
+            fetchVodFiles().then(({ data }) =>
+                data && data.listVideoOnDemands && data.listVideoOnDemands.items
                     ? {
-                          data: data.listMedia.items,
-                          total: data.listMedia.items.length,
+                          data: data.listVideoOnDemands.items
+                              .filter((item) => item.media !== null)
+                              .map((item) => ({
+                                  ...item.media,
+                                  sections: [],
+                              })),
+                          total: data.listVideoOnDemands.items.length,
                       }
                     : { data: [], total: 0 }
             ),
         getOne: (params) =>
-            fetchMedia(params.id).then(({ data }) =>
-                data && data.getMedia
-                    ? { data: data.getMedia }
-                    : { data: { id: params.id } }
-            ),
+            fetchSections().then(({ data }) => {
+                const sections =
+                    data && data.listSections && data.listSections.items
+                        ? data.listSections.items
+                        : undefined
+                return fetchMedia(params.id).then(({ data }) => {
+                    let sectionsFound = []
+                    if (
+                        data &&
+                        data.getMedia &&
+                        data.getMedia.sections &&
+                        data.getMedia.sections.items
+                    ) {
+                        sectionsFound = data.getMedia.sections.items.map(
+                            ({ sectionID }) =>
+                                sections.find(
+                                    (section) => section.id === sectionID
+                                )
+                        )
+                        sectionsFound = sectionsFound.filter(
+                            (section, index, self) =>
+                                index ===
+                                self.findIndex((t) => t.id === section.id)
+                        )
+                        sectionsFound = sectionsFound.map((section) => ({
+                            id: section.id,
+                            name: section.label,
+                        }))
+                    }
+                    return data && data.getMedia
+                        ? {
+                              data: {
+                                  ...data.getMedia,
+                                  sections: sectionsFound,
+                              },
+                          }
+                        : { data: { id: params.id } }
+                })
+            }),
         update: (params) => {
             const promiseList = []
             if (params.data.thumbnail.rawFile) {
@@ -46,6 +86,12 @@ const ressourcesMap = {
                     )
                 )
             }
+            promiseList.push(
+                updateMediaSections(
+                    params.previousData.id,
+                    params.data.sections
+                )
+            )
             promiseList.push(
                 modifyMedia({
                     ...params.data,
@@ -72,7 +118,9 @@ const ressourcesMap = {
                 {
                     id: '',
                     title: params.data.title,
-                    description: params.data.description,
+                    description: params.data.description
+                        ? params.data.description
+                        : '',
                     highlighted: params.data.highlited
                         ? params.data.highlited
                         : false,
@@ -92,9 +140,11 @@ const ressourcesMap = {
             )
         },
         delete: (params) =>
-            removeMedia({ id: params.id }).then(({ data }) => ({
-                data: data?.deleteMedia,
-            })),
+            removeMedia({ id: params.id }, params.previousData).then(
+                ({ data }) => ({
+                    data: data?.deleteMedia,
+                })
+            ),
         deleteMany: (params) =>
             Promise.all(
                 params.ids.map((id) =>
@@ -279,11 +329,11 @@ const ressourcesMap = {
 }
 
 export default {
-    getList: (ressource) => ressourcesMap[ressource].getList(),
-    getOne: (ressource, params) => ressourcesMap[ressource].getOne(params),
-    update: (ressource, params) => ressourcesMap[ressource].update(params),
-    create: (ressource, params) => ressourcesMap[ressource].create(params),
-    delete: (ressource, params) => ressourcesMap[ressource].delete(params),
+    getList: (ressource) => resourcesMap[ressource].getList(),
+    getOne: (ressource, params) => resourcesMap[ressource].getOne(params),
+    update: (ressource, params) => resourcesMap[ressource].update(params),
+    create: (ressource, params) => resourcesMap[ressource].create(params),
+    delete: (ressource, params) => resourcesMap[ressource].delete(params),
     deleteMany: (ressource, params) =>
-        ressourcesMap[ressource].deleteMany(params),
+        resourcesMap[ressource].deleteMany(params),
 }

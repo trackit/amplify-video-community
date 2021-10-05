@@ -1,4 +1,4 @@
-import React /*, { useState, useEffect }*/ from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     Edit,
     SimpleForm,
@@ -6,33 +6,31 @@ import {
     BooleanInput,
     ImageInput,
     ImageField,
-    // AutocompleteArrayInput,
     FormDataConsumer,
 } from 'react-admin'
 
 import ThumbnailField from './customFields/ThumbnailField'
-// import { fetchSections } from '../../shared/utilities'
-
-// /!\ TODO: implement sections modifications for existing videos
+import TagsInput from './customFields/TagsInput'
+import { fetchSections } from '../../utilities'
 
 const VideoEdit = (props) => {
-    // const [existingSections, setExistingSections] = useState(undefined)
+    const [existingSections, setExistingSections] = useState([])
 
-    // useEffect(() => {
-    //     ;(async () => {
-    //         try {
-    //             const { data } = await fetchSections()
-    //             if (!data || !data.listSections || !data.listSections.items)
-    //                 throw 'Received invalid sections list'
-    //             const formatedSections = data.listSections.items.map(
-    //                 (element) => ({ id: element.id, name: element.label })
-    //             )
-    //             setExistingSections(formatedSections)
-    //         } catch (error) {
-    //             console.error('Form/VideoUpload.tsx(fetchSections):', error)
-    //         }
-    //     })()
-    // }, [])
+    useEffect(() => {
+        ;(async () => {
+            try {
+                const { data } = await fetchSections()
+                if (!data || !data.listSections || !data.listSections.items)
+                    throw 'Received invalid sections list'
+                const formatedSections = data.listSections.items.map(
+                    (element) => ({ id: element.id, name: element.label })
+                )
+                setExistingSections(formatedSections)
+            } catch (error) {
+                console.error('Form/VideoUpload.tsx(fetchSections):', error)
+            }
+        })()
+    }, [])
 
     return (
         <Edit {...props}>
@@ -42,12 +40,7 @@ const VideoEdit = (props) => {
                 <TextInput source="description" multiline={true} />
                 <BooleanInput source="highlighted" />
                 <TextInput source="author" />
-                {/* {existingSections && (
-                    <AutocompleteArrayInput
-                        source="sectionUpdate"
-                        choices={existingSections}
-                    />
-                )} */}
+                <TagsInput source="sections" choices={existingSections} />
                 <FormDataConsumer>
                     {({ formData }) =>
                         formData.source === 'SELF' && (

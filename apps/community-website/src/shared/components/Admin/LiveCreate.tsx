@@ -8,16 +8,10 @@ import {
     ImageField,
     required,
 } from 'react-admin'
-import styled from 'styled-components'
 
 import { fetchSections } from '../../utilities'
 
-const InputsContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-`
-
-const CommonInputs = () => {
+const LivestreamCreate = (props) => {
     const [existingSections, setExistingSections] = useState([])
 
     useEffect(() => {
@@ -40,27 +34,18 @@ const CommonInputs = () => {
     }, [])
 
     return (
-        <InputsContainer>
-            <TextInput source="title" validate={required()} />
-            <TextInput
-                source="description"
-                multiline={true}
-                validate={required()}
-            />
-            <AutocompleteArrayInput
-                source="sections"
-                choices={existingSections}
-                validate={required()}
-            />
-        </InputsContainer>
-    )
-}
-
-const LivestreamCreate = (props) => (
-    <Create {...props}>
-        <SimpleForm>
-            <InputsContainer>
-                <CommonInputs {...props} />
+        <Create {...props}>
+            <SimpleForm>
+                <TextInput source="title" validate={required()} />
+                <TextInput
+                    source="description"
+                    multiline={true}
+                    validate={required()}
+                />
+                <AutocompleteArrayInput
+                    source="sections"
+                    choices={existingSections}
+                />
                 <ImageInput
                     source="thumbnail"
                     label="Thumbnail"
@@ -70,9 +55,9 @@ const LivestreamCreate = (props) => (
                 >
                     <ImageField source="thumbnailBlob" title="Thumbnail" />
                 </ImageInput>
-            </InputsContainer>
-        </SimpleForm>
-    </Create>
-)
+            </SimpleForm>
+        </Create>
+    )
+}
 
 export default LivestreamCreate

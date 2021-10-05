@@ -9,11 +9,11 @@ import {
     ImageField,
     FileInput,
     FileField,
-    AutocompleteArrayInput,
 } from 'react-admin'
 import { FormDataConsumer } from 'react-admin'
 import styled from 'styled-components'
 
+import TagsInput from './customFields/TagsInput'
 import { fetchSections } from '../../utilities'
 
 const InputsContainer = styled.div`
@@ -46,10 +46,7 @@ const CommonInputs = () => {
             <TextInput source="description" multiline={true} />
             <BooleanInput source="highlighted" />
             <TextInput source="author" />
-            <AutocompleteArrayInput
-                source="sections"
-                choices={existingSections}
-            />
+            <TagsInput source="sections" choices={existingSections} />
         </InputsContainer>
     )
 }
