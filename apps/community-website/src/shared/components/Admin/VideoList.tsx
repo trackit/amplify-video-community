@@ -3,20 +3,23 @@ import { List, Datagrid, TextField, BooleanField, DateField } from 'react-admin'
 import ThumbnailField from './customFields/ThumbnailField'
 import EllipsisTextField from './customFields/EllipsisTextField'
 import SourceField from './customFields/SourceField'
+import { useWindowDimensions } from '../../hooks'
 
 const VideoList = (props) => {
+    const size = useWindowDimensions()
+
     return (
         <List {...props}>
             <Datagrid rowClick="edit">
                 <ThumbnailField source="thumbnail" />
-                <EllipsisTextField source="title" width={'200px'} />
-                <EllipsisTextField source="description" width={'600px'} />
-                <BooleanField source="highlighted" />
-                <SourceField source="source" />
+                <EllipsisTextField source="title" width="125px" />
+                <EllipsisTextField source="description" width="125px" />
+                <TextField source="viewCount" label="Views" />
                 <TextField source="author" />
-                <TextField source="viewCount" />
-                <DateField source="createdAt" />
-                <DateField source="updatedAt" />
+                {size.width > 1450 && <BooleanField source="highlighted" />}
+                {size.width > 1600 && <SourceField source="source" />}
+                {size.width > 1700 && <DateField source="createdAt" />}
+                {size.width > 1700 && <DateField source="updatedAt" />}
             </Datagrid>
         </List>
     )
