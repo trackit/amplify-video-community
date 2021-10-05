@@ -7,7 +7,6 @@ import {
     ImageInput,
     ImageField,
 } from 'react-admin'
-import { FormDataConsumer } from 'react-admin'
 import styled from 'styled-components'
 
 import { fetchSections } from '../../utilities'
@@ -54,24 +53,17 @@ const CommonInputs = () => {
 const LivestreamCreate = (props) => (
     <Create {...props}>
         <SimpleForm>
-            <FormDataConsumer>
-                {(props) => (
-                    <InputsContainer>
-                        <CommonInputs {...props} />
-                        <ImageInput
-                            source="thumbnail"
-                            label="Thumbnail"
-                            accept="image/*"
-                            multiple={false}
-                        >
-                            <ImageField
-                                source="thumbnailBlob"
-                                title="Thumbnail"
-                            />
-                        </ImageInput>
-                    </InputsContainer>
-                )}
-            </FormDataConsumer>
+            <InputsContainer>
+                <CommonInputs {...props} />
+                <ImageInput
+                    source="thumbnail"
+                    label="Thumbnail"
+                    accept="image/*"
+                    multiple={false}
+                >
+                    <ImageField source="thumbnailBlob" title="Thumbnail" />
+                </ImageInput>
+            </InputsContainer>
         </SimpleForm>
     </Create>
 )
