@@ -1,5 +1,5 @@
 import {
-    fetchVodFiles,
+    fetchMedias,
     fetchMedia,
     modifyMedia,
     uploadContent,
@@ -22,16 +22,15 @@ import { fetchLivestreamsWithThumbnail } from '../../utilities/live-fetch'
 const resourcesMap = {
     Videos: {
         getList: () =>
-            fetchVodFiles().then(({ data }) =>
-                data && data.listVideoOnDemands && data.listVideoOnDemands.items
+            fetchMedias().then(({ data }) =>
+                data && data.listMedia && data.listMedia.items
                     ? {
-                          data: data.listVideoOnDemands.items
-                              .filter((item) => item.media !== null)
-                              .map((item) => ({
-                                  ...item.media,
-                                  sections: [],
-                              })),
-                          total: data.listVideoOnDemands.items.length,
+                          data: data.listMedia.items
+                              .filter(
+                                  (item) => item.source !== 'LIVESTREAM_SELF'
+                              )
+                              .map((item) => ({ ...item, sections: [] })),
+                          total: data.listMedia.items.length,
                       }
                     : { data: [], total: 0 }
             ),
@@ -203,48 +202,84 @@ const resourcesMap = {
     },
     Lives: {
         getList: () =>
-            fetchLivestreamsWithThumbnail().then(({ data }) => {
-                return data &&
-                    data.listLivestreams &&
-                    data.listLivestreams.items
+            fetchLivestreamsWithThumbnail().then(({ data }) =>
+                data && data.listLivestreams && data.listLivestreams.items
                     ? {
-                          data: data.listLivestreams.items,
+                          data: data.listLivestreams.items.map((item) => ({
+                              ...item,
+                              ...item.media,
+                              media: undefined,
+                          })),
                           total: data.listLivestreams.items.length,
                       }
                     : { data: [], total: 0 }
-            }),
+            ),
         getOne: (params) =>
             fetchLivestream(params.id).then(({ data }) =>
                 data && data.getLivestream
-                    ? { data: data.getLivestream }
+                    ? {
+                          data: {
+                              ...data.getLivestream,
+                              ...data.getLivestream.media,
+                              media: undefined,
+                          },
+                      }
                     : { data: { id: params.id } }
             ),
         update: (params) => {
-            return modifyLivestream({
-                id: params.data.id,
-                url: params.data.url,
-                isLive: params.data.isLive,
-                livestreamMediaId: params.data.media.id,
-            }).then(({ data }) => {
-                return data && data.updateLivestream
-                    ? { data: data.updateLivestream }
-                    : { data: {} }
-            })
+            const promiseList = []
+            if (params.data.thumbnail.rawFile) {
+                promiseList.push(
+                    updateThumbnail(
+                        params.previousData.thumbnail,
+                        params.previousData.id,
+                        params.data.thumbnail.rawFile
+                    )
+                )
+            }
+            promiseList.push(
+                modifyMedia({
+                    ...params.data,
+                    createdAt: undefined,
+                    updatedAt: undefined,
+                    thumbnail: undefined,
+                    sections: undefined,
+                    isLive: undefined,
+                    url: undefined,
+                    media: undefined,
+                }).then(({ data }) =>
+                    data && data.updateMedia
+                        ? { data: data.updateMedia }
+                        : { data: {} }
+                )
+            )
+            promiseList.push(
+                modifyLivestream({
+                    id: params.data.id,
+                    url: 'https://c6d98e9ef5e7.us-west-2.playback.live-video.net/api/video/v1/us-west-2.394125495069.channel.AriVnRGWVwdO.m3u8',
+                    isLive: params.data.isLive,
+                    livestreamMediaId: params.data.id,
+                }).then(({ data }) => {
+                    return data && data.updateLivestream
+                        ? { data: data.updateLivestream }
+                        : { data: {} }
+                })
+            )
+            return Promise.all(promiseList).then((res) => res.at(-1))
         },
-        create: (params) => {
-            return createNewLivestream(
+        create: (params) =>
+            createNewLivestream(
                 {
                     id: '',
                     title: params.data.title,
                     description: params.data.description,
                     highlighted: false,
-                    author: 'AmplifyVideo',
+                    author: params.data.author,
                 },
                 params.data.thumbnail.rawFile,
                 'https://c6d98e9ef5e7.us-west-2.playback.live-video.net/api/video/v1/us-west-2.394125495069.channel.AriVnRGWVwdO.m3u8',
-                params.data.sections
-            ).then(({ data }) => ({ data }))
-        },
+                params.data.isLive
+            ),
         delete: async (params) => {
             let removedLivestream
             try {

@@ -84,7 +84,7 @@ async function updateMediaSections(id, sections) {
     })
     const promises = sections.map((section) =>
         setMediasSections({
-            sectionID: section,
+            sectionID: section && section.id ? section.id : section,
             mediaID: id,
         })
     )
@@ -250,7 +250,7 @@ const uploadContent = async (
             mediaID: id,
         })
     }
-    return { data: { id: id } }
+    return { data: { id } }
 }
 
 export {

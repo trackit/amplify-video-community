@@ -1,15 +1,33 @@
 import React from 'react'
-import { Edit, SimpleForm, TextInput, BooleanInput } from 'react-admin'
+import {
+    Edit,
+    SimpleForm,
+    TextInput,
+    BooleanInput,
+    ImageInput,
+    ImageField,
+} from 'react-admin'
 
-const LiveEdit = (props) => {
-    return (
-        <Edit {...props}>
-            <SimpleForm>
-                <BooleanInput source="isLive" label="IsLive" />
-                <TextInput source="url" />
-            </SimpleForm>
-        </Edit>
-    )
-}
+import ThumbnailField from './customFields/ThumbnailField'
+
+const LiveEdit = (props) => (
+    <Edit {...props}>
+        <SimpleForm>
+            <ThumbnailField source="thumbnail" width={400} height={200} />
+            <TextInput source="title" />
+            <TextInput source="description" multiline={true} />
+            <BooleanInput source="isLive" label="Start live" />
+            <TextInput source="author" />
+            <ImageInput
+                source="thumbnail"
+                label="Thumbnail"
+                accept="image/*"
+                multiple={false}
+            >
+                <ImageField source="thumbnailBlob" title="Thumbnail" />
+            </ImageInput>
+        </SimpleForm>
+    </Edit>
+)
 
 export default LiveEdit

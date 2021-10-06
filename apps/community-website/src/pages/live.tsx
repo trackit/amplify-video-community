@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react'
 import Loader from 'react-loader-spinner'
 import styled from 'styled-components'
 
-import { fetchLivestream } from '../shared/utilities'
 import {
     Layout,
     VideoPlayer as VideoPlayerComponent,
 } from '../shared/components'
 import { Livestream } from '../models'
+import { fetchLivestreamsWithThumbnail } from '../shared/utilities/live-fetch'
 
 type VideoPlayerProps = {
     source: string
@@ -69,10 +69,15 @@ const LivestreamManagement = () => {
         ;(async () => {
             setLoading(true)
             try {
-                const { data } = await fetchLivestream(
-                    '282ee6de-56c3-459c-ad92-64d7a5eaeac5'
+                const { data } = await fetchLivestreamsWithThumbnail()
+                if (
+                    !data ||
+                    !data.listLivestreams ||
+                    !data.listLivestreams.items ||
+                    data.listLivestreams.items.length === 0
                 )
-                setLivestream(data?.getLivestream as Livestream)
+                    return
+                setLivestream(data.listLivestreams.items[0] as Livestream)
             } catch (error) {
                 console.error(
                     'admin/livestream/index.tsx(fetchLivestream):',
