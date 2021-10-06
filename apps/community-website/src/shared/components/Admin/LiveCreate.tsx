@@ -6,6 +6,7 @@ import {
     AutocompleteArrayInput,
     ImageInput,
     ImageField,
+    required,
 } from 'react-admin'
 import styled from 'styled-components'
 
@@ -40,11 +41,16 @@ const CommonInputs = () => {
 
     return (
         <InputsContainer>
-            <TextInput source="title" />
-            <TextInput source="description" multiline={true} />
+            <TextInput source="title" validate={required()} />
+            <TextInput
+                source="description"
+                multiline={true}
+                validate={required()}
+            />
             <AutocompleteArrayInput
                 source="sections"
                 choices={existingSections}
+                validate={required()}
             />
         </InputsContainer>
     )
@@ -60,6 +66,7 @@ const LivestreamCreate = (props) => (
                     label="Thumbnail"
                     accept="image/*"
                     multiple={false}
+                    validate={required()}
                 >
                     <ImageField source="thumbnailBlob" title="Thumbnail" />
                 </ImageInput>

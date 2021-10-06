@@ -86,7 +86,21 @@ const YoutubeSourceVideo = (props) => (
 
 const VideoCreate = (props) => (
     <Create {...props}>
-        <SimpleForm>
+        <SimpleForm
+            validate={(values) => {
+                const errors = {}
+                if (!values.title) {
+                    errors.title = 'Required'
+                }
+                if (!values.description) {
+                    errors.description = 'Required'
+                }
+                if (!values.author) {
+                    errors.author = 'Required'
+                    return errors
+                }
+            }}
+        >
             <RadioButtonGroupInput
                 source="source"
                 choices={[
