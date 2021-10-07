@@ -49,8 +49,10 @@ export const VideoCardItemContainer = styled.div<ItemContainerProps>`
     display: flex;
     flex-direction: column;
 
+    width: ${(props) => props.width}px;
+    height: ${(props) => (props.displayOnlyTitle ? '270' : '318')}px;
     min-width: ${(props) => props.width}px;
-    min-height: 318px;
+    min-height: ${(props) => (props.displayOnlyTitle ? '270' : '318')}px;
 
     transition: box-shadow 200ms ease-out, transform 200ms ease-out;
 
@@ -97,12 +99,13 @@ const VideoInformations = styled.div`
 `
 
 const VideoText = styled.div`
+    height: 100%;
+    margin-top: 15px;
     text-align: left;
 `
 
 const VideoTitle = styled.div`
     font-size: 22px;
-    font-weight: 500;
     font-weight: bold;
     margin-bottom: 5px;
     text-overflow: ellipsis;
@@ -152,6 +155,8 @@ const VideoCardItem = ({
     videoInfo,
     spaceBetweenItems = 40,
     itemWidth = 360,
+    displayOnlyTitle = false,
+    customStyles = {},
 }: Props) => {
     const [videoStatus, setVideoStatus] = useState<VideoStatus>({
         playing: false,
@@ -182,6 +187,8 @@ const VideoCardItem = ({
             onClick={() => navigate(`/video/${videoInfo.vod?.id}`)}
             width={itemWidth}
             margin={spaceBetweenItems}
+            displayOnlyTitle
+            style={customStyles}
         >
             <ThumbnailContainer
                 thumbUrl={
@@ -233,8 +240,14 @@ const VideoCardItem = ({
                             ? videoInfo.vod?.media?.title
                             : 'Video Title'}
                     </VideoTitle>
-                    <VideoAuthor>Author</VideoAuthor>
-                    <ViewsAndDate>1M views - 18 sep 2025</ViewsAndDate>
+                    {displayOnlyTitle ? (
+                        <div style={{ display: 'flex', flex: 1 }} />
+                    ) : (
+                        <>
+                            <VideoAuthor>Author</VideoAuthor>
+                            <ViewsAndDate>1M views - 18 sep 2025</ViewsAndDate>
+                        </>
+                    )}
                 </VideoText>
             </VideoInformations>{' '}
         </VideoCardItemContainer>

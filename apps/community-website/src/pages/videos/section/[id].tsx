@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import { PageProps } from 'gatsby'
+import { navigate, PageProps } from 'gatsby'
 import { AiOutlineSearch } from 'react-icons/ai'
 
 import { Layout, BasicLoader } from '../../../shared/components'
@@ -11,10 +11,12 @@ import {
 } from '../../../shared/utilities'
 import { VideoOnDemand, Section, Thumbnail } from '../../../models'
 import moment from 'moment'
-
-type ThumbProps = {
-    thumbUrl: string
-}
+import ReactPlayer from 'react-player'
+import awsvideoconfig from '../../../aws-video-exports'
+import PlayLogo from '../../../assets/logo/logo-play.svg'
+import AmplifyLogo from '../../../assets/logo/logo-dark.svg'
+import LinesEllipsis from 'react-lines-ellipsis'
+import VideoCardItem from '../../../shared/components/VideoCardSlider/VideoCardItem'
 
 const Container = styled.div`
     display: flex;
@@ -100,23 +102,7 @@ const LeftPanel = styled.div`
     display: flex;
     flex-direction: column;
     gap: 50px;
-`
-
-const LeftPanelItemThumbnail = styled.div<ThumbProps>`
-    background-color: #ffffff;
-    background-image: ${(props) => `url(${props.thumbUrl})`};
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-
-    min-width: 35vw;
-    min-height: calc(40vw * 9 / 16);
-
-    margin: 0 10px;
-
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-    overflow: hidden;
+    margin-bottom: 50px;
 `
 
 const LeftPanelItem = styled.div`
@@ -124,9 +110,12 @@ const LeftPanelItem = styled.div`
     gap: 30px;
 `
 
-const LeftPanelItemContent = styled.div`
-    padding: 10px 0;
+const CardItemContentContainer = styled.div`
+    padding: 12px 12px 12px 32px;
     display: flex;
+    position: relative;
+    flex: 1;
+    inline-size: 150px;
     flex-direction: column;
     justify-content: space-between;
 `
@@ -137,23 +126,20 @@ const LeftPanelItemContentTitle = styled.div`
     margin-bottom: 5px;
 `
 
-const LeftPanelItemContentDescription = styled.div`
-    font-size: 18px;
-`
-
 const LeftPanelItemContentAuthor = styled.div`
-    font-size: 14px;
+    font-size: 11px;
     font-weight: bold;
 `
 
 const LeftPanelItemContentCountDate = styled.div`
-    font-size: 12px;
+    font-size: 11px;
 `
 
 const RightPanel = styled.div`
     display: flex;
     flex-direction: column;
     margin-right: 100px;
+    max-width: 750px;
 `
 
 const RightPanelSeparator = styled.div`
@@ -190,25 +176,163 @@ const RightPanelSectionContentItem = styled.div`
     gap: 15px;
 `
 
-const RightPanelSectionContentItemTitle = styled.div`
-    font-size: 16px;
-    font-weight: bold;
-`
-
-const RightPanelSectionContentItemThumbnail = styled.div<ThumbProps>`
-    background-color: #ffffff;
+// TODO: refactor all the components below (check VideoCardItem)
+const ThumbnailContainer = styled.div`
+    position: relative;
+    max-width: 300px;
+    max-height: 170px;
     background-image: ${(props) => `url(${props.thumbUrl})`};
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-
-    min-width: 10vw;
-    min-height: calc(15vw * 9 / 16);
-
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
     overflow: hidden;
 `
+
+const PlayerWrapper = styled.div<PlayerWrapperProps>`
+    opacity: ${(props) => (props.playing ? '1' : '0')};
+    width: 100%;
+    aspect-ratio: 16/9;
+`
+
+const TransparentOverlay = styled.div`
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(50, 50, 50, 0.5);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    transition: opacity 200ms;
+    opacity: ${(props) => (props.visible ? 1 : 0)};
+`
+
+const CardItemContainer = styled.div`
+    display: flex;
+    flex: 1;
+    transition: box-shadow 200ms ease-out, transform 200ms ease-out;
+    transform: scale(${(props) => (props.playing ? 1.05 : 1)});
+    ${(props) =>
+        props.playing && 'box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);'};
+    margin-right: 40px;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    max-height: 170px;
+`
+
+const ChannelLogo = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: #ffffff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    position: absolute;
+    top: 20px;
+    left: -20px;
+`
+
+const CardItem = ({ vod, thumbnail }) => {
+    const [videoStatus, setVideoStatus] = useState<VideoStatus>({
+        playing: false,
+        played: 0,
+        loaded: 0,
+        duration: 0,
+        seeking: false,
+    })
+    const playerRef = useRef<ReactPlayer>(null)
+
+    const updateVideoStatus = (updatedData: VideoStatus) =>
+        setVideoStatus({
+            ...videoStatus,
+            ...updatedData,
+        })
+    const handleMouseLeave = () => {
+        updateVideoStatus({ playing: false })
+    }
+    const handleMouseEnter = () => {
+        updateVideoStatus({ playing: true })
+    }
+
+    return (
+        <CardItemContainer
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            playing={videoStatus.playing}
+            onClick={() => navigate(`/video/${vod?.id}`)}
+        >
+            <ThumbnailContainer
+                playing={videoStatus.playing}
+                thumbUrl={
+                    vod
+                        ? vod?.media?.source === 'SELF'
+                            ? thumbnail?.url
+                            : thumbnail?.obj?.src
+                        : `https://img.youtube.com/vi/${vod.id}/maxresdefault.jpg`
+                }
+            >
+                <PlayerWrapper playing={videoStatus.playing}>
+                    <ReactPlayer
+                        ref={playerRef}
+                        width="100%"
+                        height="100%"
+                        url={
+                            vod
+                                ? vod?.media?.source === 'SELF'
+                                    ? `https://${awsvideoconfig.awsOutputVideo}/public/${vod?.id}/${vod?.id}.m3u8`
+                                    : vod?.src
+                                : vod?.url
+                        }
+                        controls={false}
+                        playing={videoStatus.playing}
+                        muted
+                        config={{
+                            youtube: {
+                                playerVars: {
+                                    controls: 0,
+                                    rel: 0,
+                                },
+                            },
+                        }}
+                    />
+                </PlayerWrapper>
+                <TransparentOverlay visible={videoStatus.playing}>
+                    <PlayLogo />
+                </TransparentOverlay>
+            </ThumbnailContainer>
+            <CardItemContentContainer>
+                <ChannelLogo>
+                    <AmplifyLogo />
+                </ChannelLogo>
+                <div>
+                    <LeftPanelItemContentTitle>
+                        {vod.media?.title}
+                    </LeftPanelItemContentTitle>
+                    <LinesEllipsis
+                        text={vod.media?.description}
+                        maxLine="5"
+                        ellipsis="..."
+                        trimRight
+                        style={{ fontSize: '14px' }}
+                        basedOn="letters"
+                    />
+                </div>
+                <div>
+                    <LeftPanelItemContentAuthor>
+                        {vod.media?.author}
+                    </LeftPanelItemContentAuthor>
+                    <LeftPanelItemContentCountDate>
+                        {vod.media?.viewCount || 0} views -{' '}
+                        {moment(vod.media?.createdAt).fromNow()}
+                    </LeftPanelItemContentCountDate>
+                </div>
+            </CardItemContentContainer>
+        </CardItemContainer>
+    )
+}
 
 const SectionPage = (props: PageProps) => {
     const id = props.params.id
@@ -283,49 +407,21 @@ const SectionPage = (props: PageProps) => {
                     </Header>
                     <Content>
                         <LeftPanel>
-                            {vodAssets.map((asset) => (
-                                <LeftPanelItem key={asset.id}>
-                                    <LeftPanelItemThumbnail
-                                        thumbUrl={
-                                            thumbnails.find(
-                                                (thumb) =>
-                                                    thumb.obj?.id ===
-                                                    asset.media?.thumbnail?.id
-                                            )?.url || ''
-                                        }
-                                    />
-                                    <LeftPanelItemContent>
-                                        <div>
-                                            <LeftPanelItemContentTitle>
-                                                {asset.media?.title.slice(
-                                                    0,
-                                                    30
-                                                )}
-                                                ...
-                                            </LeftPanelItemContentTitle>
-                                            <LeftPanelItemContentDescription>
-                                                {asset.media?.description.slice(
-                                                    0,
-                                                    442
-                                                )}
-                                                ...
-                                            </LeftPanelItemContentDescription>
-                                        </div>
-                                        <div>
-                                            <LeftPanelItemContentAuthor>
-                                                {asset.media?.author}
-                                            </LeftPanelItemContentAuthor>
-                                            <LeftPanelItemContentCountDate>
-                                                {asset.media?.viewCount || 0}{' '}
-                                                views -{' '}
-                                                {moment(
-                                                    asset.media?.createdAt
-                                                ).fromNow()}
-                                            </LeftPanelItemContentCountDate>
-                                        </div>
-                                    </LeftPanelItemContent>
-                                </LeftPanelItem>
-                            ))}
+                            {vodAssets.map((asset) => {
+                                const thumbnail = thumbnails.find(
+                                    (thumb) =>
+                                        thumb.obj?.id ===
+                                        asset.media?.thumbnail?.id
+                                )
+                                return (
+                                    <LeftPanelItem key={asset.id}>
+                                        <CardItem
+                                            vod={asset}
+                                            thumbnail={thumbnail}
+                                        />
+                                    </LeftPanelItem>
+                                )
+                            })}
                         </LeftPanel>
                         <RightPanel>
                             <SearchBarWrapper>
@@ -347,25 +443,26 @@ const SectionPage = (props: PageProps) => {
                                 <Separator />
                                 <RightPanelSectionContent>
                                     {vodAssets.slice(0, 4).map((asset) => {
+                                        const thumbnail = thumbnails.find(
+                                            (thumb) =>
+                                                thumb.obj?.id ===
+                                                asset.media?.thumbnail?.id
+                                        )
+                                        const videoInfo = {
+                                            vod: asset,
+                                            thumbnail,
+                                        }
                                         return (
                                             <RightPanelSectionContentItem
                                                 key={asset.id}
                                             >
-                                                <RightPanelSectionContentItemThumbnail
-                                                    thumbUrl={
-                                                        thumbnails.find(
-                                                            (thumb) =>
-                                                                thumb.obj
-                                                                    ?.id ===
-                                                                asset.media
-                                                                    ?.thumbnail
-                                                                    ?.id
-                                                        )?.url || ''
-                                                    }
+                                                <VideoCardItem
+                                                    videoInfo={videoInfo}
+                                                    displayOnlyTitle
+                                                    customStyles={{
+                                                        marginRight: 0,
+                                                    }}
                                                 />
-                                                <RightPanelSectionContentItemTitle>
-                                                    {asset.media?.title}
-                                                </RightPanelSectionContentItemTitle>
                                             </RightPanelSectionContentItem>
                                         )
                                     })}
@@ -386,25 +483,27 @@ const SectionPage = (props: PageProps) => {
                                         )
                                         .slice(0, 4)
                                         .map((asset) => {
+                                            const thumbnail = thumbnails.find(
+                                                (thumb) =>
+                                                    thumb.obj?.id ===
+                                                    asset.media?.thumbnail?.id
+                                            )
+                                            const videoInfo = {
+                                                vod: asset,
+                                                thumbnail,
+                                            }
                                             return (
                                                 <RightPanelSectionContentItem
                                                     key={asset.id}
                                                 >
-                                                    <RightPanelSectionContentItemThumbnail
-                                                        thumbUrl={
-                                                            thumbnails.find(
-                                                                (thumb) =>
-                                                                    thumb.obj
-                                                                        ?.id ===
-                                                                    asset.media
-                                                                        ?.thumbnail
-                                                                        ?.id
-                                                            )?.url || ''
-                                                        }
+                                                    <VideoCardItem
+                                                        videoInfo={videoInfo}
+                                                        displayOnlyTitle
+                                                        spaceBetweenItems={0}
+                                                        customStyles={{
+                                                            marginRight: 0,
+                                                        }}
                                                     />
-                                                    <RightPanelSectionContentItemTitle>
-                                                        {asset.media?.title}
-                                                    </RightPanelSectionContentItemTitle>
                                                 </RightPanelSectionContentItem>
                                             )
                                         })}
