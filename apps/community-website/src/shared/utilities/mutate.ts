@@ -15,6 +15,8 @@ import {
     deleteSection,
     updateSection,
 } from '../../graphql/mutations'
+
+import { fetchMediasSections } from './index'
 import { uploadSourceSelf, uploadSourceYoutube } from './vod-mutate'
 import * as APIt from '../../API'
 import { Media, Thumbnail } from '../../models'
@@ -69,6 +71,24 @@ async function removeMediasSections(input: APIt.DeleteMediasSectionsInput) {
             input,
         })
     ) as GraphQLResult<APIt.DeleteMediasSectionsInput>
+}
+
+async function updateMediaSections(id, sections) {
+    await fetchMediasSections().then(({ data }) => {
+        const mediasSections = data?.listMediasSections?.items
+        const filteredMediasSections = mediasSections.filter(
+            (ms) => ms.media.id === id
+        )
+        filteredMediasSections.map((ms) => removeMediasSections({ id: ms.id }))
+        return data
+    })
+    const promises = sections.map((section) =>
+        setMediasSections({
+            sectionID: section && section.id ? section.id : section,
+            mediaID: id,
+        })
+    )
+    return Promise.all(promises)
 }
 
 async function removeThumbnailFile(thumbnail: Thumbnail | undefined) {
@@ -156,12 +176,32 @@ async function removeLivestream(input: APIt.DeleteLivestreamInput) {
     )
 }
 
-async function removeMedia(input: APIt.DeleteMediaInput) {
-    return API.graphql(
-        graphqlOperation(deleteMedia, {
-            input,
+function removeMedia(input: APIt.DeleteMediaInput, mediaToDelete) {
+    return fetchMediasSections().then(({ data }) => {
+        const mediasSections = data?.listMediasSections?.items
+        const filteredMediasSections = mediasSections.filter(
+            (ms) => ms.media.id === input.id
+        )
+        const promises = filteredMediasSections.map((ms) =>
+            removeMediasSections({ id: ms.id })
+        )
+        return Promise.all(promises).then(() => {
+            return API.graphql(
+                graphqlOperation(deleteMedia, {
+                    input,
+                })
+            ).then((result) => {
+                removeVideoOnDemand({ id: input.id })
+                if (
+                    mediaToDelete &&
+                    mediaToDelete.thumbnail &&
+                    mediaToDelete.id
+                )
+                    removeThumbnailFile(mediaToDelete.thumbnail)
+                return result
+            })
         })
-    )
+    })
 }
 
 async function modifyMedia(input: APIt.UpdateMediaInput) {
@@ -210,7 +250,7 @@ const uploadContent = async (
             mediaID: id,
         })
     }
-    return { data: { id: id } }
+    return { data: { id } }
 }
 
 export {
@@ -228,4 +268,5 @@ export {
     removeLivestream,
     removeSection,
     modifySection,
+    updateMediaSections,
 }

@@ -5,10 +5,11 @@ import {
     List,
     UrlField,
     useRecordContext,
+    TextField,
 } from 'react-admin'
 import EllipsisTextField from './customFields/EllipsisTextField'
 import styled from 'styled-components'
-import ThumbnailLivestreamField from './customFields/ThumbnailLivestreamField'
+import ThumbnailField from './customFields/ThumbnailField'
 
 const IsLiveIcon = styled.div`
     width: 14px;
@@ -26,20 +27,21 @@ const LiveList = (props) => {
         <List {...props}>
             <Datagrid rowClick="edit">
                 <IsLiveField source="isLive" label="IsLive" />
-                <ThumbnailLivestreamField source="thumbnail" path="media" />
+                <ThumbnailField source="thumbnail" />
                 <EllipsisTextField
-                    source="media.title"
+                    source="title"
                     label="Title"
                     width={'200px'}
                 />
                 <EllipsisTextField
-                    source="media.description"
+                    source="description"
                     label="Description"
                     width={'600px'}
                 />
                 <UrlField source="url" />
-                <DateField source="media.createdAt" label="CreatedAt" />
-                <DateField source="media.updatedAt" label="UpdatedAt" />
+                <TextField source="author" />
+                <DateField source="createdAt" label="CreatedAt" />
+                <DateField source="updatedAt" label="UpdatedAt" />
             </Datagrid>
         </List>
     )

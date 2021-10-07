@@ -4,12 +4,7 @@ import { v4 as uuidv4 } from 'uuid'
 import * as APIt from '../../API'
 import { createLivestream, updateLivestream } from '../../graphql/mutations'
 import { Media } from '../../models'
-import {
-    putThumbnailFile,
-    setThumbnail,
-    setMedia,
-    setMediasSections,
-} from './mutate'
+import { putThumbnailFile, setThumbnail, setMedia } from './mutate'
 
 async function setLivestream(input: APIt.CreateLivestreamInput) {
     return API.graphql(
@@ -31,9 +26,8 @@ const createNewLivestream = async (
     media: Media,
     thumbnailFile: File,
     src: string,
-    sectionsId: Array<undefined | string>
+    isLive: string
 ) => {
-    let mediaData
     const id: string = uuidv4()
     try {
         await putThumbnailFile(thumbnailFile, id)
@@ -50,10 +44,10 @@ const createNewLivestream = async (
     }
 
     try {
-        mediaData = await setMedia({
+        await setMedia({
             id,
             title: media.title,
-            author: 'AmplifyVideo',
+            author: media.author,
             description: media.description,
             highlighted: media.highlighted,
             source: APIt.Source.LIVESTREAM_SELF,
@@ -67,27 +61,14 @@ const createNewLivestream = async (
         await setLivestream({
             id,
             url: src,
-            isLive: false,
+            isLive,
             livestreamMediaId: id,
         })
     } catch (error) {
         console.error('live-mutate.tx(setLivestream): ', error)
         return
     }
-    try {
-        for (let i = 0; i < sectionsId.length; i++) {
-            await setMediasSections({
-                sectionID: sectionsId[i] as string,
-                mediaID: id,
-            })
-        }
-    } catch (error) {
-        console.error('live-mutate.tx(setMediasSections): ', error)
-        return
-    }
-    return new Promise((resolve) =>
-        resolve({ data: mediaData.data.createMedia })
-    )
+    return { data: { id } }
 }
 
 export { createNewLivestream, modifyLivestream }

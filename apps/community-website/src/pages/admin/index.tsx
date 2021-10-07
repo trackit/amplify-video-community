@@ -37,18 +37,18 @@ const AdminMainPage = () => {
                     icon={OndemandVideoIcon}
                 />
                 <Resource
-                    name="Sections"
-                    list={SectionList}
-                    edit={SectionEdit}
-                    create={SectionCreate}
-                    icon={LabelIcon}
-                />
-                <Resource
                     name="Lives"
                     list={LiveList}
                     edit={LiveEdit}
                     create={LiveCreate}
                     icon={LiveTvIcon}
+                />
+                <Resource
+                    name="Sections"
+                    list={SectionList}
+                    edit={SectionEdit}
+                    create={SectionCreate}
+                    icon={LabelIcon}
                 />
             </Admin>
         </AdminLayout>
