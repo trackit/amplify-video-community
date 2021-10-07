@@ -7,6 +7,7 @@ import {
     ImageInput,
     ImageField,
     FormDataConsumer,
+    required,
 } from 'react-admin'
 
 import ThumbnailField from './customFields/ThumbnailField'
@@ -36,10 +37,14 @@ const VideoEdit = (props) => {
         <Edit {...props}>
             <SimpleForm>
                 <ThumbnailField source="thumbnail" width={400} height={200} />
-                <TextInput source="title" />
-                <TextInput source="description" multiline={true} />
+                <TextInput source="title" validate={required()} />
+                <TextInput
+                    source="description"
+                    multiline={true}
+                    validate={required()}
+                />
                 <BooleanInput source="highlighted" />
-                <TextInput source="author" />
+                <TextInput source="author" validate={required()} />
                 <TagsInput source="sections" choices={existingSections} />
                 <FormDataConsumer>
                     {({ formData }) =>

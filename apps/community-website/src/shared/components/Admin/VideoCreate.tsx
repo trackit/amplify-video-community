@@ -81,23 +81,36 @@ const YoutubeSourceVideo = (props) => (
     </InputsContainer>
 )
 
+const validate = (values) => {
+    const errors = {}
+    if (!values.title) {
+        errors.title = 'Required'
+    }
+    if (!values.description) {
+        errors.description = 'Required'
+    }
+    if (!values.author) {
+        errors.author = 'Required'
+        return errors
+    }
+    if (
+        values.source === 'SELF' &&
+        (!values.thumbnail || !values.thumbnail.rawFile)
+    ) {
+        errors.thumbnail = 'Required'
+    }
+    if (values.source === 'SELF' && (!values.video || !values.video.rawFile)) {
+        errors.video = 'Required'
+    }
+    if (values.source === 'YOUTUBE' && !values.url) {
+        values.url = 'Required'
+    }
+    return errors
+}
+
 const VideoCreate = (props) => (
     <Create {...props}>
-        <SimpleForm
-            validate={(values) => {
-                const errors = {}
-                if (!values.title) {
-                    errors.title = 'Required'
-                }
-                if (!values.description) {
-                    errors.description = 'Required'
-                }
-                if (!values.author) {
-                    errors.author = 'Required'
-                    return errors
-                }
-            }}
-        >
+        <SimpleForm validate={validate}>
             <RadioButtonGroupInput
                 source="source"
                 choices={[
