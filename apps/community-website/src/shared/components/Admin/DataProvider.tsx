@@ -93,11 +93,12 @@ const resourcesMap = {
             )
             promiseList.push(
                 modifyMedia({
-                    ...params.data,
-                    createdAt: undefined,
-                    updatedAt: undefined,
-                    thumbnail: undefined,
-                    sections: undefined,
+                    id: params.data.id,
+                    title: params.data.title,
+                    description: params.data.description,
+                    highlited: params.data.highlited,
+                    source: params.data.source,
+                    author: params.data.author,
                 }).then(({ data }) =>
                     data && data.updateMedia
                         ? { data: data.updateMedia }
@@ -171,10 +172,9 @@ const resourcesMap = {
             ),
         update: (params) =>
             modifySection({
-                ...params.data,
-                createdAt: undefined,
-                updatedAt: undefined,
-                medias: undefined,
+                id: params.data.id,
+                label: params.data.label,
+                description: params.data.description,
             }).then(({ data }) =>
                 data && data.updateSection
                     ? { data: data.updateSection }
@@ -239,14 +239,12 @@ const resourcesMap = {
             }
             promiseList.push(
                 modifyMedia({
-                    ...params.data,
-                    createdAt: undefined,
-                    updatedAt: undefined,
-                    thumbnail: undefined,
-                    sections: undefined,
-                    isLive: undefined,
-                    url: undefined,
-                    media: undefined,
+                    id: params.data.id,
+                    title: params.data.title,
+                    description: params.data.description,
+                    highlited: params.data.highlited,
+                    source: params.data.source,
+                    author: params.data.author,
                 }).then(({ data }) =>
                     data && data.updateMedia
                         ? { data: data.updateMedia }
