@@ -218,7 +218,8 @@ const uploadContent = async (
     sectionsId: Array<undefined | string>,
     thumbnailFile: File,
     vodFile: File | null,
-    youtubeSrc: string
+    youtubeSrc: string,
+    progressCallback: (progress) => void
 ) => {
     const id: string = uuidv4()
 
@@ -232,7 +233,8 @@ const uploadContent = async (
                 media,
                 thumbnailFile,
                 vodFile,
-                sectionsId
+                sectionsId,
+                progressCallback
             )
             break
 

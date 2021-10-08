@@ -14,6 +14,7 @@ import { FormDataConsumer } from 'react-admin'
 import styled from 'styled-components'
 
 import TagsInput from './customFields/TagsInput'
+import ProgressField from './customFields/ProgressField'
 import { fetchSections } from '../../utilities'
 
 const InputsContainer = styled.div`
@@ -71,6 +72,7 @@ const SelfSourceVideo = (props) => (
         >
             <FileField source="videoBlob" title="video" />
         </FileInput>
+        <ProgressField source="progress" />
     </InputsContainer>
 )
 
