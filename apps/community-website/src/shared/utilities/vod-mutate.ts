@@ -22,16 +22,16 @@ async function createVOD(payload: APIt.CreateVideoOnDemandInput) {
     ) as GraphQLResult<APIt.CreateVideoOnDemandMutation>
 }
 
-async function putVodFile(file: File, id: string, vodExtension: string[]) {
+async function putVodFile(
+    file: File,
+    id: string,
+    vodExtension: string[],
+    progressCallback
+) {
     return Storage.put(`${id}.${vodExtension[vodExtension.length - 1]}`, file, {
         bucket: awsvideoconfig.awsInputVideo,
         region: awsmobile.aws_project_region,
-        // eslint-disable-next-line
-        progressCallback(progress: any) {
-            console.log(
-                `vodFile Uploaded: ${progress.loaded}/${progress.total}`
-            )
-        },
+        progressCallback,
     })
 }
 
@@ -66,11 +66,21 @@ const uploadSourceSelf = async (
     media: Media,
     thumbnailFile: File,
     vodFile: File,
-    sectionsId: Array<undefined | string>
+    sectionsId: Array<undefined | string>,
+    progressCallback?: (progress) => void
 ) => {
     const vodExtension = vodFile.name.toLowerCase().split('.')
     try {
-        await putVodFile(vodFile, id, vodExtension)
+        await putVodFile(
+            vodFile,
+            id,
+            vodExtension,
+            progressCallback
+                ? progressCallback
+                : () => {
+                      return
+                  }
+        )
     } catch (error) {
         console.error('vod-mutate.ts(putVodFile): ', error)
         return

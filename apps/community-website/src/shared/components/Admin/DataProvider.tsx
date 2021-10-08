@@ -136,7 +136,8 @@ const resourcesMap = {
                     : params.data.video.rawFile,
                 params.data.source === 'YOUTUBE'
                     ? `https://youtube.com/embed/${youtubeID}`
-                    : ''
+                    : '',
+                params.data.progress
             )
         },
         delete: (params) =>

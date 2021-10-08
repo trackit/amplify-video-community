@@ -1,9 +1,18 @@
-<svg width="41" height="30" viewBox="0 0 41 30" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<rect width="40.2128" height="30" fill="url(#pattern0)"/>
-<defs>
-<pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
-<use xlink:href="#image0" transform="scale(0.00793651 0.0106383)"/>
-</pattern>
-<image id="image0" width="126" height="94" xlink:href="data:image/png;base64,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"/>
-</defs>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="19px" viewBox="0 0 126 94" version="1.1" xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>Fill-1</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="100%" y1="22.1718317%" x2="0%" y2="77.8281683%" id="linearGradient-1">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path
+            d="M27.4193646,78 L62.9093796,78 L72,94 L71.743892,94 L0,94 L25.2808604,50.192137 L35.8751825,31.8473288 L44.9710103,47.6084247 L27.4193646,78 Z M40.6554116,23.5512493 L49.3887526,8.41853699 L98.814466,93.9997425 L81.3108879,93.9997425 L40.6554116,23.5512493 Z M54.249635,0 L71.7299104,0 L126,94 L108.497716,94 L54.249635,0 Z"
+            id="Fill-1" fill="url(#linearGradient-1)" fill-rule="nonzero"></path>
+    </g>
 </svg>
