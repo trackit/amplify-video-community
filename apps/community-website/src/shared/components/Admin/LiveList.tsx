@@ -3,13 +3,14 @@ import {
     Datagrid,
     DateField,
     List,
-    UrlField,
     useRecordContext,
     TextField,
+    UrlField,
 } from 'react-admin'
 import EllipsisTextField from './customFields/EllipsisTextField'
 import styled from 'styled-components'
 import ThumbnailField from './customFields/ThumbnailField'
+import { useWindowDimensions } from '../../hooks'
 
 const IsLiveIcon = styled.div`
     width: 14px;
@@ -23,25 +24,18 @@ const IsLiveField = ({ source }) => {
 }
 
 const LiveList = (props) => {
+    const size = useWindowDimensions()
     return (
         <List {...props}>
             <Datagrid rowClick="edit">
                 <IsLiveField source="isLive" label="IsLive" />
                 <ThumbnailField source="thumbnail" />
-                <EllipsisTextField
-                    source="title"
-                    label="Title"
-                    width={'200px'}
-                />
-                <EllipsisTextField
-                    source="description"
-                    label="Description"
-                    width={'600px'}
-                />
-                <UrlField source="url" />
+                <EllipsisTextField source="title" width="125px" />
+                <EllipsisTextField source="description" width="125px" />
                 <TextField source="author" />
-                <DateField source="createdAt" label="CreatedAt" />
-                <DateField source="updatedAt" label="UpdatedAt" />
+                {size.width > 1300 && <UrlField source="url" />}
+                {size.width > 1700 && <DateField source="createdAt" />}
+                {size.width > 1700 && <DateField source="updatedAt" />}
             </Datagrid>
         </List>
     )

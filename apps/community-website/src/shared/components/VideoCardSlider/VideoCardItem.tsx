@@ -187,7 +187,7 @@ const VideoCardItem = ({
             onClick={() => navigate(`/video/${videoInfo.vod?.id}`)}
             width={itemWidth}
             margin={spaceBetweenItems}
-            displayOnlyTitle
+            displayOnlyTitle={displayOnlyTitle}
             style={customStyles}
         >
             <ThumbnailContainer
