@@ -11,8 +11,6 @@ const TagsInput = (props) => {
 
     const uploadCallback = (uploadProgress) => {
         setProgress((uploadProgress.loaded * 100) / uploadProgress.total)
-        console.log(uploadProgress.loaded + '/' + uploadProgress.total)
-        console.log((uploadProgress.loaded * 100) / uploadProgress.total)
     }
 
     useEffect(() => {
