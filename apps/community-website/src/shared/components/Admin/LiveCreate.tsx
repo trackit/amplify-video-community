@@ -20,7 +20,7 @@ const LivestreamCreate = (props) => {
                     validate={required()}
                 />
                 <BooleanInput source="isLive" label="Start live when created" />
-                <TextInput source="author" />
+                <TextInput source="author" validate={required()} />
                 <ImageInput
                     source="thumbnail"
                     label="Thumbnail"
