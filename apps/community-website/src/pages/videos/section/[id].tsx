@@ -101,7 +101,7 @@ const LeftPanel = styled.div`
     margin-left: 100px;
     display: flex;
     flex-direction: column;
-    gap: 50px;
+    gap: 20px;
     margin-bottom: 50px;
 `
 
@@ -118,6 +118,8 @@ const CardItemContentContainer = styled.div`
     inline-size: 150px;
     flex-direction: column;
     justify-content: space-between;
+    ${(props) => (props.transparent ? '' : 'background-color: #FFFFFF;')}
+    transition: background-color 200ms ease-out;
 `
 
 const LeftPanelItemContentTitle = styled.div`
@@ -211,7 +213,7 @@ const CardItemContainer = styled.div`
     display: flex;
     flex: 1;
     transition: box-shadow 200ms ease-out, transform 200ms ease-out;
-    transform: scale(${(props) => (props.playing ? 1.05 : 1)});
+    transform: scale(${(props) => (props.playing ? 1.02 : 1)});
     ${(props) =>
         props.playing && 'box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);'};
     margin-right: 40px;
@@ -303,7 +305,7 @@ const CardItem = ({ vod, thumbnail }) => {
                     <PlayLogo />
                 </TransparentOverlay>
             </ThumbnailContainer>
-            <CardItemContentContainer>
+            <CardItemContentContainer transparent={!videoStatus.playing}>
                 <ChannelLogo>
                     <AmplifyLogo />
                 </ChannelLogo>
