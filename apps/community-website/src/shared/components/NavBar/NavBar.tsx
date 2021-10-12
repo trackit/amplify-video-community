@@ -153,7 +153,7 @@ const NavBar = ({
                         navBarHeight={navBarHeight}
                         navBarMinHeight={computedMinHeight}
                         isExternal
-                        to="https://docs-amplify.trackit.io/"
+                        to="https://docs-amplify-video.trackit.io"
                         content="Documentation"
                     />
                     {groups.includes('Admin') && (
