@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # IAM Permissions to use Amplify Video
 
 These are built on top of the existing IAM recommendations found on the Amplify site [here](https://docs.amplify.aws/cli/usage/iam).
@@ -5,7 +9,7 @@ These are built on top of the existing IAM recommendations found on the Amplify 
 ## Live
 <details>
 <summary>Expand</summary>
-<br>
+
 
 ```
 {
@@ -73,12 +77,13 @@ These are built on top of the existing IAM recommendations found on the Amplify 
     ]
 }
 ```
+
 </details>
 
 ## Video-on-Demand
 <details>
 <summary>Expand</summary>
-<br>
+
 
 ```
 {
@@ -166,4 +171,5 @@ These are built on top of the existing IAM recommendations found on the Amplify 
     ]
 }
 ```
+
 </details>

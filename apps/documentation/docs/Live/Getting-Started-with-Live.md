@@ -1,3 +1,8 @@
+---
+sidebar_label: Getting Started with Live
+sidebar_position: 1
+---
+
 If you're new to application development with AWS Amplify, we recommend starting by following the Amplify Getting Started guide for [Javascript](https://docs.amplify.aws/start/q/integration/js)
 
 ## Add a video resource
