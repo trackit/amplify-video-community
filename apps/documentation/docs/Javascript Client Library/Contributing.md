@@ -50,4 +50,4 @@ $ npm run cypress
 $ npm test
 ```
 
-For more information about end-to-end testing check [End-to-End testing section](js-client-library/End-to-End.md#end-to-end-testing "e2e's README.md").
+For more information about end-to-end testing check [End-to-End testing section](End-to-End.md#end-to-end-testing "e2e's README.md").

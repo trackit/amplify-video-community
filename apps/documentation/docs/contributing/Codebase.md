@@ -78,7 +78,7 @@ Contains the integration tests.
 
 Contains scripts used by Jest to provide and delete resources in the cloud.
 
-Refer to this [section](test) to learn how to write new scripts.
+Refer to this [section](tests) to learn how to write new scripts.
 
 `./scripts/setup.js`
 

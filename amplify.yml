@@ -26,12 +26,16 @@ applications:
   - appRoot: apps/documentation
     frontend:
       phases:
+        preBuild:
+          commands:
+            - yarn install
         build:
-          commands: 
-            - echo "Nothing to build"
+          commands:
+            - yarn run build
       artifacts:
-        baseDirectory: /docs
+        baseDirectory: build
         files:
           - '**/*'
       cache:
-        paths: []
+        paths:
+          - node_modules/**/*
