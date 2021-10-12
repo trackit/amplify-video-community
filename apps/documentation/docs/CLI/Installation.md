@@ -1,3 +1,8 @@
+---
+sidebar_label: Getting Started
+sidebar_position: 1
+---
+
 # NPM Installation
 
 Amplify Video is [Plugin for AWS Amplify](https://aws-amplify.github.io/docs/cli-toolchain/plugins?sdk=js) that provides video streaming resources to your Amplify project. It requires that you have the Amplify CLI installed on your system before installing the Amplify Video plugin

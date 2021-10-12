@@ -1,3 +1,8 @@
+---
+sidebar_label: Live Concepts
+sidebar_position: 2
+---
+
 ### Live Resource
 
 The Live Streaming resource will provide different origin architectures based on the configuration selected through the prompts. This is because there is a trade-off to be made with respect to latency and features. Essentially, if you need the lowest possible latency, MediaStore is a better choice. If you need advanced packaging features like filtering, multi-drm, and live-to-vod recordings, MediaPackage is necessary. This flexibility allows Amplify Video to compose the appropriate solution without too much input from the user.

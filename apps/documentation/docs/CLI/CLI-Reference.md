@@ -1,3 +1,9 @@
+---
+sidebar_position: 2
+sidebar_label: CLI Reference
+title: CLI Reference
+---
+
 ## Usage
 
 To use this plugin you just need to configure a project using `amplify init`.
