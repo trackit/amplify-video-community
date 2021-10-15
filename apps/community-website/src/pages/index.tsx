@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react'
-
-import { Layout } from '../shared/components'
-import Landing from '../shared/homepage/landing'
-import CommunityContent from '../shared/homepage/communityContent'
-import IntroductionSection from '../shared/homepage/introduction'
-import StreamingContent from '../shared/homepage/streaming'
-import Form from '../shared/homepage/form'
-import defaultTheme, {
-    NavbarTheme,
-    defaultNavbar,
-} from '../shared/components/theme'
+import Layout from '../shared/components/Layout'
+import Landing from '../shared/home/Landing'
+import Community from '../shared/home/Community'
+import IntroductionSection from '../shared/home/IntroductionSection'
+import StreamingContent from '../shared/home/Streaming'
+import SubmissionForm from '../shared/home/SubmissionForm'
+import defaultTheme, { NavbarTheme, defaultNavbar } from '../shared/theme'
 
 const noScrollNavBarTheme: NavbarTheme = {
     type: 'noScroll',
@@ -71,8 +67,8 @@ const HomePage = () => {
             <Landing />
             <IntroductionSection />
             <StreamingContent />
-            <CommunityContent />
-            <Form />
+            <Community />
+            <SubmissionForm />
         </Layout>
     )
 }

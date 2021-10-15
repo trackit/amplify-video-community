@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-
-import {
-    BasicLoader,
-    Layout,
-    VideoPlayer as VideoPlayerComponent,
-} from '../shared/components'
+import Layout from '../shared/components/Layout'
+import Loader from '../shared/components/Loader'
+import VideoPlayerComponent from '../shared/components/VideoPlayer'
 import { Livestream } from '../models'
-import { fetchLivestreamsWithThumbnail } from '../shared/utilities/live-fetch'
+import { fetchLivestreamsWithThumbnail } from '../shared/api/live-fetch'
 
 type VideoPlayerProps = {
     source: string
@@ -91,7 +88,7 @@ const LivestreamManagement = () => {
     return (
         <Layout>
             {loading ? (
-                <BasicLoader />
+                <Loader />
             ) : (
                 <Container>
                     {livestream && livestream.isLive ? (

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout } from '../shared/components'
+import Layout from '../shared/components/Layout'
 import { graphql, PageProps } from 'gatsby'
 import styled from 'styled-components'
 import HTMLParser from 'html-react-parser'

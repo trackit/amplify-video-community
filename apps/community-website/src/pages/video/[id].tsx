@@ -2,14 +2,11 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { PageProps } from 'gatsby'
 import moment from 'moment'
-
 import awsvideoconfig from '../../aws-video-exports'
-import { fetchVodAsset } from '../../shared/utilities/vod-fetch'
-import { fetchMediasSectionsFiltered } from '../../shared/utilities'
-import {
-    VideoPlayer as VideoPlayerComponent,
-    Layout,
-} from '../../shared/components'
+import { fetchVodAsset } from '../../shared/api/vod-fetch'
+import { fetchMediasSectionsFiltered } from '../../shared/api'
+import Layout from '../../shared/components/Layout'
+import VideoPlayerComponent from '../../shared/components/VideoPlayer'
 import { VideoOnDemand, MediasSections } from '../../models'
 
 type VideoPlayerProps = {
@@ -81,7 +78,6 @@ const BreadCrumb = styled.div`
 const SectionAndDate = styled.div`
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
     align-items: flex-end;
     margin-top: 20px;
 `
@@ -126,7 +122,7 @@ const Author = styled.span`
 
 const AuthorImage = styled.div`
     background-color: #c4c4c4;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 100%;
     width: 50px;
     height: 50px;

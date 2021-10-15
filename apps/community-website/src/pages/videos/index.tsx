@@ -1,17 +1,10 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-
-import {
-    Layout,
-    VideosSectionContainer,
-    BasicLoader,
-} from '../../shared/components'
-import {
-    fetchSections,
-    fetchVodFiles,
-    fetchThumbnail,
-} from '../../shared/utilities'
+import Layout from '../../shared/components/Layout'
+import VideosSection from '../../shared/components/Section/VideosSection'
+import Loader from '../../shared/components/Loader'
+import { fetchSections, fetchVodFiles, fetchThumbnail } from '../../shared/api'
 import { Thumbnail, VideoOnDemand, Section } from '../../models'
 
 const Container = styled.div`
@@ -34,7 +27,6 @@ const Title = styled.h1`
     margin-bottom: 20px;
     margin-top: 50px;
     font-size: 36px;
-    font-weight: 700px;
 `
 
 const Separator = styled.div`
@@ -46,7 +38,6 @@ const Separator = styled.div`
 
 const Description = styled.h2`
     font-size: 18px;
-    font-weight: 400px;
     font-style: normal;
     margin: 0;
 `
@@ -157,12 +148,12 @@ const VideoPage = () => {
                     </Description>
                 </Header>
                 {loadingVodFiles || loadingSections ? (
-                    <BasicLoader />
+                    <Loader />
                 ) : (
                     <>
                         {sections &&
                             sections.map((section: Section) => (
-                                <VideosSectionContainer
+                                <VideosSection
                                     key={section.id}
                                     section={section}
                                     vodAssets={vodAssets}

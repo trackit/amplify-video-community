@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { Link as GatsbyLink } from 'gatsby'
-import { NavbarTheme } from '../theme'
+import { NavbarTheme } from '../../theme'
 
 type SearchTextProps = {
     hover: boolean

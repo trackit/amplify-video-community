@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout } from '../shared/components'
+import Layout from '../shared/components/Layout'
 import styled from 'styled-components'
 
 const NotFoundContent = styled.div`
@@ -26,12 +26,11 @@ const SubTitle = styled.h4`
 const Link = styled.a`
     border-radius: 0.25rem;
     cursor: pointer;
-    box-shadow: rgb(204, 204, 204) 0.125rem 0.125rem 0px 0.125rem;
+    box-shadow: rgb(204, 204, 204) 0.125rem 0.125rem 0 0.125rem;
     padding: 0.5625rem 0.75rem 0.5rem;
     margin-top: 1rem;
     background-color: #fff;
     font-size: 1rem;
-    font-weight: 300;
     appearance: none;
     color: inherit;
     text-decoration: none;
@@ -39,7 +38,7 @@ const Link = styled.a`
     font-weight: 400;
 
     &:hover {
-        box-shadow: rgb(204, 204, 204) 0.1875rem 0.1875rem 0px 0.1875rem;
+        box-shadow: rgb(204, 204, 204) 0.1875rem 0.1875rem 0 0.1875rem;
         transform: translate(-0.0625rem, -0.0625rem);
     }
 `

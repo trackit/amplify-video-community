@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Auth } from 'aws-amplify'
-
 import HeaderLink from './Link'
 import Search from './Search'
-import { NavbarTheme } from '../theme'
-
+import { NavbarTheme } from '../../theme'
 import { useWindowDimensions } from '../../hooks'
-
 import LogoDark from '../../../assets/logo/logo-dark.svg'
 import LogoLight from '../../../assets/logo/logo-light.svg'
 
@@ -15,7 +12,6 @@ const Header = styled.header`
     box-sizing: border-box;
     margin: 0;
     display: flex;
-    justify-content: flex-end;
     align-items: center;
     padding: 0 50px;
     background-color: ${(props) => props.theme.main};

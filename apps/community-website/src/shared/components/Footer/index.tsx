@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import LandingLink from '../Button/link'
+import LandingLink from '../Button/Link'
 
 const Container = styled.div`
     background-color: #242f3e;
@@ -71,7 +71,7 @@ const NormalText = styled.p`
 
 const BoldLink = styled.a`
     font-weight: 600;
-    margin: 0px;
+    margin: 0;
     text-decoration: none;
     color: #ffffff;
 `

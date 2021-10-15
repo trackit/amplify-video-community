@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link as GatsbyLink } from 'gatsby'
-import { NavbarTheme } from '../theme'
+import { NavbarTheme } from '../../theme'
 
 const InternalLink = styled(GatsbyLink)`
     text-decoration: none;
@@ -11,6 +11,7 @@ const InternalLink = styled(GatsbyLink)`
     justify-content: center;
     display: flex;
     color: ${(props) => props.theme.textColor};
+
     &:hover {
         color: ${(props) => props.theme.textHoverColor};
     }
@@ -24,8 +25,8 @@ const Item = styled.li`
     display: flex;
     white-space: nowrap;
     cursor: pointer;
-    border-bottom: 0px solid ${(props) => props.theme.textHoverColor};
-    border-top: 0px solid rgba(0, 0, 0, 0);
+    border-bottom: 0 solid ${(props) => props.theme.textHoverColor};
+    border-top: 0 solid rgba(0, 0, 0, 0);
     transition: border-bottom 100ms ease-out, border-top 100ms ease-out;
     box-sizing: content-box;
 
@@ -44,6 +45,7 @@ const ExternalLink = styled.a`
     justify-content: center;
     display: flex;
     color: ${(props) => props.theme.textColor};
+
     &:hover {
         color: ${(props) => props.theme.textHoverColor};
     }

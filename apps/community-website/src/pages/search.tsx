@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { AiOutlineSearch } from 'react-icons/ai'
-
-import { Layout } from '../shared/components'
-import { fetchThumbnail, fetchVodFiles } from '../shared/utilities'
+import Layout from '../shared/components/Layout'
+import { fetchThumbnail, fetchVodFiles } from '../shared/api'
 import { VideoOnDemand, Thumbnail } from '../models'
-import VideoCard from '../shared/components/Video/VideoCard'
+import VideoCard from '../shared/components/Card/VideoCard'
 
 const StyledSearchItem = styled.div`
     margin: auto;
@@ -29,7 +28,7 @@ const StyledSearchInput = styled.input`
     border: none;
     height: 100%;
     width: 100%;
-    padding: 0px 5px;
+    padding: 0 5px;
     border-radius: 50px;
     font-size: 18px;
     background: none;
@@ -50,6 +49,8 @@ const StyledVideoList = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    margin-top: 10px;
+    margin-bottom: 50px;
     flex-wrap: wrap;
 `
 
@@ -59,17 +60,13 @@ const StyledVideoCard = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
-    h3 {
-        text-align: center;
-    }
 `
 
 type VideoItemProps = {
     asset: VideoOnDemand
 }
 
-const VideoItem = ({ asset }: VideoItemProps) => {
+const VideoItem = ({ vod }: VideoItemProps) => {
     const [thumbnail, setThumbnail] =
         useState<
             | {
@@ -82,10 +79,10 @@ const VideoItem = ({ asset }: VideoItemProps) => {
     useEffect(() => {
         ;(async () => {
             try {
-                if (asset.media?.thumbnail) {
-                    const data = await fetchThumbnail(asset.media)
+                if (vod.media?.thumbnail) {
+                    const data = await fetchThumbnail(vod.media)
                     setThumbnail({
-                        obj: asset.media?.thumbnail,
+                        obj: vod.media?.thumbnail,
                         url: data as string,
                     })
                 }
@@ -93,20 +90,11 @@ const VideoItem = ({ asset }: VideoItemProps) => {
                 console.error('search.tsx(fetchThumbnail):')
             }
         })()
-    }, [asset])
+    }, [vod])
 
     return (
         <StyledVideoCard>
-            <VideoCard
-                thumbnail={thumbnail}
-                vod={asset}
-                style={{
-                    width: 'calc(0.29 * 100vw)',
-                    display: 'flex',
-                    justifyContent: 'center',
-                }}
-            />
-            <h3>{asset.media?.title}</h3>
+            <VideoCard video={{ vod, thumbnail }} />
         </StyledVideoCard>
     )
 }
@@ -163,7 +151,7 @@ const SearchPage = () => {
                 {vodAssets
                     .filter(filterAssets)
                     .map((elem: VideoOnDemand, key) => {
-                        return <VideoItem asset={elem} key={key} />
+                        return <VideoItem vod={elem} key={key} />
                     })}
             </StyledVideoList>
         </Layout>
