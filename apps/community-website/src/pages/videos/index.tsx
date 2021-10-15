@@ -20,6 +20,7 @@ const Container = styled.div`
     gap: 25px;
     background-color: #f9f9f9;
     padding-bottom: 100px;
+    flex: 1;
 `
 
 const Header = styled.div`
@@ -48,14 +49,6 @@ const Description = styled.h2`
     font-weight: 400px;
     font-style: normal;
     margin: 0;
-`
-
-const LoaderWrapper = styled.div`
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 `
 
 const VideoPage = () => {
@@ -164,9 +157,7 @@ const VideoPage = () => {
                     </Description>
                 </Header>
                 {loadingVodFiles || loadingSections ? (
-                    <LoaderWrapper>
-                        <BasicLoader />
-                    </LoaderWrapper>
+                    <BasicLoader />
                 ) : (
                     <>
                         {sections &&

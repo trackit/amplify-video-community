@@ -5,10 +5,10 @@ import styled, { ThemeProvider } from 'styled-components'
 import { Helmet } from 'react-helmet'
 import { graphql, useStaticQuery } from 'gatsby'
 
-import { NavBar } from '../'
+import NavBar from '../NavBar'
 import theme, { Theme } from '../theme'
 import awsmobile from '../../../aws-exports'
-import Footer from '../Footer/Footer'
+import Footer from '../Footer'
 
 Amplify.configure(awsmobile)
 
@@ -80,16 +80,8 @@ const query = graphql`
     }
 `
 
-const Container = styled.div`
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow-x: hidden;
-`
-
-const SubBody = styled.div`
-    background-color: ${(props) => props.theme.palette.primary.background};
-    flex: 1;
+const TopSpacing = styled.div<{ height: number }>`
+    min-height: ${({ height }) => height}px;
 `
 
 type LayoutProps = {
@@ -103,20 +95,14 @@ const Layout = ({
     children,
     seo,
     overrideTheme,
-    removePaddingTop,
+    removePaddingTop = false,
 }: LayoutProps) => {
+    const [navBarHeight, setNavBarHeight] = useState(0)
     const [usedTheme, setUsedTheme] = useState(overrideTheme || theme)
-    const [headerHeight, setHeaderHeight] = useState(0)
 
     useEffect(() => {
         setUsedTheme(overrideTheme || theme)
     }, [overrideTheme])
-
-    useEffect(() => {
-        setHeaderHeight(
-            document.getElementById('video-community-header')?.clientHeight || 0
-        )
-    })
 
     return (
         <ThemeProvider theme={usedTheme}>
@@ -126,15 +112,19 @@ const Layout = ({
                 image={seo?.image}
                 article={seo?.article}
             />
-            <Container>
-                <NavBar navbarTheme={usedTheme.palette.navbar} />
-                <SubBody
-                    style={{ paddingTop: !removePaddingTop ? headerHeight : 0 }}
-                >
-                    {children}
-                </SubBody>
-                <Footer />
-            </Container>
+            <NavBar
+                navbarTheme={usedTheme.palette.navbar}
+                onHeightChange={
+                    removePaddingTop
+                        ? () => {
+                              return
+                          }
+                        : (height) => setNavBarHeight(height)
+                }
+            />
+            <TopSpacing height={navBarHeight} />
+            {children}
+            <Footer />
         </ThemeProvider>
     )
 }

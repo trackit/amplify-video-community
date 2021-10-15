@@ -59,12 +59,14 @@ const RightItemsWrapper = styled.div`
 
 type NavBarProps = {
     navbarTheme: NavbarTheme
+    onHeightChange: (height: number) => void
     maxHeight?: number
     minHeight?: number
 }
 
 const NavBar = ({
     navbarTheme,
+    onHeightChange,
     maxHeight = 9, // % of the total height of the screen
     minHeight = 5, // % of the total height of the screen
 }: NavBarProps) => {
@@ -75,11 +77,15 @@ const NavBar = ({
     const computedMinHeight = height * (minHeight / 100)
 
     const handleScroll = () => {
-        const newHeight = height * (maxHeight / 100) - window.pageYOffset
-        newHeight < computedMinHeight
+        const computedHeight = height * (maxHeight / 100) - window.pageYOffset
+        computedHeight < computedMinHeight
             ? setNavBarHeight(computedMinHeight)
-            : setNavBarHeight(newHeight)
+            : setNavBarHeight(computedHeight)
     }
+
+    useEffect(() => {
+        onHeightChange(navBarHeight)
+    }, [navBarHeight])
 
     useEffect(() => {
         handleScroll()

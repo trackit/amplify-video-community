@@ -46,6 +46,7 @@ const ListContainer = styled.div`
     align-items: center;
     height: 360px;
     overflow: hidden;
+    position: relative;
 `
 
 const SeeAllItem = styled.div`

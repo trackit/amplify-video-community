@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import Loader from 'react-loader-spinner'
 import styled from 'styled-components'
 
 import {
+    BasicLoader,
     Layout,
     VideoPlayer as VideoPlayerComponent,
 } from '../shared/components'
@@ -91,13 +91,7 @@ const LivestreamManagement = () => {
     return (
         <Layout>
             {loading ? (
-                <Loader
-                    type="Bars"
-                    color="#FFA41C"
-                    height={100}
-                    width={100}
-                    timeout={3000}
-                />
+                <BasicLoader />
             ) : (
                 <Container>
                     {livestream && livestream.isLive ? (

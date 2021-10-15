@@ -3,18 +3,10 @@ import { Auth } from 'aws-amplify'
 import { withAuthenticator } from '@aws-amplify/ui-react'
 
 import Layout from './Layout'
-import styled from 'styled-components'
 
 type AdminLayoutProps = {
     children: React.ReactNode
 }
-
-const AdminLayoutStyled = styled.div`
-    margin: 25px;
-    width: 100%;
-    max-width: 100%;
-    overflow: scroll;
-`
 
 const AdminLayout = ({ children }: AdminLayoutProps) => {
     const [groups, setGroups] = useState([] as Array<string>)
@@ -30,9 +22,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
     return (
         <>
             {groups.includes('Admin') ? (
-                <Layout>
-                    <AdminLayoutStyled>{children}</AdminLayoutStyled>
-                </Layout>
+                <Layout>{children}</Layout>
             ) : (
                 <Layout>
                     <p>{"You don't have admin permissions"}</p>

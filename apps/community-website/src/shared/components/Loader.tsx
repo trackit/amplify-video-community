@@ -38,6 +38,7 @@ const BasicLoader = ({ style, loader }: BasicLoaderProps) => {
         justifyContent: 'center',
         alignItems: 'center',
         flex: 1,
+        width: '100%',
     }
 
     return (
