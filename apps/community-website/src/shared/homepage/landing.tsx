@@ -5,13 +5,13 @@ import intro from '../../videos/introduction-video.mp4'
 
 const LandingContainer = styled.div`
     background-color: black;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
 `
 
 const VideoPlayer = styled.video`
     object-fit: cover;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     position: relative;
     top: 0;
