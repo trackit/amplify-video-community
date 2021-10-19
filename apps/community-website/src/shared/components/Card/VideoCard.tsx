@@ -97,7 +97,12 @@ const CardItemContentContainer = styled.div`
     transition: background-color 200ms ease-out;
 `
 
-const VideoCard = ({ video, haveSubtitle = false, children }) => {
+const VideoCard = ({
+    video,
+    haveSubtitle = false,
+    children,
+    redirectTo = null,
+}) => {
     const [videoStatus, setVideoStatus] = useState<VideoStatus>({
         playing: false,
         played: 0,
@@ -123,7 +128,9 @@ const VideoCard = ({ video, haveSubtitle = false, children }) => {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             playing={videoStatus.playing}
-            onClick={() => navigate(`/video/${video?.vod?.id}`)}
+            onClick={() =>
+                navigate(redirectTo ? redirectTo : `/video/${video?.vod?.id}`)
+            }
         >
             <Thumbnail video={video} videoStatus={videoStatus} />
             <CardItemContentContainer transparent={!videoStatus.playing}>
@@ -135,7 +142,9 @@ const VideoCard = ({ video, haveSubtitle = false, children }) => {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             playing={videoStatus.playing}
-            onClick={() => navigate(`/video/${video?.vod?.id}`)}
+            onClick={() =>
+                navigate(redirectTo ? redirectTo : `/video/${video?.vod?.id}`)
+            }
         >
             <Thumbnail video={video} videoStatus={videoStatus} />
             <VideoInformations transparent={!videoStatus.playing}>

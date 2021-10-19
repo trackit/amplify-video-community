@@ -32,6 +32,7 @@ type Props = {
     padding?: number
     itemWidth?: number
     spaceBetweenItems?: number
+    redirectTo?: null | string
 }
 
 const SlidingContainer = styled.div`
@@ -89,6 +90,7 @@ const VideoCardList = ({
     padding = 50,
     itemWidth = 360,
     spaceBetweenItems = 40,
+    redirectTo = null,
 }: Props) => {
     const [scroll, setScroll] = useState(0)
     const { width } = useWindowDimensions()
@@ -110,14 +112,18 @@ const VideoCardList = ({
                         key={videoInfo.vod?.id + index}
                         style={{ marginRight: '40px' }}
                     >
-                        <VideoCard video={videoInfo} />
+                        <VideoCard video={videoInfo} redirectTo={redirectTo} />
                     </div>
                 ))}
                 {section && (
                     <SeeAllItem
                         width={itemWidth}
                         onClick={() => {
-                            navigate(`/videos/section/${section.id}`)
+                            navigate(
+                                redirectTo
+                                    ? redirectTo
+                                    : `/videos/section/${section.id}`
+                            )
                         }}
                     >
                         <SeeAllItemText>

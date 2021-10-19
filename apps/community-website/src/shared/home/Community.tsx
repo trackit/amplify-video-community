@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import VideoCardList from '../components/Sliders/VideoCardSlider/VideoCardList'
+import VideoCardList from '../components/Sliders/VideoCardSlider'
 
 const Container = styled.div`
     padding: 100px 0;
@@ -41,6 +41,7 @@ const Community = () => {
                     width: 480,
                     height: 270,
                 }}
+                redirectTo="/videos"
             />
             <Title>
                 Follow tutorials to get started with{' '}
@@ -52,6 +53,7 @@ const Community = () => {
                     width: 480,
                     height: 270,
                 }}
+                redirectTo="/videos"
             />
         </Container>
     )
