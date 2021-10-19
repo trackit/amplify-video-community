@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import CSS from 'csstype'
 import { VideoOnDemand, Section, Thumbnail } from '../../../models'
-import VideoCardList from '../Sliders/VideoCardSlider/VideoCardList'
+import VideoCardList from '../Sliders/VideoCardSlider'
 import { navigate } from 'gatsby'
 import RightArrowLogo from '../../../assets/logo/right-arrow.svg'
 

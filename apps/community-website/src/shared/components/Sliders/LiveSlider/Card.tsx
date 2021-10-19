@@ -136,9 +136,9 @@ type VideoCardProps = {
     imgStyle?: CSS.Properties
 }
 
-const VideoCard = ({ vod, thumbnail, isActive }: VideoCardProps) => {
+const VideoCard = ({ thumbnail, isActive }: VideoCardProps) => {
     const onClick = () => {
-        navigate(`/video/${vod?.id}`)
+        navigate('/live')
     }
 
     return (
