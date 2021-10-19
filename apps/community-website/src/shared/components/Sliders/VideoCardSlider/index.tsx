@@ -32,7 +32,7 @@ type Props = {
     padding?: number
     itemWidth?: number
     spaceBetweenItems?: number
-    redirectTo?: undefined | string
+    redirectTo?: null | string
 }
 
 const SlidingContainer = styled.div`
@@ -90,7 +90,7 @@ const VideoCardList = ({
     padding = 50,
     itemWidth = 360,
     spaceBetweenItems = 40,
-    redirectTo = undefined,
+    redirectTo = null,
 }: Props) => {
     const [scroll, setScroll] = useState(0)
     const { width } = useWindowDimensions()

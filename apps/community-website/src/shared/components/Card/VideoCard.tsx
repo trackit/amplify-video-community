@@ -101,7 +101,7 @@ const VideoCard = ({
     video,
     haveSubtitle = false,
     children,
-    redirectTo = undefined,
+    redirectTo = null,
 }) => {
     const [videoStatus, setVideoStatus] = useState<VideoStatus>({
         playing: false,
