@@ -4,7 +4,7 @@
         "precedence": 1,
         "customPolicies": [
             {
-                "PolicyName": "ampvideocommuwebaa182671-admin-group-policy",
+                "PolicyName": "communitywebsite67b3f680-admin-group-policy",
                 "PolicyDocument": {
                     "Version": "2012-10-17",
                     "Statement": [
@@ -15,7 +15,7 @@
                                 "s3:PutObject",
                                 "s3:DeleteObject"
                             ],
-                            "Resource": "arn:aws:s3:::ampvideocommuwebvod-dev-input-pgay281b/*"
+                            "Resource": "arn:aws:s3:::communitywebsitevod-dev-input-8rcr9rte/*"
                         }
                     ]
                 }

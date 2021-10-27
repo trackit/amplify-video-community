@@ -1,0 +1,8 @@
+{
+  "arguments": {
+    "input": {
+      "query": "updateMedia",
+      "params": "{\"input\": {\"id\": \"4e0d9d70-e306-4420-8cfd-09f48e6ca067\", \"title\": \"test\", \"description\": \"123\", \"highlighted\": \"false\", \"source\": \"SELF\", \"author\": \"Julien\", \"sections\": [\"c0ab8ff9-0def-48f0-9788-479bb2da1a12\"]}}"
+    }
+  }
+}

@@ -1,10 +1,29 @@
 {
   "auth": {
-    "ampvideocommuwebaa182671": {
+    "communitywebsite67b3f680": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
-      "customAuth": false
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "loginMechanisms": [
+          "PREFERRED_USERNAME"
+        ],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      }
     },
     "userPoolGroups": {
       "service": "Cognito-UserPool-Groups",
@@ -12,7 +31,7 @@
       "dependsOn": [
         {
           "category": "auth",
-          "resourceName": "ampvideocommuwebaa182671",
+          "resourceName": "communitywebsite67b3f680",
           "attributes": [
             "UserPoolId",
             "AppClientIDWeb",
@@ -24,7 +43,7 @@
     }
   },
   "api": {
-    "ampVideoCommuWebAPI": {
+    "CommunityWebsiteAPI": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {
@@ -32,7 +51,7 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authampvideocommuwebaa182671"
+              "userPoolId": "authcommunitywebsite67b3f680"
             }
           },
           "additionalAuthenticationProviders": [
@@ -45,25 +64,25 @@
     }
   },
   "video": {
-    "ampVideoCommuWebVOD": {
+    "CommunityWebsiteVOD": {
       "service": "video",
       "serviceType": "video-on-demand",
       "providerPlugin": "awscloudformation"
     },
-    "ampVideoCommuLive": {
+    "CommunityWebsiteLive": {
       "service": "video",
       "serviceType": "ivs",
       "providerPlugin": "awscloudformation"
     }
   },
   "storage": {
-    "ampVideoCommuWebAssets": {
+    "CommunityWebsiteAssets": {
       "service": "S3",
       "providerPlugin": "awscloudformation",
       "dependsOn": [
         {
           "category": "auth",
-          "resourceName": "ampvideocommuwebaa182671",
+          "resourceName": "communitywebsite67b3f680",
           "attributes": [
             "UserPoolId"
           ]
@@ -73,6 +92,23 @@
           "resourceName": "userPoolGroups",
           "attributes": [
             "AdminGroupRole"
+          ]
+        }
+      ]
+    }
+  },
+  "function": {
+    "resourcesManager": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "CommunityWebsiteAPI",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
           ]
         }
       ]

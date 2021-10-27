@@ -1,6 +1,6 @@
 projects:
-  ampVideoCommuWebAPI:
-    schemaPath: src/graphql/schema.json
+  CommunityWebsiteAPI:
+    schemaPath: amplify/backend/api/CommunityWebsiteAPI/build/schema.graphql
     includes:
       - src/graphql/**/*.ts
     excludes:

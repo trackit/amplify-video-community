@@ -1,0 +1,8 @@
+{
+  "arguments": {
+    "input": {
+      "query": "deleteSection",
+      "params": "{ \"id\": \"958cbc29-14cc-49f2-abe3-9a0e446190e5\" }"
+    }
+  }
+}

@@ -1,6 +1,6 @@
 {
     "shared": {
-        "resourceName": "ampVideoCommuWebVOD"
+        "resourceName": "CommunityWebsiteVOD"
     },
     "template": {
         "type": [
@@ -21,13 +21,13 @@
         },
         "GraphQLAPIId": {
             "Fn::GetAtt": [
-                "apiampVideoCommuWebAPI",
+                "apiCommunityWebsiteAPI",
                 "Outputs.GraphQLAPIIdOutput"
             ]
         },
         "GraphQLEndpoint": {
             "Fn::GetAtt": [
-                "apiampVideoCommuWebAPI",
+                "apiCommunityWebsiteAPI",
                 "Outputs.GraphQLAPIEndpointOutput"
             ]
         }

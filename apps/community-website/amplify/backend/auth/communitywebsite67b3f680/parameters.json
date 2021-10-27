@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "ampvideocommuwebaa182671_identitypool_aa182671",
+    "identityPoolName": "communitywebsite67b3f680_identitypool_67b3f680",
     "allowUnauthenticatedIdentities": true,
-    "resourceNameTruncated": "ampvidaa182671",
-    "userPoolName": "ampvideocommuwebaa182671_userpool_aa182671",
+    "resourceNameTruncated": "commun67b3f680",
+    "userPoolName": "communitywebsite67b3f680_userpool_67b3f680",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -20,6 +20,7 @@
     "requiredAttributes": [
         "email"
     ],
+    "aliasAttributes": [],
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [
@@ -28,10 +29,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "ampvidaa182671_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "commun67b3f680_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "aa182671",
-    "resourceName": "ampvideocommuwebaa182671",
+    "sharedId": "67b3f680",
+    "resourceName": "communitywebsite67b3f680",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
