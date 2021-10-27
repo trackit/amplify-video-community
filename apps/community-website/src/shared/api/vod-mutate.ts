@@ -6,7 +6,6 @@ import {
     putThumbnailFile,
     setThumbnail,
     setMedia,
-    setMediasSections,
 } from './mutate'
 import awsvideoconfig from '../../aws-video-exports'
 import awsmobile from '../../aws-exports'
@@ -65,7 +64,7 @@ const uploadSourceSelf = async (
     media: Media,
     thumbnailFile: File,
     vodFile: File,
-    sectionsId: Array<undefined | string>,
+    sectionsId: Array<string> | undefined,
     progressCallback?: (progress) => void
 ) => {
     const vodExtension = vodFile.name.toLowerCase().split('.')
@@ -108,6 +107,7 @@ const uploadSourceSelf = async (
             author: media.author,
             source: APIt.Source.SELF,
             mediaThumbnailId: id,
+            sections: sectionsId,
         })
     } catch (error) {
         console.error('vod-mutate.tx(setMedia): ', error)
@@ -115,17 +115,11 @@ const uploadSourceSelf = async (
     }
 
     try {
-        const { data } = await createVOD({
+        await createVOD({
             id,
             videoOnDemandMediaId: id,
             src: null,
         })
-        for (let i = 0; i < sectionsId.length; i++) {
-            await setMediasSections({
-                sectionID: sectionsId[i] as string,
-                mediaID: data?.createVideoOnDemand?.id as string,
-            })
-        }
     } catch (error) {
         console.error('vod-mutate.tx(createVOD): ', error)
         return
@@ -136,7 +130,8 @@ const uploadSourceYoutube = async (
     id: string,
     media: Media,
     thumbnailFile: File | null,
-    youtubeSrc: string
+    youtubeSrc: string,
+    sectionsId: Array<string> | unefined
 ) => {
     if (thumbnailFile) {
         try {
@@ -169,6 +164,7 @@ const uploadSourceYoutube = async (
             highlighted: media.highlighted,
             source: APIt.Source.YOUTUBE,
             mediaThumbnailId: id,
+            sections: sectionsId,
         })
     } catch (error) {
         console.error('vod-mutate.tx(setMedia): ', error)

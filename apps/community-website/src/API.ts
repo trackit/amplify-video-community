@@ -108,7 +108,7 @@ export type Media = {
   createdAt: string,
   updatedAt: string,
   thumbnail?: Thumbnail | null,
-  sections?: ModelMediasSectionsConnection | null,
+  sections?: ModelMediasSectionConnection | null,
 };
 
 export type Thumbnail = {
@@ -120,14 +120,14 @@ export type Thumbnail = {
   updatedAt: string,
 };
 
-export type ModelMediasSectionsConnection = {
-  __typename: "ModelMediasSectionsConnection",
-  items?:  Array<MediasSections | null > | null,
+export type ModelMediasSectionConnection = {
+  __typename: "ModelMediasSectionConnection",
+  items?:  Array<MediasSection | null > | null,
   nextToken?: string | null,
 };
 
-export type MediasSections = {
-  __typename: "MediasSections",
+export type MediasSection = {
+  __typename: "MediasSection",
   id: string,
   sectionID: string,
   mediaID: string,
@@ -144,7 +144,7 @@ export type Section = {
   description: string,
   createdAt: string,
   updatedAt: string,
-  medias?: ModelMediasSectionsConnection | null,
+  medias?: ModelMediasSectionConnection | null,
 };
 
 export type UpdateMediaInput = {
@@ -162,8 +162,8 @@ export type DeleteMediaInput = {
   id: string,
 };
 
-export type UpdateContentSubmissionInput = {
-  id: string,
+export type CreateContentSubmissionInput = {
+  id?: string | null,
   title?: string | null,
   description?: string | null,
   comment?: string | null,
@@ -195,6 +195,16 @@ export type ContentSubmission = {
   email?: string | null,
   createdAt: string,
   updatedAt: string,
+};
+
+export type UpdateContentSubmissionInput = {
+  id: string,
+  title?: string | null,
+  description?: string | null,
+  comment?: string | null,
+  source?: Source | null,
+  src?: string | null,
+  email?: string | null,
 };
 
 export type DeleteContentSubmissionInput = {
@@ -249,18 +259,18 @@ export type DeleteSectionInput = {
   id: string,
 };
 
-export type CreateMediasSectionsInput = {
+export type CreateMediasSectionInput = {
   id?: string | null,
   sectionID: string,
   mediaID: string,
 };
 
-export type ModelMediasSectionsConditionInput = {
+export type ModelMediasSectionConditionInput = {
   sectionID?: ModelIDInput | null,
   mediaID?: ModelIDInput | null,
-  and?: Array< ModelMediasSectionsConditionInput | null > | null,
-  or?: Array< ModelMediasSectionsConditionInput | null > | null,
-  not?: ModelMediasSectionsConditionInput | null,
+  and?: Array< ModelMediasSectionConditionInput | null > | null,
+  or?: Array< ModelMediasSectionConditionInput | null > | null,
+  not?: ModelMediasSectionConditionInput | null,
 };
 
 export type ModelIDInput = {
@@ -279,13 +289,13 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
-export type UpdateMediasSectionsInput = {
+export type UpdateMediasSectionInput = {
   id: string,
   sectionID?: string | null,
   mediaID?: string | null,
 };
 
-export type DeleteMediasSectionsInput = {
+export type DeleteMediasSectionInput = {
   id: string,
 };
 
@@ -357,14 +367,9 @@ export type DeleteLivestreamInput = {
   id: string,
 };
 
-export type CreateContentSubmissionInput = {
-  id?: string | null,
-  title?: string | null,
-  description?: string | null,
-  comment?: string | null,
-  source?: Source | null,
-  src?: string | null,
-  email?: string | null,
+export type ResourcesManagerInput = {
+  query: string,
+  params?: string | null,
 };
 
 export type ModelMediaFilterInput = {
@@ -435,13 +440,13 @@ export type ModelSectionConnection = {
   nextToken?: string | null,
 };
 
-export type ModelMediasSectionsFilterInput = {
+export type ModelMediasSectionFilterInput = {
   id?: ModelIDInput | null,
   sectionID?: ModelIDInput | null,
   mediaID?: ModelIDInput | null,
-  and?: Array< ModelMediasSectionsFilterInput | null > | null,
-  or?: Array< ModelMediasSectionsFilterInput | null > | null,
-  not?: ModelMediasSectionsFilterInput | null,
+  and?: Array< ModelMediasSectionFilterInput | null > | null,
+  or?: Array< ModelMediasSectionFilterInput | null > | null,
+  not?: ModelMediasSectionFilterInput | null,
 };
 
 export type ModelVideoOnDemandFilterInput = {
@@ -499,9 +504,9 @@ export type CreateMediaMutation = {
       updatedAt: string,
     } | null,
     sections?:  {
-      __typename: "ModelMediasSectionsConnection",
+      __typename: "ModelMediasSectionConnection",
       items?:  Array< {
-        __typename: "MediasSections",
+        __typename: "MediasSection",
         id: string,
         sectionID: string,
         mediaID: string,
@@ -539,9 +544,9 @@ export type UpdateMediaMutation = {
       updatedAt: string,
     } | null,
     sections?:  {
-      __typename: "ModelMediasSectionsConnection",
+      __typename: "ModelMediasSectionConnection",
       items?:  Array< {
-        __typename: "MediasSections",
+        __typename: "MediasSection",
         id: string,
         sectionID: string,
         mediaID: string,
@@ -579,9 +584,9 @@ export type DeleteMediaMutation = {
       updatedAt: string,
     } | null,
     sections?:  {
-      __typename: "ModelMediasSectionsConnection",
+      __typename: "ModelMediasSectionConnection",
       items?:  Array< {
-        __typename: "MediasSections",
+        __typename: "MediasSection",
         id: string,
         sectionID: string,
         mediaID: string,
@@ -590,6 +595,26 @@ export type DeleteMediaMutation = {
       } | null > | null,
       nextToken?: string | null,
     } | null,
+  } | null,
+};
+
+export type CreateContentSubmissionMutationVariables = {
+  input: CreateContentSubmissionInput,
+  condition?: ModelContentSubmissionConditionInput | null,
+};
+
+export type CreateContentSubmissionMutation = {
+  createContentSubmission?:  {
+    __typename: "ContentSubmission",
+    id: string,
+    title?: string | null,
+    description?: string | null,
+    comment?: string | null,
+    source?: Source | null,
+    src?: string | null,
+    email?: string | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
@@ -695,9 +720,9 @@ export type CreateSectionMutation = {
     createdAt: string,
     updatedAt: string,
     medias?:  {
-      __typename: "ModelMediasSectionsConnection",
+      __typename: "ModelMediasSectionConnection",
       items?:  Array< {
-        __typename: "MediasSections",
+        __typename: "MediasSection",
         id: string,
         sectionID: string,
         mediaID: string,
@@ -723,9 +748,9 @@ export type UpdateSectionMutation = {
     createdAt: string,
     updatedAt: string,
     medias?:  {
-      __typename: "ModelMediasSectionsConnection",
+      __typename: "ModelMediasSectionConnection",
       items?:  Array< {
-        __typename: "MediasSections",
+        __typename: "MediasSection",
         id: string,
         sectionID: string,
         mediaID: string,
@@ -751,9 +776,9 @@ export type DeleteSectionMutation = {
     createdAt: string,
     updatedAt: string,
     medias?:  {
-      __typename: "ModelMediasSectionsConnection",
+      __typename: "ModelMediasSectionConnection",
       items?:  Array< {
-        __typename: "MediasSections",
+        __typename: "MediasSection",
         id: string,
         sectionID: string,
         mediaID: string,
@@ -765,14 +790,14 @@ export type DeleteSectionMutation = {
   } | null,
 };
 
-export type CreateMediasSectionsMutationVariables = {
-  input: CreateMediasSectionsInput,
-  condition?: ModelMediasSectionsConditionInput | null,
+export type CreateMediasSectionMutationVariables = {
+  input: CreateMediasSectionInput,
+  condition?: ModelMediasSectionConditionInput | null,
 };
 
-export type CreateMediasSectionsMutation = {
-  createMediasSections?:  {
-    __typename: "MediasSections",
+export type CreateMediasSectionMutation = {
+  createMediasSection?:  {
+    __typename: "MediasSection",
     id: string,
     sectionID: string,
     mediaID: string,
@@ -798,7 +823,7 @@ export type CreateMediasSectionsMutation = {
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     },
@@ -810,21 +835,21 @@ export type CreateMediasSectionsMutation = {
       createdAt: string,
       updatedAt: string,
       medias?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     },
   } | null,
 };
 
-export type UpdateMediasSectionsMutationVariables = {
-  input: UpdateMediasSectionsInput,
-  condition?: ModelMediasSectionsConditionInput | null,
+export type UpdateMediasSectionMutationVariables = {
+  input: UpdateMediasSectionInput,
+  condition?: ModelMediasSectionConditionInput | null,
 };
 
-export type UpdateMediasSectionsMutation = {
-  updateMediasSections?:  {
-    __typename: "MediasSections",
+export type UpdateMediasSectionMutation = {
+  updateMediasSection?:  {
+    __typename: "MediasSection",
     id: string,
     sectionID: string,
     mediaID: string,
@@ -850,7 +875,7 @@ export type UpdateMediasSectionsMutation = {
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     },
@@ -862,21 +887,21 @@ export type UpdateMediasSectionsMutation = {
       createdAt: string,
       updatedAt: string,
       medias?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     },
   } | null,
 };
 
-export type DeleteMediasSectionsMutationVariables = {
-  input: DeleteMediasSectionsInput,
-  condition?: ModelMediasSectionsConditionInput | null,
+export type DeleteMediasSectionMutationVariables = {
+  input: DeleteMediasSectionInput,
+  condition?: ModelMediasSectionConditionInput | null,
 };
 
-export type DeleteMediasSectionsMutation = {
-  deleteMediasSections?:  {
-    __typename: "MediasSections",
+export type DeleteMediasSectionMutation = {
+  deleteMediasSection?:  {
+    __typename: "MediasSection",
     id: string,
     sectionID: string,
     mediaID: string,
@@ -902,7 +927,7 @@ export type DeleteMediasSectionsMutation = {
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     },
@@ -914,7 +939,7 @@ export type DeleteMediasSectionsMutation = {
       createdAt: string,
       updatedAt: string,
       medias?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     },
@@ -953,7 +978,7 @@ export type CreateVideoOnDemandMutation = {
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     } | null,
@@ -992,7 +1017,7 @@ export type UpdateVideoOnDemandMutation = {
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     } | null,
@@ -1031,7 +1056,7 @@ export type DeleteVideoOnDemandMutation = {
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     } | null,
@@ -1071,7 +1096,7 @@ export type CreateLivestreamMutation = {
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     } | null,
@@ -1111,7 +1136,7 @@ export type UpdateLivestreamMutation = {
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     } | null,
@@ -1151,31 +1176,19 @@ export type DeleteLivestreamMutation = {
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     } | null,
   } | null,
 };
 
-export type CreateContentSubmissionMutationVariables = {
-  input: CreateContentSubmissionInput,
-  condition?: ModelContentSubmissionConditionInput | null,
+export type ManageResourcesQueryVariables = {
+  input?: ResourcesManagerInput | null,
 };
 
-export type CreateContentSubmissionMutation = {
-  createContentSubmission?:  {
-    __typename: "ContentSubmission",
-    id: string,
-    title?: string | null,
-    description?: string | null,
-    comment?: string | null,
-    source?: Source | null,
-    src?: string | null,
-    email?: string | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
+export type ManageResourcesQuery = {
+  manageResources?: string | null,
 };
 
 export type GetMediaQueryVariables = {
@@ -1203,9 +1216,9 @@ export type GetMediaQuery = {
       updatedAt: string,
     } | null,
     sections?:  {
-      __typename: "ModelMediasSectionsConnection",
+      __typename: "ModelMediasSectionConnection",
       items?:  Array< {
-        __typename: "MediasSections",
+        __typename: "MediasSection",
         id: string,
         sectionID: string,
         mediaID: string,
@@ -1217,14 +1230,14 @@ export type GetMediaQuery = {
   } | null,
 };
 
-export type ListMediaQueryVariables = {
+export type ListMediasQueryVariables = {
   filter?: ModelMediaFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListMediaQuery = {
-  listMedia?:  {
+export type ListMediasQuery = {
+  listMedias?:  {
     __typename: "ModelMediaConnection",
     items?:  Array< {
       __typename: "Media",
@@ -1246,7 +1259,7 @@ export type ListMediaQuery = {
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     } | null > | null,
@@ -1347,9 +1360,9 @@ export type GetSectionQuery = {
     createdAt: string,
     updatedAt: string,
     medias?:  {
-      __typename: "ModelMediasSectionsConnection",
+      __typename: "ModelMediasSectionConnection",
       items?:  Array< {
-        __typename: "MediasSections",
+        __typename: "MediasSection",
         id: string,
         sectionID: string,
         mediaID: string,
@@ -1378,7 +1391,7 @@ export type ListSectionsQuery = {
       createdAt: string,
       updatedAt: string,
       medias?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     } | null > | null,
@@ -1386,13 +1399,13 @@ export type ListSectionsQuery = {
   } | null,
 };
 
-export type GetMediasSectionsQueryVariables = {
+export type GetMediasSectionQueryVariables = {
   id: string,
 };
 
-export type GetMediasSectionsQuery = {
-  getMediasSections?:  {
-    __typename: "MediasSections",
+export type GetMediasSectionQuery = {
+  getMediasSection?:  {
+    __typename: "MediasSection",
     id: string,
     sectionID: string,
     mediaID: string,
@@ -1418,7 +1431,7 @@ export type GetMediasSectionsQuery = {
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     },
@@ -1430,7 +1443,7 @@ export type GetMediasSectionsQuery = {
       createdAt: string,
       updatedAt: string,
       medias?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     },
@@ -1438,16 +1451,16 @@ export type GetMediasSectionsQuery = {
 };
 
 export type ListMediasSectionsQueryVariables = {
-  filter?: ModelMediasSectionsFilterInput | null,
+  filter?: ModelMediasSectionFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
 export type ListMediasSectionsQuery = {
   listMediasSections?:  {
-    __typename: "ModelMediasSectionsConnection",
+    __typename: "ModelMediasSectionConnection",
     items?:  Array< {
-      __typename: "MediasSections",
+      __typename: "MediasSection",
       id: string,
       sectionID: string,
       mediaID: string,
@@ -1509,7 +1522,7 @@ export type GetVideoOnDemandQuery = {
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     } | null,
@@ -1580,7 +1593,7 @@ export type GetLivestreamQuery = {
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     } | null,
@@ -1641,9 +1654,9 @@ export type OnCreateMediaSubscription = {
       updatedAt: string,
     } | null,
     sections?:  {
-      __typename: "ModelMediasSectionsConnection",
+      __typename: "ModelMediasSectionConnection",
       items?:  Array< {
-        __typename: "MediasSections",
+        __typename: "MediasSection",
         id: string,
         sectionID: string,
         mediaID: string,
@@ -1676,9 +1689,9 @@ export type OnUpdateMediaSubscription = {
       updatedAt: string,
     } | null,
     sections?:  {
-      __typename: "ModelMediasSectionsConnection",
+      __typename: "ModelMediasSectionConnection",
       items?:  Array< {
-        __typename: "MediasSections",
+        __typename: "MediasSection",
         id: string,
         sectionID: string,
         mediaID: string,
@@ -1711,9 +1724,9 @@ export type OnDeleteMediaSubscription = {
       updatedAt: string,
     } | null,
     sections?:  {
-      __typename: "ModelMediasSectionsConnection",
+      __typename: "ModelMediasSectionConnection",
       items?:  Array< {
-        __typename: "MediasSections",
+        __typename: "MediasSection",
         id: string,
         sectionID: string,
         mediaID: string,
@@ -1812,9 +1825,9 @@ export type OnCreateSectionSubscription = {
     createdAt: string,
     updatedAt: string,
     medias?:  {
-      __typename: "ModelMediasSectionsConnection",
+      __typename: "ModelMediasSectionConnection",
       items?:  Array< {
-        __typename: "MediasSections",
+        __typename: "MediasSection",
         id: string,
         sectionID: string,
         mediaID: string,
@@ -1835,9 +1848,9 @@ export type OnUpdateSectionSubscription = {
     createdAt: string,
     updatedAt: string,
     medias?:  {
-      __typename: "ModelMediasSectionsConnection",
+      __typename: "ModelMediasSectionConnection",
       items?:  Array< {
-        __typename: "MediasSections",
+        __typename: "MediasSection",
         id: string,
         sectionID: string,
         mediaID: string,
@@ -1858,9 +1871,9 @@ export type OnDeleteSectionSubscription = {
     createdAt: string,
     updatedAt: string,
     medias?:  {
-      __typename: "ModelMediasSectionsConnection",
+      __typename: "ModelMediasSectionConnection",
       items?:  Array< {
-        __typename: "MediasSections",
+        __typename: "MediasSection",
         id: string,
         sectionID: string,
         mediaID: string,
@@ -1872,9 +1885,9 @@ export type OnDeleteSectionSubscription = {
   } | null,
 };
 
-export type OnCreateMediasSectionsSubscription = {
-  onCreateMediasSections?:  {
-    __typename: "MediasSections",
+export type OnCreateMediasSectionSubscription = {
+  onCreateMediasSection?:  {
+    __typename: "MediasSection",
     id: string,
     sectionID: string,
     mediaID: string,
@@ -1900,7 +1913,7 @@ export type OnCreateMediasSectionsSubscription = {
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     },
@@ -1912,16 +1925,16 @@ export type OnCreateMediasSectionsSubscription = {
       createdAt: string,
       updatedAt: string,
       medias?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     },
   } | null,
 };
 
-export type OnUpdateMediasSectionsSubscription = {
-  onUpdateMediasSections?:  {
-    __typename: "MediasSections",
+export type OnUpdateMediasSectionSubscription = {
+  onUpdateMediasSection?:  {
+    __typename: "MediasSection",
     id: string,
     sectionID: string,
     mediaID: string,
@@ -1947,7 +1960,7 @@ export type OnUpdateMediasSectionsSubscription = {
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     },
@@ -1959,16 +1972,16 @@ export type OnUpdateMediasSectionsSubscription = {
       createdAt: string,
       updatedAt: string,
       medias?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     },
   } | null,
 };
 
-export type OnDeleteMediasSectionsSubscription = {
-  onDeleteMediasSections?:  {
-    __typename: "MediasSections",
+export type OnDeleteMediasSectionSubscription = {
+  onDeleteMediasSection?:  {
+    __typename: "MediasSection",
     id: string,
     sectionID: string,
     mediaID: string,
@@ -1994,7 +2007,7 @@ export type OnDeleteMediasSectionsSubscription = {
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     },
@@ -2006,7 +2019,7 @@ export type OnDeleteMediasSectionsSubscription = {
       createdAt: string,
       updatedAt: string,
       medias?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     },
@@ -2040,7 +2053,7 @@ export type OnCreateVideoOnDemandSubscription = {
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     } | null,
@@ -2074,7 +2087,7 @@ export type OnUpdateVideoOnDemandSubscription = {
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     } | null,
@@ -2108,7 +2121,7 @@ export type OnDeleteVideoOnDemandSubscription = {
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     } | null,
@@ -2143,7 +2156,7 @@ export type OnCreateLivestreamSubscription = {
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     } | null,
@@ -2178,7 +2191,7 @@ export type OnUpdateLivestreamSubscription = {
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     } | null,
@@ -2213,7 +2226,7 @@ export type OnDeleteLivestreamSubscription = {
         updatedAt: string,
       } | null,
       sections?:  {
-        __typename: "ModelMediasSectionsConnection",
+        __typename: "ModelMediasSectionConnection",
         nextToken?: string | null,
       } | null,
     } | null,

@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { Auth } from 'aws-amplify'
+import styled from 'styled-components'
 import { withAuthenticator } from '@aws-amplify/ui-react'
 import Index from '../../components/Layout'
 
 type AdminLayoutProps = {
     children: React.ReactNode
 }
+
+const TextContainer = styled.div`
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
 
 const AdminLayout = ({ children }: AdminLayoutProps) => {
     const [groups, setGroups] = useState([] as Array<string>)
@@ -24,7 +32,9 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
                 <Index>{children}</Index>
             ) : (
                 <Index>
-                    <p>{"You don't have admin permissions"}</p>
+                    <TextContainer>
+                        You don&apos;t have admin permissions
+                    </TextContainer>
                 </Index>
             )}
         </>

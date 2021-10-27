@@ -107,6 +107,24 @@ export const deleteMedia = /* GraphQL */ `
     }
   }
 `;
+export const createContentSubmission = /* GraphQL */ `
+  mutation CreateContentSubmission(
+    $input: CreateContentSubmissionInput!
+    $condition: ModelContentSubmissionConditionInput
+  ) {
+    createContentSubmission(input: $input, condition: $condition) {
+      id
+      title
+      description
+      comment
+      source
+      src
+      email
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const updateContentSubmission = /* GraphQL */ `
   mutation UpdateContentSubmission(
     $input: UpdateContentSubmissionInput!
@@ -257,12 +275,12 @@ export const deleteSection = /* GraphQL */ `
     }
   }
 `;
-export const createMediasSections = /* GraphQL */ `
-  mutation CreateMediasSections(
-    $input: CreateMediasSectionsInput!
-    $condition: ModelMediasSectionsConditionInput
+export const createMediasSection = /* GraphQL */ `
+  mutation CreateMediasSection(
+    $input: CreateMediasSectionInput!
+    $condition: ModelMediasSectionConditionInput
   ) {
-    createMediasSections(input: $input, condition: $condition) {
+    createMediasSection(input: $input, condition: $condition) {
       id
       sectionID
       mediaID
@@ -302,12 +320,12 @@ export const createMediasSections = /* GraphQL */ `
     }
   }
 `;
-export const updateMediasSections = /* GraphQL */ `
-  mutation UpdateMediasSections(
-    $input: UpdateMediasSectionsInput!
-    $condition: ModelMediasSectionsConditionInput
+export const updateMediasSection = /* GraphQL */ `
+  mutation UpdateMediasSection(
+    $input: UpdateMediasSectionInput!
+    $condition: ModelMediasSectionConditionInput
   ) {
-    updateMediasSections(input: $input, condition: $condition) {
+    updateMediasSection(input: $input, condition: $condition) {
       id
       sectionID
       mediaID
@@ -347,12 +365,12 @@ export const updateMediasSections = /* GraphQL */ `
     }
   }
 `;
-export const deleteMediasSections = /* GraphQL */ `
-  mutation DeleteMediasSections(
-    $input: DeleteMediasSectionsInput!
-    $condition: ModelMediasSectionsConditionInput
+export const deleteMediasSection = /* GraphQL */ `
+  mutation DeleteMediasSection(
+    $input: DeleteMediasSectionInput!
+    $condition: ModelMediasSectionConditionInput
   ) {
-    deleteMediasSections(input: $input, condition: $condition) {
+    deleteMediasSection(input: $input, condition: $condition) {
       id
       sectionID
       mediaID
@@ -596,24 +614,6 @@ export const deleteLivestream = /* GraphQL */ `
           nextToken
         }
       }
-    }
-  }
-`;
-export const createContentSubmission = /* GraphQL */ `
-  mutation CreateContentSubmission(
-    $input: CreateContentSubmissionInput!
-    $condition: ModelContentSubmissionConditionInput
-  ) {
-    createContentSubmission(input: $input, condition: $condition) {
-      id
-      title
-      description
-      comment
-      source
-      src
-      email
-      createdAt
-      updatedAt
     }
   }
 `;

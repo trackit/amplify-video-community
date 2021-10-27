@@ -239,9 +239,9 @@ export const onDeleteSection = /* GraphQL */ `
     }
   }
 `;
-export const onCreateMediasSections = /* GraphQL */ `
-  subscription OnCreateMediasSections {
-    onCreateMediasSections {
+export const onCreateMediasSection = /* GraphQL */ `
+  subscription OnCreateMediasSection {
+    onCreateMediasSection {
       id
       sectionID
       mediaID
@@ -281,9 +281,9 @@ export const onCreateMediasSections = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateMediasSections = /* GraphQL */ `
-  subscription OnUpdateMediasSections {
-    onUpdateMediasSections {
+export const onUpdateMediasSection = /* GraphQL */ `
+  subscription OnUpdateMediasSection {
+    onUpdateMediasSection {
       id
       sectionID
       mediaID
@@ -323,9 +323,9 @@ export const onUpdateMediasSections = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteMediasSections = /* GraphQL */ `
-  subscription OnDeleteMediasSections {
-    onDeleteMediasSections {
+export const onDeleteMediasSection = /* GraphQL */ `
+  subscription OnDeleteMediasSection {
+    onDeleteMediasSection {
       id
       sectionID
       mediaID

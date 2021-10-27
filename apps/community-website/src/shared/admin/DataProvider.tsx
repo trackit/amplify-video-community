@@ -15,65 +15,28 @@ import {
     createNewLivestream,
     removeLivestream,
     removeThumbnailFile,
-    updateMediaSections,
 } from '../api'
 import { fetchLivestreamsWithThumbnail } from '../api/live-fetch'
 
 const resourcesMap = {
     Videos: {
         getList: () =>
-            fetchMedias().then(({ data }) =>
-                data && data.listMedia && data.listMedia.items
-                    ? {
-                          data: data.listMedia.items
-                              .filter(
-                                  (item) => item.source !== 'LIVESTREAM_SELF'
-                              )
-                              .map((item) => ({ ...item, sections: [] })),
-                          total: data.listMedia.items.length,
-                      }
-                    : { data: [], total: 0 }
-            ),
-        getOne: (params) =>
-            fetchSections().then(({ data }) => {
-                const sections =
-                    data && data.listSections && data.listSections.items
-                        ? data.listSections.items
-                        : undefined
-                return fetchMedia(params.id).then(({ data }) => {
-                    let sectionsFound = []
-                    if (
-                        data &&
-                        data.getMedia &&
-                        data.getMedia.sections &&
-                        data.getMedia.sections.items
-                    ) {
-                        sectionsFound = data.getMedia.sections.items.map(
-                            ({ sectionID }) =>
-                                sections.find(
-                                    (section) => section.id === sectionID
-                                )
-                        )
-                        sectionsFound = sectionsFound.filter(
-                            (section, index, self) =>
-                                index ===
-                                self.findIndex((t) => t.id === section.id)
-                        )
-                        sectionsFound = sectionsFound.map((section) => ({
-                            id: section.id,
-                            name: section.label,
-                        }))
-                    }
-                    return data && data.getMedia
-                        ? {
-                              data: {
-                                  ...data.getMedia,
-                                  sections: sectionsFound,
-                              },
-                          }
-                        : { data: { id: params.id } }
-                })
+            fetchMedias().then(({ data }) => {
+                if (!data || !data.listMedias || !data.listMedias.items)
+                    return { data: [], total: 0 }
+                const list = data.listMedias.items
+                    .filter((item) => item.source !== 'LIVESTREAM_SELF')
+                    .map((item) => ({ ...item, sections: [] }))
+                return {
+                    data: list,
+                    total: list.length,
+                }
+                return ret
             }),
+        getOne: (params) =>
+            fetchMedia(params.id).then((response) => ({
+                data: response,
+            })),
         update: (params) => {
             const promiseList = []
             if (params.data.thumbnail.rawFile) {
@@ -86,12 +49,6 @@ const resourcesMap = {
                 )
             }
             promiseList.push(
-                updateMediaSections(
-                    params.previousData.id,
-                    params.data.sections
-                )
-            )
-            promiseList.push(
                 modifyMedia({
                     id: params.data.id,
                     title: params.data.title,
@@ -99,6 +56,7 @@ const resourcesMap = {
                     highlited: params.data.highlited,
                     source: params.data.source,
                     author: params.data.author,
+                    sections: params.data.sections,
                 }).then(({ data }) =>
                     data && data.updateMedia
                         ? { data: data.updateMedia }
@@ -189,15 +147,13 @@ const resourcesMap = {
                         : { data: {} }
             ),
         delete: (params) =>
-            removeSection({ id: params.id }).then(({ data }) => ({
+            removeSection(params.id).then(({ data }) => ({
                 data: data?.deleteSection,
             })),
         deleteMany: (params) =>
             Promise.all(
                 params.ids.map((id) =>
-                    removeSection({ id: id }).then(
-                        ({ data }) => data?.deleteSection
-                    )
+                    removeSection(id).then(({ data }) => data?.deleteSection)
                 )
             ).then((deletedVideos) => ({ data: deletedVideos })),
     },
@@ -280,37 +236,11 @@ const resourcesMap = {
                 params.data.isLive
             ),
         delete: async (params) => {
-            let removedLivestream
-            try {
-                removedLivestream = await removeLivestream({ id: params.id })
-            } catch (error) {
-                console.error(
-                    'DataProvider.tsx(delete: removeLivestream): ',
-                    error
-                )
-                return
+            if (params.previousData) {
+                await removeMedia({ id: params.previousData.id })
+                await removeThumbnailFile(params.previousData.thumbnail)
             }
-
-            try {
-                await removeMedia({ id: params.previousData.media.id })
-            } catch (error) {
-                console.error('DataProvider.tsx(delete: removeMedia): ', error)
-                return
-            }
-
-            try {
-                await removeThumbnailFile(params.previousData.media.thumbnail)
-            } catch (error) {
-                console.error(
-                    'DataProvider.tsx(delete: removeThumbnailFile): ',
-                    error
-                )
-                return
-            }
-
-            return new Promise((resolve) =>
-                resolve({ data: removedLivestream.data })
-            )
+            return removeLivestream({ id: params.id })
         },
         deleteMany: (params) =>
             Promise.all(

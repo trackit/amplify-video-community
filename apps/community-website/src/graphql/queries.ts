@@ -2,6 +2,11 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const manageResources = /* GraphQL */ `
+  query ManageResources($input: ResourcesManagerInput) {
+    manageResources(input: $input)
+  }
+`;
 export const getMedia = /* GraphQL */ `
   query GetMedia($id: ID!) {
     getMedia(id: $id) {
@@ -34,13 +39,13 @@ export const getMedia = /* GraphQL */ `
     }
   }
 `;
-export const listMedia = /* GraphQL */ `
-  query ListMedia(
+export const listMedias = /* GraphQL */ `
+  query ListMedias(
     $filter: ModelMediaFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listMedia(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listMedias(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         title
@@ -178,9 +183,9 @@ export const listSections = /* GraphQL */ `
     }
   }
 `;
-export const getMediasSections = /* GraphQL */ `
-  query GetMediasSections($id: ID!) {
-    getMediasSections(id: $id) {
+export const getMediasSection = /* GraphQL */ `
+  query GetMediasSection($id: ID!) {
+    getMediasSection(id: $id) {
       id
       sectionID
       mediaID
@@ -222,7 +227,7 @@ export const getMediasSections = /* GraphQL */ `
 `;
 export const listMediasSections = /* GraphQL */ `
   query ListMediasSections(
-    $filter: ModelMediasSectionsFilterInput
+    $filter: ModelMediasSectionFilterInput
     $limit: Int
     $nextToken: String
   ) {
