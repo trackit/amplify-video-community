@@ -5,27 +5,41 @@ import { v4 as uuidv4 } from 'uuid'
 import Resizer from 'react-image-file-resizer'
 import {
     createSection,
-    deleteMedia,
-    updateMedia,
     deleteThumbnail,
     deleteMediasSections,
     deleteVideoOnDemand,
     deleteLivestream,
-    deleteSection,
     updateSection,
 } from '../../graphql/mutations'
-import { fetchMediasSections } from './index'
+import { manageResources } from '../../graphql/queries'
 import { uploadSourceSelf, uploadSourceYoutube } from './vod-mutate'
 import * as APIt from '../../API'
 import { Media, Thumbnail } from '../../models'
-import {
-    createThumbnail,
-    createMediasSections,
-    createMedia,
-} from '../../graphql/mutations'
+import { createThumbnail } from '../../graphql/mutations'
 import awsmobile from '../../aws-exports'
 
 const thumbnailExtension = 'jpeg'
+
+async function callManageResourcesLambda(query: string, params: unknown) {
+    return API.graphql(
+        graphqlOperation(manageResources, {
+            input: {
+                query,
+                params: JSON.stringify(params),
+            },
+        })
+    )
+        .then((response) => {
+            const jsonResponse = JSON.parse(response.data.manageResources)
+            if (jsonResponse.statusCode !== 200) {
+                throw new Error(jsonResponse.body)
+            }
+            return jsonResponse.body
+        })
+        .catch((error) => {
+            console.log({ error })
+        })
+}
 
 const createNewSection = async (label: string, description: string) => {
     return API.graphql(
@@ -38,12 +52,8 @@ const createNewSection = async (label: string, description: string) => {
     )
 }
 
-async function removeSection(input: APIt.DeleteSectionInput) {
-    return API.graphql(
-        graphqlOperation(deleteSection, {
-            input,
-        })
-    )
+async function removeSection(id) {
+    return callManageResourcesLambda('deleteSection', { id })
 }
 
 async function modifySection(input: APIt.UpdateSectionInput) {
@@ -54,38 +64,12 @@ async function modifySection(input: APIt.UpdateSectionInput) {
     )
 }
 
-async function setMediasSections(input: APIt.CreateMediasSectionsInput) {
-    return API.graphql(
-        graphqlOperation(createMediasSections, {
-            input,
-        })
-    ) as GraphQLResult<APIt.CreateMediasSectionsMutation>
-}
-
 async function removeMediasSections(input: APIt.DeleteMediasSectionsInput) {
     return API.graphql(
         graphqlOperation(deleteMediasSections, {
             input,
         })
     ) as GraphQLResult<APIt.DeleteMediasSectionsInput>
-}
-
-async function updateMediaSections(id, sections) {
-    await fetchMediasSections().then(({ data }) => {
-        const mediasSections = data?.listMediasSections?.items
-        const filteredMediasSections = mediasSections.filter(
-            (ms) => ms.media.id === id
-        )
-        filteredMediasSections.map((ms) => removeMediasSections({ id: ms.id }))
-        return data
-    })
-    const promises = sections.map((section) =>
-        setMediasSections({
-            sectionID: section && section.id ? section.id : section,
-            mediaID: id,
-        })
-    )
-    return Promise.all(promises)
 }
 
 async function removeThumbnailFile(thumbnail: Thumbnail | undefined) {
@@ -150,11 +134,7 @@ async function setThumbnail(id: string, src?: string) {
 }
 
 async function setMedia(input: APIt.CreateMediaInput) {
-    return API.graphql(
-        graphqlOperation(createMedia, {
-            input,
-        })
-    )
+    return callManageResourcesLambda('createMedia', { input })
 }
 
 async function removeVideoOnDemand(input: APIt.DeleteVideoOnDemandInput) {
@@ -173,46 +153,24 @@ async function removeLivestream(input: APIt.DeleteLivestreamInput) {
     )
 }
 
-function removeMedia(input: APIt.DeleteMediaInput, mediaToDelete) {
-    return fetchMediasSections().then(({ data }) => {
-        const mediasSections = data?.listMediasSections?.items
-        const filteredMediasSections = mediasSections.filter(
-            (ms) => ms.media.id === input.id
-        )
-        const promises = filteredMediasSections.map((ms) =>
-            removeMediasSections({ id: ms.id })
-        )
-        return Promise.all(promises).then(() => {
-            return API.graphql(
-                graphqlOperation(deleteMedia, {
-                    input,
-                })
-            ).then((result) => {
-                removeVideoOnDemand({ id: input.id })
-                if (
-                    mediaToDelete &&
-                    mediaToDelete.thumbnail &&
-                    mediaToDelete.id
-                )
-                    removeThumbnailFile(mediaToDelete.thumbnail)
-                return result
-            })
-        })
+function removeMedia({ id }: APIt.DeleteMediaInput, mediaToDelete) {
+    return callManageResourcesLambda('deleteMedia', { id }).then((result) => {
+        removeVideoOnDemand({ id })
+        if (mediaToDelete && mediaToDelete.thumbnail && mediaToDelete.id) {
+            removeThumbnailFile(mediaToDelete.thumbnail)
+        }
+        return result
     })
 }
 
-async function modifyMedia(input: APIt.UpdateMediaInput) {
-    return API.graphql(
-        graphqlOperation(updateMedia, {
-            input,
-        })
-    )
+async function modifyMedia(input) {
+    return callManageResourcesLambda('updateMedia', { input })
 }
 
 const uploadContent = async (
     media: Media,
     source: APIt.Source,
-    sectionsId: Array<undefined | string>,
+    sectionsId: Array<string> | undefined,
     thumbnailFile: File,
     vodFile: File | null,
     youtubeSrc: string,
@@ -236,28 +194,28 @@ const uploadContent = async (
             break
 
         case APIt.Source.YOUTUBE:
-            await uploadSourceYoutube(id, media, thumbnailFile, youtubeSrc)
+            await uploadSourceYoutube(
+                id,
+                media,
+                thumbnailFile,
+                youtubeSrc,
+                sectionsId
+            )
             break
 
         default:
             break
     }
 
-    for (let i = 0; i < sectionsId.length; i++) {
-        await setMediasSections({
-            sectionID: sectionsId[i] as string,
-            mediaID: id,
-        })
-    }
     return { data: { id } }
 }
 
 export {
+    callManageResourcesLambda,
     uploadContent,
     createNewSection,
     putThumbnailFile,
     setMedia,
-    setMediasSections,
     setThumbnail,
     removeMedia,
     modifyMedia,
@@ -267,5 +225,4 @@ export {
     removeLivestream,
     removeSection,
     modifySection,
-    updateMediaSections,
 }

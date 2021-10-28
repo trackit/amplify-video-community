@@ -162,8 +162,8 @@ export type DeleteMediaInput = {
   id: string,
 };
 
-export type UpdateContentSubmissionInput = {
-  id: string,
+export type CreateContentSubmissionInput = {
+  id?: string | null,
   title?: string | null,
   description?: string | null,
   comment?: string | null,
@@ -195,6 +195,16 @@ export type ContentSubmission = {
   email?: string | null,
   createdAt: string,
   updatedAt: string,
+};
+
+export type UpdateContentSubmissionInput = {
+  id: string,
+  title?: string | null,
+  description?: string | null,
+  comment?: string | null,
+  source?: Source | null,
+  src?: string | null,
+  email?: string | null,
 };
 
 export type DeleteContentSubmissionInput = {
@@ -357,14 +367,9 @@ export type DeleteLivestreamInput = {
   id: string,
 };
 
-export type CreateContentSubmissionInput = {
-  id?: string | null,
-  title?: string | null,
-  description?: string | null,
-  comment?: string | null,
-  source?: Source | null,
-  src?: string | null,
-  email?: string | null,
+export type ResourcesManagerInput = {
+  query: string,
+  params?: string | null,
 };
 
 export type ModelMediaFilterInput = {
@@ -590,6 +595,26 @@ export type DeleteMediaMutation = {
       } | null > | null,
       nextToken?: string | null,
     } | null,
+  } | null,
+};
+
+export type CreateContentSubmissionMutationVariables = {
+  input: CreateContentSubmissionInput,
+  condition?: ModelContentSubmissionConditionInput | null,
+};
+
+export type CreateContentSubmissionMutation = {
+  createContentSubmission?:  {
+    __typename: "ContentSubmission",
+    id: string,
+    title?: string | null,
+    description?: string | null,
+    comment?: string | null,
+    source?: Source | null,
+    src?: string | null,
+    email?: string | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
@@ -1158,24 +1183,12 @@ export type DeleteLivestreamMutation = {
   } | null,
 };
 
-export type CreateContentSubmissionMutationVariables = {
-  input: CreateContentSubmissionInput,
-  condition?: ModelContentSubmissionConditionInput | null,
+export type ManageResourcesQueryVariables = {
+  input?: ResourcesManagerInput | null,
 };
 
-export type CreateContentSubmissionMutation = {
-  createContentSubmission?:  {
-    __typename: "ContentSubmission",
-    id: string,
-    title?: string | null,
-    description?: string | null,
-    comment?: string | null,
-    source?: Source | null,
-    src?: string | null,
-    email?: string | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
+export type ManageResourcesQuery = {
+  manageResources?: string | null,
 };
 
 export type GetMediaQueryVariables = {

@@ -2,6 +2,11 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const manageResources = /* GraphQL */ `
+  query ManageResources($input: ResourcesManagerInput) {
+    manageResources(input: $input)
+  }
+`;
 export const getMedia = /* GraphQL */ `
   query GetMedia($id: ID!) {
     getMedia(id: $id) {
