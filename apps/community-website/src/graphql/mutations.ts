@@ -107,6 +107,24 @@ export const deleteMedia = /* GraphQL */ `
     }
   }
 `;
+export const createContentSubmission = /* GraphQL */ `
+  mutation CreateContentSubmission(
+    $input: CreateContentSubmissionInput!
+    $condition: ModelContentSubmissionConditionInput
+  ) {
+    createContentSubmission(input: $input, condition: $condition) {
+      id
+      title
+      description
+      comment
+      source
+      src
+      email
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const updateContentSubmission = /* GraphQL */ `
   mutation UpdateContentSubmission(
     $input: UpdateContentSubmissionInput!
@@ -596,24 +614,6 @@ export const deleteLivestream = /* GraphQL */ `
           nextToken
         }
       }
-    }
-  }
-`;
-export const createContentSubmission = /* GraphQL */ `
-  mutation CreateContentSubmission(
-    $input: CreateContentSubmissionInput!
-    $condition: ModelContentSubmissionConditionInput
-  ) {
-    createContentSubmission(input: $input, condition: $condition) {
-      id
-      title
-      description
-      comment
-      source
-      src
-      email
-      createdAt
-      updatedAt
     }
   }
 `;

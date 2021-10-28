@@ -7,7 +7,6 @@ import {
 import { ContentSubmission, Media } from '../../models'
 import { getAuthMode } from './helper'
 import { uploadSourceYoutube } from './vod-mutate'
-import { setMediasSections } from './mutate'
 
 async function setContentSubmission(input: APIt.CreateContentSubmissionInput) {
     return API.graphql({
@@ -44,14 +43,9 @@ async function acceptContentSubmission(
         submission.id,
         media,
         thumbnailFile,
-        submission.src || ''
+        submission.src || '',
+        sectionsId
     )
-    for (let i = 0; i < sectionsId.length; i++) {
-        await setMediasSections({
-            sectionID: sectionsId[i] as string,
-            mediaID: submission.id,
-        })
-    }
 }
 
 export {

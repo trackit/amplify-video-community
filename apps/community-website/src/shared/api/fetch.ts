@@ -4,10 +4,10 @@ import {
     getSection,
     listSections,
     listMedia,
-    getMedia,
     listMediasSections,
     getMediasSections,
 } from '../../graphql/queries'
+import { callManageResourcesLambda } from './mutate'
 import awsmobile from '../../aws-exports'
 import * as APIt from '../../API'
 import { Media } from '../../models'
@@ -46,11 +46,19 @@ async function fetchMedias() {
 }
 
 async function fetchMedia(id: string) {
-    return API.graphql({
-        query: getMedia,
-        variables: { id },
-        authMode: await getAuthMode(),
-    }) as GraphQLResult<APIt.GetMediaQuery>
+    try {
+        return await callManageResourcesLambda('getMedia', { id }).then(
+            (response) => ({
+                ...response,
+                sections: response.sections.map((section) => ({
+                    title: section.label,
+                    id: section.id,
+                })),
+            })
+        )
+    } catch (error) {
+        return { id }
+    }
 }
 
 async function fetchMediasSections() {
@@ -61,7 +69,7 @@ async function fetchMediasSections() {
 }
 
 async function fetchMediasSectionsFiltered(
-    filter: APIt.ModelMediasSectionsFilterInput
+    filter: APIt.ModelMediasSectionFilterInput
 ) {
     return API.graphql({
         query: listMediasSections,
