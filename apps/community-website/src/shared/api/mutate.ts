@@ -28,17 +28,13 @@ async function callManageResourcesLambda(query: string, params: unknown) {
                 params: JSON.stringify(params),
             },
         })
-    )
-        .then((response) => {
-            const jsonResponse = JSON.parse(response.data.manageResources)
-            if (jsonResponse.statusCode !== 200) {
-                throw new Error(jsonResponse.body)
-            }
-            return jsonResponse.body
-        })
-        .catch((error) => {
-            console.log({ error })
-        })
+    ).then((response) => {
+        const jsonResponse = JSON.parse(response.data.manageResources)
+        if (jsonResponse.statusCode !== 200) {
+            throw new Error(jsonResponse.body)
+        }
+        return jsonResponse.body
+    })
 }
 
 const createNewSection = async (label: string, description: string) => {
