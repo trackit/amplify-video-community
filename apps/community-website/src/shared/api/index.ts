@@ -14,14 +14,12 @@ export {
     removeMedia,
     modifyMedia,
     removeMediasSections,
-    setMediasSections,
     createNewSection,
     removeSection,
     modifySection,
     removeThumbnailFile,
     putThumbnailFile,
     removeLivestream,
-    updateMediaSections,
 } from './mutate'
 
 export {
