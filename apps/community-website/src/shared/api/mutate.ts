@@ -160,6 +160,13 @@ function removeMedia({ id }: APIt.DeleteMediaInput, mediaToDelete) {
 }
 
 async function modifyMedia(input) {
+    if (input.sections && input.sections.length > 0 && input.sections[0].id)
+        return callManageResourcesLambda('updateMedia', {
+            input: {
+                ...input,
+                sections: input.sections.map((section) => section.id),
+            },
+        })
     return callManageResourcesLambda('updateMedia', { input })
 }
 
