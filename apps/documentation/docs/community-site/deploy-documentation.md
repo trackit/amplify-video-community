@@ -26,25 +26,30 @@ Follow these instructions to deploy the community site:
     ```
     4.2. click `Next`
     
-    ![Add repository branch](./images/add-repo-branch.png)
+    ![Add repository branch](./images/documentation/add-mono-repo.PNG)
 
 5. Configure build settings
-![Configure build settings](./images/build-settings.png)
+![Configure build settings](./images/documentation/configure-settings.PNG)
 6. Review build settings
-![Review build settings](./images/review.png)
+![Review build settings](./images/documentation/review-settings.PNG)
 7. Provision, build and deploy your app
-![Review build settings](./images/provision.png)
-![Deployed](./images/done.png)
+![Review build settings](./images/documentation/provision.PNG)
+![Deployed](./images/documentation/done.PNG)
 
 ### Assign a domain
-To continue working on the backend, install the Amplify CLI and make updates by running the command below from the root of your project folder.
+Once the website is deployed, you can modify the link with one of your domains. Here for the example it will be ***trackit.io***
 
-![Backend](./images/backend.png)
+1.  Click on Domain Management
+![Go to domain](./images/documentation/to-domain.PNG)
+2.  Click on Add domain and enter the name of your root domain
+![Go to domain](./images/documentation/add-domain.PNG)
+3.  Click on Configure domain ![Go to domain](./images/documentation/exclude-root.png)
 
-```bash
-cd amplify-video-community/apps/community-website
-```
+    3.1. Click on `Disable` to exclude the main root of your domain ![Root exclude](./images/documentation/configure-domain.png)
+    3.2. Choose the extension name that you want and click on `Save` ![Add extension name](./images/documentation/extension-name.PNG)
 
-```bash
-amplify pull --appId <your-app-id> --envName <your-env>
-```
+4.  SSL creation, SSL configuration and Domain activation
+![SSL creation](./images/documentation/SSL-creation.png)
+![Domain deployed](./images/documentation/SSL-done.png)
+5.  Return to your App main page and you will see that the link is changed
+![Link Changed](./images/documentation/domain-complete.png)
