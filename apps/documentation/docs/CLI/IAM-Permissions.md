@@ -164,7 +164,7 @@ These are built on top of the existing IAM recommendations found on the Amplify 
                 "s3:*",
                 "amplify:*",
                 "mediaconvert:*",
-                "secretsmanager:*",
+                "secretsmanager:*"
             ],
             "Resource": "*"
         }
